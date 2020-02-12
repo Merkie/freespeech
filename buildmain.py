@@ -5,8 +5,6 @@ count = 0
 
 def createindex():
 
-    colors = ["#0c2461", "#1e3799", "#4a69bd", "#6a89cc"]
-
     # getting input from build.json
     jsonfile = json.loads(open("build.json", "r+").read())
 
