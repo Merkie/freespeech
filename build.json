@@ -1,28 +1,19 @@
 {
-"page":{
-  "row1":{
-    "greetings":{
-      "page":{
-        "row1":{"hello":"#079992", "hi":"#", "hey":"#", "what's up":"#"},
-        "row2":{"goodbye":"#", "see you later":"#079992", "goodnight":"#"},
-        "row3":{"howdy":"#", "top of the morning":"#", "home":"home"}
-      }
-    },
-    "holidays":{
-      "page":{
-        "row1":{"christmas":"#1e3799","merry christmas!":"#f6b93b", "santa":"#1e3799"},
-        "row2":{"halloween":"#f6b93b", "trick or treat!":"#f6b93b", "home":"home"}
-      }
-    },
-    "food":{
-      "page":{
-        "row1":{"home":"home"}
-      }
-    }
-  },
-  "row2":{
-    "yes":"#78e08f",
-    "no":"#eb2f06"
+  "page":{
+    "row1":[
+      {"name":"Welcome", "text":"Welcome"},
+      {"name":"To", "text":"To"},
+      {"name":"FreeSpeech", "text":"Speecg"}
+    ],
+    "row2":[
+      {"name":" ", "text":" "},
+      {"name":" ", "text":" "},
+      {"name":" ", "text":" "}
+    ],
+    "row3":[
+      {"name":" ", "text":" "},
+      {"name":" ", "text":" "},
+      {"name":" ", "text":" "}
+    ]
   }
-}
 }

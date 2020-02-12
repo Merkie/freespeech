@@ -5,11 +5,13 @@ import bs4
 
 build.createindex()
 
-eel.init('')
+eel.init("")
+
 
 @eel.expose
 def speak(word):
-    print(word)
-    os.system("say "+bs4.BeautifulSoup(word, 'html.parser').find("p").text)
+    # print(word)
+    os.system("say " + bs4.BeautifulSoup(word, "html.parser").find("p")["spokenvalue"])
 
-eel.start('index.html')
+
+eel.start("index.html")
