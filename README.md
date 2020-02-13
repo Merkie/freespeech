@@ -27,6 +27,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 ## Authors
 
 * **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
+* **Bailey Townsend** - *Help with text to speech functionality* - [Fatfingers23](https://github.com/fatfingers23)
 
 ## License
 
