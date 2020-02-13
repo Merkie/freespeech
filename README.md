@@ -18,6 +18,8 @@ Install the prerequisites along with Python 3.8. Cd into the Freespeech folder a
 * [Eel](https://pypi.org/project/Eel/)
 * [Beautiful Soup 4](https://pypi.org/project/beautifulsoup4/)
 
+Can install dependencies with `pip install -r requirements.txt`
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.

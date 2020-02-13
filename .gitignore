@@ -1,0 +1,4 @@
+virtualenv
+.idea
+index.html
+__pycache__

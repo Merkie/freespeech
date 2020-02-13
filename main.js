@@ -1,6 +1,8 @@
 
 
 var editmode = false;
+var synth = window.speechSynthesis;
+var voices = [];
 
     function editMode() {
 
@@ -26,4 +28,37 @@ var editmode = false;
             document.getElementById("content").contentEditable = "true";
         }
 
+    }
+
+
+    function populateVoiceList() {
+      voices = synth.getVoices();
+
+      for(i = 0; i < voices.length ; i++) {
+        var option = document.createElement('option');
+        option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+
+        if(voices[i].default) {
+          option.textContent += ' -- DEFAULT';
+        }
+
+        option.setAttribute('data-lang', voices[i].lang);
+        option.setAttribute('data-name', voices[i].name);
+        document.getElementById("voices").appendChild(option);
+      }
+    }
+
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = populateVoiceList;
+    }
+    function Speak(textToSpeak) {
+        var utterThis = new SpeechSynthesisUtterance(textToSpeak.getElementsByTagName("p")[0].dataset.spokenvalue);
+        var selectedOption = document.querySelector('select').selectedOptions[0].getAttribute('data-name');
+        for(i = 0; i < voices.length ; i++) {
+            if(voices[i].name === selectedOption) {
+                utterThis.voice = voices[i];
+            }
+        }
+       synth.speak(utterThis);
     }
