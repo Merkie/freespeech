@@ -2,3 +2,4 @@ virtualenv
 .idea
 index.html
 __pycache__
+.DS_Store
