@@ -1,19 +1,19 @@
 {
   "page":{
-    "row1":[
-      {"name":"Welcome", "text":"Welcome"},
-      {"name":"To", "text":"To"},
-      {"name":"FreeSpeech", "text":"Speecg"}
+    "row1": [
+      { "name": "Welcome", "text": "Welcome" },
+      { "name": "To", "text": "To" },
+      { "name": "FreeSpeech", "text": "Free Speech" }
     ],
     "row2":[
-      {"name":" ", "text":" "},
-      {"name":" ", "text":" "},
-      {"name":" ", "text":" "}
+      { "name": " ", "text": " " },
+      { "name": " ", "text": " " },
+      { "name": " ", "text": " " }
     ],
     "row3":[
-      {"name":" ", "text":" "},
-      {"name":" ", "text":" "},
-      {"name":" ", "text":" "}
+      { "name": " ", "text": " " },
+      { "name": " ", "text": " " },
+      { "name": " ", "text": " " }
     ]
   }
 }

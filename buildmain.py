@@ -59,19 +59,19 @@ def createindex():
                     newpage = open(str(count) + ".html", "w+")
                     create_page(newpage, box["page"], box["name"])
                     if "image" in box:
-                        built += f'<div class="box" style="background-color:{redirectcolor}"><a onclick="Speak(this);" href="{str(count)}.html" style="color:white"><div class="inner" style="display : block; padding-top:20%"><img src="{box["image"]}" style="width: 60%; height:60%;"><p data-spokenvalue="{box["text"]}">{box["name"]}"</p></div></a></div>"'
+                        built += f'<div class="box" style="background-color:{redirectcolor}"><a onclick="speakText(this);" href="{str(count)}.html" style="color:white"><div class="inner" style="display : block; padding-top:20%"><img src="{box["image"]}" style="width: 60%; height:60%;"><p data-spokenvalue="{box["text"]}">{box["name"]}"</p></div></a></div>"'
 
                     else:
-                        built += f'<div class="box" style="background-color:{redirectcolor}"><a onclick="Speak(this);" href="{str(count)}.html" style="color:white"><div class="inner"><p data-spokenvalue="{box["text"] }">{box["name"]} "</p></div></a></div>"'
+                        built += f'<div class="box" style="background-color:{redirectcolor}"><a onclick="speakText(this);" href="{str(count)}.html" style="color:white"><div class="inner"><p data-spokenvalue="{box["text"] }">{box["name"]} "</p></div></a></div>"'
                     count += 1
                 else:
                     if "home" in box:
                         built += f'<div class="box" style="border-radius: 25px; background-color:{homecolor};"><a href="index.html" style="color:white"><div class="inner"><p><i>Home</i></p></div></a></div>'
                     else:
                         if "image" in box:
-                            built += f'<div class="box" style="background-color:{color}"><a onclick="Speak(this);"><div class="inner" style="display : block; padding-top:20%"><img src="{box["image"]}" style="width: 60%; height:60%;"><p data-spokenvalue="{box["text"]}">{box["name"]}</p></div></a></div>'
+                            built += f'<div class="box" style="background-color:{color}"><a onclick="speakText(this);"><div class="inner" style="display : block; padding-top:20%"><img src="{box["image"]}" style="width: 60%; height:60%;"><p data-spokenvalue="{box["text"]}">{box["name"]}</p></div></a></div>'
                         else:
-                            built += f'<div class="box" style="background-color:{color}"><a onclick="Speak(this);"><div class="inner"><p data-spokenvalue="{box["text"]}"> {box["name"]} </p></div></a></div>'
+                            built += f'<div class="box" style="background-color:{color}"><a onclick="speakText(this);"><div class="inner"><p data-spokenvalue="{box["text"]}"> {box["name"]} </p></div></a></div>'
 
             built += "</div>"
 
