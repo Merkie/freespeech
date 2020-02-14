@@ -1,10 +1,13 @@
 // enable JavaScript strict mode
 "use strict";
 
-// object of the entry point for the speechSynthesis functionality
+// object to access the speechSynthesis API
 const SPEECH_SYNTHESIS = window.speechSynthesis;
 
+// editMode is off by default
 let editMode = false;
+
+// voices gets populated in populateVoices()
 let voices = [];
 
 /**
@@ -43,7 +46,7 @@ function speakText(el) {
 }
 
 /**
- * Turn on edit mode if it was off, and turn it on if it was off.
+ * Turn off edit mode if it was on, and turn it on if it was off.
  */
 function toggleEditMode() {
 	// if editMode was already on
