@@ -14,8 +14,8 @@ let voices = [];
  * Automatically run this function to initialize speechSynthesis functionality.
  */
 (function init() {
-	// populate the voice select element with speechSynthesisVoices
-	populateVoiceList();
+	// populate the voice select element with speechSynthesisVoices once the window has loaded
+	window.onload = populateVoiceList;
 	
 	// if there isn't a onvoiceschanged function bound, bind it to populateVoiceList
 	if (SPEECH_SYNTHESIS.onvoiceschanged !== undefined) 
