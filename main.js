@@ -11,16 +11,16 @@ let editMode = false;
 let voices = [];
 
 /**
- * Automatically run this function to initialize speechSynthesis functionality.
+ * Automatically run this function when the window loads to initialize speechSynthesis functionality.
  */
-(function init() {
+window.onload = function() {
 	// populate the voice select element with speechSynthesisVoices once the window has loaded
-	window.onload = populateVoiceList;
-	
+	populateVoiceList();
+
 	// if there isn't a onvoiceschanged function bound, bind it to populateVoiceList
 	if (SPEECH_SYNTHESIS.onvoiceschanged !== undefined) 
 		SPEECH_SYNTHESIS.onvoiceschanged = populateVoiceList;
-})();
+};
 
 /**
  * Use speechSynthesis to read a string of text.
