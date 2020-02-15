@@ -22,12 +22,13 @@ Can install dependencies with `pip install -r requirements.txt`
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
 
 ## Authors
 
 * **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
 * **Bailey Townsend** - *Help with text to speech functionality* - [Fatfingers23](https://github.com/fatfingers23)
+* **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
 
 ## License
 
