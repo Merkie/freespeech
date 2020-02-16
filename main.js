@@ -32,12 +32,12 @@ function speakText(el) {
 	let utterThis = new SpeechSynthesisUtterance(el.getElementsByTagName("p")[0].dataset.spokenvalue);
 	
 	// get the voice name that we have selected on the webpage
-	let selectedVoice = document.getElementById("voices").selectedOptions[0].getAttribute("data-name");
+	let selectedVoiceIndex = document.getElementById("voices").selectedOptions[0].getAttribute("data-name");
 
 	// find the Voice object that corresponds to the voice name
 	voices.forEach(function(voice) {
 		// set the Utterance object's voice to the voice that we have selected
-		if (voice.name === selectedVoice)
+		if (voice.name === selectedVoiceIndex)
 			utterThis.voice = voice;
 	});
 	
