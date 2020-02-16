@@ -12,7 +12,9 @@ Many people requested to donate to the project. I'd first recommend you donate t
 
 Install the prerequisites along with Python 3.8. Cd into the Freespeech folder and run the app by running app.py.
 
-### Prerequisites
+## Prerequisites
+
+### Original Project
 
 * [Python 3.8](https://www.python.org/downloads/release/python-381/)
 * [Eel](https://pypi.org/project/Eel/)
@@ -20,7 +22,13 @@ Install the prerequisites along with Python 3.8. Cd into the Freespeech folder a
 
 Can install dependencies with `pip install -r requirements.txt`
 
+### Vue Project
+
+Vue setup can be found [here](freespeechvue/README.md)
+
 ## Contributing
+
+Can find our source code on [Github](https://github.com/Merkie/freespeech).
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
 
