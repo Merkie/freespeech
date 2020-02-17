@@ -1,13 +1,15 @@
 <template>
   <v-container
     fluid
-    class="grey lighten-5"
+    class="grey lighten-5 py-10"
+    style="{text-align: center}" 
+
   >
     <v-row
       dense
       v-for="(row, index) in TileData"
       :key="index"
-    > 
+    >
       <template v-for="(tile, tileIndex) in row">
         <v-col
           :key="tileIndex"
@@ -33,7 +35,7 @@ const VOICES = SPEECH_SYNTHESIS.getVoices();
 
 import TileData from '../../../build.json';
 import Tile from '@/components/TilePad/Tile';
-import { isMobile } from 'mobile-device-detect';
+//import { isMobile, isTablet } from 'mobile-device-detect';
 
 export default {
     name: 'TilePad',
@@ -43,7 +45,8 @@ export default {
     data() {
         return {
             TileData: TileData.page,
-            isMobile,
+            //isMobile,
+            //isTablet,
             voices: VOICES
         };
     },
@@ -52,8 +55,8 @@ export default {
   },
   methods: {
       speakText(textToSpeak){
-          let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);           
-          
+          let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);
+
           speechSynthesisUtterance.voice = this.voices[this.selectedVoiceIndex];
           SPEECH_SYNTHESIS.speak(speechSynthesisUtterance);
 
