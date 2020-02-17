@@ -11,7 +11,8 @@ const vuexLocal = new VuexPersistence({
 export default new Vuex.Store({
     state: {
         selectedVoiceIndex: 0,
-        settingsDialogVisibility: false
+        settingsDialogVisibility: false,
+
     },
     mutations: {
         SET_SELECTED_VOICE_INDEX(state, value){

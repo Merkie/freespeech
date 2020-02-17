@@ -1,5 +1,5 @@
 {
-  "page":{
+  "home":{
     "row1": [
       { "name": "No", "text": "No", "accent":"peach", "image":"https://img.icons8.com/officexs/64/000000/cancel-2.png"},
       { "name": "Little", "text": "Little", "image":"https://img.icons8.com/officexs/64/000000/cursor.png"},
@@ -12,7 +12,7 @@
       { "name": "Mine", "text": "Mine", "image":"https://img.icons8.com/officexs/64/000000/oppression.png"},
       { "name": "Down", "text": "Down", "image":"https://img.icons8.com/officexs/64/000000/long-arrow-down.png"},
       { "name": "Up", "text": "Up", "accent":"mint","image":"https://img.icons8.com/officexs/64/000000/finger-and-thumb.png"},
-      { "name": "Keyboard", "text": " ", "accent":"mint","image":"https://img.icons8.com/officexs/64/000000/keyboard.png"}
+      { "name": "Keyboard", "text": " ", "accent":"mint","image":"https://img.icons8.com/officexs/64/000000/keyboard.png", "navigation": "keyboard"}
     ],
     "row2":[
       { "name": "Feel", "text": "Feel", "accent":"peach", "image":"https://img.icons8.com/officexs/64/000000/in-love.png" },
@@ -69,6 +69,115 @@
       { "name": "Are", "text": "Are", "accent":"violet", "image":"https://img.icons8.com/officexs/64/000000/fantasy.png"},
       { "name": "The", "text": "The", "accent":"violet", "image":"https://img.icons8.com/officexs/64/000000/the-flash-sign.png"},
       { "name": "An", "text": "An", "accent":"violet", "image":"https://img.icons8.com/officexs/64/000000/north.png"}
+    ]
+  },
+  "keyboard":{
+    "row1": [
+      
+        { "name": "A",
+          "text": "A"
+        },
+        {
+          "name": "B",
+          "text": "B"
+        },
+        {
+          "name": "C",
+          "text": "C"
+        },
+        {
+          "name": "D",
+          "text": "D"
+        },
+        {
+          "name": "E",
+          "text": "E"
+        },
+        {
+          "name": "F",
+          "text": "F"
+        },
+        {
+          "name": "G",
+          "text": "G"
+        },
+        {
+          "name": "H",
+          "text": "H"
+        },
+        {
+          "name": "I",
+          "text": "I"
+        },
+        {
+          "name": "J",
+          "text": "J"
+        },
+        {
+          "name": "K",
+          "text": "K"
+        },
+        {
+          "name": "L",
+          "text": "L"
+        },
+        {
+          "name": "M",
+          "text": "M"
+        },
+        {
+          "name": "N",
+          "text": "N"
+        },
+        {
+          "name": "O",
+          "text": "O"
+        },
+        {
+          "name": "P",
+          "text": "P"
+        },
+        {
+          "name": "Q",
+          "text": "Q"
+        },
+        {
+          "name": "R",
+          "text": "R"
+        },
+        {
+          "name": "S",
+          "text": "S"
+        },
+        {
+          "name": "T",
+          "text": "T"
+        },
+        {
+          "name": "U",
+          "text": "U"
+        },
+        {
+          "name": "V",
+          "text": "V"
+        },
+        {
+          "name": "W",
+          "text": "W"
+        },
+        {
+          "name": "X",
+          "text": "X"
+        },
+        {
+          "name": "Y",
+          "text": "Y"
+        },
+        {
+          "name": "Z",
+          "text": "Z"
+        }
+      
     ]
   }
 }

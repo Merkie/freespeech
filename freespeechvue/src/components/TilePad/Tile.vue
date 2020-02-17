@@ -3,14 +3,17 @@
     raised
     tile
     class="mx-auto"
-    @click="$emit('speakText', tileData.text)"
+    @click="tileClickedEvent"
     :color="typeof tileData.accent === 'undefined' ? '' : cardColor"
   >
     <v-container
       justify="
     center"
     >
-      <v-row align="center" justify="center">
+      <v-row
+        align="center"
+        justify="center"
+      >
         <v-img
           max-height="32"
           max-width="32"
@@ -19,7 +22,11 @@
         />
       </v-row>
       <v-row>
-        <v-card-text class="" align="center" justify="center">
+        <v-card-text
+          class=""
+          align="center"
+          justify="center"
+        >
           <h3> {{ tileData.name }} </h3>
         </v-card-text>
       </v-row>
@@ -30,7 +37,7 @@
 <script>
 
 export default {
-  name: "ImageTile",
+  name: "Tile",
   props: {
     tileData: {
       type: Object,
@@ -65,6 +72,16 @@ export default {
             }
             return cardHexColor;
         }
+  },
+  methods: {
+    tileClickedEvent(){
+      if(typeof this.tileData.navigation === 'undefined' || this.tileData.navigation === '')
+      {
+        this.$emit('speakText', this.tileData.text)
+      }else{
+        this.$router.push({name: 'tilePadWithRoute', params: {layout: this.tileData.navigation }})
+      }
+    }
   },
 };
 </script>

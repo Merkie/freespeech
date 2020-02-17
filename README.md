@@ -35,7 +35,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 ## Authors
 
 * **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
-* **Bailey Townsend** - *Help with text to speech functionality* - [Fatfingers23](https://github.com/fatfingers23)
+* **Bailey Townsend** - *Help with text to speech functionality and move to Vue* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 * **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
 
 ## License
