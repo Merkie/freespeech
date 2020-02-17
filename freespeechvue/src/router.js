@@ -9,9 +9,15 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/layout/:layout',
+      name: 'tilePadWithRoute',
+      component: TilePad,
+      props: true
+    },
+    {
       path: '/',
-      name: 'home',
-      component: TilePad
+      name: 'tilePad',
+      component: TilePad      
     },
     {
       path: '/about',
