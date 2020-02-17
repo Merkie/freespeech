@@ -1,0 +1,125 @@
+@import './_variables.scss'
+
+.v-snack
+  align-items: center
+  color: $snackbar-color
+  display: flex
+  font-size: $snackbar-font-size
+  left: $snackbar-left
+  pointer-events: none
+  position: fixed
+  right: $snackbar-right
+  transition-duration: .15s
+  transition-timing-function: map-get($transition, 'linear-out-slow-in')
+  z-index: 1000
+
+  +ltr()
+    text-align: left
+
+  +rtl()
+    text-align: right
+
+  &--absolute
+    position: absolute
+
+  &--top
+    top: $snackbar-top
+
+  &--bottom
+    bottom: $snackbar-bottom
+
+  &__wrapper
+    align-items: center
+    background-color: $snackbar-background-color
+    border-radius: $snackbar-border-radius
+    display: flex
+    margin: 0 auto
+    pointer-events: auto
+    transition: inherit
+    transition-property: opacity, transform
+    min-width: 100%
+    +elevation($snackbar-wrapper-elevation)
+
+  &__content
+    align-items: center
+    display: flex
+    min-height: $snackbar-content-min-height
+    justify-content: space-between
+    overflow: hidden
+    padding: $snackbar-content-padding
+    width: 100%
+
+    .v-btn
+      flex: 0 0 auto
+      height: auto
+      min-width: auto
+      padding: 8px
+      width: auto
+
+      &--text, &--icon, &--outlined
+        color: $snackbar-color
+
+      +ltr()
+        margin: 0 $snackbar-btn-margin-right 0 $snackbar-btn-margin-left
+
+      +rtl()
+        margin: 0 $snackbar-btn-margin-left 0 $snackbar-btn-margin-right
+
+      &__content
+        margin: -2px
+
+  &--multi-line &__content
+    height: auto
+    min-height: $snackbar-multi-line-content-min-height
+
+  &--vertical &__content
+    // https://stackoverflow.com/questions/35111090/text-in-a-flex-container-doesnt-wrap-in-ie11
+    align-items: stretch
+    flex-direction: column
+    height: auto
+    padding: $snackbar-vertical-content-padding
+
+    .v-btn
+      &.v-btn // Higher specificity
+        align-self: flex-end
+        justify-self: flex-end
+        margin-top: $snackbar-vertical-content-btn-margin-top
+
+        +ltr()
+          margin-left: 0
+
+        +rtl()
+          margin-right: 0
+
+      &__content
+        flex: 0 0 auto
+        margin: 0
+
+@media #{map-get($display-breakpoints, 'sm-and-up')}
+  .v-snack
+    &__wrapper
+      min-width: $snackbar-wrapper-min-width
+      max-width: $snackbar-wrapper-max-width
+
+      .v-snack--left &
+        margin-left: 0
+
+      .v-snack--right &
+        margin-right: 0
+
+    &__content .v-btn:first-of-type
+      +ltr()
+        margin-left: $snackbar-content-first-btn-margin
+
+      +rtl()
+        margin-right: $snackbar-content-first-btn-margin
+
+.v-snack-transition
+  &-enter
+    .v-snack__wrapper
+      transform: scale($snackbar-transition-wrapper-transform)
+
+  &-enter,
+  &-leave-to
+    .v-snack__wrapper
+      opacity: 0

@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VTooltip should render component and match snapshot 1`] = `
+<span class="v-tooltip">
+  <span>
+    activator
+  </span>
+</span>
+`;
+
+exports[`VTooltip should render component and match snapshot 2`] = `
+<span class="v-tooltip">
+  <span>
+    activator
+  </span>
+</span>
+`;
+
+exports[`VTooltip should render component with custom eager and match snapshot 1`] = `
+<span class="v-tooltip">
+  <span>
+    activator
+  </span>
+</span>
+`;
+
+exports[`VTooltip should render component with min/max width and match snapshot 1`] = `
+<span class="v-tooltip">
+  <span>
+    activator
+  </span>
+</span>
+`;
+
+exports[`VTooltip should render component with value=true and match snapshot 1`] = `
+<span class="v-tooltip">
+  <span>
+    activator
+  </span>
+</span>
+`;
+
+exports[`VTooltip should render component with zIndex prop and match snapshot 1`] = `
+<span class="v-tooltip">
+</span>
+`;

@@ -1,0 +1,14 @@
+// Imports
+@import './_variables.scss'
+
+// Theme
++theme(v-sheet) using ($material)
+  background-color: map-get($material, 'cards')
+  border-color: map-get($material, 'cards')
+  color: map-deep-get($material, 'text', 'primary')
+
+.v-sheet
+  border-radius: $sheet-border-radius
+
+  &--tile
+    border-radius: 0
