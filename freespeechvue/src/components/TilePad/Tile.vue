@@ -10,14 +10,16 @@
       justify="
     center"
     >
-      <v-row>
+      <v-row align="center" justify="center">
         <v-img
+          max-height="32"
+          max-width="32"
           aspect-ratio="1"
           :src="tileData.image"
         />
       </v-row>
       <v-row>
-        <v-card-text>
+        <v-card-text class="" align="center" justify="center">
           <h3> {{ tileData.name }} </h3>
         </v-card-text>
       </v-row>
@@ -38,7 +40,7 @@ export default {
         cardColor: function(){
             let cardHexColor;
 
-            switch(this.tileData.accent) {  
+            switch(this.tileData.accent) {
                 case "red":
                     cardHexColor = "#FF9AA2";
                     break;
@@ -67,7 +69,6 @@ export default {
 };
 </script>
 
- 
+<style>
 
-
- 
+</style>
