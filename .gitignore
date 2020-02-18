@@ -1,9 +1,8 @@
 virtualenv
 .idea
-index.html
 __pycache__
 .DS_Store
- dist
+dist
 node_modules
 
  # local env files
@@ -23,3 +22,4 @@ node_modules
  *.njsproj
  *.sln
  *.sw?
+.vscode

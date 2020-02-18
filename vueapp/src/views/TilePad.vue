@@ -18,6 +18,7 @@
           <Tile
             @speakText="speakText"
             :tile-data="tile"
+            :tile-page="currentTilePadPage"
           />
         </v-col>
       </template>
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 // object to access the speechSynthesis API
 const SPEECH_SYNTHESIS = window.speechSynthesis;
@@ -37,39 +38,60 @@ import Tile from '@/components/TilePad/Tile';
 import { isMobileOnly } from 'mobile-device-detect';
 
 export default {
-    name: 'TilePad',
-    components: {
-        Tile
-    },
-    data() {
-        return {
-            tileData: TileData,
-            isMobileOnly,
-            voices: VOICES
-        };
-    },
+  name: 'TilePad',
+  components: {
+    Tile
+  },
+  data() {
+    return {
+      tileData: TileData,
+      isMobileOnly,
+      voices: VOICES,
+    };
+  },
   computed: {
-      ...mapGetters(['selectedVoiceIndex']),
-      tilePadToDisplay: function(){
-        let routeParam = this.$route.params.layout
-        if(typeof routeParam === 'undefined'){
-          return this.tileData.home
-        }else{
-          return this.tileData[routeParam]
-        }
+    ...mapGetters({
+      selectedVoiceIndex: 'settings/selectedVoiceIndex',
+      customTilePadOption: 'settings/customTilePad',
+      customTilePadData: 'tilePad/customTilePadData'
+    }),
+    tilePadToDisplay: function() {
+      
+      //Checks to see if custom tile from store is empty, and if so sets the tile pad to the static one so they have something to start with, feel like there is a better way to prime the data.
+      if(Object.entries(this.customTilePadData).length === 0 && this.customTilePadData.constructor === Object){
+        this.setCustomTilePadData(this.tileData);
       }
+
+      let tilePadTiles = this.customTilePadOption ? this.customTilePadData : this.tileData;
+      
+      let routeParam = this.$route.params.layout;
+      if (typeof routeParam === 'undefined') {
+        return tilePadTiles.home;
+      } else {
+        return tilePadTiles[routeParam];
+      }
+    },
+    currentTilePadPage(){
+      let routeParam = this.$route.params.layout;
+      if (typeof routeParam === 'undefined') {
+        return 'home';
+      } else {
+        return routeParam;
+      }
+    }
   },
   methods: {
-      speakText(textToSpeak){
-          let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);
+    ...mapActions({
+      setCustomTilePadData : 'tilePad/setCustomTilePadData'
+    }),
+    speakText(textToSpeak) {
+      let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);
 
-          speechSynthesisUtterance.voice = this.voices[this.selectedVoiceIndex];
-          SPEECH_SYNTHESIS.speak(speechSynthesisUtterance);
-
-      }
+      speechSynthesisUtterance.voice = this.voices[this.selectedVoiceIndex];
+      SPEECH_SYNTHESIS.speak(speechSynthesisUtterance);
+    }
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>

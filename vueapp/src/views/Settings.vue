@@ -17,6 +17,11 @@
                 label="Voice"
                 v-model="selectedVoiceIndex"
               />
+ 
+              <v-switch
+                :label="customTilePad ? 'Custom Tile Pad' : 'Static Tile Pad'"
+                v-model="customTilePad"
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -36,38 +41,55 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 const VOICES = window.speechSynthesis.getVoices();
 
-let voiceOptions = (VOICES.map((voice, index) => {
-    return {text: `${voice.name} (${voice.lang})`, value: index}
-})).sort((a,b) => a.text.localeCompare(b.text));
+let voiceOptions = VOICES.map((voice, index) => {
+  return { text: `${voice.name} (${voice.lang})`, value: index };
+}).sort((a, b) => a.text.localeCompare(b.text));
 
 export default {
-    
-    name:"Settings",
-    data () {
-        return {
-        dialog: true,
-        voiceOptions,
-        voices: VOICES
-        }      
+  name: 'Settings',
+  data() {
+    return {
+      dialog: true,
+      voiceOptions,
+      voices: VOICES
+    };
+  },
+  computed: {
+    ...mapGetters({
+      settingsDialogVisibility: 'settings/settingsDialogVisibility'
+    }),
+    selectedVoiceIndex: {
+      get() {
+        let voiceIndex = this.$store.state.settings.selectedVoiceIndex;
+        return voiceOptions.filter(x => x.value === voiceIndex)[0];
+      },
+      set(value) {
+        this.setSelectedVoiceIndex(value);
+      }
     },
-    computed: {
-        ...mapGetters(['settingsDialogVisibility']),
-        selectedVoiceIndex: {
-            get(){
-                let voiceIndex = this.$store.state.selectedVoiceIndex;
-                return voiceOptions.filter(x => x.value === voiceIndex)[0];
-            },
-            set(value){            
-                this.setselectedVoiceIndex(value);
-            }
-        }  
-        },
-        methods: {
-            ...mapActions(['setselectedVoiceIndex','toggleSettingsDialogVisibility'])
+    customTilePad: {
+      get(){
+        return this.$store.state.settings.customTilePad;
+      },
+      set(value){
+        if(!value){
+          this.setEditMode(false);
         }
-}
+        this.toggleCustomTilePad();
+      }
+    }
+  },
+  methods: {
+    ...mapActions({
+      setSelectedVoiceIndex: 'settings/setSelectedVoiceIndex',
+      toggleSettingsDialogVisibility: 'settings/toggleSettingsDialogVisibility',
+      toggleCustomTilePad: 'settings/toggleCustomTilePad',
+      setEditMode:'tilePad/setEditMode'
+    })
+  }
+};
 </script>
