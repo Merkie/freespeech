@@ -5,11 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: enter into directory
-        run: cd vueapp
       - name: npm install
-        run: npm i
+        run: cd vueapp && npm i && cd ../
       - name: lint
-        run: npm run lint
+        run: cd vueapp && npm run lint && cd ../
       - name: production build
-        run: npm run build
+        run: cd vueapp && npm run build && cd ../
