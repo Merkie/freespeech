@@ -14,7 +14,7 @@ Many people requested to donate to the project. I'd first recommend you donate t
 * [npm LTS](https://nodejs.org/en/)
 
 #### Dev Setup
-All commands are ran inside of a terminal inside of the freespeechvue folder
+All commands are ran inside of a terminal inside of the vueapp folder
 ```
 npm install
 ```
@@ -24,14 +24,14 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production. Production ready code in /frespeech
+### Compiles and minifies for production. Production ready code in /vueapp/dist
 ```
 npm run build
 ```
 
 ### Lints and fixes files
 ```
-npm run li
+npm run lint
 ``` 
 
 ## Contributing
@@ -43,7 +43,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 ## Authors
 
 * **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
-* **Bailey Townsend** - *Help with text to speech functionality* - [Fatfingers23](https://github.com/fatfingers23)
+* **Bailey Townsend** - *Core Team Member/Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 * **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
 
 ## License
