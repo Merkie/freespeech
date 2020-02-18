@@ -1,0 +1,15 @@
+name: Build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: enter into directory
+        run: cd vueapp
+      - name: npm install
+        run: npm i
+      - name: lint
+        run: npm run lint
+      - name: production build
+        run: npm run build
