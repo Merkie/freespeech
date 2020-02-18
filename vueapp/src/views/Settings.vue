@@ -26,6 +26,13 @@
         <v-btn
           color="blue darken-1"
           text
+          @click="voiceTestEvent"
+        >
+          Hear this Voice
+        </v-btn>
+        <v-btn
+          color="blue darken-1"
+          text
           @click="toggleSettingsDialogVisibility"
         >
           Close
@@ -45,14 +52,14 @@ let voiceOptions = (VOICES.map((voice, index) => {
 })).sort((a,b) => a.text.localeCompare(b.text));
 
 export default {
-    
+
     name:"Settings",
     data () {
         return {
         dialog: true,
         voiceOptions,
         voices: VOICES
-        }      
+        }
     },
     computed: {
         ...mapGetters(['settingsDialogVisibility']),
@@ -61,13 +68,19 @@ export default {
                 let voiceIndex = this.$store.state.selectedVoiceIndex;
                 return voiceOptions.filter(x => x.value === voiceIndex)[0];
             },
-            set(value){            
+            set(value){
                 this.setselectedVoiceIndex(value);
             }
-        }  
+        }
         },
         methods: {
-            ...mapActions(['setselectedVoiceIndex','toggleSettingsDialogVisibility'])
+            ...mapActions(['setselectedVoiceIndex','toggleSettingsDialogVisibility']),
+            voiceTestEvent(){
+              let speechSynthesisUtterance = new SpeechSynthesisUtterance('Welcome to Free Speech');
+
+              speechSynthesisUtterance.voice = this.voices[this.$store.state.selectedVoiceIndex];
+              window.speechSynthesis.speak(speechSynthesisUtterance);
+            }
         }
 }
 </script>
