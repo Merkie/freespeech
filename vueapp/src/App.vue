@@ -78,7 +78,15 @@ export default {
     ...mapActions({        
       toggleSettingsDialogVisibility: 'settings/toggleSettingsDialogVisibility',
       toggleEditMode: 'tilePad/toggleEditMode'
-    })
+    }),
+    populateVoiceData (windowVoices){
+      const voiceOptions = windowVoices.map((voice, index) => {
+        return { text: `${voice.name} (${voice.lang})`, value: index };
+      }).sort((a, b) => a.text.localeCompare(b.text));
+
+      this.$store.dispatch('settings/setVoices', windowVoices);
+      this.$store.dispatch('settings/setVoiceOptions', voiceOptions);
+    },
   },
   computed: {
     ...mapGetters({ 
@@ -86,5 +94,15 @@ export default {
       editMode: 'tilePad/editMode'
     })
   },
+  created(){
+    let windowVoices = window.speechSynthesis.getVoices();
+
+    if (!windowVoices.length > 0) {
+      const vm = this;
+      window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
+    } else {
+      this.populateVoiceData(windowVoices);
+    }
+  }
 };
 </script>

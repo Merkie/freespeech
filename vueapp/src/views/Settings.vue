@@ -13,7 +13,7 @@
           <v-row>
             <v-col cols="12">
               <v-select
-                :items="voiceOptions"
+                :items="$store.state.settings.voiceOptions"
                 label="Voice"
                 v-model="selectedVoiceIndex"
               />
@@ -53,12 +53,12 @@ export default {
   data() {
     return {
       dialog: true,
-      voiceOptions: [],
     };
   },
   computed: {
     ...mapGetters({
-      settingsDialogVisibility: 'settings/settingsDialogVisibility'
+      settingsDialogVisibility: 'settings/settingsDialogVisibility',
+      voiceOptions: 'settings/voiceOptions',
     }),
     selectedVoiceIndex: {
       get() {
@@ -97,21 +97,6 @@ export default {
       setEditMode:'tilePad/setEditMode',
       toggleSentenceMode: 'settings/toggleSentenceMode'
     }),
-    populateVoiceData (windowVoices){
-      this.voiceOptions = windowVoices.map((voice, index) => {
-        return { text: `${voice.name} (${voice.lang})`, value: index };
-      }).sort((a, b) => a.text.localeCompare(b.text));
-    },
-  },
-  created() {
-    let windowVoices = window.speechSynthesis.getVoices();
-
-    if (!windowVoices.length > 0) {
-      const vm = this;
-      window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
-    } else {
-      this.populateVoiceData(windowVoices);
-    }
   },
 };
 </script>
