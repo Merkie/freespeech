@@ -48,19 +48,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-const VOICES = window.speechSynthesis.getVoices();
-
-let voiceOptions = VOICES.map((voice, index) => {
-  return { text: `${voice.name} (${voice.lang})`, value: index };
-}).sort((a, b) => a.text.localeCompare(b.text));
-
 export default {
   name: 'Settings',
   data() {
     return {
       dialog: true,
-      voiceOptions,
-      voices: VOICES,
+      voiceOptions: [],
     };
   },
   computed: {
@@ -70,7 +63,7 @@ export default {
     selectedVoiceIndex: {
       get() {
         let voiceIndex = this.$store.state.settings.selectedVoiceIndex;
-        return voiceOptions.filter(x => x.value === voiceIndex)[0];
+        return this.voiceOptions.filter(x => x.value === voiceIndex)[0];
       },
       set(value) {
         this.setSelectedVoiceIndex(value);
@@ -103,7 +96,22 @@ export default {
       toggleCustomTilePad: 'settings/toggleCustomTilePad',
       setEditMode:'tilePad/setEditMode',
       toggleSentenceMode: 'settings/toggleSentenceMode'
-    })
-  }
+    }),
+    populateVoiceData (windowVoices){
+      this.voiceOptions = windowVoices.map((voice, index) => {
+        return { text: `${voice.name} (${voice.lang})`, value: index };
+      }).sort((a, b) => a.text.localeCompare(b.text));
+    },
+  },
+  created() {
+    let windowVoices = window.speechSynthesis.getVoices();
+
+    if (!windowVoices.length > 0) {
+      const vm = this;
+      window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
+    } else {
+      this.populateVoiceData(windowVoices);
+    }
+  },
 };
 </script>
