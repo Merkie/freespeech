@@ -10,7 +10,6 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "marked": "^0.8.0",
-    "mobile-device-detect": "^0.3.3",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
@@ -47,8 +46,17 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "quotes": [2, "single", { "avoidEscape": true }],
-      "semi": [2, "always"]
+      "quotes": [
+        2,
+        "single",
+        {
+          "avoidEscape": true
+        }
+      ],
+      "semi": [
+        2,
+        "always"
+      ]
     }
   },
   "postcss": {
