@@ -13,7 +13,7 @@
           <v-row>
             <v-col cols="12">
               <v-select
-                :items="$store.state.settings.voiceOptions"
+                :items="voiceOptions"
                 label="Voice"
                 v-model="selectedVoiceIndex"
               />
