@@ -1,6 +1,6 @@
 # Freespeech
 
-A free program designed to help the non-verbal.
+A free program designed to help people who are non-verbal.
 
 ## Why Was This Created?
 
@@ -45,6 +45,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 * **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
 * **Bailey Townsend** - *Core Team Member/Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 * **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
+* **Aidan Kinzett** - *Feature enhancements/Sentence Building feature* - [aidankinzett](https://github.com/aidankinzett)
 
 ## License
 
