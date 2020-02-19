@@ -1,6 +1,6 @@
 # Freespeech
 
-A free program designed to help the non-verbal.
+A free program designed to help people who are non-verbal.
 
 ## Why Was This Created?
 
@@ -8,6 +8,11 @@ Freespeech was created in response to the few programs out there for non-verbal 
 
 Many people requested to donate to the project. I'd first recommend you donate to the [Make A Wish](https://secure2.wish.org/site/SPageServer?pagename=donate_now&chid=100-000) charity as they gave my Sister, Della, a wish. If you feel inclined to donate to me and the development of this project, feel free to support me on [ko-fi](https://ko-fi.com/merkie). I am trying to buy myself a new computer as I am currently developing off my parent's laptop. Any money left over after expenses will go to Make A Wish.
 
+## Contributing
+
+Can find our source code on [Github](https://github.com/Merkie/freespeech).
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
 
 ## Installation
 
@@ -34,17 +39,13 @@ npm run build
 npm run lint
 ``` 
 
-## Contributing
-
-Can find our source code on [Github](https://github.com/Merkie/freespeech).
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
 
 ## Authors
 
 * **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
 * **Bailey Townsend** - *Core Team Member/Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 * **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
+* **Aidan Kinzett** - *Feature enhancements/Sentence Building feature* - [aidankinzett](https://github.com/aidankinzett)
 
 ## License
 
