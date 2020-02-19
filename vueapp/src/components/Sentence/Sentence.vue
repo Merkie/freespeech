@@ -4,10 +4,10 @@
       <v-card-title>
         Sentence
         <v-spacer />
-        <v-btn class="mx-1" @click="$emit('speakSentence')">
+        <v-btn class="mx-1" color="primary" @click="$emit('speakSentence')">
           <v-icon class="pr-2">record_voice_over</v-icon> Speak
         </v-btn>
-        <v-btn class="mx-2" @click="$emit('clearSentence')">
+        <v-btn class="mx-2" color="primary" @click="$emit('clearSentence')">
           <v-icon class="pr-2">clear</v-icon> Clear
         </v-btn>
       </v-card-title>
