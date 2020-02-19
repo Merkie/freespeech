@@ -48,7 +48,6 @@ import { mapGetters, mapActions, mapState } from 'vuex';
 
 // object to access the speechSynthesis API
 const SPEECH_SYNTHESIS = window.speechSynthesis;
-const VOICES = SPEECH_SYNTHESIS.getVoices();
 
 import TileData from '../../../build.json';
 import Tile from '@/components/TilePad/Tile';
@@ -63,8 +62,7 @@ export default {
   data() {
     return {
       tileData: TileData,
-      voices: VOICES,
-      sentenceTiles: []
+      sentenceTiles: [],
     };
   },
   computed: {
@@ -72,7 +70,8 @@ export default {
     ...mapGetters({
       selectedVoiceIndex: 'settings/selectedVoiceIndex',
       customTilePadOption: 'settings/customTilePad',
-      customTilePadData: 'tilePad/customTilePadData'
+      customTilePadData: 'tilePad/customTilePadData',
+      voices: 'settings/voices',
     }),
     tilePadToDisplay: function() {
       //Checks to see if custom tile from store is empty, and if so sets the tile pad to the static one so they have something to start with, feel like there is a better way to prime the data.

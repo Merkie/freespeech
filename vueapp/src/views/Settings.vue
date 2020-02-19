@@ -48,29 +48,22 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-const VOICES = window.speechSynthesis.getVoices();
-
-let voiceOptions = VOICES.map((voice, index) => {
-  return { text: `${voice.name} (${voice.lang})`, value: index };
-}).sort((a, b) => a.text.localeCompare(b.text));
-
 export default {
   name: 'Settings',
   data() {
     return {
       dialog: true,
-      voiceOptions,
-      voices: VOICES,
     };
   },
   computed: {
     ...mapGetters({
-      settingsDialogVisibility: 'settings/settingsDialogVisibility'
+      settingsDialogVisibility: 'settings/settingsDialogVisibility',
+      voiceOptions: 'settings/voiceOptions',
     }),
     selectedVoiceIndex: {
       get() {
         let voiceIndex = this.$store.state.settings.selectedVoiceIndex;
-        return voiceOptions.filter(x => x.value === voiceIndex)[0];
+        return this.voiceOptions.filter(x => x.value === voiceIndex)[0];
       },
       set(value) {
         this.setSelectedVoiceIndex(value);
@@ -103,7 +96,7 @@ export default {
       toggleCustomTilePad: 'settings/toggleCustomTilePad',
       setEditMode:'tilePad/setEditMode',
       toggleSentenceMode: 'settings/toggleSentenceMode'
-    })
-  }
+    }),
+  },
 };
 </script>
