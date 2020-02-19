@@ -66,7 +66,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('tilePad', ['sentenceMode']),
+    ...mapState('settings', ['sentenceMode']),
     ...mapGetters({
       editMode: 'tilePad/editMode'
     }),

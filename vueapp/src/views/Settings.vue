@@ -22,6 +22,11 @@
                 :label="customTilePad ? 'Custom Tile Pad' : 'Static Tile Pad'"
                 v-model="customTilePad"
               />
+
+              <v-switch
+                label="Create Sentences"
+                v-model="sentenceMode"
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -55,7 +60,7 @@ export default {
     return {
       dialog: true,
       voiceOptions,
-      voices: VOICES
+      voices: VOICES,
     };
   },
   computed: {
@@ -81,6 +86,14 @@ export default {
         }
         this.toggleCustomTilePad();
       }
+    },
+    sentenceMode: {
+      get(){
+        return this.$store.state.settings.sentenceMode;
+      },
+      set(){
+        this.toggleSentenceMode();
+      }
     }
   },
   methods: {
@@ -88,7 +101,8 @@ export default {
       setSelectedVoiceIndex: 'settings/setSelectedVoiceIndex',
       toggleSettingsDialogVisibility: 'settings/toggleSettingsDialogVisibility',
       toggleCustomTilePad: 'settings/toggleCustomTilePad',
-      setEditMode:'tilePad/setEditMode'
+      setEditMode:'tilePad/setEditMode',
+      toggleSentenceMode: 'settings/toggleSentenceMode'
     })
   }
 };
