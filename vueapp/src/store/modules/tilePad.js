@@ -4,7 +4,6 @@ const state = {
   editMode: false,
   editDialogVisibility: false,
   currentTileBeingEdited: {},
-  sentenceMode: false
 };
 
 const mutations = {
@@ -13,9 +12,6 @@ const mutations = {
   },
   TOGGLE_EDIT_MODE(state){
     state.editMode = !state.editMode;
-  },
-  TOGGLE_SENTENCE_MODE(state){
-    state.sentenceMode = !state.sentenceMode;
   },
   TOGGLE_EDIT_DIALOG_VISIBILITY(state){
     state.editDialogVisibility = !state.editDialogVisibility;
@@ -41,9 +37,6 @@ const actions = {
   },
   toggleEditMode: ({commit}) => {
     commit('TOGGLE_EDIT_MODE');
-  },
-  toggleSentenceMode: ({commit}) => {
-    commit('TOGGLE_SENTENCE_MODE');
   },
   toggleEditDialogVisibility: ({commit}) => {   
     commit('TOGGLE_EDIT_DIALOG_VISIBILITY');

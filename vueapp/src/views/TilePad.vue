@@ -1,16 +1,5 @@
 <template>
   <div>
-    <v-row>
-      <v-spacer />
-      <v-btn
-        class="my-3"
-        @click="toggleSentenceMode"
-      >
-        {{ sentenceMode ? "Disable" : "Enable" }} Sentence Mode
-      </v-btn>
-      <v-spacer />
-    </v-row>
-
     <Sentence
       v-if="sentenceMode"
       :tile-pad-to-display="sentenceTiles"
@@ -79,7 +68,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('tilePad', ['sentenceMode']),
+    ...mapState('settings', ['sentenceMode']),
     ...mapGetters({
       selectedVoiceIndex: 'settings/selectedVoiceIndex',
       customTilePadOption: 'settings/customTilePad',

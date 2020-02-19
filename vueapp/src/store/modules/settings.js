@@ -1,7 +1,8 @@
 const state = {
   selectedVoiceIndex: 0,
   settingsDialogVisibility: false,
-  customTilePad: true
+  customTilePad: true,
+  sentenceMode: true
 };
 
 const mutations = {
@@ -13,10 +14,16 @@ const mutations = {
   },
   TOGGLE_CUSTOM_TILE_PAD(state){
     state.customTilePad = !state.customTilePad;
-  }
+  },
+  TOGGLE_SENTENCE_MODE(state){
+    state.sentenceMode = !state.sentenceMode;
+  },
 };
 
 const actions = {
+  toggleSentenceMode: ({commit}) => {
+    commit('TOGGLE_SENTENCE_MODE');
+  },
   setSelectedVoiceIndex: ({ commit }, value) => {
     commit('SET_SELECTED_VOICE_INDEX', value);
   },
