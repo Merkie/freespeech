@@ -12,7 +12,7 @@ Many people requested to donate to the project. I'd first recommend you donate t
 
 Can find our source code on [Github](https://github.com/Merkie/freespeech).
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
+Please read [CONTRIBUTING.md](/docs/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
 
 ## Installation
 
