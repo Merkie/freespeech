@@ -9,15 +9,21 @@
         <v-spacer />
         <v-btn
           class="mx-1"
+          color="primary"
           @click="$emit('speakSentence')"
         >
-          Play
+          <v-icon class="pr-2">
+            record_voice_over
+          </v-icon> Speak
         </v-btn>
         <v-btn
           class="mx-2"
+          color="primary"
           @click="$emit('clearSentence')"
         >
-          Clear
+          <v-icon class="pr-2">
+            clear
+          </v-icon> Clear
         </v-btn>
       </v-card-title>
       <v-container class="py-0">
@@ -82,6 +88,6 @@ export default {
   top: 56px;
   z-index: 100;
   padding: 5px;
-  background-color: white
+  background-color: white;
 }
 </style>
