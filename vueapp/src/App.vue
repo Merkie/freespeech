@@ -77,15 +77,17 @@ export default {
     methods: {
     ...mapActions({        
       toggleSettingsDialogVisibility: 'settings/toggleSettingsDialogVisibility',
-      toggleEditMode: 'tilePad/toggleEditMode'
+      toggleEditMode: 'tilePad/toggleEditMode',
+      setVoices: 'settings/setVoices',
+      setVoiceOptions: 'settings/setVoiceOptions',
     }),
     populateVoiceData (windowVoices){
       const voiceOptions = windowVoices.map((voice, index) => {
         return { text: `${voice.name} (${voice.lang})`, value: index };
       }).sort((a, b) => a.text.localeCompare(b.text));
 
-      this.$store.dispatch('settings/setVoices', windowVoices);
-      this.$store.dispatch('settings/setVoiceOptions', voiceOptions);
+      this.setVoices(windowVoices);
+      this.setVoiceOptions(voiceOptions);
     },
   },
   computed: {
