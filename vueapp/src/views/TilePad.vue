@@ -12,7 +12,7 @@
       <template v-for="(tile, tileIndex) in row">
         <v-col
           :key="tileIndex"
-          :cols="isMobileOnly ? 3 : 1"
+          :cols="$vuetify.breakpoint.xsOnly ? 3 : $vuetify.breakpoint.smAndDown ? 2 : 1"
           class="d-flex child-flex"
         >
           <Tile
@@ -35,7 +35,6 @@ const VOICES = SPEECH_SYNTHESIS.getVoices();
 
 import TileData from '../../../build.json';
 import Tile from '@/components/TilePad/Tile';
-import { isMobileOnly } from 'mobile-device-detect';
 
 export default {
   name: 'TilePad',
@@ -45,7 +44,6 @@ export default {
   data() {
     return {
       tileData: TileData,
-      isMobileOnly,
       voices: VOICES,
     };
   },
