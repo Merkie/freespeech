@@ -1,87 +1,87 @@
 <template>
-  <v-card class="numberPad white">
-    <v-card-title
-      v-if="title"
-      class="title grey lighten-2"
-    >
-      {{ title }}
-    </v-card-title>
+	<v-card class="numberPad white">
+		<v-card-title
+			v-if="title"
+			class="title grey lighten-2"
+		>
+			{{ title }}
+		</v-card-title>
 
-    <v-card-text class="pt-4">
-      <v-row>
-        <v-col cols="12">
-          <v-card>
-            <v-card-text class="text-center title">
-              &nbsp;{{ display }}&nbsp;
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
+		<v-card-text class="pt-4">
+			<v-row>
+				<v-col cols="12">
+					<v-card>
+						<v-card-text class="text-center title">
+							&nbsp;{{ display }}&nbsp;
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
 
-      <v-row class="d-flex">
-        <template v-for="n in 9">
-          <v-col
-            cols="4"
-            :key="n"
-          >
-            <v-btn
-              block
-              @click="padInput(n)"
-              x-large
-              :disabled="!isNumbersEnabled"
-            >
-              {{ n }}
-            </v-btn>
-          </v-col>
-        </template>
+			<v-row class="d-flex">
+				<template v-for="n in 9">
+					<v-col
+						:key="n"
+						cols="4"
+					>
+						<v-btn
+							block
+							x-large
+							:disabled="!isNumbersEnabled"
+							@click="padInput(n)"
+						>
+							{{ n }}
+						</v-btn>
+					</v-col>
+				</template>
 
-        <v-col cols="4">
-          <v-btn
-            block
-            @click="backspace"
-            x-large
-            color="warning"
-            v-if="isBackspaceEnabled"
-          >
-            <v-icon>backspace</v-icon>
-          </v-btn>
+				<v-col cols="4">
+					<v-btn
+						v-if="isBackspaceEnabled"
+						block
+						x-large
+						color="warning"
+						@click="backspace"
+					>
+						<v-icon>backspace</v-icon>
+					</v-btn>
 
-          <v-btn
-            block
-            @click="close"
-            x-large
-            color="error"
-            v-else
-          >
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-col>
+					<v-btn
+						v-else
+						block
+						x-large
+						color="error"
+						@click="close"
+					>
+						<v-icon>close</v-icon>
+					</v-btn>
+				</v-col>
 
-        <v-col cols="4">
-          <v-btn
-            block
-            @click="padInput(0)"
-            x-large
-            :disabled="!isNumbersEnabled"
-          >
-            0
-          </v-btn>
-        </v-col>
+				<v-col cols="4">
+					<v-btn
+						block
+						x-large
+						:disabled="!isNumbersEnabled"
+						@click="padInput(0)"
+					>
+						0
+					</v-btn>
+				</v-col>
 
-        <v-col cols="4">
-          <v-btn
-            block
-            @click="save"
-            x-large
-            color="success"
-            :disabled="!isSaveEnabled"
-          >
-            <v-icon>done</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+				<v-col cols="4">
+					<v-btn
+						block
+						x-large
+						color="success"
+						:disabled="!isSaveEnabled"
+						@click="save"
+					>
+						<v-icon>done</v-icon>
+					</v-btn>
+				</v-col>
+			</v-row>
+		</v-card-text>
+	</v-card>
 </template>
 
 <script>
@@ -101,31 +101,31 @@ export default {
 			default: null
 		}
 	},
-	data() {
+	data () {
 		return {
 			input: '',
 			hiddenCharacter: '⚫'
 		};
 	},
 	computed: {
-		display() {
+		display () {
 			if (this.hidden) {
 				return this.hiddenCharacter.repeat(this.input.length);
 			}
 
 			return this.input;
 		},
-		isBackspaceEnabled() {
+		isBackspaceEnabled () {
 			return this.input.length > 0;
 		},
-		isNumbersEnabled() {
+		isNumbersEnabled () {
 			if (this.length) {
 				return this.input.length < this.length;
 			} else {
 				return true;
 			}
 		},
-		isSaveEnabled() {
+		isSaveEnabled () {
 			if (this.length) {
 				return this.input.length === this.length;
 			} else {
@@ -133,19 +133,25 @@ export default {
 			}
 		}
 	},
+	created: function () {
+		window.addEventListener('keyup', this.keyboardInput);
+	},
+	beforeDestroy: function () {
+		window.removeEventListener('keyup', this.keyboardInput);
+	},
 	methods: {
-		backspace() {
+		backspace () {
 			if (this.isBackspaceEnabled) {
 				this.input = this.input.substring(0, this.input.length - 1);
 			}
 		},
-		close() {
+		close () {
 			if (!this.isBackspaceEnabled) {
 				this.input = '';
 				this.$emit('input', null);
 			}
 		},
-		keyboardInput(e) {
+		keyboardInput (e) {
 			if (e.key >= 0 && e.key <= 9) {
 				e.preventDefault();
 				this.padInput(e.key);
@@ -160,23 +166,17 @@ export default {
 				this.backspace();
 			}
 		},
-		padInput(number) {
+		padInput (number) {
 			if (this.isNumbersEnabled) {
 				this.input = this.input + number;
 			}
 		},
-		save() {
+		save () {
 			if (this.isSaveEnabled) {
 				this.$emit('input', this.input);
 				this.input = '';
 			}
 		}
-	},
-	created: function() {
-		window.addEventListener('keyup', this.keyboardInput);
-	},
-	beforeDestroy: function() {
-		window.removeEventListener('keyup', this.keyboardInput);
 	}
 };
 </script>

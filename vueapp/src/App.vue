@@ -1,91 +1,91 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      :color="taskbarColor"
-      dark
-    >
-      <div class="d-flex align-center">
-        <h2>Freespeech</h2>
-      </div>
+	<v-app>
+		<v-app-bar
+			app
+			:color="taskbarColor"
+			dark
+		>
+			<div class="d-flex align-center">
+				<h2>Freespeech</h2>
+			</div>
 
-      <v-spacer />
+			<v-spacer />
 
-      <v-btn
-        icon
-        to="/"
-      >
-        <v-icon>
-          home
-        </v-icon>
-      </v-btn>
+			<v-btn
+				icon
+				to="/"
+			>
+				<v-icon>
+					home
+				</v-icon>
+			</v-btn>
 
-      <v-btn
-        icon
-        v-if="passcode"
-        @click="toggleLocked"
-      >
-        <v-icon>{{ locked ? 'lock_open' : 'lock' }}</v-icon>
-      </v-btn>
+			<v-btn
+				v-if="passcode"
+				icon
+				@click="toggleLocked"
+			>
+				<v-icon>{{ locked ? 'lock_open' : 'lock' }}</v-icon>
+			</v-btn>
 
-      <v-btn
-        icon
-        v-if="customTilePad"
-        :disabled="isLocked"
-        @click="this.toggleEditMode"
-      >
-        <v-icon>{{ editMode ? 'save' : 'edit ' }}</v-icon>
-      </v-btn>
+			<v-btn
+				v-if="customTilePad"
+				icon
+				:disabled="isLocked"
+				@click="toggleEditMode"
+			>
+				<v-icon>{{ editMode ? 'save' : 'edit ' }}</v-icon>
+			</v-btn>
 
-      <v-btn
-        icon
-        to="/about"
-        @click="this.disableEditMode"
-        :disabled="isLocked"
-      >
-        <v-icon>
-          info
-        </v-icon>
-      </v-btn>
+			<v-btn
+				icon
+				to="/about"
+				:disabled="isLocked"
+				@click="disableEditMode"
+			>
+				<v-icon>
+					info
+				</v-icon>
+			</v-btn>
 
-      <v-btn
-        icon
-        to="/settings"
-        @click="this.disableEditMode"
-        :disabled="isLocked"
-      >
-        <v-icon>
-          settings
-        </v-icon>
-      </v-btn>
-    </v-app-bar>
+			<v-btn
+				icon
+				to="/settings"
+				:disabled="isLocked"
+				@click="disableEditMode"
+			>
+				<v-icon>
+					settings
+				</v-icon>
+			</v-btn>
+		</v-app-bar>
 
-    <v-content>
-      <router-view />
-      <editDialog />
-    </v-content>
+		<v-content>
+			<router-view />
+			<editDialog />
+		</v-content>
 
-    <v-snackbar
-      v-model="passcodeError"
-      color="error"
-      top
-    >
-      Incorrect passcode
-    </v-snackbar>
+		<v-snackbar
+			v-model="passcodeError"
+			color="error"
+			top
+		>
+			Incorrect passcode
+		</v-snackbar>
 
-    <v-dialog
-      v-model="passcodeEntry"
-      width="400"
-      persistent
-    >
-      <NumberPad
-        title="Enter Passcode to unlock"
-        :length="passcodeLength"
-        :hidden="true"
-        @input="handlePasscodeInput"
-      />
-    </v-dialog>
-  </v-app>
+		<v-dialog
+			v-model="passcodeEntry"
+			width="400"
+			persistent
+		>
+			<NumberPad
+				title="Enter Passcode to unlock"
+				:length="passcodeLength"
+				:hidden="true"
+				@input="handlePasscodeInput"
+			/>
+		</v-dialog>
+	</v-app>
 </template>
 
 <script>
@@ -104,6 +104,30 @@ export default {
 		passcodeError: false,
 		passcodeLength: 4,
 	}),
+	computed: {
+		...mapGetters({
+			customTilePad: 'settings/customTilePad',
+			editMode: 'tilePad/editMode',
+			locked: 'settings/locked',
+			passcode: 'settings/passcode',
+		}),
+		isLocked() {
+			return this.passcode !== null && this.passcode.length > 0 && this.locked;
+		},
+		taskbarColor() {
+			return this.editMode ? 'success' : 'primary';
+		}
+	},
+	created(){
+		let windowVoices = window.speechSynthesis.getVoices();
+
+		if (!windowVoices.length > 0) {
+			const vm = this;
+			window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
+		} else {
+			this.populateVoiceData(windowVoices);
+		}
+	},
 	methods: {
 		...mapActions({
 			setLocked: 'settings/setLocked',
@@ -139,30 +163,6 @@ export default {
 				this.disableEditMode();
 				this.setLocked(true);
 			}
-		}
-	},
-	computed: {
-		...mapGetters({
-			customTilePad: 'settings/customTilePad',
-			editMode: 'tilePad/editMode',
-			locked: 'settings/locked',
-			passcode: 'settings/passcode',
-		}),
-		isLocked() {
-			return this.passcode !== null && this.passcode.length > 0 && this.locked;
-		},
-		taskbarColor() {
-			return this.editMode ? 'success' : 'primary';
-		}
-	},
-	created(){
-		let windowVoices = window.speechSynthesis.getVoices();
-
-		if (!windowVoices.length > 0) {
-			const vm = this;
-			window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
-		} else {
-			this.populateVoiceData(windowVoices);
 		}
 	}
 };

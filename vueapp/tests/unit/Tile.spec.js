@@ -57,7 +57,7 @@ describe('Tile.vue', () => {
 	});
 });
 
-describe ('Tile.vue (edit mode)', () => {
+describe('Tile.vue (edit mode)', () => {
 	let wrapper;
 
 	beforeEach(() => {

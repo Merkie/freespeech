@@ -1,37 +1,37 @@
 <template>
-  <v-card
-    raised
-    tile
-    class="mx-auto"
-    @click="tileClickedEvent"
-    :color="typeof tileData.accent === 'undefined' ? '' : cardColor"
-  >
-    <v-container
-      justify="
+	<v-card
+		raised
+		tile
+		class="mx-auto"
+		:color="typeof tileData.accent === 'undefined' ? '' : cardColor"
+		@click="tileClickedEvent"
+	>
+		<v-container
+			justify="
     center"
-    >
-      <v-row
-        align="center"
-        justify="center"
-      >
-        <v-img
-          max-height="32"
-          max-width="32"
-          aspect-ratio="1"
-          :src="tileData.image"
-        />
-      </v-row>
-      <v-row>
-        <v-card-text
-          class
-          align="center"
-          justify="center"
-        >
-          <h3>{{ tileData.name }}</h3>
-        </v-card-text>
-      </v-row>
-    </v-container>
-  </v-card>
+		>
+			<v-row
+				align="center"
+				justify="center"
+			>
+				<v-img
+					max-height="32"
+					max-width="32"
+					aspect-ratio="1"
+					:src="tileData.image"
+				/>
+			</v-row>
+			<v-row>
+				<v-card-text
+					class
+					align="center"
+					justify="center"
+				>
+					<h3>{{ tileData.name }}</h3>
+				</v-card-text>
+			</v-row>
+		</v-container>
+	</v-card>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ export default {
 	props: {
 		tileData: {
 			type: Object,
-			default() {
+			default () {
 				return {
 					name: '',
 					text: '',
@@ -70,7 +70,7 @@ export default {
 		...mapGetters({
 			editMode: 'tilePad/editMode'
 		}),
-		cardColor: function() {
+		cardColor: function () {
 			let cardHexColor;
 
 			switch (this.tileData.accent) {
@@ -104,7 +104,7 @@ export default {
 			toggleEditDialogVisibility: 'tilePad/toggleEditDialogVisibility',
 			setCurrentTileBeingEdited: 'tilePad/setCurrentTileBeingEdited'
 		}),
-		tileClickedEvent() {
+		tileClickedEvent () {
 			if (this.editMode) {
 				// if in edit tiles mode
 				let tileDataToEdit = this.tileData;
@@ -123,7 +123,7 @@ export default {
 				}
 			} else if (
 				typeof this.tileData.navigation === 'undefined' ||
-        this.tileData.navigation === ''
+					this.tileData.navigation === ''
 			) {
 				this.$emit('speakText', this.tileData.text);
 			} else {

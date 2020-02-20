@@ -1,52 +1,52 @@
 <template>
-  <div>
-    <Sentence
-      v-if="sentenceMode && !editMode"
-      :tile-pad-to-display="sentenceTiles"
-      @clearSentence="sentenceTiles = []"
-      @speakSentence="speakSentence"
-      @removeFromSentence="sentenceTiles.splice($event, 1)"
-    />
-    <edit-mode-header
-      v-if="sentenceMode && editMode"
-    />
-    <v-container
-      fluid
-      class="grey lighten-5 pb-10"
-      style="{text-align: center}"
-    >
-      <v-row dense>
-        <draggable
-          style="display: contents"
-          v-model="tilePadToDisplay.tileData"
-          :options="{disabled: !editMode}"
-          class="tilePadContainer"
-        >
-          <template v-for="(tile, tileIndex) in tilePadToDisplay.tileData">
-            <v-col
-              :key="tileIndex"
-              :cols="
-                $vuetify.breakpoint.xsOnly
-                  ? 3
-                  : $vuetify.breakpoint.smAndDown
-                    ? 2
-                    : 1
-              "
-              class="d-flex child-flex"
-              style="padding: 4px"
-            >
-              <Tile
-                @speakText="speakText"
-                @addToSentence="sentenceTiles.push($event)"
-                :tile-data="tile"
-                :tile-page="currentTilePadPage"
-              />
-            </v-col>
-          </template>
-        </draggable>
-      </v-row>
-    </v-container>
-  </div>
+	<div>
+		<Sentence
+			v-if="sentenceMode && !editMode"
+			:tile-pad-to-display="sentenceTiles"
+			@clearSentence="sentenceTiles = []"
+			@speakSentence="speakSentence"
+			@removeFromSentence="sentenceTiles.splice($event, 1)"
+		/>
+		<edit-mode-header
+			v-if="sentenceMode && editMode"
+		/>
+		<v-container
+			fluid
+			class="grey lighten-5 pb-10"
+			style="{text-align: center}"
+		>
+			<v-row dense>
+				<draggable
+					v-model="tilePadToDisplay.tileData"
+					style="display: contents"
+					:options="{disabled: !editMode}"
+					class="tilePadContainer"
+				>
+					<template v-for="(tile, tileIndex) in tilePadToDisplay.tileData">
+						<v-col
+							:key="tileIndex"
+							:cols="
+								$vuetify.breakpoint.xsOnly
+									? 3
+									: $vuetify.breakpoint.smAndDown
+										? 2
+										: 1
+							"
+							class="d-flex child-flex"
+							style="padding: 4px"
+						>
+							<Tile
+								:tile-data="tile"
+								:tile-page="currentTilePadPage"
+								@speakText="speakText"
+								@addToSentence="sentenceTiles.push($event)"
+							/>
+						</v-col>
+					</template>
+				</draggable>
+			</v-row>
+		</v-container>
+	</div>
 </template>
 
 <script>
@@ -69,7 +69,7 @@ export default {
 		draggable,
 		EditModeHeader
 	},
-	data() {
+	data () {
 		return {
 			tileData: TileData,
 			sentenceTiles: [],
@@ -84,11 +84,11 @@ export default {
 			customTilePadData: 'tilePad/customTilePadData',
 			voices: 'settings/voices',
 		}),
-		tilePadToDisplay: function() {
+		tilePadToDisplay: function () {
 			//Checks to see if custom tile from store is empty, and if so sets the tile pad to the static one so they have something to start with, feel like there is a better way to prime the data.
 			if (
 				Object.entries(this.customTilePadData).length === 0 &&
-        this.customTilePadData.constructor === Object
+					this.customTilePadData.constructor === Object
 			) {
 				this.setCustomTilePadData(this.tileData);
 			}
@@ -104,7 +104,7 @@ export default {
 				return tilePadTiles[routeParam];
 			}
 		},
-		currentTilePadPage() {
+		currentTilePadPage () {
 			let routeParam = this.$route.params.layout;
 			if (typeof routeParam === 'undefined') {
 				return 'home';
@@ -118,16 +118,16 @@ export default {
 			setCustomTilePadData: 'tilePad/setCustomTilePadData',
 			toggleSentenceMode: 'tilePad/toggleSentenceMode'
 		}),
-		speakText(textToSpeak) {
+		speakText (textToSpeak) {
 			let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);
 
 			speechSynthesisUtterance.voice = this.voices[this.selectedVoiceIndex];
 			SPEECH_SYNTHESIS.speak(speechSynthesisUtterance);
 		},
 		/**
-     * Speaks the sentence that is currently in the sentenceTiles variable
-     */
-		speakSentence() {
+			 * Speaks the sentence that is currently in the sentenceTiles variable
+			 */
+		speakSentence () {
 			let textToSpeak = this.sentenceTiles.map(tile => tile.text).join(' ');
 			this.speakText(textToSpeak);
 		}
