@@ -1,13 +1,16 @@
 {
-  "languageName": "Deutsch",
-  "settings": {
-    "title": "Einstellungen",
-    "optionVoice": "Stimme",
-    "optionCustomTilePad": "Angepasst Kachelsatz",
-    "optionCreateSentences": "Sätze erstellen",
-    "optionLanguage": "Sprache",
-    "optionPasscodeEnabled": "Passcode aktiviert",
-    "buttonClose": "Schließen",
-    "titleSetPasscode": "Passcode einstellen"
-  }
+	"languageName": "Deutsch",
+	"settings": {
+		"title": "Einstellungen",
+		"optionVoice": "Stimme",
+		"optionCustomTilePad": "Angepasst Kachelsatz",
+		"optionCreateSentences": "Sätze erstellen",
+		"optionLanguage": "Sprache",
+		"optionPasscodeEnabled": "Passcode aktiviert",
+		"buttonClose": "Schließen",
+		"buttonReset": "Alle Einstellungen und Kacheln zurücksetzen",
+		"buttonExport": "Einstellungen & Kacheln exportieren",
+		"buttonImport": "Einstellungen & Kacheln importieren",
+		"titleSetPasscode": "Passcode einstellen"
+	}
 }

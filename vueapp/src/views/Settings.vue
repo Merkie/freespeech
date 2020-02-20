@@ -57,21 +57,55 @@
 			/>
 		</v-dialog>
 
-		<v-btn
-			color="warning"
-			class="mt-4"
-			@click="fullReset"
-		>
-			<v-icon class="mr-2">
-				refresh
-			</v-icon>
-			Reset all Settings &amp; Custom Tiles
-		</v-btn>
+		<div>
+			<v-btn
+				color="warning"
+				class="mt-4 mr-4"
+				@click="fullReset"
+			>
+				<v-icon class="mr-2">
+					refresh
+				</v-icon>
+				{{ $t('settings.buttonReset') }}
+			</v-btn>
+		</div>
+
+		<div>
+			<v-btn
+				color="white"
+				class="mt-4 mr-4"
+				@click="exportSettings"
+			>
+				<v-icon class="mr-2">
+					cloud_download
+				</v-icon>
+				{{ $t('settings.buttonExport') }}
+			</v-btn>
+
+			<v-btn
+				color="white"
+				class="mt-4 mr-4"
+				@click="$refs.importSettingsFile.click()"
+			>
+				<v-icon class="mr-2">
+					cloud_upload
+				</v-icon>
+				{{ $t('settings.buttonImport') }}
+			</v-btn>
+
+			<input
+				ref="importSettingsFile"
+				type="file"
+				style="display: none"
+				@change="importSettings"
+			/>
+		</div>
 	</v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { saveAs } from 'file-saver';
 import NumberPad from '@/components/NumberPad/NumberPad.vue';
 
 export default {
@@ -85,6 +119,8 @@ export default {
 	},
 	computed: {
 		...mapGetters({
+			customTilePad: 'settings/customTilePad',
+			customTilePadData: 'tilePad/customTilePadData',
 			locale: 'settings/locale',
 			passcode: 'settings/passcode',
 			voiceOptions: 'settings/voiceOptions',
@@ -156,14 +192,28 @@ export default {
 			toggleCustomTilePad: 'settings/toggleCustomTilePad',
 			toggleSentenceMode: 'settings/toggleSentenceMode'
 		}),
-		handlePasscodeInput(input) {
-			this.passcodeEntry = false;
+		exportSettings() {
+			const json = JSON.stringify({
+				'settings/setSentenceMode': this.sentenceMode,
+				'settings/setCustomTilePad': this.customTilePad,
+				'settings/setPasscode': this.passcode,
+				'tilePad/setCustomTilePadData': this.customTilePadData
+			});
 
-			if (input !== null && input.length === this.passcodeLength) {
-				this.setPasscode(input);
-				this.setLocked(true);
-			} else {
-				this.setPasscode(null);
+			const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+			saveAs(blob, 'freespeech-settings.json');
+		},
+		async importSettings() {
+			if (typeof this.$refs.importSettingsFile.files === 'undefined') {
+				return;
+			}
+
+			const json = await this.$refs.importSettingsFile.files[0].text();
+			const data = JSON.parse(json);
+			if (data) {
+				for (const [key, value] of Object.entries(data)) {
+					await this.$store.dispatch(key, value);
+				}
 			}
 		},
 		fullReset() {
@@ -176,6 +226,16 @@ export default {
 			}
 
 			document.location.reload();
+		},
+		handlePasscodeInput(input) {
+			this.passcodeEntry = false;
+
+			if (input !== null && input.length === this.passcodeLength) {
+				this.setPasscode(input);
+				this.setLocked(true);
+			} else {
+				this.setPasscode(null);
+			}
 		}
 	}
 };
