@@ -12,32 +12,9 @@ Many people requested to donate to the project. I'd first recommend you donate t
 
 Can find our source code on [Github](https://github.com/Merkie/freespeech).
 
-Please read [CONTRIBUTING.md](/docs/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
+Please read [our Contributing guide](/.github/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
 
-## Installation
-
-* [npm LTS](https://nodejs.org/en/)
-
-#### Dev Setup
-All commands are ran inside of a terminal inside of the vueapp folder
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production. Production ready code in /vueapp/dist
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-``` 
+Please make sure to follow our [Code Of Conduct](/.github/CODE_OF_CONDUCT.md) in all manners when contributing to this project.
 
 
 ## Authors
@@ -46,10 +23,12 @@ npm run lint
 * **Bailey Townsend** - *Core Team Member/Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 * **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
 * **Aidan Kinzett** - *Feature enhancements/Sentence Building feature* - [aidankinzett](https://github.com/aidankinzett)
+* **James Burnham** - *Bug fixes* - [jburnham96](https://github.com/jburnham96)
+* **Ed Linklater** - *Added intial unit test to provide us with base* - [edlinklater](https://github.com/edlinklater)
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License.](LICENSE.md)
 
 ## Acknowledgments
 
