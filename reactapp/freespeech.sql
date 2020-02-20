@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 20, 2020 at 03:31 AM
+-- Generation Time: Feb 20, 2020 at 04:03 AM
 -- Server version: 5.7.29-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.3
 
@@ -57,6 +57,7 @@ CREATE TABLE `speech` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(64) DEFAULT NULL,
+  `email` varchar(64) NOT NULL,
   `password` varchar(64) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL,
   `preferredVoiceId` int(11) DEFAULT '0'

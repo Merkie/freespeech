@@ -62,6 +62,9 @@ class Signup extends Component {
             <Grid item xs={12}>
               <TextField variant="outlined" required fullWidth id="username" label="Username" name="username" autoComplete="username" onChange={this.handleInputChange} />
             </Grid>
+						<Grid item xs={12}>
+              <TextField variant="outlined" required fullWidth id="email" label="Email" name="email" autoComplete="email" type="email" onChange={this.handleInputChange} />
+            </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" required fullWidth name="password" inputProps={{ pattern:"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", title:"Password required to be a minimum of eight in length with one uppercase letter, one lowercase letter, one number, and one special character"}} label="Password" type="password" id="password" autoComplete="passowrd" onChange={this.handleInputChange} />
             </Grid>
