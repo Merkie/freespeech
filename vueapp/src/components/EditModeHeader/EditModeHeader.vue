@@ -21,7 +21,8 @@
         <p
           class="body-2"
         >
-          You can edit tiles while in edit mode by clicking on them to edit them. Press the save icon or the button above to save your changes.
+          You can edit tiles while in edit mode by clicking on them to edit them or clicking and dragging them to move them around.
+          Press the save icon or the button above to save your changes.
         </p>
       </v-container>
     </v-card>

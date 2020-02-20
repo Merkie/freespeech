@@ -59,6 +59,7 @@ const SPEECH_SYNTHESIS = window.speechSynthesis;
 import TileData from '../../../build.json';
 import Tile from '@/components/TilePad/Tile';
 import Sentence from '@/components/Sentence/Sentence';
+import EditModeHeader from '@/components/EditModeHeader/EditModeHeader';
 
 export default {
   name: 'TilePad',
