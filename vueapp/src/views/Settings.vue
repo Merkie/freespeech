@@ -53,8 +53,8 @@
 
 		<v-btn
 			color="warning"
-			@click="fullReset"
 			class="mt-4"
+			@click="fullReset"
 		>
 			<v-icon class="mr-2">
 				refresh
@@ -149,7 +149,7 @@ export default {
 			}
 
 			if (typeof window.localStorage !== 'undefined') {
-				window.localStorage.clear();
+				window.localStorage.removeItem('vuex');
 			}
 
 			document.location.reload();
