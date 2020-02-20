@@ -12,55 +12,64 @@
           "name": "Little",
           "text": "Little",
           "image": "https://img.icons8.com/officexs/64/000000/cursor.png",
-          "id": 1
+          "id": 1,
+          "accent": "white"
         },
         {
           "name": "Off",
           "text": "Off",
           "image": "https://img.icons8.com/officexs/64/000000/disclaimer.png",
-          "id": 2
+          "id": 2,
+          "accent": "white"
         },
         {
           "name": "Good",
           "text": "Good",
           "image": "https://img.icons8.com/officexs64/000000/good-quality.png",
-          "id": 3
+          "id": 3,
+          "accent": "white"
         },
         {
           "name": "Some",
           "text": "Some",
           "image": "https://img.icons8.com/officexs/64/000000/plus-math.png",
-          "id": 4
+          "id": 4,
+          "accent": "white"
         },
         {
           "name": "Finished",
           "text": "Finished",
           "image": "https://img.icons8.com/officexs/64/000000/so-so.png",
-          "id": 5
+          "id": 5,
+          "accent": "white"
         },
         {
           "name": "Bad",
           "text": "Bad",
           "image": "https://img.icons8.com/officexs/64/000000/remove-tag.png",
-          "id": 6
+          "id": 6,
+          "accent": "white"
         },
         {
           "name": "Out",
           "text": "Out",
           "image": "https://img.icons8.com/officexs/64/000000/hand-right.png",
-          "id": 7
+          "id": 7,
+          "accent": "white"
         },
         {
           "name": "Mine",
           "text": "Mine",
           "image": "https://img.icons8.com/officexs/64/000000/oppression.png",
-          "id": 8
+          "id": 8,
+          "accent": "white"
         },
         {
           "name": "Down",
           "text": "Down",
           "image": "https://img.icons8.com/officexs/64/000000/long-arrow-down.png",
-          "id": 9
+          "id": 9,
+          "accent": "white"
         },
         {
           "name": "Up",
@@ -95,55 +104,64 @@
           "name": "New",
           "text": "New",
           "image": "https://img.icons8.com/officexs/64/000000/new.png",
-          "id": 14
+          "id": 14,
+          "accent": "white"
         },
         {
           "name": "Play",
           "text": "Play",
           "image": "https://img.icons8.com/officexs/64/000000/play.png",
-          "id": 15
+          "id": 15,
+          "accent": "white"
         },
         {
           "name": "Have",
           "text": "Have",
           "image": "https://img.icons8.com/officexs/64/000000/hospital-2.png",
-          "id": 16
+          "id": 16,
+          "accent": "white"
         },
         {
           "name": "Stop",
           "text": "Stop",
           "image": "https://img.icons8.com/officexs/64/000000/stop-sign.png",
-          "id": 17
+          "id": 17,
+          "accent": "white"
         },
         {
           "name": "Read",
           "text": "Read",
           "image": "https://img.icons8.com/officexs/64/000000/book.png",
-          "id": 18
+          "id": 18,
+          "accent": "white"
         },
         {
           "name": "Fast",
           "text": "Fast",
           "image": "https://img.icons8.com/officexs/64/000000/double-right.png",
-          "id": 19
+          "id": 19,
+          "accent": "white"
         },
         {
           "name": "You",
           "text": "You",
           "image": "https://img.icons8.com/officexs/64/000000/youtube.png",
-          "id": 20
+          "id": 20,
+          "accent": "white"
         },
         {
           "name": "Like",
           "text": "Like",
           "image": "https://img.icons8.com/officexs/64/000000/filled-like.png",
-          "id": 21
+          "id": 21,
+          "accent": "white"
         },
         {
           "name": "More",
           "text": "More",
           "image": "https://img.icons8.com/officexs/64/000000/more.png",
-          "id": 22
+          "id": 22,
+          "accent": "white"
         },
         {
           "name": "They",
@@ -170,55 +188,64 @@
           "name": "Go",
           "text": "Go",
           "image": "https://img.icons8.com/officexs/64/000000/go.png",
-          "id": 26
+          "id": 26,
+          "accent": "white"
         },
         {
           "name": "Want",
           "text": "Want",
           "image": "https://img.icons8.com/officexs/64/000000/gift.png",
-          "id": 27
+          "id": 27,
+          "accent": "white"
         },
         {
           "name": "Help",
           "text": "Help",
           "image": "https://img.icons8.com/officexs/64/000000/volunteering.png",
-          "id": 28
+          "id": 28,
+          "accent": "white"
         },
         {
           "name": "It",
           "text": "It",
           "image": "https://img.icons8.com/officexs/64/000000/dog.png",
-          "id": 29
+          "id": 29,
+          "accent": "white"
         },
         {
           "name": "Do",
           "text": "Do",
           "image": "https://img.icons8.com/officexs/64/000000/to-do.png",
-          "id": 30
+          "id": 30,
+          "accent": "white"
         },
         {
           "name": "Come",
           "text": "Come",
           "image": "https://img.icons8.com/officexs/64/000000/comet.png",
-          "id": 31
+          "id": 31,
+          "accent": "white"
         },
         {
           "name": "All",
           "text": "All",
           "image": "https://img.icons8.com/officexs/64/000000/alligator.png",
-          "id": 32
+          "id": 32,
+          "accent": "white"
         },
         {
           "name": "He",
           "text": "He",
           "image": "https://img.icons8.com/officexs/64/000000/standing-man.png",
-          "id": 33
+          "id": 33,
+          "accent": "white"
         },
         {
           "name": "Get",
           "text": "Get",
           "image": "https://img.icons8.com/officexs/64/000000/quote-right.png",
-          "id": 34
+          "id": 34,
+          "accent": "white"
         },
         {
           "name": "Color",
@@ -245,55 +272,64 @@
           "name": "And",
           "text": "And",
           "image": "https://img.icons8.com/officexs/64/000000/bicycle.png",
-          "id": 38
+          "id": 38,
+          "accent": "white"
         },
         {
           "name": "Wear",
           "text": "Wear",
           "image": "https://img.icons8.com/officexs/64/000000/shirt.png",
-          "id": 39
+          "id": 39,
+          "accent": "white"
         },
         {
           "name": "That",
           "text": "That",
           "image": "https://img.icons8.com/officexs/64/000000/map-marker.png",
-          "id": 40
+          "id": 40,
+          "accent": "white"
         },
         {
           "name": "Am",
           "text": "Am",
           "image": "https://img.icons8.com/officexs/64/000000/map-pin.png",
-          "id": 41
+          "id": 41,
+          "accent": "white"
         },
         {
           "name": "Please",
           "text": "Please",
           "image": "https://img.icons8.com/officexs/64/000000/synchronize.png",
-          "id": 42
+          "id": 42,
+          "accent": "white"
         },
         {
           "name": "What",
           "text": "What",
           "image": "https://img.icons8.com/officexs/64/000000/talk-male.png",
-          "id": 43
+          "id": 43,
+          "accent": "white"
         },
         {
           "name": "+s",
           "text": "Needs to be added",
           "image": "https://img.icons8.com/officexs/64/000000/numbered-list.png",
-          "id": 44
+          "id": 44,
+          "accent": "white"
         },
         {
           "name": "There",
           "text": "There",
           "image": "https://img.icons8.com/officexs/64/000000/city-square.png",
-          "id": 45
+          "id": 45,
+          "accent": "white"
         },
         {
           "name": "In",
           "text": "In",
           "image": "https://img.icons8.com/officexs/64/000000/walking.png",
-          "id": 46
+          "id": 46,
+          "accent": "white"
         },
         {
           "name": "A",
@@ -320,13 +356,15 @@
           "name": "Was",
           "text": "Was",
           "image": "https://img.icons8.com/officexs/64/000000/wasp.png",
-          "id": 50
+          "id": 50,
+          "accent": "white"
         },
         {
           "name": "I",
           "text": "Eye",
           "image": "https://img.icons8.com/officexs/64/000000/visible.png",
-          "id": 51
+          "id": 51,
+          "accent": "white"
         },
         {
           "name": "End",
@@ -387,7 +425,7 @@
     ]
   },
   "keyboard": {
-    "tileData": [      
+    "tileData": [
         {
           "name": "A",
           "text": "A",
@@ -518,6 +556,6 @@
           "text": "Z",
           "id": 25
         }
-      ]    
+      ]
   }
 }
