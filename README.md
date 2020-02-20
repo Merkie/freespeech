@@ -20,11 +20,11 @@ Please make sure to follow our [Code Of Conduct](/.github/CODE_OF_CONDUCT.md) in
 ## Authors
 
 * **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
-* **Bailey Townsend** - *Core Team Member/Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
+* **Bailey Townsend** - *Core Team Member/Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105) [Ko-fi](https://ko-fi.com/baileytownsend)
 * **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
 * **Aidan Kinzett** - *Feature enhancements/Sentence Building feature* - [aidankinzett](https://github.com/aidankinzett)
 * **James Burnham** - *Bug fixes* - [jburnham96](https://github.com/jburnham96)
-* **Ed Linklater** - *Added intial unit test to provide us with base* - [edlinklater](https://github.com/edlinklater)
+* **Ed Linklater** - *Added intial unit test to provide us with a base* - [edlinklater](https://github.com/edlinklater)
 
 ## License
 
