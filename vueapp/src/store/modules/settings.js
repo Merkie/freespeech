@@ -1,9 +1,9 @@
 const state = {
   customTilePad: true,
-  locale: 'en',
+  locale: null,
   locked: false,
   passcode: null,
-  selectedVoiceIndex: 0,
+  selectedVoiceIndex: null,
   sentenceMode: true,
   voices: [],
   voiceOptions: [],
