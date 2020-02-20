@@ -19,7 +19,7 @@ class Signup extends Component {
     e.preventDefault();
 		this.setState({submitable:false});
 		console.log(JSON.stringify(this.state));
-    fetch("http://ryanhill.com:5000/signup", {
+    fetch(window.location.protocol+'//'+window.location.hostname+(window.location.port ? ':'+window.location.port: '')+"/signup", {
 			method:"POST",
       headers: {
         'Accept': 'application/json',
@@ -37,7 +37,7 @@ class Signup extends Component {
 
 	handleInputChange(event) {
     const target = event.target;
-    const value = (target.type === 'password')?sha256(target.value):target.value;
+    const value = (target.type === 'password')?sha256(target.value):target.value.toLowerCase();
     const name = target.name;
     this.setState({ [name]: value });
   }

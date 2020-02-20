@@ -17,7 +17,7 @@ class Login extends Component {
 	onSubmit(e) {
     e.preventDefault();
 		this.setState({submitable:false});
-    fetch("http://ryanhill.com:5000/login", {
+    fetch(window.location.protocol+'//'+window.location.hostname+(window.location.port ? ':'+window.location.port: '')+"/login", {
 			method:"POST",
       headers: {
         'Accept': 'application/json',

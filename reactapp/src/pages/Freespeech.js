@@ -20,7 +20,7 @@ class Freespeech extends Component {
 
 	componentDidMount() {
 		if(this.props.isSignedIn){
-			fetch("http://ryanhill.com:5000/speechItems", {
+			fetch(window.location.protocol+'//'+window.location.hostname+(window.location.port ? ':'+window.location.port: '')+"/speechItems", {
 				method:"GET",
 	      headers: {
 	        'Accept': 'application/json',
