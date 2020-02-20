@@ -8,5 +8,10 @@ module.exports = {
 		themeColor: '#4DBA87',
 		msTileColor: '#000000',
 		appleMobileWebAppCapable: 'yes'
+	},
+	devServer:{
+    disableHostCheck: true,
+    port: 3000,
+    host: '0.0.0.0'
 	}
 };
