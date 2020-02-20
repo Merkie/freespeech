@@ -1,5 +1,23 @@
 <template>
   <div>
+    <v-container
+      v-if="editMode"
+      fluid
+      class="grey lighten-5 pb-10"
+      style="{text-align: center}"
+    >
+      <v-card class="mx-10">
+        <div class="px-8 py-5">
+          <p class="title">You're in edit mode. Please save the changes before continuing to use Freespeech.</p>
+          <v-btn
+            @click="this.toggleEditMode"
+          >
+            <span>Save Changes</span>
+            <v-icon>save</v-icon>
+          </v-btn>
+        </div>
+      </v-card>
+    </v-container>
     <Sentence
       v-if="sentenceMode && !editMode"
       :tile-pad-to-display="sentenceTiles"
@@ -36,6 +54,7 @@
               style="padding: 4px"
             >
               <Tile
+                :class="editMode ? 'pulse' : ''"
                 @speakText="speakText"
                 @addToSentence="sentenceTiles.push($event)"
                 :tile-data="tile"
@@ -83,6 +102,7 @@ export default {
       customTilePadOption: 'settings/customTilePad',
       customTilePadData: 'tilePad/customTilePadData',
       voices: 'settings/voices',
+      editMode: 'tilePad/editMode'
     }),
     tilePadToDisplay: function() {
       //Checks to see if custom tile from store is empty, and if so sets the tile pad to the static one so they have something to start with, feel like there is a better way to prime the data.
@@ -116,7 +136,8 @@ export default {
   methods: {
     ...mapActions({
       setCustomTilePadData: 'tilePad/setCustomTilePadData',
-      toggleSentenceMode: 'tilePad/toggleSentenceMode'
+      toggleSentenceMode: 'tilePad/toggleSentenceMode',
+      toggleEditMode: 'tilePad/toggleEditMode'
     }),
     speakText(textToSpeak) {
       let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);
