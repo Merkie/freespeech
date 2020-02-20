@@ -29,11 +29,16 @@
                   aspect-ratio="1"
                   :src="currentTileBeingEdited.image"
                 />
-                <v-text-field 
+                <v-text-field
                   class="pt-5"
                   :value="currentTileBeingEdited.text"
                   @input="update('text', $event)"
                   label="Text to speak"
+                />
+                <p class="text-left">Accent color</p>
+                <v-color-picker
+                  hide-inputs
+                  v-model="color"
                 />
               </v-form>
             </v-col>
@@ -45,7 +50,7 @@
         <v-btn
           color="blue darken-1"
           text
-          @click="saveCurrentEdit"          
+          @click="saveCurrentEdit"
         >
           Save
         </v-btn>
@@ -70,8 +75,13 @@ export default {
   computed: {
     ...mapGetters({
       editDialogVisibility: 'tilePad/editDialogVisibility',
-      currentTileBeingEdited: 'tilePad/currentTileBeingEdited'      
+      currentTileBeingEdited: 'tilePad/currentTileBeingEdited'
     }),
+  },
+  data () {
+    return {
+      color: '',
+    };
   },
   methods: {
     ...mapActions({
@@ -80,13 +90,14 @@ export default {
       saveEditsToTileBeingEdited: 'tilePad/saveEditsToTileBeingEdited'
     }),
     saveCurrentEdit(){
+      this.saveEditsToTileBeingEdited({ key: 'accent', value: this.color});
       this.saveTileEdit();
       this.toggleEditDialogVisibility();
     },
-    update(key, value){      
+    update(key, value){
       this.saveEditsToTileBeingEdited({'key': key, 'value': value});
     }
-    
+
   },
     //this.editedTileValues = Object.assign({}, this.currentTileBeingEdited);
 

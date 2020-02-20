@@ -93,7 +93,7 @@ export default {
           cardHexColor = '#C7CEEA';
           break;
         default:
-          cardHexColor = '';
+          cardHexColor = this.tileData.accent;
           break;
       }
       return cardHexColor;
