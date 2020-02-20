@@ -1,43 +1,43 @@
 <template>
-  <v-container class="pb-10">
-    <h1 class="mb-5">
-      Settings
-    </h1>
+	<v-container class="pb-10">
+		<h1 class="mb-5">
+			Settings
+		</h1>
 
-    <v-select
-      :items="voiceOptions"
-      label="Voice"
-      v-model="selectedVoiceIndex"
-    />
+		<v-select
+			v-model="selectedVoiceIndex"
+			:items="voiceOptions"
+			label="Voice"
+		/>
 
-    <v-switch
-      :label="customTilePad ? 'Custom Tile Pad' : 'Static Tile Pad'"
-      v-model="customTilePad"
-    />
+		<v-switch
+			v-model="customTilePad"
+			:label="customTilePad ? 'Custom Tile Pad' : 'Static Tile Pad'"
+		/>
 
-    <v-switch
-      label="Create Sentences"
-      v-model="sentenceMode"
-    />
+		<v-switch
+			v-model="sentenceMode"
+			label="Create Sentences"
+		/>
 
-    <v-switch
-      label="Passcode Enabled"
-      v-model="passcodeEnabled"
-    />
+		<v-switch
+			v-model="passcodeEnabled"
+			label="Passcode Enabled"
+		/>
 
-    <v-dialog
-      v-model="passcodeEntry"
-      width="400"
-      persistent
-    >
-      <NumberPad
-        title="Set Passcode"
-        :length="passcodeLength"
-        :hidden="true"
-        @input="handlePasscodeInput"
-      />
-    </v-dialog>
-  </v-container>
+		<v-dialog
+			v-model="passcodeEntry"
+			width="400"
+			persistent
+		>
+			<NumberPad
+				title="Set Passcode"
+				:length="passcodeLength"
+				:hidden="true"
+				@input="handlePasscodeInput"
+			/>
+		</v-dialog>
+	</v-container>
 </template>
 
 <script>
@@ -47,7 +47,7 @@ import NumberPad from '@/components/NumberPad/NumberPad.vue';
 export default {
 	name: 'Settings',
 	components: { NumberPad },
-	data() {
+	data () {
 		return {
 			passcodeEntry: false,
 			passcodeLength: 4,
@@ -59,30 +59,30 @@ export default {
 			voiceOptions: 'settings/voiceOptions',
 		}),
 		selectedVoiceIndex: {
-			get() {
+			get () {
 				let voiceIndex = this.$store.state.settings.selectedVoiceIndex;
 				return this.voiceOptions.filter(x => x.value === voiceIndex)[0];
 			},
-			set(value) {
+			set (value) {
 				this.setSelectedVoiceIndex(value);
 			}
 		},
 		customTilePad: {
-			get(){
+			get () {
 				return this.$store.state.settings.customTilePad;
 			},
-			set(value){
-				if(!value){
+			set (value) {
+				if (!value) {
 					this.setEditMode(false);
 				}
 				this.toggleCustomTilePad();
 			}
 		},
 		passcodeEnabled: {
-			get(){
+			get () {
 				return this.passcode !== null;
 			},
-			set(value){
+			set (value) {
 				if (value === true) {
 					this.setPasscode('');
 					this.passcodeEntry = true;
@@ -92,10 +92,10 @@ export default {
 			}
 		},
 		sentenceMode: {
-			get(){
+			get () {
 				return this.$store.state.settings.sentenceMode;
 			},
-			set(){
+			set () {
 				this.toggleSentenceMode();
 			}
 		}
@@ -109,7 +109,7 @@ export default {
 			toggleCustomTilePad: 'settings/toggleCustomTilePad',
 			toggleSentenceMode: 'settings/toggleSentenceMode'
 		}),
-		handlePasscodeInput(input) {
+		handlePasscodeInput (input) {
 			this.passcodeEntry = false;
 
 			if (input !== null && input.length === this.passcodeLength) {

@@ -1,4 +1,3 @@
-
 const state = {
 	customTilePadData: {},
 	editMode: false,
@@ -7,50 +6,50 @@ const state = {
 };
 
 const mutations = {
-	SET_CUSTOM_TILE_PAD_DATA(state, value) {
+	SET_CUSTOM_TILE_PAD_DATA (state, value) {
 		state.customTilePadData = value;
 	},
-	TOGGLE_EDIT_MODE(state){
+	TOGGLE_EDIT_MODE (state) {
 		state.editMode = !state.editMode;
 	},
-	TOGGLE_EDIT_DIALOG_VISIBILITY(state){
+	TOGGLE_EDIT_DIALOG_VISIBILITY (state) {
 		state.editDialogVisibility = !state.editDialogVisibility;
 	},
-	SET_CURRENT_TILE_BEING_EDITED(state, value){
+	SET_CURRENT_TILE_BEING_EDITED (state, value) {
 		state.currentTileBeingEdited = value;
 	},
-	SAVE_EDITS_TO_TILE_BEING_EDITED(state, value){
+	SAVE_EDITS_TO_TILE_BEING_EDITED (state, value) {
 		state.currentTileBeingEdited[value.key] = value.value;
 	},
-	SET_TILE_BEING_EDITED(state){    
+	SET_TILE_BEING_EDITED (state) {
 		let indexOfTileInCustomTilePadData = state.customTilePadData[state.currentTileBeingEdited.page].tileData.findIndex(tile => tile.id == state.currentTileBeingEdited.id);
 		state.customTilePadData[state.currentTileBeingEdited.page].tileData.splice(indexOfTileInCustomTilePadData, state.currentTileBeingEdited);
 	},
-	SET_EDIT_MODE(state, value){
+	SET_EDIT_MODE (state, value) {
 		state.editMode = value;
 	}
 };
 
-const actions = {  
-	setCustomTilePadData: ({commit}, value) => {
+const actions = {
+	setCustomTilePadData: ({ commit }, value) => {
 		commit('SET_CUSTOM_TILE_PAD_DATA', value);
 	},
-	toggleEditMode: ({commit}) => {
+	toggleEditMode: ({ commit }) => {
 		commit('TOGGLE_EDIT_MODE');
 	},
-	toggleEditDialogVisibility: ({commit}) => {   
+	toggleEditDialogVisibility: ({ commit }) => {
 		commit('TOGGLE_EDIT_DIALOG_VISIBILITY');
 	},
-	setCurrentTileBeingEdited: ({commit}, value) => {
+	setCurrentTileBeingEdited: ({ commit }, value) => {
 		commit('SET_CURRENT_TILE_BEING_EDITED', value);
 	},
-	saveEditsToTileBeingEdited: ({commit}, value) => {
+	saveEditsToTileBeingEdited: ({ commit }, value) => {
 		commit('SAVE_EDITS_TO_TILE_BEING_EDITED', value);
 	},
-	saveTileEdit: ({commit}) => {
+	saveTileEdit: ({ commit }) => {
 		commit('SET_TILE_BEING_EDITED');
 	},
-	setEditMode: ({commit}, value) => {
+	setEditMode: ({ commit }, value) => {
 		commit('SET_EDIT_MODE', value);
 	}
 };

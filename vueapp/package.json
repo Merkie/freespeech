@@ -45,7 +45,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/strongly-recommended",
+      "plugin:vue/recommended",
       "eslint:recommended"
     ],
     "parserOptions": {
@@ -63,8 +63,19 @@
         2,
         "always"
       ],
-      "indent":["error", "tab"],
-      "object-property-newline":"error",
+      "indent": [
+        "error",
+        "tab"
+      ],
+      "vue/html-indent": [
+        "error",
+        "tab",
+        {
+          "alignAttributesVertically": false,
+          "closeBracket": 0
+        }
+      ],
+      "object-property-newline": "error",
       "space-in-brackets": "always"
     },
     "overrides": [
