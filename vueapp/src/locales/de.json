@@ -1,0 +1,13 @@
+{
+  "languageName": "Deutsch",
+  "settings": {
+    "title": "Einstellungen",
+    "optionVoice": "Stimme",
+    "optionCustomTilePad": "Angepasst Kachelsatz",
+    "optionCreateSentences": "Sätze erstellen",
+    "optionLanguage": "Sprache",
+    "optionPasscodeEnabled": "Passcode aktiviert",
+    "buttonClose": "Schließen",
+    "titleSetPasscode": "Passcode einstellen"
+  }
+}

@@ -108,6 +108,7 @@ export default {
 		...mapGetters({
 			customTilePad: 'settings/customTilePad',
 			editMode: 'tilePad/editMode',
+			locale: 'settings/locale',
 			locked: 'settings/locked',
 			passcode: 'settings/passcode',
 		}),
@@ -119,6 +120,8 @@ export default {
 		}
 	},
 	created(){
+		this.$root.$i18n.locale = this.locale;
+
 		let windowVoices = window.speechSynthesis.getVoices();
 
 		if (!windowVoices.length > 0) {
@@ -149,6 +152,9 @@ export default {
 				return { text: `${voice.name} (${voice.lang})`,
 					value: index };
 			}).sort((a, b) => a.text.localeCompare(b.text));
+
+			this.setVoices(windowVoices);
+			this.setVoiceOptions(voiceOptions);
 
 			this.setVoices(windowVoices);
 			this.setVoiceOptions(voiceOptions);

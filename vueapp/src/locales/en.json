@@ -1,0 +1,13 @@
+{
+  "languageName": "English",
+  "settings": {
+    "title": "Settings",
+    "optionVoice": "Voice",
+    "optionCustomTilePad": "Custom Tile Pad",
+    "optionCreateSentences": "Create Sentences",
+    "optionLanguage": "Language",
+    "optionPasscodeEnabled": "Passcode Enabled",
+    "buttonClose": "Close",
+    "titleSetPasscode": "Set Passcode"
+  }
+}
