@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Tile from '@/components/TilePad/Tile.vue';
+import settings from '@/store/modules/settings';
 import tilePad from '@/store/modules/tilePad';
 
 const localVue = createLocalVue();
@@ -12,7 +13,8 @@ function getWrapper () {
     localVue,
     store: new Vuex.Store({
       modules: {
-        tilePad: tilePad,
+        tilePad,
+        settings
       },
     }),
     propsData: {
@@ -53,8 +55,6 @@ describe('Tile.vue', () => {
   it('sets tile color based on accent string', () => {
     expect(wrapper.vm.cardColor).to.equal('#FFB7B2');
   });
-
-
 });
 
 describe ('Tile.vue (edit mode)', () => {
