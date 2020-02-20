@@ -15,32 +15,35 @@
       class="grey lighten-5 pb-10"
       style="{text-align: center}"
     >
-      <v-row
-        dense
-        v-for="(row, index) in tilePadToDisplay"
-        :key="index"
-        class="tilePadContainer"
-      >
-        <template v-for="(tile, tileIndex) in row">
-          <v-col
-            :key="tileIndex"
-            :cols="
-              $vuetify.breakpoint.xsOnly
-                ? 3
-                : $vuetify.breakpoint.smAndDown
-                  ? 2
-                  : 1
-            "
-            class="d-flex child-flex"
-          >
-            <Tile
-              @speakText="speakText"
-              @addToSentence="sentenceTiles.push($event)"
-              :tile-data="tile"
-              :tile-page="currentTilePadPage"
-            />
-          </v-col>
-        </template>
+      <v-row dense>
+        <draggable
+          style="display: contents"
+          v-model="tilePadToDisplay.tileData"
+          :options="{disabled: !editMode}"
+          class="tilePadContainer"
+        >
+          <template v-for="(tile, tileIndex) in tilePadToDisplay.tileData">
+            <v-col
+              :key="tileIndex"
+              :cols="
+                $vuetify.breakpoint.xsOnly
+                  ? 3
+                  : $vuetify.breakpoint.smAndDown
+                    ? 2
+                    : 1
+              "
+              class="d-flex child-flex"
+              style="padding: 4px"
+            >
+              <Tile
+                @speakText="speakText"
+                @addToSentence="sentenceTiles.push($event)"
+                :tile-data="tile"
+                :tile-page="currentTilePadPage"
+              />
+            </v-col>
+          </template>
+        </draggable>
       </v-row>
     </v-container>
   </div>
@@ -48,6 +51,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
+import draggable from 'vuedraggable';
 
 // object to access the speechSynthesis API
 const SPEECH_SYNTHESIS = window.speechSynthesis;
@@ -55,13 +59,13 @@ const SPEECH_SYNTHESIS = window.speechSynthesis;
 import TileData from '../../../build.json';
 import Tile from '@/components/TilePad/Tile';
 import Sentence from '@/components/Sentence/Sentence';
-import EditModeHeader from '@/components/EditModeHeader/EditModeHeader';
 
 export default {
   name: 'TilePad',
   components: {
     Tile,
     Sentence,
+    draggable,
     EditModeHeader
   },
   data() {
@@ -72,11 +76,11 @@ export default {
   },
   computed: {
     ...mapState('settings', ['sentenceMode']),
+    ...mapState('tilePad', ['editMode']),
     ...mapGetters({
       selectedVoiceIndex: 'settings/selectedVoiceIndex',
       customTilePadOption: 'settings/customTilePad',
       customTilePadData: 'tilePad/customTilePadData',
-      editMode: 'tilePad/editMode',
       voices: 'settings/voices',
     }),
     tilePadToDisplay: function() {
