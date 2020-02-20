@@ -1,28 +1,34 @@
 <template>
 	<v-container class="pb-10">
 		<h1 class="mb-5">
-			Settings
+			{{ $t('settings.title') }}
 		</h1>
+
+		<v-select
+			v-model="selectedLanguage"
+			:items="languageOptions"
+			:label="$t('settings.optionLanguage')"
+		/>
 
 		<v-select
 			v-model="selectedVoiceIndex"
 			:items="voiceOptions"
-			label="Voice"
+			:label="$t('settings.optionVoice')"
 		/>
 
 		<v-switch
 			v-model="customTilePad"
-			:label="customTilePad ? 'Custom Tile Pad' : 'Static Tile Pad'"
+			:label="$t('settings.optionCustomTilePad')"
 		/>
 
 		<v-switch
 			v-model="sentenceMode"
-			label="Create Sentences"
+			:label="$t('settings.optionCreateSentences')"
 		/>
 
 		<v-switch
 			v-model="passcodeEnabled"
-			label="Passcode Enabled"
+			:label="$t('settings.optionPasscodeEnabled')"
 		/>
 
 		<v-dialog
@@ -31,7 +37,7 @@
 			persistent
 		>
 			<NumberPad
-				title="Set Passcode"
+				:title="$t('settings.titleSetPasscode')"
 				:length="passcodeLength"
 				:hidden="true"
 				@input="handlePasscodeInput"
@@ -47,7 +53,7 @@ import NumberPad from '@/components/NumberPad/NumberPad.vue';
 export default {
 	name: 'Settings',
 	components: { NumberPad },
-	data () {
+	data() {
 		return {
 			passcodeEntry: false,
 			passcodeLength: 4,
@@ -55,34 +61,35 @@ export default {
 	},
 	computed: {
 		...mapGetters({
+			locale: 'settings/locale',
 			passcode: 'settings/passcode',
 			voiceOptions: 'settings/voiceOptions',
 		}),
 		selectedVoiceIndex: {
-			get () {
+			get() {
 				let voiceIndex = this.$store.state.settings.selectedVoiceIndex;
 				return this.voiceOptions.filter(x => x.value === voiceIndex)[0];
 			},
-			set (value) {
+			set(value) {
 				this.setSelectedVoiceIndex(value);
 			}
 		},
 		customTilePad: {
-			get () {
+			get(){
 				return this.$store.state.settings.customTilePad;
 			},
-			set (value) {
-				if (!value) {
+			set(value){
+				if(!value){
 					this.setEditMode(false);
 				}
 				this.toggleCustomTilePad();
 			}
 		},
 		passcodeEnabled: {
-			get () {
+			get(){
 				return this.passcode !== null;
 			},
-			set (value) {
+			set(value){
 				if (value === true) {
 					this.setPasscode('');
 					this.passcodeEntry = true;
@@ -92,24 +99,40 @@ export default {
 			}
 		},
 		sentenceMode: {
-			get () {
+			get(){
 				return this.$store.state.settings.sentenceMode;
 			},
-			set () {
+			set(){
 				this.toggleSentenceMode();
 			}
+		},
+		selectedLanguage: {
+			get() {
+				return this.locale;
+			},
+			set(value) {
+				this.$root.$i18n.locale = value;
+				this.setLocale(value);
+			}
+		},
+		languageOptions() {
+			return Object.entries(this.$i18n.messages).map(entry => {
+				return { value: entry[0],
+					text: entry[1].languageName };
+			});
 		}
 	},
 	methods: {
 		...mapActions({
 			setEditMode: 'tilePad/setEditMode',
+			setLocale: 'settings/setLocale',
 			setLocked: 'settings/setLocked',
 			setPasscode: 'settings/setPasscode',
 			setSelectedVoiceIndex: 'settings/setSelectedVoiceIndex',
 			toggleCustomTilePad: 'settings/toggleCustomTilePad',
 			toggleSentenceMode: 'settings/toggleSentenceMode'
 		}),
-		handlePasscodeInput (input) {
+		handlePasscodeInput(input) {
 			this.passcodeEntry = false;
 
 			if (input !== null && input.length === this.passcodeLength) {

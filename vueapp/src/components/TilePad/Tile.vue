@@ -3,7 +3,7 @@
 		raised
 		tile
 		class="mx-auto"
-		:color="typeof tileData.accent === 'undefined' ? '' : cardColor"
+		:color="typeof localeTileData.accent === 'undefined' ? '' : cardColor"
 		@click="tileClickedEvent"
 	>
 		<v-container
@@ -18,16 +18,15 @@
 					max-height="32"
 					max-width="32"
 					aspect-ratio="1"
-					:src="tileData.image"
+					:src="localeTileData.image"
 				/>
 			</v-row>
 			<v-row>
 				<v-card-text
-					class
-					align="center"
+					class="text-center"
 					justify="center"
 				>
-					<h3>{{ tileData.name }}</h3>
+					<h3>{{ localeTileData.name }}</h3>
 				</v-card-text>
 			</v-row>
 		</v-container>
@@ -42,13 +41,14 @@ export default {
 	props: {
 		tileData: {
 			type: Object,
-			default () {
+			default() {
 				return {
 					name: '',
 					text: '',
 					accent: '',
 					image: '',
-					id: 0
+					id: 0,
+					messages: {}
 				};
 			}
 		},
@@ -68,35 +68,35 @@ export default {
 	computed: {
 		...mapState('settings', ['sentenceMode']),
 		...mapGetters({
-			editMode: 'tilePad/editMode'
+			editMode: 'tilePad/editMode',
+			locale: 'settings/locale'
 		}),
-		cardColor: function () {
-			let cardHexColor;
-
-			switch (this.tileData.accent) {
+		cardColor: function() {
+			switch (this.localeTileData.accent) {
 			case 'red':
-				cardHexColor = '#FF9AA2';
-				break;
+				return '#FF9AA2';
 			case 'blush':
-				cardHexColor = '#FFB7B2';
-				break;
+				return '#FFB7B2';
 			case 'peach':
-				cardHexColor = '#FFB7B2';
-				break;
+				return '#FFB7B2';
 			case 'pear':
-				cardHexColor = '#E2F0CB';
-				break;
+				return '#E2F0CB';
 			case 'mint':
-				cardHexColor = '#B5EAD7';
-				break;
+				return '#B5EAD7';
 			case 'violet':
-				cardHexColor = '#C7CEEA';
-				break;
+				return '#C7CEEA';
 			default:
-				cardHexColor = this.tileData.accent;
-				break;
+				return this.localeTileData.accent;
 			}
-			return cardHexColor;
+		},
+		localeTileData() {
+			const messages = this.tileData.messages;
+			if (typeof messages !== 'undefined' && typeof messages[this.locale] === 'object') {
+				return { ...this.tileData,
+					...messages[this.locale] };
+			} else {
+				return this.tileData;
+			}
 		}
 	},
 	methods: {
@@ -104,7 +104,7 @@ export default {
 			toggleEditDialogVisibility: 'tilePad/toggleEditDialogVisibility',
 			setCurrentTileBeingEdited: 'tilePad/setCurrentTileBeingEdited'
 		}),
-		tileClickedEvent () {
+		tileClickedEvent() {
 			if (this.editMode) {
 				// if in edit tiles mode
 				let tileDataToEdit = this.tileData;
@@ -118,14 +118,14 @@ export default {
 					this.$emit('removeFromSentence', this.sentenceIndex);
 				} else {
 					// if its not in the sentence component, speak it and add it to the sentence
-					this.$emit('speakText', this.tileData.text);
-					this.$emit('addToSentence', this.tileData);
+					this.$emit('speakText', this.localeTileData.text);
+					this.$emit('addToSentence', this.localeTileData);
 				}
 			} else if (
 				typeof this.tileData.navigation === 'undefined' ||
-					this.tileData.navigation === ''
+        this.tileData.navigation === ''
 			) {
-				this.$emit('speakText', this.tileData.text);
+				this.$emit('speakText', this.localeTileData.text);
 			} else {
 				this.$router.push({
 					name: 'tilePadWithRoute',

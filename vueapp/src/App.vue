@@ -108,8 +108,10 @@ export default {
 		...mapGetters({
 			customTilePad: 'settings/customTilePad',
 			editMode: 'tilePad/editMode',
+			locale: 'settings/locale',
 			locked: 'settings/locked',
 			passcode: 'settings/passcode',
+			selectedVoiceIndex: 'settings/selectedVoiceIndex'
 		}),
 		isLocked() {
 			return this.passcode !== null && this.passcode.length > 0 && this.locked;
@@ -118,7 +120,16 @@ export default {
 			return this.editMode ? 'success' : 'primary';
 		}
 	},
-	created(){
+	created() {
+		if (this.locale === null) {
+			const defaultLanguage = navigator.languages
+				? navigator.languages[0]
+				: (navigator.language || navigator.userLanguage);
+			this.setLocale(defaultLanguage.substr(0, 2));
+		}
+
+		this.$root.$i18n.locale = this.locale;
+
 		let windowVoices = window.speechSynthesis.getVoices();
 
 		if (!windowVoices.length > 0) {
@@ -130,7 +141,9 @@ export default {
 	},
 	methods: {
 		...mapActions({
+			setLocale: 'settings/setLocale',
 			setLocked: 'settings/setLocked',
+			setSelectedVoiceIndex: 'settings/setSelectedVoiceIndex',
 			setVoices: 'settings/setVoices',
 			setVoiceOptions: 'settings/setVoiceOptions',
 			toggleEditMode: 'tilePad/toggleEditMode'
@@ -146,6 +159,9 @@ export default {
 		},
 		populateVoiceData (windowVoices){
 			const voiceOptions = windowVoices.map((voice, index) => {
+				if (this.selectedVoiceIndex === null && voice.lang.substring(0, 2) === this.locale) {
+					this.setSelectedVoiceIndex(index);
+				}
 				return { text: `${voice.name} (${voice.lang})`,
 					value: index };
 			}).sort((a, b) => a.text.localeCompare(b.text));
