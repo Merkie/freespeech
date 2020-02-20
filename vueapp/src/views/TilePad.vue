@@ -6,10 +6,14 @@
       class="grey lighten-5 pb-10"
       style="{text-align: center}"
     >
-      <v-card class="mx-10">
+      <v-card
+        elevation="6"
+        class="mx-10"
+      >
         <div class="px-8 py-5">
           <p class="title">You're in edit mode. Please save the changes before continuing to use Freespeech.</p>
           <v-btn
+            color="info"
             @click="this.toggleEditMode"
           >
             <span>Save Changes</span>
