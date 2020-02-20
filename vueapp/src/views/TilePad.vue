@@ -12,32 +12,35 @@
       class="grey lighten-5 pb-10"
       style="{text-align: center}"
     >
-      <v-row
-        dense
-        v-for="(row, index) in tilePadToDisplay"
-        :key="index"
-        class="tilePadContainer"
-      >
-        <template v-for="(tile, tileIndex) in row">
-          <v-col
-            :key="tileIndex"
-            :cols="
-              $vuetify.breakpoint.xsOnly
-                ? 3
-                : $vuetify.breakpoint.smAndDown
-                  ? 2
-                  : 1
-            "
-            class="d-flex child-flex"
-          >
-            <Tile
-              @speakText="speakText"
-              @addToSentence="sentenceTiles.push($event)"
-              :tile-data="tile"
-              :tile-page="currentTilePadPage"
-            />
-          </v-col>
-        </template>
+      <v-row dense>
+        <draggable
+          style="display: contents"
+          v-model="tilePadToDisplay.tileData"
+          :options="{disabled: !editMode}"
+          class="tilePadContainer"
+        >
+          <template v-for="(tile, tileIndex) in tilePadToDisplay.tileData">
+            <v-col
+              :key="tileIndex"
+              :cols="
+                $vuetify.breakpoint.xsOnly
+                  ? 3
+                  : $vuetify.breakpoint.smAndDown
+                    ? 2
+                    : 1
+              "
+              class="d-flex child-flex"
+              style="padding: 4px"
+            >
+              <Tile
+                @speakText="speakText"
+                @addToSentence="sentenceTiles.push($event)"
+                :tile-data="tile"
+                :tile-page="currentTilePadPage"
+              />
+            </v-col>
+          </template>
+        </draggable>
       </v-row>
     </v-container>
   </div>
@@ -45,6 +48,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
+import draggable from 'vuedraggable';
 
 // object to access the speechSynthesis API
 const SPEECH_SYNTHESIS = window.speechSynthesis;
@@ -57,21 +61,23 @@ export default {
   name: 'TilePad',
   components: {
     Tile,
-    Sentence
+    Sentence,
+    draggable
   },
   data() {
     return {
       tileData: TileData,
-      sentenceTiles: [],
+      sentenceTiles: []
     };
   },
   computed: {
     ...mapState('settings', ['sentenceMode']),
+    ...mapState('tilePad', ['editMode']),
     ...mapGetters({
       selectedVoiceIndex: 'settings/selectedVoiceIndex',
       customTilePadOption: 'settings/customTilePad',
       customTilePadData: 'tilePad/customTilePadData',
-      voices: 'settings/voices',
+      voices: 'settings/voices'
     }),
     tilePadToDisplay: function() {
       //Checks to see if custom tile from store is empty, and if so sets the tile pad to the static one so they have something to start with, feel like there is a better way to prime the data.
