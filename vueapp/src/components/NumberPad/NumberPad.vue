@@ -86,98 +86,98 @@
 
 <script>
 export default {
-  name: 'NumberPad',
-  props: {
-    hidden: {
-      type: Boolean,
-      default: false
-    },
-    length: {
-      type: Number,
-      default: 0
-    },
-    title: {
-      type: String,
-      default: null
-    }
-  },
-  data() {
-    return {
-      input: '',
-      hiddenCharacter: '⚫'
-    };
-  },
-  computed: {
-    display() {
-      if (this.hidden) {
-        return this.hiddenCharacter.repeat(this.input.length);
-      }
+	name: 'NumberPad',
+	props: {
+		hidden: {
+			type: Boolean,
+			default: false
+		},
+		length: {
+			type: Number,
+			default: 0
+		},
+		title: {
+			type: String,
+			default: null
+		}
+	},
+	data() {
+		return {
+			input: '',
+			hiddenCharacter: '⚫'
+		};
+	},
+	computed: {
+		display() {
+			if (this.hidden) {
+				return this.hiddenCharacter.repeat(this.input.length);
+			}
 
-      return this.input;
-    },
-    isBackspaceEnabled() {
-      return this.input.length > 0;
-    },
-    isNumbersEnabled() {
-      if (this.length) {
-        return this.input.length < this.length;
-      } else {
-        return true;
-      }
-    },
-    isSaveEnabled() {
-      if (this.length) {
-        return this.input.length === this.length;
-      } else {
-        return this.input.length > 0;
-      }
-    }
-  },
-  methods: {
-    backspace() {
-      if (this.isBackspaceEnabled) {
-        this.input = this.input.substring(0, this.input.length - 1);
-      }
-    },
-    close() {
-      if (!this.isBackspaceEnabled) {
-        this.input = '';
-        this.$emit('input', null);
-      }
-    },
-    keyboardInput(e) {
-      if (e.key >= 0 && e.key <= 9) {
-        e.preventDefault();
-        this.padInput(e.key);
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        this.save();
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        this.close();
-      } else if (e.key === 'Backspace') {
-        e.preventDefault();
-        this.backspace();
-      }
-    },
-    padInput(number) {
-      if (this.isNumbersEnabled) {
-        this.input = this.input + number;
-      }
-    },
-    save() {
-      if (this.isSaveEnabled) {
-        this.$emit('input', this.input);
-        this.input = '';
-      }
-    }
-  },
-  created: function() {
-    window.addEventListener('keyup', this.keyboardInput);
-  },
-  beforeDestroy: function() {
-    window.removeEventListener('keyup', this.keyboardInput);
-  }
+			return this.input;
+		},
+		isBackspaceEnabled() {
+			return this.input.length > 0;
+		},
+		isNumbersEnabled() {
+			if (this.length) {
+				return this.input.length < this.length;
+			} else {
+				return true;
+			}
+		},
+		isSaveEnabled() {
+			if (this.length) {
+				return this.input.length === this.length;
+			} else {
+				return this.input.length > 0;
+			}
+		}
+	},
+	methods: {
+		backspace() {
+			if (this.isBackspaceEnabled) {
+				this.input = this.input.substring(0, this.input.length - 1);
+			}
+		},
+		close() {
+			if (!this.isBackspaceEnabled) {
+				this.input = '';
+				this.$emit('input', null);
+			}
+		},
+		keyboardInput(e) {
+			if (e.key >= 0 && e.key <= 9) {
+				e.preventDefault();
+				this.padInput(e.key);
+			} else if (e.key === 'Enter') {
+				e.preventDefault();
+				this.save();
+			} else if (e.key === 'Escape') {
+				e.preventDefault();
+				this.close();
+			} else if (e.key === 'Backspace') {
+				e.preventDefault();
+				this.backspace();
+			}
+		},
+		padInput(number) {
+			if (this.isNumbersEnabled) {
+				this.input = this.input + number;
+			}
+		},
+		save() {
+			if (this.isSaveEnabled) {
+				this.$emit('input', this.input);
+				this.input = '';
+			}
+		}
+	},
+	created: function() {
+		window.addEventListener('keyup', this.keyboardInput);
+	},
+	beforeDestroy: function() {
+		window.removeEventListener('keyup', this.keyboardInput);
+	}
 };
 </script>
 

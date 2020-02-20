@@ -62,7 +62,10 @@
       "semi": [
         2,
         "always"
-      ]
+      ],
+      "indent":["error", "tab"],
+      "object-property-newline":"error",
+      "space-in-brackets": "always"
     },
     "overrides": [
       {

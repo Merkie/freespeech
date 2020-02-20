@@ -9,16 +9,16 @@ import readMeAboutMarkDownText from '!raw-loader!../../../README.md';
 const marked = require('marked');
 
 export default {
-  name: 'About',
-  data() {
-    return {
-      readMeAboutMarkDownText
-    };
-  },
-  computed: {
-    compiledMarkdown: function() {
-      return marked(readMeAboutMarkDownText, { santzie: true });
-    }
-  }
+	name: 'About',
+	data() {
+		return {
+			readMeAboutMarkDownText
+		};
+	},
+	computed: {
+		compiledMarkdown: function() {
+			return marked(readMeAboutMarkDownText, { santzie: true });
+		}
+	}
 };
 </script>
