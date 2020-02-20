@@ -1,11 +1,14 @@
 <template>
   <div>
     <Sentence
-      v-if="sentenceMode"
+      v-if="sentenceMode && !editMode"
       :tile-pad-to-display="sentenceTiles"
       @clearSentence="sentenceTiles = []"
       @speakSentence="speakSentence"
       @removeFromSentence="sentenceTiles.splice($event, 1)"
+    />
+    <edit-mode-header
+      v-if="sentenceMode && editMode"
     />
     <v-container
       fluid
@@ -56,18 +59,20 @@ const SPEECH_SYNTHESIS = window.speechSynthesis;
 import TileData from '../../../build.json';
 import Tile from '@/components/TilePad/Tile';
 import Sentence from '@/components/Sentence/Sentence';
+import EditModeHeader from '@/components/EditModeHeader/EditModeHeader';
 
 export default {
   name: 'TilePad',
   components: {
     Tile,
     Sentence,
-    draggable
+    draggable,
+    EditModeHeader
   },
   data() {
     return {
       tileData: TileData,
-      sentenceTiles: []
+      sentenceTiles: [],
     };
   },
   computed: {
@@ -77,7 +82,7 @@ export default {
       selectedVoiceIndex: 'settings/selectedVoiceIndex',
       customTilePadOption: 'settings/customTilePad',
       customTilePadData: 'tilePad/customTilePadData',
-      voices: 'settings/voices'
+      voices: 'settings/voices',
     }),
     tilePadToDisplay: function() {
       //Checks to see if custom tile from store is empty, and if so sets the tile pad to the static one so they have something to start with, feel like there is a better way to prime the data.
