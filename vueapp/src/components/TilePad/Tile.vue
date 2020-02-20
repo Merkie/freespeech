@@ -1,10 +1,11 @@
 <template>
-  <v-card
+  <v-btn
     raised
     tile
     class="mx-auto"
     @click="tileClickedEvent"
     :color="typeof tileData.accent === 'undefined' ? '' : cardColor"
+    style="height: unset"
   >
     <v-container
       justify="
@@ -31,7 +32,7 @@
         </v-card-text>
       </v-row>
     </v-container>
-  </v-card>
+  </v-btn>
 </template>
 
 <script>
