@@ -111,6 +111,7 @@ export default {
 			locale: 'settings/locale',
 			locked: 'settings/locked',
 			passcode: 'settings/passcode',
+			selectedVoiceIndex: 'settings/selectedVoiceIndex'
 		}),
 		isLocked() {
 			return this.passcode !== null && this.passcode.length > 0 && this.locked;
@@ -119,7 +120,14 @@ export default {
 			return this.editMode ? 'success' : 'primary';
 		}
 	},
-	created(){
+	created() {
+		if (this.locale === null) {
+			const defaultLanguage = navigator.languages
+				? navigator.languages[0]
+				: (navigator.language || navigator.userLanguage);
+			this.setLocale(defaultLanguage.substr(0, 2));
+		}
+
 		this.$root.$i18n.locale = this.locale;
 
 		let windowVoices = window.speechSynthesis.getVoices();
@@ -143,69 +151,35 @@ export default {
 		handlePasscodeInput (input) {
 			this.passcodeEntry = false;
 
-      if (input === this.passcode) {
-        this.setLocked(false);
-      } else if (input !== null) {
-        this.passcodeError = true;
-      }
-    },
-    populateVoiceData (windowVoices){
-      const voiceOptions = windowVoices.map((voice, index) => {
-        if (this.selectedVoiceIndex === null && voice.lang.substring(0, 2) === this.locale) {
-          this.setSelectedVoiceIndex(index);
-        }
-        return { text: `${voice.name} (${voice.lang})`, value: index };
-      }).sort((a, b) => a.text.localeCompare(b.text));
+			if (input === this.passcode) {
+				this.setLocked(false);
+			} else if (input !== null) {
+				this.passcodeError = true;
+			}
+		},
+		populateVoiceData (windowVoices){
+			const voiceOptions = windowVoices.map((voice, index) => {
+				if (this.selectedVoiceIndex === null && voice.lang.substring(0, 2) === this.locale) {
+					this.setSelectedVoiceIndex(index);
+				}
+				return { text: `${voice.name} (${voice.lang})`,
+					value: index };
+			}).sort((a, b) => a.text.localeCompare(b.text));
 
-      this.setVoices(windowVoices);
-      this.setVoiceOptions(voiceOptions);
-    },
-    disableEditMode() {
-      this.$store.dispatch('tilePad/setEditMode', false);
-    },
-    toggleLocked(){
-      if (this.locked) {
-        this.passcodeEntry = true;
-      } else {
-        this.disableEditMode();
-        this.setLocked(true);
-      }
-    }
-  },
-  computed: {
-    ...mapGetters({
-      customTilePad: 'settings/customTilePad',
-      editMode: 'tilePad/editMode',
-      locale: 'settings/locale',
-      locked: 'settings/locked',
-      passcode: 'settings/passcode',
-      selectedVoiceIndex: 'settings/selectedVoiceIndex'
-    }),
-    isLocked() {
-      return this.passcode !== null && this.passcode.length > 0 && this.locked;
-    },
-    taskbarColor() {
-      return this.editMode ? 'success' : 'primary';
-    }
-  },
-  created() {
-		if (this.locale === null) {
-			const defaultLanguage = navigator.languages
-				? navigator.languages[0]
-				: (navigator.language || navigator.userLanguage);
-			this.setLocale(defaultLanguage.substr(0, 2));
+			this.setVoices(windowVoices);
+			this.setVoiceOptions(voiceOptions);
+		},
+		disableEditMode() {
+			this.$store.dispatch('tilePad/setEditMode', false);
+		},
+		toggleLocked(){
+			if (this.locked) {
+				this.passcodeEntry = true;
+			} else {
+				this.disableEditMode();
+				this.setLocked(true);
+			}
 		}
-
-		this.$root.$i18n.locale = this.locale;
-
-    let windowVoices = window.speechSynthesis.getVoices();
-
-    if (!windowVoices.length > 0) {
-      const vm = this;
-      window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
-    } else {
-      this.populateVoiceData(windowVoices);
-    }
-  }
+	}
 };
 </script>
