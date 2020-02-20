@@ -31,11 +31,11 @@
 
 <script>
 export default {
-  methods: {
-    exitEditMode() {
-      this.$store.dispatch('tilePad/setEditMode', false);
-    }
-  }
+	methods: {
+		exitEditMode() {
+			this.$store.dispatch('tilePad/setEditMode', false);
+		}
+	}
 };
 </script>
 <style scoped>

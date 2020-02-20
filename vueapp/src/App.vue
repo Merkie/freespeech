@@ -94,75 +94,76 @@ import NumberPad from '@/components/NumberPad/NumberPad';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'App',
-  components: {
-    EditDialog,
-    NumberPad
-  },
-  data: () => ({
-    passcodeEntry: false,
-    passcodeError: false,
-    passcodeLength: 4,
-  }),
-  methods: {
-    ...mapActions({
-      setLocked: 'settings/setLocked',
-      setVoices: 'settings/setVoices',
-      setVoiceOptions: 'settings/setVoiceOptions',
-      toggleEditMode: 'tilePad/toggleEditMode'
-    }),
-    handlePasscodeInput (input) {
-      this.passcodeEntry = false;
+	name: 'App',
+	components: {
+		EditDialog,
+		NumberPad
+	},
+	data: () => ({
+		passcodeEntry: false,
+		passcodeError: false,
+		passcodeLength: 4,
+	}),
+	methods: {
+		...mapActions({
+			setLocked: 'settings/setLocked',
+			setVoices: 'settings/setVoices',
+			setVoiceOptions: 'settings/setVoiceOptions',
+			toggleEditMode: 'tilePad/toggleEditMode'
+		}),
+		handlePasscodeInput (input) {
+			this.passcodeEntry = false;
 
-      if (input === this.passcode) {
-        this.setLocked(false);
-      } else if (input !== null) {
-        this.passcodeError = true;
-      }
-    },
-    populateVoiceData (windowVoices){
-      const voiceOptions = windowVoices.map((voice, index) => {
-        return { text: `${voice.name} (${voice.lang})`, value: index };
-      }).sort((a, b) => a.text.localeCompare(b.text));
+			if (input === this.passcode) {
+				this.setLocked(false);
+			} else if (input !== null) {
+				this.passcodeError = true;
+			}
+		},
+		populateVoiceData (windowVoices){
+			const voiceOptions = windowVoices.map((voice, index) => {
+				return { text: `${voice.name} (${voice.lang})`,
+					value: index };
+			}).sort((a, b) => a.text.localeCompare(b.text));
 
-      this.setVoices(windowVoices);
-      this.setVoiceOptions(voiceOptions);
-    },
-    disableEditMode() {
-      this.$store.dispatch('tilePad/setEditMode', false);
-    },
-    toggleLocked(){
-      if (this.locked) {
-        this.passcodeEntry = true;
-      } else {
-        this.disableEditMode();
-        this.setLocked(true);
-      }
-    }
-  },
-  computed: {
-    ...mapGetters({
-      customTilePad: 'settings/customTilePad',
-      editMode: 'tilePad/editMode',
-      locked: 'settings/locked',
-      passcode: 'settings/passcode',
-    }),
-    isLocked() {
-      return this.passcode !== null && this.passcode.length > 0 && this.locked;
-    },
-    taskbarColor() {
-      return this.editMode ? 'success' : 'primary';
-    }
-  },
-  created(){
-    let windowVoices = window.speechSynthesis.getVoices();
+			this.setVoices(windowVoices);
+			this.setVoiceOptions(voiceOptions);
+		},
+		disableEditMode() {
+			this.$store.dispatch('tilePad/setEditMode', false);
+		},
+		toggleLocked(){
+			if (this.locked) {
+				this.passcodeEntry = true;
+			} else {
+				this.disableEditMode();
+				this.setLocked(true);
+			}
+		}
+	},
+	computed: {
+		...mapGetters({
+			customTilePad: 'settings/customTilePad',
+			editMode: 'tilePad/editMode',
+			locked: 'settings/locked',
+			passcode: 'settings/passcode',
+		}),
+		isLocked() {
+			return this.passcode !== null && this.passcode.length > 0 && this.locked;
+		},
+		taskbarColor() {
+			return this.editMode ? 'success' : 'primary';
+		}
+	},
+	created(){
+		let windowVoices = window.speechSynthesis.getVoices();
 
-    if (!windowVoices.length > 0) {
-      const vm = this;
-      window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
-    } else {
-      this.populateVoiceData(windowVoices);
-    }
-  }
+		if (!windowVoices.length > 0) {
+			const vm = this;
+			window.speechSynthesis.onvoiceschanged = () => vm.populateVoiceData(window.speechSynthesis.getVoices());
+		} else {
+			this.populateVoiceData(windowVoices);
+		}
+	}
 };
 </script>

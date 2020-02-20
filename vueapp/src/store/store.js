@@ -7,13 +7,13 @@ import tilePadModule from './modules/tilePad';
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
+	storage: window.localStorage,
 });
 
 export default new Vuex.Store({
-  modules: {
-    settings: settingsModule,
-    tilePad: tilePadModule
-  },
-  plugins: [vuexLocal.plugin]
+	modules: {
+		settings: settingsModule,
+		tilePad: tilePadModule
+	},
+	plugins: [vuexLocal.plugin]
 });

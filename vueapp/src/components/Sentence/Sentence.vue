@@ -67,18 +67,18 @@
 import Tile from '@/components/TilePad/Tile';
 
 export default {
-  name: 'Sentence',
-  components: {
-    Tile
-  },
-  props: {
-    tilePadToDisplay: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  }
+	name: 'Sentence',
+	components: {
+		Tile
+	},
+	props: {
+		tilePadToDisplay: {
+			type: Array,
+			default() {
+				return [];
+			}
+		}
+	}
 };
 </script>
 <style scoped>

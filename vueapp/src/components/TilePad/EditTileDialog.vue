@@ -35,7 +35,9 @@
                   @input="update('text', $event)"
                   label="Text to speak"
                 />
-                <p class="text-left">Accent color</p>
+                <p class="text-left">
+                  Accent color
+                </p>
                 <v-color-picker
                   hide-inputs
                   v-model="color"
@@ -71,35 +73,37 @@
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-  name:'EditTileDialog',
-  computed: {
-    ...mapGetters({
-      editDialogVisibility: 'tilePad/editDialogVisibility',
-      currentTileBeingEdited: 'tilePad/currentTileBeingEdited'
-    }),
-  },
-  data () {
-    return {
-      color: '',
-    };
-  },
-  methods: {
-    ...mapActions({
-      toggleEditDialogVisibility: 'tilePad/toggleEditDialogVisibility',
-      saveTileEdit: 'tilePad/saveTileEdit',
-      saveEditsToTileBeingEdited: 'tilePad/saveEditsToTileBeingEdited'
-    }),
-    saveCurrentEdit(){
-      this.saveEditsToTileBeingEdited({ key: 'accent', value: this.color});
-      this.saveTileEdit();
-      this.toggleEditDialogVisibility();
-    },
-    update(key, value){
-      this.saveEditsToTileBeingEdited({'key': key, 'value': value});
-    }
+	name:'EditTileDialog',
+	computed: {
+		...mapGetters({
+			editDialogVisibility: 'tilePad/editDialogVisibility',
+			currentTileBeingEdited: 'tilePad/currentTileBeingEdited'
+		}),
+	},
+	data () {
+		return {
+			color: '',
+		};
+	},
+	methods: {
+		...mapActions({
+			toggleEditDialogVisibility: 'tilePad/toggleEditDialogVisibility',
+			saveTileEdit: 'tilePad/saveTileEdit',
+			saveEditsToTileBeingEdited: 'tilePad/saveEditsToTileBeingEdited'
+		}),
+		saveCurrentEdit(){
+			this.saveEditsToTileBeingEdited({ key: 'accent',
+				value: this.color});
+			this.saveTileEdit();
+			this.toggleEditDialogVisibility();
+		},
+		update(key, value){
+			this.saveEditsToTileBeingEdited({'key': key,
+				'value': value});
+		}
 
-  },
-    //this.editedTileValues = Object.assign({}, this.currentTileBeingEdited);
+	},
+	//this.editedTileValues = Object.assign({}, this.currentTileBeingEdited);
 
 
 };
