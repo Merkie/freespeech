@@ -28,7 +28,7 @@
               block
               @click="padInput(n)"
               x-large
-              :disabled="length && input.length >= length"
+              :disabled="!isNumbersEnabled"
             >
               {{ n }}
             </v-btn>
@@ -41,7 +41,7 @@
             @click="backspace"
             x-large
             color="warning"
-            v-if="input.length > 0"
+            v-if="isBackspaceEnabled"
           >
             <v-icon>backspace</v-icon>
           </v-btn>
@@ -62,7 +62,7 @@
             block
             @click="padInput(0)"
             x-large
-            :disabled="length && input.length >= length"
+            :disabled="!isNumbersEnabled"
           >
             0
           </v-btn>
@@ -74,7 +74,7 @@
             @click="save"
             x-large
             color="success"
-            :disabled="length && input.length < length"
+            :disabled="!isSaveEnabled"
           >
             <v-icon>done</v-icon>
           </v-btn>
@@ -94,7 +94,7 @@ export default {
     },
     length: {
       type: Number,
-      default: null
+      default: 0
     },
     title: {
       type: String,
@@ -103,47 +103,70 @@ export default {
   },
   data() {
     return {
-      input: ''
+      input: '',
+      hiddenCharacter: '⚫'
     };
   },
   computed: {
     display() {
       if (this.hidden) {
-        return '⚫'.repeat(this.input.length);
+        return this.hiddenCharacter.repeat(this.input.length);
       }
 
       return this.input;
+    },
+    isBackspaceEnabled() {
+      return this.input.length > 0;
+    },
+    isNumbersEnabled() {
+      if (this.length) {
+        return this.input.length < this.length;
+      } else {
+        return true;
+      }
+    },
+    isSaveEnabled() {
+      if (this.length) {
+        return this.input.length === this.length;
+      } else {
+        return this.input.length > 0;
+      }
     }
   },
   methods: {
     backspace() {
-      if (this.input.length > 0) {
+      if (this.isBackspaceEnabled) {
         this.input = this.input.substring(0, this.input.length - 1);
       }
     },
     close() {
-      this.input = '';
-      this.$emit('input', null);
+      if (!this.isBackspaceEnabled) {
+        this.input = '';
+        this.$emit('input', null);
+      }
     },
     keyboardInput(e) {
       if (e.key >= 0 && e.key <= 9) {
         e.preventDefault();
         this.padInput(e.key);
-      }
-      if (e.key === 'Enter') {
+      } else if (e.key === 'Enter') {
         e.preventDefault();
         this.save();
-      }
-      if (e.key === 'Backspace') {
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        this.close();
+      } else if (e.key === 'Backspace') {
         e.preventDefault();
         this.backspace();
       }
     },
     padInput(number) {
-      this.input = this.input + number;
+      if (this.isNumbersEnabled) {
+        this.input = this.input + number;
+      }
     },
     save() {
-      if (!this.length || this.input.length === this.length) {
+      if (this.isSaveEnabled) {
         this.$emit('input', this.input);
         this.input = '';
       }
