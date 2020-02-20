@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      :color="taskbarColor"
       dark
     >
       <div class="d-flex align-center">
@@ -40,6 +40,7 @@
       <v-btn
         icon
         to="/about"
+        @click="this.disableEditMode"
         :disabled="isLocked"
       >
         <v-icon>
@@ -126,6 +127,9 @@ export default {
       this.setVoices(windowVoices);
       this.setVoiceOptions(voiceOptions);
     },
+    disableEditMode() {
+      this.$store.dispatch('tilePad/setEditMode', false);
+    }
     toggleLocked(){
       if (this.locked) {
         this.passcodeEntry = true;
@@ -143,6 +147,9 @@ export default {
     }),
     isLocked() {
       return this.passcode !== null && this.passcode.length > 0 && this.locked;
+    },
+    taskbarColor() {
+      return this.editMode ? 'success' : 'primary';
     }
   },
   created(){
