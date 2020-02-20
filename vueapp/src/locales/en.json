@@ -1,5 +1,9 @@
 {
 	"languageName": "English",
+	"app": {
+		"titleEnterPasscode": "Enter Passcode to unlock",
+		"errorIncorrectPasscode": "Incorrect passcode"
+	},
 	"settings": {
 		"title": "Settings",
 		"optionVoice": "Voice",
@@ -8,9 +12,12 @@
 		"optionLanguage": "Language",
 		"optionPasscodeEnabled": "Passcode Enabled",
 		"buttonClose": "Close",
-		"buttonReset": "Reset all Settings & Tiles",
-		"buttonExport": "Export Settings & Tiles",
-		"buttonImport": "Import Settings & Tiles",
 		"titleSetPasscode": "Set Passcode"
+	},
+	"sentence": {
+		"title": "Sentence",
+		"instructions": "Add tiles to this sentence by tapping on them below.",
+		"buttonSpeak": "Speak",
+		"buttonClear": "Clear"
 	}
 }

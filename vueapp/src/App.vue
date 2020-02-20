@@ -70,7 +70,7 @@
 			color="error"
 			top
 		>
-			Incorrect passcode
+			{{ $t('app.errorIncorrectPasscode') }}
 		</v-snackbar>
 
 		<v-dialog
@@ -79,7 +79,7 @@
 			persistent
 		>
 			<NumberPad
-				title="Enter Passcode to unlock"
+				:title="$t('app.titleEnterPasscode')"
 				:length="passcodeLength"
 				:hidden="true"
 				@input="handlePasscodeInput"

@@ -5,7 +5,7 @@
 			class="px-4 sentenceCard"
 		>
 			<v-card-title>
-				Sentence
+				{{ $t('sentence.title') }}
 				<v-spacer />
 				<v-btn
 					raised
@@ -15,6 +15,8 @@
 					style="height: unset"
 					@click="$emit('speakSentence')"
 				>
+							</v-icon						</v-row>
+					
 					<v-container
 						justify="center"
 					>
@@ -32,7 +34,7 @@
 								align="center"
 								justify="center"
 							>
-								<h3>Speak</h3>
+								<h3>{{ $t('sentence.buttonSpeak') }}</h3>
 							</v-card-text>
 						</v-row>
 					</v-container>
@@ -50,6 +52,7 @@
 					style="height: unset; color: white;"
 					@click="$emit('clearSentence')"
 				>
+				</v-btn>
 					<v-container
 						justify="center"
 					>
@@ -67,18 +70,17 @@
 								align="center"
 								justify="center"
 							>
-								<h3>Clear</h3>
+								<h3>{{ $t('sentence.buttonClear') }}</h3>
 							</v-card-text>
 						</v-row>
 					</v-container>
-				</v-btn>
 			</v-card-title>
-			<v-container class="py-0">
+			<v-card-text class="py-0">
 				<p
 					v-if="tilePadToDisplay.length === 0"
 					class="body-2"
 				>
-					Add tiles to this sentence by tapping on them below.
+					{{ $t('sentence.instructions') }}
 				</p>
 				<v-row
 					v-else
@@ -105,7 +107,7 @@
 						/>
 					</v-col>
 				</v-row>
-			</v-container>
+			</v-card-text>
 		</v-card>
 	</div>
 </template>
