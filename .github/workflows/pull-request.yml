@@ -1,0 +1,39 @@
+name: Pull Request
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('vueapp/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+      - name: npm install
+        run: cd vueapp && npm ci && cd ../
+      - name: check linting passes
+        run: cd vueapp && npm run lint:nofix && cd ../
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('vueapp/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+      - name: npm install
+        run: cd vueapp && npm ci && cd ../
+      - name: unit tests
+        run: cd vueapp && npm run test:unit && cd ../
