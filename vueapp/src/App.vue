@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      :color="taskbarColor"
       dark
     >
       <div class="d-flex align-center">
@@ -36,6 +36,7 @@
       <v-btn
         icon
         to="/about"
+        @click="this.disableEditMode"
       >
         <v-icon>
           info
@@ -75,7 +76,7 @@ export default {
     //
   }),
     methods: {
-    ...mapActions({        
+    ...mapActions({
       toggleSettingsDialogVisibility: 'settings/toggleSettingsDialogVisibility',
       toggleEditMode: 'tilePad/toggleEditMode',
       setVoices: 'settings/setVoices',
@@ -89,12 +90,18 @@ export default {
       this.setVoices(windowVoices);
       this.setVoiceOptions(voiceOptions);
     },
+    disableEditMode() {
+      this.$store.dispatch('tilePad/setEditMode', false);
+    }
   },
   computed: {
-    ...mapGetters({ 
+    ...mapGetters({
       customTilePad: 'settings/customTilePad',
       editMode: 'tilePad/editMode'
-    })
+    }),
+    taskbarColor() {
+      return this.editMode ? 'success' : 'primary';
+    }
   },
   created(){
     let windowVoices = window.speechSynthesis.getVoices();

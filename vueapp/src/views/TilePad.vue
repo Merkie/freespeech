@@ -1,11 +1,14 @@
 <template>
   <div>
     <Sentence
-      v-if="sentenceMode"
+      v-if="sentenceMode && !editMode"
       :tile-pad-to-display="sentenceTiles"
       @clearSentence="sentenceTiles = []"
       @speakSentence="speakSentence"
       @removeFromSentence="sentenceTiles.splice($event, 1)"
+    />
+    <edit-mode-header
+      v-if="sentenceMode && editMode"
     />
     <v-container
       fluid
@@ -52,12 +55,14 @@ const SPEECH_SYNTHESIS = window.speechSynthesis;
 import TileData from '../../../build.json';
 import Tile from '@/components/TilePad/Tile';
 import Sentence from '@/components/Sentence/Sentence';
+import EditModeHeader from '@/components/EditModeHeader/EditModeHeader';
 
 export default {
   name: 'TilePad',
   components: {
     Tile,
-    Sentence
+    Sentence,
+    EditModeHeader
   },
   data() {
     return {
@@ -71,6 +76,7 @@ export default {
       selectedVoiceIndex: 'settings/selectedVoiceIndex',
       customTilePadOption: 'settings/customTilePad',
       customTilePadData: 'tilePad/customTilePadData',
+      editMode: 'tilePad/editMode',
       voices: 'settings/voices',
     }),
     tilePadToDisplay: function() {
