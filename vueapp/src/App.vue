@@ -77,6 +77,7 @@
       persistent
     >
       <NumberPad
+        title="Enter Passcode to unlock"
         :length="passcodeLength"
         :hidden="true"
         @input="handlePasscodeInput"

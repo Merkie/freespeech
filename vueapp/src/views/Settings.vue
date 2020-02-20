@@ -31,6 +31,7 @@
       persistent
     >
       <NumberPad
+        title="Set Passcode"
         :length="passcodeLength"
         :hidden="true"
         @input="handlePasscodeInput"
