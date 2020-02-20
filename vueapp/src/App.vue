@@ -51,6 +51,7 @@
       <v-btn
         icon
         to="/settings"
+        @click="this.disableEditMode"
         :disabled="isLocked"
       >
         <v-icon>
@@ -129,11 +130,12 @@ export default {
     },
     disableEditMode() {
       this.$store.dispatch('tilePad/setEditMode', false);
-    }
+    },
     toggleLocked(){
       if (this.locked) {
         this.passcodeEntry = true;
       } else {
+        this.disableEditMode();
         this.setLocked(true);
       }
     }
