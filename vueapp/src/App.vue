@@ -31,7 +31,7 @@
       <v-btn
         icon
         v-if="customTilePad"
-        :disabled="passcode && locked"
+        :disabled="isLocked"
         @click="this.toggleEditMode"
       >
         <v-icon>{{ editMode ? 'save' : 'edit ' }}</v-icon>
@@ -40,7 +40,7 @@
       <v-btn
         icon
         to="/about"
-        :disabled="passcode && locked"
+        :disabled="isLocked"
       >
         <v-icon>
           info
@@ -50,7 +50,7 @@
       <v-btn
         icon
         to="/settings"
-        :disabled="passcode && locked"
+        :disabled="isLocked"
       >
         <v-icon>
           settings
@@ -139,7 +139,10 @@ export default {
       editMode: 'tilePad/editMode',
       locked: 'settings/locked',
       passcode: 'settings/passcode',
-    })
+    }),
+    isLocked() {
+      return this.passcode !== null && this.passcode.length > 0 && this.locked;
+    }
   },
   created(){
     let windowVoices = window.speechSynthesis.getVoices();
