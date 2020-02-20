@@ -1,13 +1,23 @@
 {
-  "languageName": "Deutsch",
-  "settings": {
-    "title": "Einstellungen",
-    "optionVoice": "Stimme",
-    "optionCustomTilePad": "Angepasst Kachelsatz",
-    "optionCreateSentences": "Sätze erstellen",
-    "optionLanguage": "Sprache",
-    "optionPasscodeEnabled": "Passcode aktiviert",
-    "buttonClose": "Schließen",
-    "titleSetPasscode": "Passcode einstellen"
-  }
+	"languageName": "Deutsch",
+	"app": {
+		"titleEnterPasscode": "Geben Sie den Passcode",
+		"errorIncorrectPasscode": "Der Passcode ist falsch"
+	},
+	"settings": {
+		"title": "Einstellungen",
+		"optionVoice": "Stimme",
+		"optionCustomTilePad": "Angepasst Kachelsatz",
+		"optionCreateSentences": "Sätze erstellen",
+		"optionLanguage": "Sprache",
+		"optionPasscodeEnabled": "Passcode aktiviert",
+		"buttonClose": "Schließen",
+		"titleSetPasscode": "Passcode einstellen"
+	},
+	"sentence": {
+		"title": "Satz",
+		"instructions": "Fügen Sie diesem Satz Kacheln hinzu, indem Sie unten darauf tippen.",
+		"buttonSpeak": "Sprechen",
+		"buttonClear": "Löschen"
+	}
 }

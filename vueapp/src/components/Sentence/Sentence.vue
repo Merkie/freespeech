@@ -5,7 +5,7 @@
 			class="px-4 sentenceCard"
 		>
 			<v-card-title>
-				Sentence
+				{{ $t('sentence.title') }}
 				<v-spacer />
 				<v-btn
 					class="mx-1"
@@ -15,7 +15,7 @@
 					<v-icon class="pr-2">
 						record_voice_over
 					</v-icon>
-					Speak
+					{{ $t('sentence.buttonSpeak') }}
 				</v-btn>
 				<v-btn
 					class="mx-2"
@@ -25,15 +25,15 @@
 					<v-icon class="pr-2">
 						clear
 					</v-icon>
-					Clear
+					{{ $t('sentence.buttonClear') }}
 				</v-btn>
 			</v-card-title>
-			<v-container class="py-0">
+			<v-card-text class="py-0">
 				<p
 					v-if="tilePadToDisplay.length === 0"
 					class="body-2"
 				>
-					Add tiles to this sentence by tapping on them below.
+					{{ $t('sentence.instructions') }}
 				</p>
 				<v-row
 					v-else
@@ -60,7 +60,7 @@
 						/>
 					</v-col>
 				</v-row>
-			</v-container>
+			</v-card-text>
 		</v-card>
 	</div>
 </template>

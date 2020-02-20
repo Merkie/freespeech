@@ -1,13 +1,23 @@
 {
-  "languageName": "English",
-  "settings": {
-    "title": "Settings",
-    "optionVoice": "Voice",
-    "optionCustomTilePad": "Custom Tile Pad",
-    "optionCreateSentences": "Create Sentences",
-    "optionLanguage": "Language",
-    "optionPasscodeEnabled": "Passcode Enabled",
-    "buttonClose": "Close",
-    "titleSetPasscode": "Set Passcode"
-  }
+	"languageName": "English",
+	"app": {
+		"titleEnterPasscode": "Enter Passcode to unlock",
+		"errorIncorrectPasscode": "Incorrect passcode"
+	},
+	"settings": {
+		"title": "Settings",
+		"optionVoice": "Voice",
+		"optionCustomTilePad": "Custom Tile Pad",
+		"optionCreateSentences": "Create Sentences",
+		"optionLanguage": "Language",
+		"optionPasscodeEnabled": "Passcode Enabled",
+		"buttonClose": "Close",
+		"titleSetPasscode": "Set Passcode"
+	},
+	"sentence": {
+		"title": "Sentence",
+		"instructions": "Add tiles to this sentence by tapping on them below.",
+		"buttonSpeak": "Speak",
+		"buttonClear": "Clear"
+	}
 }
