@@ -43,6 +43,30 @@
 				@input="handlePasscodeInput"
 			/>
 		</v-dialog>
+
+		<v-dialog
+			v-model="passcodeEntry"
+			width="400"
+			persistent
+		>
+			<NumberPad
+				title="Set Passcode"
+				:length="passcodeLength"
+				:hidden="true"
+				@input="handlePasscodeInput"
+			/>
+		</v-dialog>
+
+		<v-btn
+			color="warning"
+			class="mt-4"
+			@click="fullReset"
+		>
+			<v-icon class="mr-2">
+				refresh
+			</v-icon>
+			Reset all Settings &amp; Custom Tiles
+		</v-btn>
 	</v-container>
 </template>
 
@@ -141,7 +165,18 @@ export default {
 			} else {
 				this.setPasscode(null);
 			}
+		},
+		fullReset() {
+			if (!confirm('Are you sure you want to reset all settings and custom tiles?')) {
+				return false;
+			}
+
+			if (typeof window.localStorage !== 'undefined') {
+				window.localStorage.removeItem('vuex');
+			}
+
+			document.location.reload();
 		}
-	},
+	}
 };
 </script>
