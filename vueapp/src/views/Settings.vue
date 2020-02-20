@@ -37,6 +37,17 @@
         @input="handlePasscodeInput"
       />
     </v-dialog>
+
+    <v-btn
+      color="warning"
+      @click="fullReset"
+      class="mt-4"
+    >
+      <v-icon class="mr-2">
+        refresh
+      </v-icon>
+      Reset all Settings &amp; Custom Tiles
+    </v-btn>
   </v-container>
 </template>
 
@@ -118,6 +129,16 @@ export default {
       } else {
         this.setPasscode(null);
       }
+    },
+    fullReset() {
+      if (!confirm('Are you sure you want to reset all settings and custom tiles?')) {
+        return false;
+      }
+
+      if (typeof window.localStorage !== 'undefined') {
+        window.localStorage.clear();
+      }
+      document.location.reload();
     }
   },
 };
