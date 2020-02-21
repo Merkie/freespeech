@@ -98,7 +98,7 @@
 				type="file"
 				style="display: none"
 				@change="importSettings"
-			/>
+			>
 		</div>
 	</v-container>
 </template>
