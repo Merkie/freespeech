@@ -1,47 +1,111 @@
 <template>
-  <v-container class="pb-10">
-    <h1 class="mb-5">
-      Settings
-    </h1>
+	<v-container class="pb-10">
+		<h1 class="mb-5">
+			{{ $t('settings.title') }}
+		</h1>
 
-    <v-select
-      :items="voiceOptions"
-      label="Voice"
-      v-model="selectedVoiceIndex"
-    />
+		<v-select
+			v-model="selectedLanguage"
+			:items="languageOptions"
+			:label="$t('settings.optionLanguage')"
+		/>
 
-    <v-switch
-      :label="customTilePad ? 'Custom Tile Pad' : 'Static Tile Pad'"
-      v-model="customTilePad"
-    />
+		<v-select
+			v-model="selectedVoiceIndex"
+			:items="voiceOptions"
+			:label="$t('settings.optionVoice')"
+		/>
 
-    <v-switch
-      label="Create Sentences"
-      v-model="sentenceMode"
-    />
+		<v-switch
+			v-model="customTilePad"
+			:label="$t('settings.optionCustomTilePad')"
+		/>
 
-    <v-switch
-      label="Passcode Enabled"
-      v-model="passcodeEnabled"
-    />
+		<v-switch
+			v-model="sentenceMode"
+			:label="$t('settings.optionCreateSentences')"
+		/>
 
-    <v-dialog
-      v-model="passcodeEntry"
-      width="400"
-      persistent
-    >
-      <NumberPad
-        title="Set Passcode"
-        :length="passcodeLength"
-        :hidden="true"
-        @input="handlePasscodeInput"
-      />
-    </v-dialog>
-  </v-container>
+		<v-switch
+			v-model="passcodeEnabled"
+			:label="$t('settings.optionPasscodeEnabled')"
+		/>
+
+		<v-dialog
+			v-model="passcodeEntry"
+			width="400"
+			persistent
+		>
+			<NumberPad
+				:title="$t('settings.titleSetPasscode')"
+				:length="passcodeLength"
+				:hidden="true"
+				@input="handlePasscodeInput"
+			/>
+		</v-dialog>
+
+		<v-dialog
+			v-model="passcodeEntry"
+			width="400"
+			persistent
+		>
+			<NumberPad
+				title="Set Passcode"
+				:length="passcodeLength"
+				:hidden="true"
+				@input="handlePasscodeInput"
+			/>
+		</v-dialog>
+
+		<div>
+			<v-btn
+				color="warning"
+				class="mt-4 mr-4"
+				@click="fullReset"
+			>
+				<v-icon class="mr-2">
+					refresh
+				</v-icon>
+				{{ $t('settings.buttonReset') }}
+			</v-btn>
+		</div>
+
+		<div>
+			<v-btn
+				color="white"
+				class="mt-4 mr-4"
+				@click="exportSettings"
+			>
+				<v-icon class="mr-2">
+					cloud_download
+				</v-icon>
+				{{ $t('settings.buttonExport') }}
+			</v-btn>
+
+			<v-btn
+				color="white"
+				class="mt-4 mr-4"
+				@click="$refs.importSettingsFile.click()"
+			>
+				<v-icon class="mr-2">
+					cloud_upload
+				</v-icon>
+				{{ $t('settings.buttonImport') }}
+			</v-btn>
+
+			<input
+				ref="importSettingsFile"
+				type="file"
+				style="display: none"
+				@change="importSettings"
+			>
+		</div>
+	</v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { saveAs } from 'file-saver';
 import NumberPad from '@/components/NumberPad/NumberPad.vue';
 
 export default {
@@ -55,6 +119,9 @@ export default {
 	},
 	computed: {
 		...mapGetters({
+			customTilePad: 'settings/customTilePad',
+			customTilePadData: 'tilePad/customTilePadData',
+			locale: 'settings/locale',
 			passcode: 'settings/passcode',
 			voiceOptions: 'settings/voiceOptions',
 		}),
@@ -98,17 +165,68 @@ export default {
 			set(){
 				this.toggleSentenceMode();
 			}
+		},
+		selectedLanguage: {
+			get() {
+				return this.locale;
+			},
+			set(value) {
+				this.$root.$i18n.locale = value;
+				this.setLocale(value);
+			}
+		},
+		languageOptions() {
+			return Object.entries(this.$i18n.messages).map(entry => {
+				return { value: entry[0],
+					text: entry[1].languageName };
+			});
 		}
 	},
 	methods: {
 		...mapActions({
 			setEditMode: 'tilePad/setEditMode',
+			setLocale: 'settings/setLocale',
 			setLocked: 'settings/setLocked',
 			setPasscode: 'settings/setPasscode',
 			setSelectedVoiceIndex: 'settings/setSelectedVoiceIndex',
 			toggleCustomTilePad: 'settings/toggleCustomTilePad',
 			toggleSentenceMode: 'settings/toggleSentenceMode'
 		}),
+		exportSettings() {
+			const json = JSON.stringify({
+				'settings/setSentenceMode': this.sentenceMode,
+				'settings/setCustomTilePad': this.customTilePad,
+				'settings/setPasscode': this.passcode,
+				'tilePad/setCustomTilePadData': this.customTilePadData
+			});
+
+			const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+			saveAs(blob, 'freespeech-settings.json');
+		},
+		async importSettings() {
+			if (typeof this.$refs.importSettingsFile.files === 'undefined') {
+				return;
+			}
+
+			const json = await this.$refs.importSettingsFile.files[0].text();
+			const data = JSON.parse(json);
+			if (data) {
+				for (const [key, value] of Object.entries(data)) {
+					await this.$store.dispatch(key, value);
+				}
+			}
+		},
+		fullReset() {
+			if (!confirm('Are you sure you want to reset all settings and custom tiles?')) {
+				return false;
+			}
+
+			if (typeof window.localStorage !== 'undefined') {
+				window.localStorage.removeItem('vuex');
+			}
+
+			document.location.reload();
+		},
 		handlePasscodeInput(input) {
 			this.passcodeEntry = false;
 
@@ -119,6 +237,6 @@ export default {
 				this.setPasscode(null);
 			}
 		}
-	},
+	}
 };
 </script>

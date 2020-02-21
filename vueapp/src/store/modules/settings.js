@@ -1,14 +1,21 @@
 const state = {
 	customTilePad: true,
+	locale: null,
 	locked: false,
 	passcode: null,
-	selectedVoiceIndex: 0,
+	selectedVoiceIndex: null,
 	sentenceMode: true,
 	voices: [],
 	voiceOptions: [],
 };
 
 const mutations = {
+	SET_CUSTOM_TILE_PAD(state, value){
+		state.customTilePad = value;
+	},
+	SET_LOCALE(state, value){
+		state.locale = value;
+	},
 	SET_LOCKED(state, value){
 		state.locked = value;
 	},
@@ -18,21 +25,24 @@ const mutations = {
 	SET_SELECTED_VOICE_INDEX(state, value){
 		state.selectedVoiceIndex = value;
 	},
+	SET_SENTENCE_MODE(state, value){
+		state.sentenceMode = value;
+	},
 	SET_VOICES(state, value){
 		state.voices = value;
 	},
 	SET_VOICE_OPTIONS(state, value){
 		state.voiceOptions = value;
-	},
-	TOGGLE_CUSTOM_TILE_PAD(state){
-		state.customTilePad = !state.customTilePad;
-	},
-	TOGGLE_SENTENCE_MODE(state){
-		state.sentenceMode = !state.sentenceMode;
-	},
+	}
 };
 
 const actions = {
+	setCustomTilePad: ({commit}, value) => {
+		commit('SET_CUSTOM_TILE_PAD', value);
+	},
+	setLocale: ({commit}, value) => {
+		commit('SET_LOCALE', value);
+	},
 	setLocked: ({commit}, value) => {
 		commit('SET_LOCKED', value);
 	},
@@ -42,25 +52,29 @@ const actions = {
 	setSelectedVoiceIndex: ({commit}, value) => {
 		commit('SET_SELECTED_VOICE_INDEX', value);
 	},
+	setSentenceMode: ({commit}, value) => {
+		commit('SET_SENTENCE_MODE', value);
+	},
 	setVoices: ({commit}, value) => {
 		commit('SET_VOICES', value);
 	},
 	setVoiceOptions: ({commit}, value) => {
 		commit('SET_VOICE_OPTIONS', value);
 	},
-	toggleCustomTilePad: ({commit}) => {
-		commit('TOGGLE_CUSTOM_TILE_PAD');
+	toggleCustomTilePad: ({commit, state}) => {
+		commit('SET_CUSTOM_TILE_PAD', !state.customTilePad);
 	},
 	toggleLocked: ({commit, state}) => {
 		commit('SET_LOCKED', !state.locked);
 	},
-	toggleSentenceMode: ({commit}) => {
-		commit('TOGGLE_SENTENCE_MODE');
+	toggleSentenceMode: ({commit, state}) => {
+		commit('SET_SENTENCE_MODE', !state.sentenceMode);
 	},
 };
 
 const getters = {
 	customTilePad: state => state.customTilePad,
+	locale: state => state.locale,
 	locked: state => state.locked,
 	passcode: state => state.passcode,
 	selectedVoiceIndex: state => state.selectedVoiceIndex,

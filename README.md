@@ -19,12 +19,23 @@ Please make sure to follow our [Code Of Conduct](/.github/CODE_OF_CONDUCT.md) in
 
 ## Authors
 
-* **Archer Calder** - *Initial work* - [Merkie](https://github.com/Merkie)
-* **Bailey Townsend** - *Core Team Member/Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
-* **Rees Draminski** - *Help with JavaScript* - [reesdraminski](https://github.com/reesdraminski)
-* **Aidan Kinzett** - *Feature enhancements/Sentence Building feature* - [aidankinzett](https://github.com/aidankinzett)
-* **James Burnham** - *Bug fixes* - [jburnham96](https://github.com/jburnham96)
-* **Ed Linklater** - *Added intial unit test to provide us with base* - [edlinklater](https://github.com/edlinklater)
+### Core Team
+* **Archer Calder** - *Initial work/Core Team Member/Creator* - [Merkie](https://github.com/Merkie)
+
+    [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/merkie)
+
+* **Bailey Townsend** - *Core Team Member/Developer/Collaborator* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105) 
+
+    [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/T6T61FYPX)
+
+
+## Contributors
+None of this would be possible without you all. Thank you!
+<a href="https://github.com/Merkie/freespeech/graphs/contributors">
+  <img src="https://contributors-img.firebaseapp.com/image?repo=Merkie/freespeech" />
+</a>
+
+Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
 ## License
 

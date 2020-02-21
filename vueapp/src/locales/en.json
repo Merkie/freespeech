@@ -1,0 +1,16 @@
+{
+	"languageName": "English",
+	"settings": {
+		"title": "Settings",
+		"optionVoice": "Voice",
+		"optionCustomTilePad": "Custom Tile Pad",
+		"optionCreateSentences": "Create Sentences",
+		"optionLanguage": "Language",
+		"optionPasscodeEnabled": "Passcode Enabled",
+		"buttonClose": "Close",
+		"buttonReset": "Reset all Settings & Tiles",
+		"buttonExport": "Export Settings & Tiles",
+		"buttonImport": "Import Settings & Tiles",
+		"titleSetPasscode": "Set Passcode"
+	}
+}

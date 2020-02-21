@@ -6,77 +6,143 @@
           "text": "No",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/cancel-2.png",
-          "id": 0
+          "id": 0,
+          "messages": {
+            "de": {
+              "name": "Nein",
+              "text": "nein"
+            }
+          }
         },
         {
           "name": "Little",
           "text": "Little",
           "image": "https://img.icons8.com/officexs/64/000000/cursor.png",
           "id": 1,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Klein",
+              "text": "klein"
+            }
+          }
         },
         {
           "name": "Off",
           "text": "Off",
           "image": "https://img.icons8.com/officexs/64/000000/disclaimer.png",
           "id": 2,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Aus",
+              "text": "aus"
+            }
+          }
         },
         {
           "name": "Good",
           "text": "Good",
           "image": "https://img.icons8.com/officexs64/000000/good-quality.png",
           "id": 3,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Gut",
+              "text": "gut"
+            }
+          }
         },
         {
           "name": "Some",
           "text": "Some",
           "image": "https://img.icons8.com/officexs/64/000000/plus-math.png",
           "id": 4,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Etwas",
+              "text": "etwas"
+            }
+          }
         },
         {
           "name": "Finished",
           "text": "Finished",
           "image": "https://img.icons8.com/officexs/64/000000/so-so.png",
           "id": 5,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Fertig",
+              "text": "fertig"
+            }
+          }
         },
         {
           "name": "Bad",
           "text": "Bad",
           "image": "https://img.icons8.com/officexs/64/000000/remove-tag.png",
           "id": 6,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Schlecht",
+              "text": "schlecht"
+            }
+          }
         },
         {
           "name": "Out",
           "text": "Out",
           "image": "https://img.icons8.com/officexs/64/000000/hand-right.png",
           "id": 7,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Raus",
+              "text": "raus"
+            }
+          }
         },
         {
           "name": "Mine",
           "text": "Mine",
           "image": "https://img.icons8.com/officexs/64/000000/oppression.png",
           "id": 8,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Mein",
+              "text": "mein"
+            }
+          }
         },
         {
           "name": "Down",
           "text": "Down",
           "image": "https://img.icons8.com/officexs/64/000000/long-arrow-down.png",
           "id": 9,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Ab",
+              "text": "ab"
+            }
+          }
         },
         {
           "name": "Up",
           "text": "Up",
           "accent": "mint",
           "image": "https://img.icons8.com/officexs/64/000000/finger-and-thumb.png",
-          "id": 10
+          "id": 10,
+          "messages": {
+            "de": {
+              "name": "Auf",
+              "text": "auf"
+            }
+          }
         },
         {
           "name": "Keyboard",
@@ -84,231 +150,429 @@
           "accent": "mint",
           "image": "https://img.icons8.com/officexs/64/000000/keyboard.png",
           "navigation": "keyboard",
-          "id": 11
+          "id": 11,
+          "messages": {
+            "de": {
+              "name": "Tastatur",
+              "text": "Tastatur"
+            }
+          }
         },
         {
           "name": "Feel",
           "text": "Feel",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/in-love.png",
-          "id": 12
+          "id": 12,
+          "messages": {
+            "de": {
+              "name": "Fühlen",
+              "text": "fühlen"
+            }
+          }
         },
         {
           "name": "Work",
           "text": "Work",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/work.png",
-          "id": 13
+          "id": 13,
+          "messages": {
+            "de": {
+              "name": "Arbeit",
+              "text": "Arbeit"
+            }
+          }
         },
         {
           "name": "New",
           "text": "New",
           "image": "https://img.icons8.com/officexs/64/000000/new.png",
           "id": 14,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Neu",
+              "text": "neu"
+            }
+          }
         },
         {
           "name": "Play",
           "text": "Play",
           "image": "https://img.icons8.com/officexs/64/000000/play.png",
           "id": 15,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Spiele",
+              "text": "Spiele"
+            }
+          }
         },
         {
           "name": "Have",
           "text": "Have",
           "image": "https://img.icons8.com/officexs/64/000000/hospital-2.png",
           "id": 16,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Habe",
+              "text": "habe"
+            }
+          }
         },
         {
           "name": "Stop",
           "text": "Stop",
           "image": "https://img.icons8.com/officexs/64/000000/stop-sign.png",
           "id": 17,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Halt",
+              "text": "halt"
+            }
+          }
         },
         {
           "name": "Read",
           "text": "Read",
           "image": "https://img.icons8.com/officexs/64/000000/book.png",
           "id": 18,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Lesen",
+              "text": "lesen"
+            }
+          }
         },
         {
           "name": "Fast",
           "text": "Fast",
           "image": "https://img.icons8.com/officexs/64/000000/double-right.png",
           "id": 19,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Schnell",
+              "text": "schnell"
+            }
+          }
         },
         {
           "name": "You",
           "text": "You",
           "image": "https://img.icons8.com/officexs/64/000000/youtube.png",
           "id": 20,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Du",
+              "text": "du"
+            }
+          }
         },
         {
           "name": "Like",
           "text": "Like",
           "image": "https://img.icons8.com/officexs/64/000000/filled-like.png",
           "id": 21,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Mag",
+              "text": "mag"
+            }
+          }
         },
         {
           "name": "More",
           "text": "More",
           "image": "https://img.icons8.com/officexs/64/000000/more.png",
           "id": 22,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Mehr",
+              "text": "mehr"
+            }
+          }
         },
         {
           "name": "They",
           "text": "They",
           "accent": "mint",
           "image": "https://img.icons8.com/officexs/64/000000/street-view.png",
-          "id": 23
+          "id": 23,
+          "messages": {
+            "de": {
+              "name": "Sie",
+              "text": "Sie"
+            }
+          }
         },
         {
           "name": "Time",
           "text": "Time",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/time.png",
-          "id": 24
+          "id": 24,
+          "messages": {
+            "de": {
+              "name": "Zeit",
+              "text": "Zeit"
+            }
+          }
         },
         {
           "name": "Big",
           "text": "Big",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/big-ben.png",
-          "id": 25
+          "id": 25,
+          "messages": {
+            "de": {
+              "name": "Groß",
+              "text": "groß"
+            }
+          }
         },
         {
           "name": "Go",
           "text": "Go",
           "image": "https://img.icons8.com/officexs/64/000000/go.png",
           "id": 26,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Gehen",
+              "text": "gehen"
+            }
+          }
         },
         {
           "name": "Want",
           "text": "Want",
           "image": "https://img.icons8.com/officexs/64/000000/gift.png",
           "id": 27,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Will",
+              "text": "will"
+            }
+          }
         },
         {
           "name": "Help",
           "text": "Help",
           "image": "https://img.icons8.com/officexs/64/000000/volunteering.png",
           "id": 28,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Hilfe",
+              "text": "hilfe"
+            }
+          }
         },
         {
           "name": "It",
           "text": "It",
           "image": "https://img.icons8.com/officexs/64/000000/dog.png",
           "id": 29,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Es",
+              "text": "es"
+            }
+          }
         },
         {
           "name": "Do",
           "text": "Do",
           "image": "https://img.icons8.com/officexs/64/000000/to-do.png",
           "id": 30,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Machen",
+              "text": "machen"
+            }
+          }
         },
         {
           "name": "Come",
           "text": "Come",
           "image": "https://img.icons8.com/officexs/64/000000/comet.png",
           "id": 31,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Komme",
+              "text": "komme"
+            }
+          }
         },
         {
           "name": "All",
           "text": "All",
           "image": "https://img.icons8.com/officexs/64/000000/alligator.png",
           "id": 32,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Alle",
+              "text": "alle"
+            }
+          }
         },
         {
           "name": "He",
           "text": "He",
           "image": "https://img.icons8.com/officexs/64/000000/standing-man.png",
           "id": 33,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Er",
+              "text": "er"
+            }
+          }
         },
         {
           "name": "Get",
           "text": "Get",
           "image": "https://img.icons8.com/officexs/64/000000/quote-right.png",
           "id": 34,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Holen",
+              "text": "holen"
+            }
+          }
         },
         {
           "name": "Color",
           "text": "Color",
           "accent": "mint",
           "image": "https://img.icons8.com/officexs/64/000000/rgb-circle-1.png",
-          "id": 35
+          "id": 35,
+          "messages": {
+            "de": {
+              "name": "Farbe",
+              "text": "farbe"
+            }
+          }
         },
         {
           "name": "My",
           "text": "My",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/oppression.png",
-          "id": 36
+          "id": 36,
+          "messages": {
+            "de": {
+              "name": "Mein",
+              "text": "mein"
+            }
+          }
         },
         {
           "name": "Me",
           "text": "Me",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/person-male.png",
-          "id": 37
+          "id": 37,
+          "messages": {
+            "de": {
+              "name": "Mir",
+              "text": "mir"
+            }
+          }
         },
         {
           "name": "And",
           "text": "And",
           "image": "https://img.icons8.com/officexs/64/000000/bicycle.png",
           "id": 38,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Und",
+              "text": "und"
+            }
+          }
         },
         {
           "name": "Wear",
           "text": "Wear",
           "image": "https://img.icons8.com/officexs/64/000000/shirt.png",
           "id": 39,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Tragen",
+              "text": "tragen"
+            }
+          }
         },
         {
           "name": "That",
           "text": "That",
           "image": "https://img.icons8.com/officexs/64/000000/map-marker.png",
           "id": 40,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Das",
+              "text": "das"
+            }
+          }
         },
         {
           "name": "Am",
           "text": "Am",
           "image": "https://img.icons8.com/officexs/64/000000/map-pin.png",
           "id": 41,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Bin",
+              "text": "bin"
+            }
+          }
         },
         {
           "name": "Please",
           "text": "Please",
           "image": "https://img.icons8.com/officexs/64/000000/synchronize.png",
           "id": 42,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Bitte",
+              "text": "bitte"
+            }
+          }
         },
         {
           "name": "What",
           "text": "What",
           "image": "https://img.icons8.com/officexs/64/000000/talk-male.png",
           "id": 43,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Was",
+              "text": "was"
+            }
+          }
         },
         {
           "name": "+s",
@@ -322,77 +586,143 @@
           "text": "There",
           "image": "https://img.icons8.com/officexs/64/000000/city-square.png",
           "id": 45,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Da",
+              "text": "da"
+            }
+          }
         },
         {
           "name": "In",
           "text": "In",
           "image": "https://img.icons8.com/officexs/64/000000/walking.png",
           "id": 46,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Im",
+              "text": "im"
+            }
+          }
         },
         {
           "name": "A",
           "text": "Uh",
           "accent": "mint",
           "image": "https://img.icons8.com/officexs/64/000000/xbox-a.png",
-          "id": 47
+          "id": 47,
+          "messages": {
+            "de": {
+              "name": "Ein",
+              "text": "ein"
+            }
+          }
         },
         {
           "name": "Were",
           "text": "Were",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/jog-reverse.png",
-          "id": 48
+          "id": 48,
+          "messages": {
+            "de": {
+              "name": "Warst",
+              "text": "warst"
+            }
+          }
         },
         {
           "name": "On",
           "text": "On",
           "accent": "peach",
           "image": "https://img.icons8.com/officexs/64/000000/ceiling-fan-on.png",
-          "id": 49
+          "id": 49,
+          "messages": {
+            "de": {
+              "name": "Auf",
+              "text": "auf"
+            }
+          }
         },
         {
           "name": "Was",
           "text": "Was",
           "image": "https://img.icons8.com/officexs/64/000000/wasp.png",
           "id": 50,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "War",
+              "text": "war"
+            }
+          }
         },
         {
           "name": "I",
           "text": "Eye",
           "image": "https://img.icons8.com/officexs/64/000000/visible.png",
           "id": 51,
-          "accent": "white"
+          "accent": "white",
+          "messages": {
+            "de": {
+              "name": "Ich",
+              "text": "ich"
+            }
+          }
         },
         {
           "name": "End",
           "text": "End",
           "accent": "violet",
           "image": "https://img.icons8.com/officexs/64/000000/end-call.png",
-          "id": 52
+          "id": 52,
+          "messages": {
+            "de": {
+              "name": "Ende",
+              "text": "ende"
+            }
+          }
         },
         {
           "name": "Is",
           "text": "Is",
           "accent": "violet",
           "image": "https://img.icons8.com/officexs/64/000000/year-of-snake.png",
-          "id": 53
+          "id": 53,
+          "messages": {
+            "de": {
+              "name": "Ist",
+              "text": "ist"
+            }
+          }
         },
         {
           "name": "To",
           "text": "To",
           "accent": "violet",
           "image": "https://img.icons8.com/officexs/64/000000/students.png",
-          "id": 54
+          "id": 54,
+          "messages": {
+            "de": {
+              "name": "Zu",
+              "text": "zu"
+            }
+          }
         },
         {
           "name": "We",
           "text": "We",
           "accent": "violet",
           "image": "https://img.icons8.com/officexs/64/000000/conference-call.png",
-          "id": 55
+          "id": 55,
+          "messages": {
+            "de": {
+              "name": "Wir",
+              "text": "wir"
+            }
+          }
         },
         {
           "name": "Numbers",
@@ -406,21 +736,39 @@
           "text": "Are",
           "accent": "violet",
           "image": "https://img.icons8.com/officexs/64/000000/fantasy.png",
-          "id": 57
+          "id": 57,
+          "messages": {
+            "de": {
+              "name": "Sind",
+              "text": "sind"
+            }
+          }
         },
         {
           "name": "The",
           "text": "The",
           "accent": "violet",
           "image": "https://img.icons8.com/officexs/64/000000/the-flash-sign.png",
-          "id": 58
+          "id": 58,
+          "messages": {
+            "de": {
+              "name": "Der",
+              "text": "der"
+            }
+          }
         },
         {
           "name": "An",
           "text": "An",
           "accent": "violet",
           "image": "https://img.icons8.com/officexs/64/000000/north.png",
-          "id": 59
+          "id": 59,
+          "messages": {
+            "de": {
+              "name": "Eine",
+              "text": "eine"
+            }
+          }
         }
     ]
   },
