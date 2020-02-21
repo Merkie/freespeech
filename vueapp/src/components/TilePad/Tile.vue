@@ -1,36 +1,38 @@
 <template>
-	<v-card
-		raised
-		tile
-		class="mx-auto"
-		:color="typeof localeTileData.accent === 'undefined' ? '' : cardColor"
-		@click="tileClickedEvent"
-	>
-		<v-container
-			justify="
+  <v-btn
+    raised
+    tile
+    class="mx-auto"
+    @click="tileClickedEvent"
+    :color="typeof tileData.accent === 'undefined' ? '' : cardColor"
+    style="height: unset"
+  >
+    <v-container
+      justify="
     center"
-		>
-			<v-row
-				align="center"
-				justify="center"
-			>
-				<v-img
-					max-height="32"
-					max-width="32"
-					aspect-ratio="1"
-					:src="localeTileData.image"
-				/>
-			</v-row>
-			<v-row>
-				<v-card-text
-					class="text-center"
-					justify="center"
-				>
-					<h3>{{ localeTileData.name }}</h3>
-				</v-card-text>
-			</v-row>
-		</v-container>
-	</v-card>
+    >
+      <v-row
+        align="center"
+        justify="center"
+      >
+        <v-img
+          max-height="32"
+          max-width="32"
+          aspect-ratio="1"
+          :src="tileData.image"
+        />
+      </v-row>
+      <v-row>
+        <v-card-text
+          class
+          align="center"
+          justify="center"
+        >
+          <h3>{{ tileData.name }}</h3>
+        </v-card-text>
+      </v-row>
+    </v-container>
+  </v-btn>
 </template>
 
 <script>
