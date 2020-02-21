@@ -162,8 +162,10 @@ export default {
 				if (this.selectedVoiceIndex === null && voice.lang.substring(0, 2) === this.locale) {
 					this.setSelectedVoiceIndex(index);
 				}
-				return { text: `${voice.name} (${voice.lang})`,
-					value: index };
+				return {
+					text: `${voice.name} (${voice.lang})`,
+					value: index
+				};
 			}).sort((a, b) => a.text.localeCompare(b.text));
 
 			this.setVoices(windowVoices);
