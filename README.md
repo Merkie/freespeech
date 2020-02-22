@@ -37,6 +37,11 @@ None of this would be possible without you all. Thank you!
 
 Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
+## Community
+
+<a href="https://discord.gg/76PrNC6">
+  <img src="https://discordapp.com/api/guilds/680203682528100464/widget.png?style=banner3" />
+</a>
 ## License
 
 This project is licensed under the [MIT License.](LICENSE.md)
