@@ -8,24 +8,71 @@
 				Sentence
 				<v-spacer />
 				<v-btn
-					class="mx-1"
+					raised
+					tile
+					class="mx-auto"
 					color="primary"
+					style="height: unset"
 					@click="$emit('speakSentence')"
 				>
-					<v-icon class="pr-2">
-						record_voice_over
-					</v-icon>
-					Speak
+					<v-container
+						justify="
+			    center"
+					>
+						<v-row
+							align="center"
+							justify="center"
+						>
+						<v-icon class="pr-2">
+							record_voice_over
+						</v-icon>
+						</v-row>
+						<v-row>
+							<v-card-text
+								class
+								align="center"
+								justify="center"
+							>
+								<h3>Speak</h3>
+							</v-card-text>
+						</v-row>
+					</v-container>
 				</v-btn>
+				<v-divider
+        class="mx-4"
+        inset
+        vertical
+      ></v-divider>
 				<v-btn
-					class="mx-2"
-					color="primary"
+					raised
+					tile
+					class="mx-auto"
+					color="red darken-1"
+					style="height: unset; color: white;"
 					@click="$emit('clearSentence')"
 				>
-					<v-icon class="pr-2">
-						clear
-					</v-icon>
-					Clear
+					<v-container
+						justify="
+			    center"
+					>
+						<v-row
+							align="center"
+							justify="center"
+						>
+						<v-icon class="pr-2">
+							clear
+						</v-icon>
+						</v-row>
+						<v-row>
+							<v-card-text
+								class
+								align="center"
+								justify="center"
+							>
+								<h3>Clear</h3>
+							</v-card-text>
+						</v-row>
+					</v-container>
 				</v-btn>
 			</v-card-title>
 			<v-container class="py-0">
