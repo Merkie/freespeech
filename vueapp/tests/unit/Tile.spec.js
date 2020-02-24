@@ -4,9 +4,27 @@ import Vuex from 'vuex';
 import Tile from '@/components/TilePad/Tile.vue';
 import settings from '@/store/modules/settings';
 import tilePad from '@/store/modules/tilePad';
+import VueRouter from 'vue-router';
+import TilePad from '@/views/TilePad';
 
+const routes = [{
+	path: '/layout/:layout',
+	name: 'tilePadWithRoute',
+	component: TilePad,
+	props: true
+}];
+const sentenceModePropsData = {
+	name: 'Test Key Board Tile',
+	text: ' ',
+	accent: 'mint',
+	image: 'https://img.icons8.com/officexs/64/000000/keyboard.png',
+	navigation: 'keyboard',
+	id: 11,
+};
+const router = new VueRouter({ routes });
 const localVue = createLocalVue();
 localVue.use(Vuex);
+localVue.use(VueRouter);
 
 function getWrapper () {
 	return shallowMount(Tile, {
@@ -17,6 +35,7 @@ function getWrapper () {
 				settings
 			},
 		}),
+		router: router,
 		propsData: {
 			tileData: {
 				name: 'Test',
@@ -55,6 +74,14 @@ describe('Tile.vue', () => {
 	it('sets tile color based on accent string', () => {
 		expect(wrapper.vm.cardColor).to.equal('#FFB7B2');
 	});
+
+	it('Keyboard tile opens on click', async () => {
+		wrapper.setProps({tileData: sentenceModePropsData});
+		wrapper.vm.tileClickedEvent();
+		await wrapper.vm.$nextTick();
+		expect(wrapper.vm.$route.params.layout).to.equal(sentenceModePropsData.navigation);
+	});
+
 });
 
 describe('Tile.vue (edit mode)', () => {

@@ -107,13 +107,17 @@ export default {
 			setCurrentTileBeingEdited: 'tilePad/setCurrentTileBeingEdited'
 		}),
 		tileClickedEvent() {
+			
+			let keyboardTile = typeof this.tileData.navigation !== 'undefined' && this.tileData.navigation !== '';
+
 			if (this.editMode) {
 				// if in edit tiles mode
 				let tileDataToEdit = this.tileData;
 				tileDataToEdit.page = this.tilePage;
 				this.setCurrentTileBeingEdited(tileDataToEdit);
 				this.toggleEditDialogVisibility();
-			} else if (this.sentenceMode) {
+
+			} else if (this.sentenceMode && !keyboardTile) {
 				// if in sentence mode
 				if (this.inSentenceComponent) {
 					// if its in the sentence component, remove it from the sentence
@@ -123,16 +127,14 @@ export default {
 					this.$emit('speakText', this.localeTileData.text);
 					this.$emit('addToSentence', this.localeTileData);
 				}
-			} else if (
-				typeof this.tileData.navigation === 'undefined' ||
-        this.tileData.navigation === ''
-			) {
-				this.$emit('speakText', this.localeTileData.text);
-			} else {
+			} else if (keyboardTile) {
 				this.$router.push({
 					name: 'tilePadWithRoute',
 					params: { layout: this.tileData.navigation }
 				});
+			} else {
+				this.$emit('speakText', this.localeTileData.text);
+
 			}
 		}
 	}
