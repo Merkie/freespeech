@@ -16,16 +16,15 @@
 					@click="$emit('speakSentence')"
 				>
 					<v-container
-						justify="
-			    center"
+						justify="center"
 					>
 						<v-row
 							align="center"
 							justify="center"
 						>
-						<v-icon class="pr-2">
-							record_voice_over
-						</v-icon>
+							<v-icon class="pr-2">
+								record_voice_over
+							</v-icon>
 						</v-row>
 						<v-row>
 							<v-card-text
@@ -39,10 +38,10 @@
 					</v-container>
 				</v-btn>
 				<v-divider
-        class="mx-4"
-        inset
-        vertical
-      ></v-divider>
+					class="mx-4"
+					inset
+					vertical
+				/>
 				<v-btn
 					raised
 					tile
@@ -52,16 +51,15 @@
 					@click="$emit('clearSentence')"
 				>
 					<v-container
-						justify="
-			    center"
+						justify="center"
 					>
 						<v-row
 							align="center"
 							justify="center"
 						>
-						<v-icon class="pr-2">
-							clear
-						</v-icon>
+							<v-icon class="pr-2">
+								clear
+							</v-icon>
 						</v-row>
 						<v-row>
 							<v-card-text
@@ -123,7 +121,7 @@ export default {
 	props: {
 		tilePadToDisplay: {
 			type: Array,
-			default () {
+			default() {
 				return [];
 			}
 		}
@@ -131,12 +129,12 @@ export default {
 };
 </script>
 <style scoped>
-	.sentenceCardContainer {
-		position: -webkit-sticky;
-		position: sticky;
-		top: 56px;
-		z-index: 100;
-		padding: 5px;
-		background-color: white;
-	}
+.sentenceCardContainer {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 56px;
+  z-index: 100;
+  padding: 5px;
+  background-color: white;
+}
 </style>
