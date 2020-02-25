@@ -7,6 +7,8 @@
 
 <script>
 import readMeAboutMarkDownText from '!raw-loader!../../../README.md';
+const createDOMPurify = require('dompurify');
+const DOMPurify = createDOMPurify(window);
 
 const marked = require('marked');
 
@@ -19,7 +21,9 @@ export default {
 	},
 	computed: {
 		compiledMarkdown: function () {
-			return marked(readMeAboutMarkDownText, { sanitize: true });
+			let htmlFromMarkDown = marked(readMeAboutMarkDownText, { sanitize: false });			
+			let cleanHtml = DOMPurify.sanitize(htmlFromMarkDown);
+			return cleanHtml;
 		}
 	}
 };
