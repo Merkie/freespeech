@@ -29,6 +29,12 @@
 					justify="center"
 				>
 					<h3>{{ tileData.name }}</h3>
+					<img
+						v-if="editMode"
+						id="drag-handle"
+						src="https://img.icons8.com/officexs/16/000000/resize-four-directions.png"
+						style="padding-top: 8px; margin-bottom: -12px;"
+					>
 				</v-card-text>
 			</v-row>
 		</v-container>

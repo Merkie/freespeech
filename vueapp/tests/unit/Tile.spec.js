@@ -82,6 +82,9 @@ describe('Tile.vue', () => {
 		expect(wrapper.vm.$route.params.layout).to.equal(sentenceModePropsData.navigation);
 	});
 
+	it('drag handle is not visible', async () => {
+		expect(wrapper.find('#drag-handle').exists()).to.be.false;
+	});
 });
 
 describe('Tile.vue (edit mode)', () => {
@@ -96,5 +99,9 @@ describe('Tile.vue (edit mode)', () => {
 		wrapper.vm.tileClickedEvent();
 		expect(wrapper.vm.$store.state.tilePad.currentTileBeingEdited.name).to.equal('Test');
 		expect(wrapper.vm.$store.state.tilePad.editDialogVisibility).to.be.true;
+	});
+
+	it('drag handle is visible', async () => {
+		expect(wrapper.find('#drag-handle').exists()).to.be.true;
 	});
 });
