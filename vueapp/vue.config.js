@@ -2,7 +2,18 @@ module.exports = {
 	configureWebpack: {
 		devtool: 'source-map'
 	},
-
+	chainWebpack: config => {
+		if (process.env.TEST_COVERAGE === 'true') {
+			config.module
+				.rule('js')
+				.use('istanbul-instrumenter-loader')
+				.loader('istanbul-instrumenter-loader')
+				.options({
+					esModules: true
+				})
+				.after('babel-loader');
+		}
+	},
 	transpileDependencies: ['vuetify'],
 
 	pwa: {

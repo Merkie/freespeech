@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "lint:nofix": "vue-cli-service lint --no-fix --max-warnings 0",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
+    "cover": "TEST_COVERAGE=true nyc npm run test:unit"
   },
   "dependencies": {
     "core-js": "^2.6.5",
@@ -32,12 +33,15 @@
     "@vue/cli-service": "^3.12.0",
     "@vue/test-utils": "1.0.0-beta.31",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.1.2",
     "dompurify": "^2.0.8",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "material-design-icons-iconfont": "^5.0.1",
     "null-loader": "^3.0.0",
+    "nyc": "^15.0.0",
     "raw-loader": "^4.0.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
@@ -105,5 +109,16 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "nyc": {
+    "instrument": false,
+    "sourceMap": false,
+    "include": [
+      "src/**/*.{js,vue}"
+    ],
+    "extension": [
+      ".js",
+      ".vue"
+    ]
+  }
 }
