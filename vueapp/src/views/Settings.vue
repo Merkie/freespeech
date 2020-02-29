@@ -50,7 +50,7 @@
 			persistent
 		>
 			<NumberPad
-				title="Set Passcode"
+				:title="$t('settings.titleSetPasscode')"
 				:length="passcodeLength"
 				:hidden="true"
 				@input="handlePasscodeInput"

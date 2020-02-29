@@ -1,5 +1,9 @@
 {
 	"languageName": "Deutsch",
+	"app": {
+		"titleEnterPasscode": "Geben Sie den Passcode",
+		"errorIncorrectPasscode": "Der Passcode ist falsch"
+	},
 	"settings": {
 		"title": "Einstellungen",
 		"optionVoice": "Stimme",
@@ -12,5 +16,11 @@
 		"buttonExport": "Einstellungen & Kacheln exportieren",
 		"buttonImport": "Einstellungen & Kacheln importieren",
 		"titleSetPasscode": "Passcode einstellen"
+	},
+	"sentence": {
+		"title": "Satz",
+		"instructions": "Fügen Sie diesem Satz Kacheln hinzu, indem Sie unten darauf tippen.",
+		"buttonSpeak": "Sprechen",
+		"buttonClear": "Löschen"
 	}
 }
