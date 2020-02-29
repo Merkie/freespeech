@@ -28,7 +28,7 @@
 					align="center"
 					justify="center"
 				>
-					<h3>{{ tileData.name }}</h3>
+					<h3>{{ localeTileData.name }}</h3>
 					<img
 						v-if="editMode"
 						id="drag-handle"
