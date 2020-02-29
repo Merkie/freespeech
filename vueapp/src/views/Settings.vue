@@ -124,6 +124,7 @@ export default {
 			locale: 'settings/locale',
 			passcode: 'settings/passcode',
 			voiceOptions: 'settings/voiceOptions',
+			voices: 'settings/voices'
 		}),
 		selectedVoiceIndex: {
 			get() {
@@ -132,6 +133,9 @@ export default {
 			},
 			set(value) {
 				this.setSelectedVoiceIndex(value);
+				const speechSynthesisUtterance = new SpeechSynthesisUtterance('Welcome to Free Speech');
+				speechSynthesisUtterance.voice = this.voices[value];
+				window.speechSynthesis.speak(speechSynthesisUtterance);
 			}
 		},
 		customTilePad: {
