@@ -3,7 +3,7 @@
 		raised
 		tile
 		class="mx-auto"
-		:color="typeof tileData.accent === 'undefined' ? '' : cardColor"
+		:color="typeof localeTileData.accent === 'undefined' ? '' : cardColor"
 		style="height: unset"
 		@click="tileClickedEvent"
 	>
@@ -19,7 +19,7 @@
 					max-height="32"
 					max-width="32"
 					aspect-ratio="1"
-					:src="tileData.image"
+					:src="localeTileData.image"
 				/>
 			</v-row>
 			<v-row>

@@ -12,7 +12,10 @@
 		"optionLanguage": "Language",
 		"optionPasscodeEnabled": "Passcode Enabled",
 		"buttonClose": "Close",
-		"titleSetPasscode": "Set Passcode"
+		"titleSetPasscode": "Set Passcode",
+		"buttonReset": "Reset All Settings & Tiles",
+		"buttonExport": "Export Settings & Tiles",
+		"buttonImport": "Import Settings & Tiles"
 	},
 	"sentence": {
 		"title": "Sentence",

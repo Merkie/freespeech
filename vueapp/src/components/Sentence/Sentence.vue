@@ -15,8 +15,6 @@
 					style="height: unset"
 					@click="$emit('speakSentence')"
 				>
-							</v-icon						</v-row>
-					
 					<v-container
 						justify="center"
 					>
@@ -52,7 +50,6 @@
 					style="height: unset; color: white;"
 					@click="$emit('clearSentence')"
 				>
-				</v-btn>
 					<v-container
 						justify="center"
 					>
@@ -74,8 +71,9 @@
 							</v-card-text>
 						</v-row>
 					</v-container>
+				</v-btn>
 			</v-card-title>
-			<v-card-text class="py-0">
+			<v-container class="py-0">
 				<p
 					v-if="tilePadToDisplay.length === 0"
 					class="body-2"
@@ -107,7 +105,7 @@
 						/>
 					</v-col>
 				</v-row>
-			</v-card-text>
+			</v-container>
 		</v-card>
 	</div>
 </template>
