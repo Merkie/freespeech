@@ -73,7 +73,7 @@
 					</v-container>
 				</v-btn>
 			</v-card-title>
-			<v-container class="py-0">
+			<v-card-text class="py-0">
 				<p
 					v-if="tilePadToDisplay.length === 0"
 					class="body-2"
@@ -105,7 +105,7 @@
 						/>
 					</v-col>
 				</v-row>
-			</v-container>
+			</v-card-text>
 		</v-card>
 	</div>
 </template>
