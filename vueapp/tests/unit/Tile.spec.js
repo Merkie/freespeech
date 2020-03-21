@@ -21,6 +21,7 @@ const sentenceModePropsData = {
 	navigation: 'keyboard',
 	id: 11,
 };
+
 const router = new VueRouter({ routes });
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -76,7 +77,7 @@ describe('Tile.vue', () => {
 	});
 
 	it('Keyboard tile opens on click', async () => {
-		wrapper.setProps({tileData: sentenceModePropsData});
+		wrapper.setProps({ tileData: sentenceModePropsData });
 		wrapper.vm.tileClickedEvent();
 		await wrapper.vm.$nextTick();
 		expect(wrapper.vm.$route.params.layout).to.equal(sentenceModePropsData.navigation);

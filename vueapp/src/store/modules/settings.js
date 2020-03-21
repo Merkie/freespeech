@@ -37,37 +37,37 @@ const mutations = {
 };
 
 const actions = {
-	setCustomTilePad: ({commit}, value) => {
+	setCustomTilePad: ({ commit }, value) => {
 		commit('SET_CUSTOM_TILE_PAD', value);
 	},
-	setLocale: ({commit}, value) => {
+	setLocale: ({ commit }, value) => {
 		commit('SET_LOCALE', value);
 	},
-	setLocked: ({commit}, value) => {
+	setLocked: ({ commit }, value) => {
 		commit('SET_LOCKED', value);
 	},
-	setPasscode: ({commit}, value) => {
+	setPasscode: ({ commit }, value) => {
 		commit('SET_PASSCODE', value);
 	},
-	setSelectedVoiceIndex: ({commit}, value) => {
+	setSelectedVoiceIndex: ({ commit }, value) => {
 		commit('SET_SELECTED_VOICE_INDEX', value);
 	},
-	setSentenceMode: ({commit}, value) => {
+	setSentenceMode: ({ commit }, value) => {
 		commit('SET_SENTENCE_MODE', value);
 	},
-	setVoices: ({commit}, value) => {
+	setVoices: ({ commit }, value) => {
 		commit('SET_VOICES', value);
 	},
-	setVoiceOptions: ({commit}, value) => {
+	setVoiceOptions: ({ commit }, value) => {
 		commit('SET_VOICE_OPTIONS', value);
 	},
-	toggleCustomTilePad: ({commit, state}) => {
+	toggleCustomTilePad: ({ commit, state }) => {
 		commit('SET_CUSTOM_TILE_PAD', !state.customTilePad);
 	},
-	toggleLocked: ({commit, state}) => {
+	toggleLocked: ({ commit, state }) => {
 		commit('SET_LOCKED', !state.locked);
 	},
-	toggleSentenceMode: ({commit, state}) => {
+	toggleSentenceMode: ({ commit, state }) => {
 		commit('SET_SENTENCE_MODE', !state.sentenceMode);
 	},
 };

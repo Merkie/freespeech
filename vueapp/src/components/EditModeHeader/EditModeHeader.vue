@@ -8,9 +8,10 @@
 				You're in edit mode!
 				<v-spacer />
 				<v-btn
+					id="exitEditModeButton"
 					class="mx-2"
 					color="success"
-					@click="exitEditMode"
+					@click.native="exitEditMode"
 				>
 					<v-icon class="pr-2">
 						save
@@ -32,10 +33,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	methods: {
+		...mapActions('tilePad',['setEditMode']),
 		exitEditMode () {
-			this.$store.dispatch('tilePad/setEditMode', false);
+			this.setEditMode(false);
 		}
 	}
 };
