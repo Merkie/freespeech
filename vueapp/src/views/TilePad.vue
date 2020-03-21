@@ -8,7 +8,7 @@
 			@removeFromSentence="sentenceTiles.splice($event, 1)"
 		/>
 		<edit-mode-header
-			v-if="sentenceMode && editMode"
+			v-if="editMode"
 		/>
 		<v-container
 			fluid
