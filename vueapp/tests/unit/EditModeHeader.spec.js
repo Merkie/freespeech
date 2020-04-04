@@ -14,9 +14,12 @@ function getWrapper () {
 		localVue,
 		store: new Vuex.Store({
 			modules: {
-				tilePad: cloneDeep(tilePad)
+				tilePad: cloneDeep(tilePad),
 			},
-		})		
+		}),
+		mocks: {
+			$t: () => 'Save Changes',
+		},
 	});
 }
 
