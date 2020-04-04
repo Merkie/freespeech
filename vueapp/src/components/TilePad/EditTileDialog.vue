@@ -6,7 +6,7 @@
 	>
 		<v-card>
 			<v-card-title>
-				<span class="headline"> <v-icon>edit</v-icon>Edit</span>
+				<span class="headline"> <v-icon>edit</v-icon>{{ $t('editMode.tile.title') }}</span>
 			</v-card-title>
 			<v-card-text>
 				<v-container>
@@ -15,12 +15,12 @@
 							<v-form>
 								<v-text-field
 									:value="currentTileBeingEdited.name"
-									label="Name"
+									:label="$t('editMode.tile.name')"
 									@input="update('name', $event)"
 								/>
 								<v-text-field
 									:value="currentTileBeingEdited.image"
-									label="Image URL"
+									:label="$t('editMode.tile.imageUrl')"
 									@input="update('image', $event)"
 								/>
 								<v-img
@@ -32,11 +32,11 @@
 								<v-text-field
 									class="pt-5"
 									:value="currentTileBeingEdited.text"
-									label="Text to speak"
+									:label="$t('editMode.tile.textToSpeak')"
 									@input="update('text', $event)"
 								/>
 								<p class="text-left">
-									Accent color
+									{{ $t('editMode.tile.accentColor') }}
 								</p>
 								<v-color-picker
 									v-model="color"
@@ -54,7 +54,7 @@
 					text
 					@click="saveCurrentEdit"
 				>
-					Save
+					{{ $t('editMode.tile.buttonSave') }}
 				</v-btn>
 
 				<v-btn
@@ -62,7 +62,7 @@
 					text
 					@click="toggleEditDialogVisibility"
 				>
-					Close
+					{{ $t('editMode.tile.buttonClose') }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -106,8 +106,7 @@ export default {
 			});
 		}
 
-	},
-	//this.editedTileValues = Object.assign({}, this.currentTileBeingEdited);
+	}
 };
 </script>
 
