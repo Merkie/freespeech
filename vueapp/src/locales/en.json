@@ -15,7 +15,8 @@
 		"titleSetPasscode": "Set Passcode",
 		"buttonReset": "Reset All Settings & Tiles",
 		"buttonExport": "Export Settings & Tiles",
-		"buttonImport": "Import Settings & Tiles"
+		"buttonImport": "Import Settings & Tiles", 
+		"displayTapCount": "Display Tap Count"
 	},
 	"sentence": {
 		"title": "Sentence",

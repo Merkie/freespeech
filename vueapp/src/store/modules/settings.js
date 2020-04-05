@@ -6,7 +6,8 @@ const state = {
 	selectedVoiceIndex: null,
 	sentenceMode: true,
 	voices: [],
-	voiceOptions: [],
+	voiceOptions: [], 
+	displayTapCount: false,
 };
 
 const mutations = {
@@ -33,6 +34,9 @@ const mutations = {
 	},
 	SET_VOICE_OPTIONS(state, value){
 		state.voiceOptions = value;
+	},
+	SET_DISPLAY_TAP_COUNT: (state, value) => {
+		state.displayTapCount = value;
 	}
 };
 
@@ -70,16 +74,20 @@ const actions = {
 	toggleSentenceMode: ({ commit, state }) => {
 		commit('SET_SENTENCE_MODE', !state.sentenceMode);
 	},
+	setDisplayTapCount: ({ commit }, value) => {
+		commit('SET_DISPLAY_TAP_COUNT', value);
+	}
 };
 
 const getters = {
-	customTilePad: state => state.customTilePad,
-	locale: state => state.locale,
-	locked: state => state.locked,
-	passcode: state => state.passcode,
-	selectedVoiceIndex: state => state.selectedVoiceIndex,
-	voices: state => state.voices,
-	voiceOptions: state => state.voiceOptions,
+	customTilePad: (state) => state.customTilePad,
+	locale: (state) => state.locale,
+	locked: (state) => state.locked,
+	passcode: (state) => state.passcode,
+	selectedVoiceIndex: (state) => state.selectedVoiceIndex,
+	voices: (state) => state.voices,
+	voiceOptions: (state) => state.voiceOptions,
+	displayTapCount: (state) => state.displayTapCount,
 };
 
 export default {

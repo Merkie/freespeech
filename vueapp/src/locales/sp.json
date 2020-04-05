@@ -1,26 +1,27 @@
 {
-	"languageName": "Español",
-	"app": {
-		"titleEnterPasscode": "Ingrese el código de acceso para desbloquear",
-		"errorIncorrectPasscode": "Código de acceso incorrecto"
-	},
-	"settings": {
-		"title": "Configuraciones",
-		"optionVoice": "Voz",
-		"optionCustomTilePad": "Bloc de mosaicos personalizados",
-		"optionCreateSentences": "Crear oraciones",
-		"optionLanguage": "Idioma",
-		"optionPasscodeEnabled": "Código de acceso habilitado",
-		"buttonClose": "Cerrar",
-		"titleSetPasscode": "Establecer código de acceso",
-		"buttonReset": "Restablecer todas las Configuraciones & Mosaicos",
-		"buttonExport": "Exportar Configuraciones & Mosaicos",
-		"buttonImport": "Importar Configuraciones & Mosaicos"
-	},
-	"sentence": {
-		"title": "Sentence",
-		"instructions": "Agregar mosaicos a esta oración simplemente pulsando sobre los mismos.",
-		"buttonSpeak": "Hablar",
-		"buttonClear": "Borrar"
-	}
+  "languageName": "Español",
+  "app": {
+    "titleEnterPasscode": "Ingrese el código de acceso para desbloquear",
+    "errorIncorrectPasscode": "Código de acceso incorrecto"
+  },
+  "settings": {
+    "title": "Configuraciones",
+    "optionVoice": "Voz",
+    "optionCustomTilePad": "Bloc de mosaicos personalizados",
+    "optionCreateSentences": "Crear oraciones",
+    "optionLanguage": "Idioma",
+    "optionPasscodeEnabled": "Código de acceso habilitado",
+    "buttonClose": "Cerrar",
+    "titleSetPasscode": "Establecer código de acceso",
+    "buttonReset": "Restablecer todas las Configuraciones & Mosaicos",
+    "buttonExport": "Exportar Configuraciones & Mosaicos",
+    "buttonImport": "Importar Configuraciones & Mosaicos",
+    "displayTapCount": "Mostrar uso de los mosaicos"
+  },
+  "sentence": {
+    "title": "Sentence",
+    "instructions": "Agregar mosaicos a esta oración simplemente pulsando sobre los mismos.",
+    "buttonSpeak": "Hablar",
+    "buttonClear": "Borrar"
+  }
 }

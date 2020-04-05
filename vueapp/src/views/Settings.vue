@@ -31,6 +31,11 @@
 			:label="$t('settings.optionPasscodeEnabled')"
 		/>
 
+		<v-switch
+			v-model="tapCount"
+			:label="$t('settings.displayTapCount')"
+		/>
+
 		<v-dialog
 			v-model="passcodeEntry"
 			width="400"
@@ -124,7 +129,8 @@ export default {
 			locale: 'settings/locale',
 			passcode: 'settings/passcode',
 			voiceOptions: 'settings/voiceOptions',
-			voices: 'settings/voices'
+			voices: 'settings/voices',
+			displayTapCount: 'settings/displayTapCount',
 		}),
 		selectedVoiceIndex: {
 			get() {
@@ -184,6 +190,14 @@ export default {
 				return { value: entry[0],
 					text: entry[1].languageName };
 			});
+		},
+		tapCount: {
+			get(){
+				return this.displayTapCount;
+			},
+			set(value){
+				this.setDisplayTapCount(value);
+			}
 		}
 	},
 	methods: {
@@ -194,7 +208,8 @@ export default {
 			setPasscode: 'settings/setPasscode',
 			setSelectedVoiceIndex: 'settings/setSelectedVoiceIndex',
 			toggleCustomTilePad: 'settings/toggleCustomTilePad',
-			toggleSentenceMode: 'settings/toggleSentenceMode'
+			toggleSentenceMode: 'settings/toggleSentenceMode',
+			setDisplayTapCount: 'settings/setDisplayTapCount',
 		}),
 		exportSettings() {
 			const json = JSON.stringify({

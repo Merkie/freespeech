@@ -4,13 +4,19 @@
 		tile
 		class="mx-auto"
 		:color="typeof localeTileData.accent === 'undefined' ? '' : cardColor"
-		style="height: unset"
+		style="height: unset;"
 		@click="tileClickedEvent"
 	>
 		<v-container
 			justify="
     center"
 		>
+			<span
+				v-if="displayTapCount && !editMode"
+				class="taps-count"
+			>{{
+				taps
+			}}</span>
 			<v-row
 				align="center"
 				justify="center"
@@ -56,30 +62,32 @@ export default {
 					accent: '',
 					image: '',
 					id: 0,
-					messages: {}
+					messages: {},
 				};
-			}
+			},
 		},
 		tilePage: {
 			type: String,
-			default: ''
+			default: '',
 		},
 		inSentenceComponent: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		sentenceIndex: {
 			type: Number,
-			default: null
-		}
+			default: null,
+		},
 	},
 	computed: {
 		...mapState('settings', ['sentenceMode']),
 		...mapGetters({
 			editMode: 'tilePad/editMode',
-			locale: 'settings/locale'
+			locale: 'settings/locale',
+			displayTapCount: 'settings/displayTapCount',
+			tileTapsCount: 'tilePad/tileTapsCount',
 		}),
-		cardColor: function() {
+		cardColor: function () {
 			switch (this.localeTileData.accent) {
 			case 'red':
 				return '#FF9AA2';
@@ -99,13 +107,23 @@ export default {
 		},
 		localeTileData() {
 			const messages = this.tileData.messages;
-			if (typeof messages !== 'undefined' && typeof messages[this.locale] === 'object') {
+			if (
+				typeof messages !== 'undefined' &&
+        typeof messages[this.locale] === 'object'
+			) {
 				return { ...this.tileData,
 					...messages[this.locale] };
 			} else {
 				return this.tileData;
 			}
-		}
+		},
+		taps() {
+			const indexOfTile = this.tileTapsCount.findIndex(
+				(obj) => obj.id == this.tileData.id
+			);
+			if (indexOfTile == -1) return 0;
+			return this.tileTapsCount[indexOfTile].taps;
+		},
 	},
 	methods: {
 		...mapActions({
@@ -113,8 +131,9 @@ export default {
 			setCurrentTileBeingEdited: 'tilePad/setCurrentTileBeingEdited'
 		}),
 		tileClickedEvent() {
-			
-			let keyboardTile = typeof this.tileData.navigation !== 'undefined' && this.tileData.navigation !== '';
+			let keyboardTile =
+        typeof this.tileData.navigation !== 'undefined' &&
+        this.tileData.navigation !== '';
 
 			if (this.editMode) {
 				// if in edit tiles mode
@@ -122,7 +141,6 @@ export default {
 				tileDataToEdit.page = this.tilePage;
 				this.setCurrentTileBeingEdited(tileDataToEdit);
 				this.toggleEditDialogVisibility();
-
 			} else if (this.sentenceMode && !keyboardTile) {
 				// if in sentence mode
 				if (this.inSentenceComponent) {
@@ -136,15 +154,19 @@ export default {
 			} else if (keyboardTile) {
 				this.$router.push({
 					name: 'tilePadWithRoute',
-					params: { layout: this.tileData.navigation }
+					params: { layout: this.tileData.navigation },
 				});
 			} else {
 				this.$emit('speakText', this.localeTileData.text);
-
 			}
-		}
-	}
+		},
+	},
 };
 </script>
-
-<style></style>
+<style>
+.taps-count {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+}
+</style>

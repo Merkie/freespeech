@@ -3,6 +3,7 @@ const state = {
 	editMode: false,
 	editDialogVisibility: false,
 	currentTileBeingEdited: {},
+	tileTapsCount: []
 };
 
 const mutations = {
@@ -27,6 +28,16 @@ const mutations = {
 	},
 	SET_EDIT_MODE (state, value) {
 		state.editMode = value;
+	},
+	LOG_TILE_TAP(state, value) {
+		const indexOfTile = state.tileTapsCount.findIndex((obj) => obj.id == value);
+		if (indexOfTile >= 0)
+			state.tileTapsCount[indexOfTile].taps++;
+		else {
+			const tile = { id: value,
+				taps: 1 };
+			state.tileTapsCount.push(tile);
+		}
 	}
 };
 
@@ -51,14 +62,18 @@ const actions = {
 	},
 	setEditMode: ({ commit }, value) => {
 		commit('SET_EDIT_MODE', value);
+	}, 
+	logTileTap: ({ commit }, value) => {
+		commit('LOG_TILE_TAP', value);
 	}
 };
 
 const getters = {
-	customTilePadData: state => state.customTilePadData,
-	editMode: state => state.editMode,
-	editDialogVisibility: state => state.editDialogVisibility,
-	currentTileBeingEdited: state => state.currentTileBeingEdited
+	customTilePadData: (state) => state.customTilePadData,
+	editMode: (state) => state.editMode,
+	editDialogVisibility: (state) => state.editDialogVisibility,
+	currentTileBeingEdited: (state) => state.currentTileBeingEdited,
+	tileTapsCount: (state) => state.tileTapsCount,
 };
 
 export default {
