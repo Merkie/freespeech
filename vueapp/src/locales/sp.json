@@ -19,9 +19,23 @@
     "displayTapCount": "Mostrar uso de los mosaicos"
   },
   "sentence": {
-    "title": "Sentence",
+    "title": "Oración",
     "instructions": "Agregar mosaicos a esta oración simplemente pulsando sobre los mismos.",
     "buttonSpeak": "Hablar",
     "buttonClear": "Borrar"
+  },
+  "editMode": {
+    "title": "Estás en modo de edición!",
+    "buttonSave": "Guardar cambios",
+    "instructions": "Puedes editar los mosaicos haciendo clic sobre ellos. También puedes arrastrarlos para reordenarlos. Haz clic en el botón de arriba para guardar tus cambios.",
+    "tile": {
+      "title": "Editar",
+      "name": "Nombre",
+      "imageUrl": "URL de la imagen",
+      "textToSpeak": "Texto a pronunciar",
+      "accentColor": "Color de énfasis",
+      "butonSave": "Guardar",
+      "buttonClose": "Cancelar"
+    }
   }
 }

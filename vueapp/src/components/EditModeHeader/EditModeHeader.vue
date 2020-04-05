@@ -5,7 +5,7 @@
 			class="px-4 sentenceCard"
 		>
 			<v-card-title>
-				You're in edit mode!
+				{{ $t('editMode.title') }}
 				<v-spacer />
 				<v-btn
 					id="exitEditModeButton"
@@ -16,16 +16,12 @@
 					<v-icon class="pr-2">
 						save
 					</v-icon>
-					Save Changes
+					{{ $t('editMode.buttonSave') }}
 				</v-btn>
 			</v-card-title>
 			<v-container class="py-0">
-				<p
-					class="body-2"
-				>
-					You can edit tiles while in edit mode by clicking on them to edit them or clicking and dragging them
-					to move them around.
-					Press the save icon or the button above to save your changes.
+				<p class="body-2">
+					{{ $t('editMode.instructions') }}
 				</p>
 			</v-container>
 		</v-card>
@@ -37,20 +33,20 @@ import { mapActions } from 'vuex';
 
 export default {
 	methods: {
-		...mapActions('tilePad',['setEditMode']),
-		exitEditMode () {
+		...mapActions('tilePad', ['setEditMode']),
+		exitEditMode() {
 			this.setEditMode(false);
 		}
 	}
 };
 </script>
 <style scoped>
-	.sentenceCardContainer {
-		position: -webkit-sticky;
-		position: sticky;
-		top: 56px;
-		z-index: 100;
-		padding: 5px;
-		background-color: white;
-	}
+.sentenceCardContainer {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 56px;
+  z-index: 100;
+  padding: 5px;
+  background-color: white;
+}
 </style>

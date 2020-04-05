@@ -1,27 +1,41 @@
 {
-	"languageName": "English",
-	"app": {
-		"titleEnterPasscode": "Enter Passcode to unlock",
-		"errorIncorrectPasscode": "Incorrect passcode"
-	},
-	"settings": {
-		"title": "Settings",
-		"optionVoice": "Voice",
-		"optionCustomTilePad": "Custom Tile Pad",
-		"optionCreateSentences": "Create Sentences",
-		"optionLanguage": "Language",
-		"optionPasscodeEnabled": "Passcode Enabled",
-		"buttonClose": "Close",
-		"titleSetPasscode": "Set Passcode",
-		"buttonReset": "Reset All Settings & Tiles",
-		"buttonExport": "Export Settings & Tiles",
-		"buttonImport": "Import Settings & Tiles", 
-		"displayTapCount": "Display Tap Count"
-	},
-	"sentence": {
-		"title": "Sentence",
-		"instructions": "Add tiles to this sentence by tapping on them below.",
-		"buttonSpeak": "Speak",
-		"buttonClear": "Clear"
-	}
+  "languageName": "English",
+  "app": {
+    "titleEnterPasscode": "Enter Passcode to unlock",
+    "errorIncorrectPasscode": "Incorrect passcode"
+  },
+  "settings": {
+    "title": "Settings",
+    "optionVoice": "Voice",
+    "optionCustomTilePad": "Custom Tile Pad",
+    "optionCreateSentences": "Create Sentences",
+    "optionLanguage": "Language",
+    "optionPasscodeEnabled": "Passcode Enabled",
+    "buttonClose": "Close",
+    "titleSetPasscode": "Set Passcode",
+    "buttonReset": "Reset All Settings & Tiles",
+    "buttonExport": "Export Settings & Tiles",
+    "buttonImport": "Import Settings & Tiles",
+    "displayTapCount": "Mostrar uso de los mosaicos"
+  },
+  "sentence": {
+    "title": "Sentence",
+    "instructions": "Add tiles to this sentence by tapping on them below.",
+    "buttonSpeak": "Speak",
+    "buttonClear": "Clear"
+  },
+  "editMode": {
+    "title": "You're in edit mode!",
+    "buttonSave": "Save Changes",
+    "instructions": "You can edit tiles while in edit mode by clicking on them to edit them or clicking and dragging them to move them around. Press the save icon or the button above to save your changes.",
+    "tile": {
+      "title": "Edit",
+      "name": "Name",
+      "imageUrl": "Image URL",
+      "textToSpeak": "Text to speak",
+      "accentColor": "Accent color",
+      "buttonSave": "Save",
+      "buttonClose": "Close"
+    }
+  }
 }
