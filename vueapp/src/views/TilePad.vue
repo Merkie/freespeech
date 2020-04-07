@@ -16,15 +16,24 @@
 			style="{text-align: center}"
 		>
 			<v-row dense>
+				<Tile
+					v-if="editMode"
+					id="newTile"
+					:new-tile="true"							
+					:tile-page="currentTilePadPage"
+				/>
+
+			</v-row>
+			<v-row dense>
 				<draggable
 					v-model="tilePadToDisplay.tileData"
 					style="display: contents"
 					:options="{disabled: !editMode, handle: '#drag-handle'}"
 					class="tilePadContainer"
 				>
-					<template v-for="(tile, tileIndex) in tilePadToDisplay.tileData">
+					<template v-for="(tile, tileIndex) in  tilePadToDisplay.tileData">
 						<v-col
-							:key="tileIndex"
+							:key="tileIndex + 1"
 							:cols="
 								$vuetify.breakpoint.xsOnly
 									? 3
@@ -92,11 +101,10 @@ export default {
 			) {
 				this.setCustomTilePadData(this.tileData);
 			}
-
+		
 			let tilePadTiles = this.customTilePadOption
 				? this.customTilePadData
 				: this.tileData;
-
 			let routeParam = this.$route.params.layout;
 			if (typeof routeParam === 'undefined') {
 				return tilePadTiles.home;

@@ -38,6 +38,15 @@ const mutations = {
 				taps: 1 };
 			state.tileTapsCount.push(tile);
 		}
+	},
+	CREATE_NEW_TILE(state, value){
+		let maxid = 0;
+		state.customTilePadData[state.currentTileBeingEdited.page].tileData.map(function(obj){     
+			if (obj.id > maxid) maxid = obj.id;    
+		});
+		value.id = maxid + 1;
+		state.customTilePadData[state.currentTileBeingEdited.page].tileData.unshift(value);
+		state.currentTileBeingEdited = {};
 	}
 };
 
@@ -62,7 +71,7 @@ const actions = {
 	},
 	setEditMode: ({ commit }, value) => {
 		commit('SET_EDIT_MODE', value);
-	}, 
+	},
 	logTileTap: ({ commit }, value) => {
 		commit('LOG_TILE_TAP', value);
 	}

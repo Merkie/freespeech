@@ -3,13 +3,38 @@
 		raised
 		tile
 		class="mx-auto"
-		:color="typeof localeTileData.accent === 'undefined' ? '' : cardColor"
-		style="height: unset;"
+		:color="typeof localeTileData.accent === 'undefined' ? '#FFFFFFFF' : cardColor"
+		style="height: unset"
 		@click="tileClickedEvent"
 	>
 		<v-container
-			justify="
-    center"
+			v-if="newTile"
+			justify="center"
+		>
+			<v-row
+				align="center"
+				justify="center"
+			>
+				<v-img
+					max-height="32"
+					max-width="32"
+					aspect-ratio="1"					
+					src="https://img.icons8.com/officexs/64/000000/plus-math.png"
+				/>
+			</v-row>
+			<v-row>
+				<v-card-text
+					class
+					align="center"
+					justify="center"
+				>
+					<h4>Add a New Tile</h4>
+				</v-card-text>
+			</v-row>
+		</v-container>
+		<v-container
+			v-else
+			justify="center"
 		>
 			<span
 				v-if="displayTapCount && !editMode"
@@ -76,8 +101,12 @@ export default {
 		},
 		sentenceIndex: {
 			type: Number,
-			default: null,
+			default: null
 		},
+		newTile:{
+			type: Boolean,
+			default: false
+		}	
 	},
 	computed: {
 		...mapState('settings', ['sentenceMode']),
@@ -126,11 +155,11 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions({
-			toggleEditDialogVisibility: 'tilePad/toggleEditDialogVisibility',
-			setCurrentTileBeingEdited: 'tilePad/setCurrentTileBeingEdited',
-			logTileTap: 'tilePad/logTileTap',
-		}),
+		...mapActions('tilePad', [
+			'toggleEditDialogVisibility', 
+			'setCurrentTileBeingEdited',
+			'createNewTile',
+			'logTileTap']),
 		tileClickedEvent() {
 			let keyboardTile =
         typeof this.tileData.navigation !== 'undefined' &&
@@ -140,6 +169,9 @@ export default {
 				// if in edit tiles mode
 				let tileDataToEdit = this.tileData;
 				tileDataToEdit.page = this.tilePage;
+				if(this.newTile){
+					tileDataToEdit.newTile = true;
+				}
 				this.setCurrentTileBeingEdited(tileDataToEdit);
 				this.toggleEditDialogVisibility();
 			} else if (this.sentenceMode && !keyboardTile) {

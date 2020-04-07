@@ -105,4 +105,14 @@ describe('Tile.vue (edit mode)', () => {
 	it('drag handle is visible', async () => {
 		expect(wrapper.find('#drag-handle').exists()).to.be.true;
 	});
+
+	it('new tile is shown', async () => {
+		wrapper.vm.$store.state.tilePad.editDialogVisibility = false;
+		wrapper.setProps({ newTile: true });
+		wrapper.vm.tileClickedEvent();
+		await wrapper.vm.$nextTick();
+
+		expect(wrapper.vm.$store.state.tilePad.currentTileBeingEdited.newTile).to.be.true;
+		expect(wrapper.vm.$store.state.tilePad.editDialogVisibility).to.be.true;
+	});
 });
