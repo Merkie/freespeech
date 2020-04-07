@@ -116,7 +116,8 @@ export default {
 	methods: {
 		...mapActions({
 			setCustomTilePadData: 'tilePad/setCustomTilePadData',
-			toggleSentenceMode: 'tilePad/toggleSentenceMode'
+			toggleSentenceMode: 'tilePad/toggleSentenceMode',
+			logTileTap: 'tilePad/logTileTap',
 		}),
 		speakText (textToSpeak) {
 			let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);
@@ -130,6 +131,12 @@ export default {
 		speakSentence () {
 			let textToSpeak = this.sentenceTiles.map(tile => tile.text).join(' ');
 			this.speakText(textToSpeak);
+			this.logTaps();
+		}, 
+		logTaps () {
+			this.sentenceTiles.forEach(tile => {
+				this.logTileTap(tile.id);
+			});
 		}
 	}
 };

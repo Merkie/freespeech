@@ -15,7 +15,8 @@
     "titleSetPasscode": "Establecer código de acceso",
     "buttonReset": "Restablecer todas las Configuraciones & Mosaicos",
     "buttonExport": "Exportar Configuraciones & Mosaicos",
-    "buttonImport": "Importar Configuraciones & Mosaicos"
+    "buttonImport": "Importar Configuraciones & Mosaicos",
+    "displayTapCounter": "Mostrar uso de los mosaicos"
   },
   "sentence": {
     "title": "Oración",
