@@ -16,7 +16,7 @@
     "buttonReset": "Reset All Settings & Tiles",
     "buttonExport": "Export Settings & Tiles",
     "buttonImport": "Import Settings & Tiles",
-    "displayTapCount": "Mostrar uso de los mosaicos"
+    "displayTapCounter": "Display Tap Counter"
   },
   "sentence": {
     "title": "Sentence",

@@ -16,7 +16,7 @@
     "buttonReset": "Restablecer todas las Configuraciones & Mosaicos",
     "buttonExport": "Exportar Configuraciones & Mosaicos",
     "buttonImport": "Importar Configuraciones & Mosaicos",
-    "displayTapCount": "Mostrar uso de los mosaicos"
+    "displayTapCounter": "Mostrar uso de los mosaicos"
   },
   "sentence": {
     "title": "Oración",

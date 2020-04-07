@@ -33,7 +33,7 @@
 
 		<v-switch
 			v-model="tapCount"
-			:label="$t('settings.displayTapCount')"
+			:label="$t('settings.displayTapCounter')"
 		/>
 
 		<v-dialog

@@ -128,7 +128,8 @@ export default {
 	methods: {
 		...mapActions({
 			toggleEditDialogVisibility: 'tilePad/toggleEditDialogVisibility',
-			setCurrentTileBeingEdited: 'tilePad/setCurrentTileBeingEdited'
+			setCurrentTileBeingEdited: 'tilePad/setCurrentTileBeingEdited',
+			logTileTap: 'tilePad/logTileTap',
 		}),
 		tileClickedEvent() {
 			let keyboardTile =
@@ -158,6 +159,7 @@ export default {
 				});
 			} else {
 				this.$emit('speakText', this.localeTileData.text);
+				this.logTileTap(this.localeTileData.id);
 			}
 		},
 	},
