@@ -1148,6 +1148,7 @@
                 "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
                 "navigation": "home",
                 "id": 26,
+<<<<<<< HEAD
                 "messages": {
                     "de": {
                         "name": "Fliesen",
@@ -1347,6 +1348,8 @@
                 "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
                 "navigation": "home",
                 "id": 11,
+=======
+>>>>>>> add translations to 'tiles' button
                 "messages": {
                     "de": {
                         "name": "Fliesen",
@@ -1355,6 +1358,7 @@
                     "sp": {
                         "name": "Losas",
                         "text": "Losas"
+<<<<<<< HEAD
                     }
                 }
             },
@@ -1949,6 +1953,8 @@
                     "sp": {
                         "name": "Kilómetros",
                         "text": "Kilómetros"
+=======
+>>>>>>> add translations to 'tiles' button
                     }
                 }
             }
