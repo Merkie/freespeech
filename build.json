@@ -4602,6 +4602,7 @@
 
 
             {
+<<<<<<< HEAD
 
 
 
@@ -4632,6 +4633,14 @@
 
 
 
+=======
+                "name": "Numbers",
+                "text": " ",
+                "accent": "violet",
+                "image": "https://img.icons8.com/officexs/64/000000/superscript.png",
+                "navigation": "numbers",
+                "id": 56,
+>>>>>>> add back to tiles button in keyboard section
                 "messages": {
 
 
