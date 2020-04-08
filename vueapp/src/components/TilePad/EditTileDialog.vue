@@ -6,17 +6,22 @@
 	>
 		<v-card>
 			<v-card-title>
-				<span class="headline"> <v-icon>edit</v-icon>{{ $t('editMode.tile.title') }}</span>
+				<span class="headline"> <v-icon>{{ currentTileBeingEdited.newTile ? 'add' : 'edit' }}</v-icon>{{ currentTileBeingEdited.newTile ? "Add a new tile" : "Edit" }}</span>
 			</v-card-title>
 			<v-card-text>
 				<v-container>
-					<v-row>
-						<v-col cols="12">
-							<v-form>
+					<v-form
+						ref="form"
+						v-model="valid"
+					>	
+						<v-row>
+
+							<v-col cols="12">
 								<v-text-field
 									:value="currentTileBeingEdited.name"
 									:label="$t('editMode.tile.name')"
 									@input="update('name', $event)"
+									:rules="[rules.required]"
 								/>
 								<v-text-field
 									:value="currentTileBeingEdited.image"
@@ -34,6 +39,7 @@
 									:value="currentTileBeingEdited.text"
 									:label="$t('editMode.tile.textToSpeak')"
 									@input="update('text', $event)"
+									:rules="[rules.required]"
 								/>
 								<p class="text-left">
 									{{ $t('editMode.tile.accentColor') }}
@@ -42,9 +48,11 @@
 									v-model="color"
 									hide-inputs
 								/>
-							</v-form>
-						</v-col>
-					</v-row>
+							</v-col>
+
+						</v-row>
+					</v-form>
+
 				</v-container>
 			</v-card-text>
 			<v-card-actions>
@@ -76,37 +84,72 @@ export default {
 	name: 'EditTileDialog',
 	data () {
 		return {
+			valid:false,
 			color: '',
+			newTileObject: {},
+			rules: {
+				required: value => !!value || 'This field is required.'
+			}
 		};
 	},
 	computed: {
-		...mapGetters({
-			editDialogVisibility: 'tilePad/editDialogVisibility',
-			currentTileBeingEdited: 'tilePad/currentTileBeingEdited'
-		}),
+		...mapGetters('tilePad', [
+			'editDialogVisibility',
+			'currentTileBeingEdited',
+			'customTilePadData'
+		]),
+		areRequiredFieldsFilled:function(){
+			return !!this.newTileObject.name && !!this.newTileObject.text; 
+		}
 	},
 	methods: {
-		...mapActions({
-			toggleEditDialogVisibility: 'tilePad/toggleEditDialogVisibility',
-			saveTileEdit: 'tilePad/saveTileEdit',
-			saveEditsToTileBeingEdited: 'tilePad/saveEditsToTileBeingEdited'
-		}),
+		...mapActions('tilePad', [
+			'toggleEditDialogVisibility', 
+			'saveEditsToTileBeingEdited',
+			'createNewTile']),
+		validate () {
+			this.$refs.form.validate();
+		},
+		resetValidation () {
+			this.$refs.form.resetValidation();
+		},
 		saveCurrentEdit () {
-			this.saveEditsToTileBeingEdited({
-				key: 'accent',
-				value: this.color
-			});
-			this.saveTileEdit();
-			this.toggleEditDialogVisibility();
+			
+			if(this.currentTileBeingEdited.newTile){
+				this.validate();
+				
+				if(this.valid)
+				{		
+					this.resetValidation();			
+					var maxid = 0;
+
+					this.newTileObject.id = maxid + 1;
+					delete this.currentTileBeingEdited.newTile;
+					this.createNewTile(this.newTileObject);
+					this.toggleEditDialogVisibility();
+				}
+				return;
+			}else{
+				this.saveEditsToTileBeingEdited({
+					key: 'accent',
+					value: this.color
+				});
+				this.saveTileEdit();
+				this.toggleEditDialogVisibility();
+			}
 		},
 		update (key, value) {
-			this.saveEditsToTileBeingEdited({
-				'key': key,
-				'value': value
-			});
+			if(!this.currentTileBeingEdited.newTile){
+				this.saveEditsToTileBeingEdited({
+					'key': key,
+					'value': value
+				});
+			}else{
+				this.newTileObject[key] = value;
+			}			
 		}
 
-	}
+	},
 };
 </script>
 
