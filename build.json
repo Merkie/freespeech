@@ -1146,15 +1146,15 @@
                 "accent": "mint",
                 "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
                 "navigation": "home",
-                "id": 11,
+                "id": 26,
                 "messages": {
                     "de": {
-                        "name": "Tastatur",
-                        "text": "Tastatur"
+                        "name": "Fliesen",
+                        "text": "Fliesen"
                     },
                     "sp": {
-                        "name": "Teclado",
-                        "text": "Teclado"
+                        "name": "Losas",
+                        "text": "Losas"
                     }
                 }
             }
