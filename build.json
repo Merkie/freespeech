@@ -1,6 +1,7 @@
 {
     "home": {
-        "tileData": [{
+        "tileData": [
+		{
                 "name": "No",
                 "text": "No",
                 "accent": "peach",
