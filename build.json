@@ -1111,6 +1111,7 @@
                 "text": "T",
                 "id": 19
             },
+
             {
                 "name": "U",
                 "text": "U",
@@ -1182,6 +1183,7 @@
 
             },
             {
+<<<<<<< HEAD
                 "name": "Zero",
                 "text": "0",
                 "image": "https://img.icons8.com/color/48/000000/0-c.png",
@@ -1340,16 +1342,83 @@
                         "text": "Nueve"
                     }
                 }
+=======
+                "name": "zero",
+                "text": "0",
+                "image": "https://img.icons8.com/color/48/000000/0-c.png",
+                "id": 1
+            },
+            {
+                "name": "one",
+                "text": "1",
+                "image": "https://img.icons8.com/color/48/000000/1-c.png",
+                "id": 2
+            },
+            {
+                "name": "two",
+                "text": "2",
+                "image": "https://img.icons8.com/color/48/000000/2-c.png",
+                "id": 3
+            },
+            {
+                "name": "three",
+                "text": "3",
+                "image": "https://img.icons8.com/color/48/000000/3-c.png",
+                "id": 4
+            },
+            {
+                "name": "four",
+                "text": "4",
+                "image": "https://img.icons8.com/color/48/000000/4-c.png",
+                "id": 5
+            },
+            {
+                "name": "five",
+                "text": "5",
+                "image": "https://img.icons8.com/color/48/000000/5-c.png",
+                "id": 6
+            },
+            {
+                "name": "six",
+                "text": "6",
+                "image": "https://img.icons8.com/color/48/000000/6-c.png",
+                "id": 7
+            },
+            {
+                "name": "seven",
+                "text": "7",
+                "image": "https://img.icons8.com/color/48/000000/7-c.png",
+                "id": 8
+            },
+            {
+                "name": "eight",
+                "text": "8",
+                "image": "https://img.icons8.com/color/48/000000/8-c.png",
+                "id": 9
+            },
+            {
+                "name": "nine",
+                "text": "9",
+                "image": "https://img.icons8.com/color/48/000000/9-c.png",
+                "id": 10
+>>>>>>> add numbers page and tile data
             },
             {
                 "name": "Tiles",
                 "text": " ",
+<<<<<<< HEAD
                 "accent": "peach",
                 "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
                 "navigation": "home",
                 "id": 11,
 =======
 >>>>>>> add translations to 'tiles' button
+=======
+                "accent": "mint",
+                "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
+                "navigation": "home",
+                "id": 11,
+>>>>>>> add numbers page and tile data
                 "messages": {
                     "de": {
                         "name": "Fliesen",
@@ -1359,6 +1428,9 @@
                         "name": "Losas",
                         "text": "Losas"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> add numbers page and tile data
                     }
                 }
             },
@@ -1370,16 +1442,26 @@
                 "accent": "peach",
                 "messages": {
                     "de": {
+<<<<<<< HEAD
                         "name": "Komma",
                         "text": "Komma"
                     },
                     "sp": {
                         "name": "Coma",
                         "text": "Coma"
+=======
+                        "name": "Und",
+                        "text": "und"
+                    },
+                    "sp": {
+                        "name": "Y",
+                        "text": "Y"
+>>>>>>> add numbers page and tile data
                     }
                 }
             },
             {
+<<<<<<< HEAD
                 "name": "Ten",
                 "text": "10",
                 "image": "https://img.icons8.com/color/48/000000/10.png",
@@ -1394,11 +1476,18 @@
                         "text": "Diez"
                     }
                 }
+=======
+                "name": "ten",
+                "text": "10",
+                "image": "https://img.icons8.com/color/48/000000/10.png",
+                "id": 13
+>>>>>>> add numbers page and tile data
             },
             {
                 "name": "eleven",
                 "text": "11",
                 "image": "https://img.icons8.com/color/48/000000/11.png",
+<<<<<<< HEAD
                 "id": 14,
                 "messages": {
                     "de": {
@@ -1458,11 +1547,33 @@
                         "text": "Catorce"
                     }
                 }
+=======
+                "id": 14
+            },
+            {
+                "name": "twelve",
+                "text": "12",
+                "image": "https://img.icons8.com/color/48/000000/12.png",
+                "id": 15
+            },
+            {
+                "name": "thirteen",
+                "text": "13",
+                "image": "https://img.icons8.com/color/48/000000/13.png",
+                "id": 16
+            },
+            {
+                "name": "fourteen",
+                "text": "14",
+                "image": "https://img.icons8.com/color/48/000000/14.png",
+                "id": 17
+>>>>>>> add numbers page and tile data
             },
             {
                 "name": "fifteen",
                 "text": "15",
                 "image": "https://img.icons8.com/color/48/000000/15.png",
+<<<<<<< HEAD
                 "id": 18,
                 "messages": {
                     "de": {
@@ -1538,6 +1649,33 @@
                         "text": "Diecinueve"
                     }
                 }
+=======
+                "id": 18
+            },
+            {
+                "name": "sixteen",
+                "text": "16",
+                "image": "https://img.icons8.com/color/48/000000/16.png",
+                "id": 19
+            },
+            {
+                "name": "seventeen",
+                "text": "17",
+                "image": "https://img.icons8.com/color/48/000000/17.png",
+                "id": 20
+            },
+            {
+                "name": "eighteen",
+                "text": "18",
+                "image": "https://img.icons8.com/color/48/000000/18.png",
+                "id": 21
+            },
+            {
+                "name": "nineteen",
+                "text": "19",
+                "image": "https://img.icons8.com/color/48/000000/19.png",
+                "id": 22
+>>>>>>> add numbers page and tile data
             },
             {
                 "name": "Minutes",
@@ -1547,12 +1685,21 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
+<<<<<<< HEAD
                         "name": "Minuten",
                         "text": "Minuten"
                     },
                     "sp": {
                         "name": "Minutos",
                         "text": "Minutos"
+=======
+                        "name": "Und",
+                        "text": "und"
+                    },
+                    "sp": {
+                        "name": "Y",
+                        "text": "Y"
+>>>>>>> add numbers page and tile data
                     }
                 }
             },
@@ -1564,16 +1711,26 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
+<<<<<<< HEAD
                         "name": "Tausend",
                         "text": "Tausend"
                     },
                     "sp": {
                         "name": "Mil",
                         "text": "Mil"
+=======
+                        "name": "Und",
+                        "text": "und"
+                    },
+                    "sp": {
+                        "name": "Y",
+                        "text": "Y"
+>>>>>>> add numbers page and tile data
                     }
                 }
             },
             {
+<<<<<<< HEAD
                 "name": "Twenty",
                 "text": "20",
                 "image": "https://img.icons8.com/color/48/000000/20.png",
@@ -1717,6 +1874,61 @@
                         "text": "Ciento"
                     }
                 }
+=======
+                "name": "twenty",
+                "text": "20",
+                "image": "https://img.icons8.com/color/48/000000/20.png",
+                "id": 25
+            },
+            {
+                "name": "thirty",
+                "text": "30",
+                "image": "https://img.icons8.com/color/48/000000/30.png",
+                "id": 26
+            },
+            {
+                "name": "fourty",
+                "text": "40",
+                "image": "https://img.icons8.com/color/48/000000/40.png",
+                "id": 27
+            },
+            {
+                "name": "fifty",
+                "text": "50",
+                "image": "https://img.icons8.com/color/48/000000/50.png",
+                "id": 28
+            },
+            {
+                "name": "sixty",
+                "text": "60",
+                "image": "https://img.icons8.com/color/48/000000/60.png",
+                "id": 29
+            },
+            {
+                "name": "seventy",
+                "text": "70",
+                "image": "https://img.icons8.com/color/48/000000/70.png",
+                "id": 30
+            },
+            {
+                "name": "eighty",
+                "text": "80",
+                "image": "https://img.icons8.com/color/48/000000/80.png",
+                "id": 31
+            },
+            {
+                "name": "ninety",
+                "text": "90",
+                "image": "https://img.icons8.com/color/48/000000/90.png",
+                "id": 32
+            },
+            {
+                "name": "hundred",
+                "text": "hundred",
+                "accent": "mint",
+                "image": "https://img.icons8.com/color/48/000000/100.png",
+                "id": 33
+>>>>>>> add numbers page and tile data
             },
             {
                 "name": "Degrees",
@@ -1726,12 +1938,21 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
+<<<<<<< HEAD
                         "name": "Grad",
                         "text": "Grad"
                     },
                     "sp": {
                         "name": "Grados",
                         "text": "Grados"
+=======
+                        "name": "Und",
+                        "text": "und"
+                    },
+                    "sp": {
+                        "name": "Y",
+                        "text": "Y"
+>>>>>>> add numbers page and tile data
                     }
                 }
             },
@@ -1743,12 +1964,21 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
+<<<<<<< HEAD
                         "name": "Pfund",
                         "text": "Pfund"
                     },
                     "sp": {
                         "name": "Libra",
                         "text": "Libra"
+=======
+                        "name": "Und",
+                        "text": "und"
+                    },
+                    "sp": {
+                        "name": "Y",
+                        "text": "Y"
+>>>>>>> add numbers page and tile data
                     }
                 }
             },
@@ -1760,6 +1990,7 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
+<<<<<<< HEAD
                         "name": "Dollars",
                         "text": "Dollars"
                     },
@@ -1955,6 +2186,14 @@
                         "text": "Kilómetros"
 =======
 >>>>>>> add translations to 'tiles' button
+=======
+                        "name": "Und",
+                        "text": "und"
+                    },
+                    "sp": {
+                        "name": "Y",
+                        "text": "Y"
+>>>>>>> add numbers page and tile data
                     }
                 }
             }
