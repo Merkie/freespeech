@@ -1991,6 +1991,7 @@
                 "messages": {
                     "de": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                         "name": "Dollars",
                         "text": "Dollars"
                     },
@@ -2194,6 +2195,14 @@
                         "name": "Y",
                         "text": "Y"
 >>>>>>> add numbers page and tile data
+=======
+                        "name": "Dollars",
+                        "text": "Dollars"
+                    },
+                    "sp": {
+                        "name": "Dolares",
+                        "text": "Dolares"
+>>>>>>> add translation to dollars tile
                     }
                 }
             }
