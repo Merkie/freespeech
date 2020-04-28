@@ -2722,6 +2722,7 @@
                     "sp": {
                         "name": "Dolares",
                         "text": "Dolares"
+<<<<<<< HEAD
                     }
                 }
             },
@@ -3142,6 +3143,8 @@
                     "sp": {
                         "name": "Kilómetros",
                         "text": "Kilómetros"
+=======
+>>>>>>> add translation to dollars tile
                     }
                 }
             }
