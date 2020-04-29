@@ -1,7 +1,6 @@
 {
     "home": {
-        "tileData": [
-		{
+        "tileData": [{
                 "name": "No",
                 "text": "No",
                 "accent": "peach",
@@ -3148,7 +3147,197 @@
 >>>>>>> add translation to dollars tile
                     }
                 }
+            },
+            {
+                "name": "To",
+                "text": "To",
+                "accent": "mint",
+                "image": "https://img.icons8.com/officexs/64/000000/students.png",
+                "id": 37,
+                "messages": {
+                    "de": {
+                        "name": "Zu",
+                        "text": "zu"
+                    },
+                    "sp": {
+                        "name": "A",
+                        "text": "A"
+                    }
+                }
+            },
+            {
+                "name": "In",
+                "text": "In",
+                "image": "https://img.icons8.com/officexs/64/000000/walking.png",
+                "id": 38,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Im",
+                        "text": "im"
+                    },
+                    "sp": {
+                        "name": "En",
+                        "text": "En"
+                    }
+                }
+            },
+            {
+                "name": "Days",
+                "text": "Days",
+                "image": "https://img.icons8.com/officel/16/000000/day-camera.png",
+                "id": 39,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Tage",
+                        "text": "Tage"
+                    },
+                    "sp": {
+                        "name": "Dias",
+                        "text": "Dias"
+                    }
+                }
+            },
+            {
+                "name": "Percent",
+                "text": "Percent",
+                "image": "https://img.icons8.com/dusk/64/000000/percentage.png",
+                "id": 40,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Prozent",
+                        "text": "Prozent"
+                    },
+                    "sp": {
+                        "name": "Por Ciento",
+                        "text": "Por Ciento"
+                    }
+                }
+            },
+            {
+                "name": "Times",
+                "text": "Times",
+                "image": "https://img.icons8.com/dusk/64/000000/property-time.png",
+                "id": 41,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Mal",
+                        "text": "Mal"
+                    },
+                    "sp": {
+                        "name": "Veces",
+                        "text": "Veces"
+                    }
+                }
+            },
+            {
+                "name": "Hours",
+                "text": "Hours",
+                "image": "https://img.icons8.com/dusk/64/000000/future.png",
+                "id": 42,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Dienststunden",
+                        "text": "Dienststunden"
+                    },
+                    "sp": {
+                        "name": "Horas",
+                        "text": "Horas"
+                    }
+                }
+            },
+            {
+                "name": "Months",
+                "text": "Months",
+                "image": "https://img.icons8.com/dusk/64/000000/calendar-plus.png",
+                "id": 43,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Monate",
+                        "text": "Monate"
+                    },
+                    "sp": {
+                        "name": "Meses",
+                        "text": "Meses"
+                    }
+                }
+            },
+            {
+                "name": "Years",
+                "text": "Years",
+                "image": "https://img.icons8.com/cute-clipart/64/000000/minus-1year.png",
+                "id": 44,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Jahren",
+                        "text": "Jahren"
+                    },
+                    "sp": {
+                        "name": "Años",
+                        "text": "Años"
+                    }
+                }
+            },
+            {
+                "name": "Half",
+                "text": "Half",
+                "image": "https://img.icons8.com/dusk/64/000000/half-heart.png",
+                "id": 45,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Halb",
+                        "text": "Halb"
+                    },
+                    "sp": {
+                        "name": "Medio",
+                        "text": "Medio"
+                    }
+                }
+            },
+            {
+                "name": "Feet",
+                "text": "Feet",
+                "image": "https://img.icons8.com/cotton/64/000000/tape-measure-sewing--v2.png",
+                "id": 46,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Im",
+                        "text": "im"
+                    },
+                    "sp": {
+                        "name": "En",
+                        "text": "En"
+                    }
+                }
+            },
+            {
+                "name": "Miles",
+                "text": "Miles",
+                "image": "https://img.icons8.com/cute-clipart/64/000000/maximum-speed.png",
+                "id": 47,
+                "accent": "mint",
+                "messages": {
+                    "de": {
+                        "name": "Im",
+                        "text": "im"
+                    },
+                    "sp": {
+                        "name": "En",
+                        "text": "En"
+                    }
+                }
             }
+
+
+
         ]
     }
 }
