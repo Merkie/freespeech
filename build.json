@@ -1266,6 +1266,7 @@
             },
             {
                 "name": "Five",
+<<<<<<< HEAD
                 "text": "5",
                 "image": "https://img.icons8.com/color/48/000000/5-c.png",
                 "id": 6,
@@ -1428,6 +1429,8 @@
             },
             {
                 "name": "five",
+=======
+>>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
                 "text": "5",
                 "image": "https://img.icons8.com/color/48/000000/5-c.png",
                 "id": 6,
@@ -1443,7 +1446,7 @@
                 }
             },
             {
-                "name": "six",
+                "name": "Six",
                 "text": "6",
                 "image": "https://img.icons8.com/color/48/000000/6-c.png",
                 "id": 7,
@@ -1459,7 +1462,7 @@
                 }
             },
             {
-                "name": "seven",
+                "name": "Seven",
                 "text": "7",
                 "image": "https://img.icons8.com/color/48/000000/7-c.png",
                 "id": 8,
@@ -1475,7 +1478,7 @@
                 }
             },
             {
-                "name": "eight",
+                "name": "Eight",
                 "text": "8",
                 "image": "https://img.icons8.com/color/48/000000/8-c.png",
                 "id": 9,
@@ -1491,7 +1494,7 @@
                 }
             },
             {
-                "name": "nine",
+                "name": "Nine",
                 "text": "9",
                 "image": "https://img.icons8.com/color/48/000000/9-c.png",
 <<<<<<< HEAD
@@ -1555,6 +1558,7 @@
                 "messages": {
                     "de": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                         "name": "Komma",
                         "text": "Komma"
                     },
@@ -1569,6 +1573,14 @@
                         "name": "Y",
                         "text": "Y"
 >>>>>>> add numbers page and tile data
+=======
+                        "name": "Komma",
+                        "text": "Komma"
+                    },
+                    "sp": {
+                        "name": "Coma",
+                        "text": "Coma"
+>>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
                     }
                 }
             },
@@ -1702,7 +1714,7 @@
                 }
             },
             {
-                "name": "thirteen",
+                "name": "Thirteen",
                 "text": "13",
                 "image": "https://img.icons8.com/color/48/000000/13.png",
                 "id": 16,
@@ -1718,7 +1730,7 @@
                 }
             },
             {
-                "name": "fourteen",
+                "name": "Fourteen",
                 "text": "14",
                 "image": "https://img.icons8.com/color/48/000000/14.png",
 <<<<<<< HEAD
@@ -1850,6 +1862,7 @@
                 "id": 20,
                 "messages": {
                     "de": {
+<<<<<<< HEAD
                         "name": "Siebzehn",
                         "text": "Siebzehn"
                     },
@@ -1949,6 +1962,10 @@
 =======
                         "name": "Und",
                         "text": "und"
+=======
+                        "name": "Tausend",
+                        "text": "Tausend"
+>>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
                     },
                     "sp": {
 <<<<<<< HEAD
@@ -2305,6 +2322,7 @@
                 "messages": {
                     "de": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                         "name": "Pfund",
                         "text": "Pfund"
                     },
@@ -2319,6 +2337,14 @@
                         "name": "Y",
                         "text": "Y"
 >>>>>>> add numbers page and tile data
+=======
+                        "name": "Pfund",
+                        "text": "Pfund"
+                    },
+                    "sp": {
+                        "name": "Libra",
+                        "text": "Libra"
+>>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
                     }
                 }
             },
@@ -2707,12 +2733,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-                        "name": "Im",
-                        "text": "im"
+                        "name": "Meters",
+                        "text": "Meters"
                     },
                     "sp": {
-                        "name": "En",
-                        "text": "En"
+                        "name": "Metros",
+                        "text": "Metros"
                     }
                 }
             },
@@ -2724,12 +2750,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-                        "name": "Im",
-                        "text": "im"
+                        "name": "Kilometer",
+                        "text": "Kilometer"
                     },
                     "sp": {
-                        "name": "En",
-                        "text": "En"
+                        "name": "Kilómetros",
+                        "text": "Kilómetros"
                     }
                 }
             }
