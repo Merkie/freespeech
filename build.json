@@ -2751,12 +2751,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-                        "name": "Im",
-                        "text": "im"
+                        "name": "Meters",
+                        "text": "Meters"
                     },
                     "sp": {
-                        "name": "En",
-                        "text": "En"
+                        "name": "Metros",
+                        "text": "Metros"
                     }
                 }
             },
@@ -3326,12 +3326,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-                        "name": "Im",
-                        "text": "im"
+                        "name": "Kilometer",
+                        "text": "Kilometer"
                     },
                     "sp": {
-                        "name": "En",
-                        "text": "En"
+                        "name": "Kilómetros",
+                        "text": "Kilómetros"
                     }
                 }
             }
