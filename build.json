@@ -1148,16 +1148,6 @@
                 "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
                 "navigation": "home",
                 "id": 26,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "messages": {
                     "de": {
                         "name": "Fliesen",
@@ -1191,17 +1181,6 @@
 
             },
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "name": "Zero",
                 "text": "0",
                 "image": "https://img.icons8.com/color/48/000000/0-c.png",
@@ -1283,16 +1262,6 @@
             },
             {
                 "name": "Five",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "text": "5",
                 "image": "https://img.icons8.com/color/48/000000/5-c.png",
                 "id": 6,
@@ -1370,223 +1339,14 @@
                         "text": "Nueve"
                     }
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                "name": "zero",
-=======
-                "name": "Zero",
->>>>>>> add spanish and deutsch translations
-                "text": "0",
-                "image": "https://img.icons8.com/color/48/000000/0-c.png",
-                "id": 1,
-                "messages": {
-                    "de": {
-                        "name": "Null",
-                        "text": "Null"
-                    },
-                    "sp": {
-                        "name": "Cero",
-                        "text": "Cero"
-                    }
-                }
-            },
-            {
-                "name": "One",
-                "text": "1",
-                "image": "https://img.icons8.com/color/48/000000/1-c.png",
-                "id": 2,
-                "messages": {
-                    "de": {
-                        "name": "Eins",
-                        "text": "Eins"
-                    },
-                    "sp": {
-                        "name": "Uno",
-                        "text": "Uno"
-                    }
-                }
-            },
-            {
-                "name": "Two",
-                "text": "2",
-                "image": "https://img.icons8.com/color/48/000000/2-c.png",
-                "id": 3,
-                "messages": {
-                    "de": {
-                        "name": "Zwei",
-                        "text": "Zwei"
-                    },
-                    "sp": {
-                        "name": "Dos",
-                        "text": "Dos"
-                    }
-                }
-            },
-            {
-                "name": "Three",
-                "text": "3",
-                "image": "https://img.icons8.com/color/48/000000/3-c.png",
-                "id": 4,
-                "messages": {
-                    "de": {
-                        "name": "Drei",
-                        "text": "Drei"
-                    },
-                    "sp": {
-                        "name": "Tres",
-                        "text": "Tres"
-                    }
-                }
-            },
-            {
-                "name": "Four",
-                "text": "4",
-                "image": "https://img.icons8.com/color/48/000000/4-c.png",
-                "id": 5,
-                "messages": {
-                    "de": {
-                        "name": "Vier",
-                        "text": "Vier"
-                    },
-                    "sp": {
-                        "name": "Cuatro",
-                        "text": "Cuatro"
-                    }
-                }
-            },
-            {
-                "name": "five",
-=======
->>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
-                "text": "5",
-                "image": "https://img.icons8.com/color/48/000000/5-c.png",
-                "id": 6,
-                "messages": {
-                    "de": {
-                        "name": "Fünf",
-                        "text": "Fünf"
-                    },
-                    "sp": {
-                        "name": "Cinco",
-                        "text": "Cinco"
-                    }
-                }
-            },
-            {
-                "name": "Six",
-                "text": "6",
-                "image": "https://img.icons8.com/color/48/000000/6-c.png",
-                "id": 7,
-                "messages": {
-                    "de": {
-                        "name": "Sechs",
-                        "text": "Sechs"
-                    },
-                    "sp": {
-                        "name": "Seis",
-                        "text": "Seis"
-                    }
-                }
-            },
-            {
-                "name": "Seven",
-                "text": "7",
-                "image": "https://img.icons8.com/color/48/000000/7-c.png",
-                "id": 8,
-                "messages": {
-                    "de": {
-                        "name": "Sieben",
-                        "text": "Sieben"
-                    },
-                    "sp": {
-                        "name": "Siete",
-                        "text": "Siete"
-                    }
-                }
-            },
-            {
-                "name": "Eight",
-                "text": "8",
-                "image": "https://img.icons8.com/color/48/000000/8-c.png",
-                "id": 9,
-                "messages": {
-                    "de": {
-                        "name": "Acht",
-                        "text": "Acht"
-                    },
-                    "sp": {
-                        "name": "Ocho",
-                        "text": "Ocho"
-                    }
-                }
-            },
-            {
-                "name": "Nine",
-                "text": "9",
-                "image": "https://img.icons8.com/color/48/000000/9-c.png",
-<<<<<<< HEAD
-                "id": 10
->>>>>>> add numbers page and tile data
-=======
-                "id": 10,
-                "messages": {
-                    "de": {
-                        "name": "Neun",
-                        "text": "Neun"
-                    },
-                    "sp": {
-                        "name": "Nueve",
-                        "text": "Nueve"
-                    }
-                }
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
             },
             {
                 "name": "Tiles",
                 "text": " ",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "accent": "peach",
                 "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
                 "navigation": "home",
                 "id": 11,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> add translations to 'tiles' button
-=======
-                "accent": "mint",
-=======
-                "accent": "peach",
->>>>>>> add spanish and deutsch translations
-                "image": "https://img.icons8.com/dusk/64/000000/medium-icons.png",
-                "navigation": "home",
-                "id": 11,
->>>>>>> add numbers page and tile data
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "messages": {
                     "de": {
                         "name": "Fliesen",
@@ -1595,19 +1355,6 @@
                     "sp": {
                         "name": "Losas",
                         "text": "Losas"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> add numbers page and tile data
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                     }
                 }
             },
@@ -1619,63 +1366,16 @@
                 "accent": "peach",
                 "messages": {
                     "de": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                         "name": "Komma",
                         "text": "Komma"
                     },
                     "sp": {
                         "name": "Coma",
                         "text": "Coma"
-=======
-                        "name": "Und",
-                        "text": "und"
-                    },
-                    "sp": {
-                        "name": "Y",
-                        "text": "Y"
->>>>>>> add numbers page and tile data
-=======
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Komma",
-                        "text": "Komma"
-                    },
-                    "sp": {
-                        "name": "Coma",
-                        "text": "Coma"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                     }
                 }
             },
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "name": "Ten",
                 "text": "10",
                 "image": "https://img.icons8.com/color/48/000000/10.png",
@@ -1690,55 +1390,11 @@
                         "text": "Diez"
                     }
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                "name": "ten",
-                "text": "10",
-                "image": "https://img.icons8.com/color/48/000000/10.png",
-                "id": 13
->>>>>>> add numbers page and tile data
-=======
-                "name": "Ten",
-                "text": "10",
-                "image": "https://img.icons8.com/color/48/000000/10.png",
-                "id": 13,
-                "messages": {
-                    "de": {
-                        "name": "Zehn",
-                        "text": "Zehn"
-                    },
-                    "sp": {
-                        "name": "Diez",
-                        "text": "Diez"
-                    }
-                }
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
             },
             {
                 "name": "eleven",
                 "text": "11",
                 "image": "https://img.icons8.com/color/48/000000/11.png",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "id": 14,
                 "messages": {
                     "de": {
@@ -1750,9 +1406,6 @@
                         "text": "Once"
                     }
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             },
             {
                 "name": "Twelve",
@@ -1801,118 +1454,11 @@
                         "text": "Catorce"
                     }
                 }
-=======
-                "id": 14
-=======
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-            },
-
-
-
-            {
-
-
-
-                "name": "Twelve",
-
-
-
-=======
-            },
-            {
-                "name": "Twelve",
->>>>>>> add numbers page and tile data
-                "text": "12",
-                "image": "https://img.icons8.com/color/48/000000/12.png",
-                "id": 15,
-                "messages": {
-                    "de": {
-                        "name": "Zwölf",
-                        "text": "Zwölf"
-                    },
-                    "sp": {
-                        "name": "Doce",
-                        "text": "Doce"
-                    }
-                }
-            },
-            {
-                "name": "Thirteen",
-                "text": "13",
-                "image": "https://img.icons8.com/color/48/000000/13.png",
-                "id": 16,
-                "messages": {
-                    "de": {
-                        "name": "Dreizehn",
-                        "text": "Dreizehn"
-                    },
-                    "sp": {
-                        "name": "Trece",
-                        "text": "Trece"
-                    }
-                }
-            },
-            {
-                "name": "Fourteen",
-                "text": "14",
-                "image": "https://img.icons8.com/color/48/000000/14.png",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 17
->>>>>>> add numbers page and tile data
-=======
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                "id": 17,
-                "messages": {
-                    "de": {
-                        "name": "Vierzehn",
-                        "text": "Vierzehn"
-                    },
-                    "sp": {
-                        "name": "Catorce",
-                        "text": "Catorce"
-                    }
-                }
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
             },
             {
                 "name": "fifteen",
                 "text": "15",
                 "image": "https://img.icons8.com/color/48/000000/15.png",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "id": 18,
                 "messages": {
                     "de": {
@@ -1924,16 +1470,6 @@
                         "text": "Quince"
                     }
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
             },
             {
                 "name": "Sixteen",
@@ -1998,89 +1534,6 @@
                         "text": "Diecinueve"
                     }
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                "id": 18
-=======
->>>>>>> add spanish and deutsch translations
-            },
-            {
-                "name": "Sixteen",
-                "text": "16",
-                "image": "https://img.icons8.com/color/48/000000/16.png",
-                "id": 19,
-                "messages": {
-                    "de": {
-                        "name": "Sechzehn",
-                        "text": "Sechzehn"
-                    },
-                    "sp": {
-                        "name": "Dieciséis",
-                        "text": "Dieciséis"
-                    }
-                }
-            },
-            {
-                "name": "Seventeen",
-                "text": "17",
-                "image": "https://img.icons8.com/color/48/000000/17.png",
-                "id": 20,
-                "messages": {
-                    "de": {
-<<<<<<< HEAD
-                        "name": "Siebzehn",
-                        "text": "Siebzehn"
-                    },
-                    "sp": {
-                        "name": "Diecisiete",
-                        "text": "Diecisiete"
-                    }
-                }
-            },
-            {
-                "name": "eighteen",
-                "text": "18",
-                "image": "https://img.icons8.com/color/48/000000/18.png",
-                "id": 21,
-                "messages": {
-                    "de": {
-                        "name": "Achtzehn",
-                        "text": "Achtzehn"
-                    },
-                    "sp": {
-                        "name": "Dieciocho",
-                        "text": "Dieciocho"
-                    }
-                }
-            },
-            {
-                "name": "nineteen",
-                "text": "19",
-                "image": "https://img.icons8.com/color/48/000000/19.png",
-<<<<<<< HEAD
-                "id": 22
->>>>>>> add numbers page and tile data
-=======
-                "id": 22,
-                "messages": {
-                    "de": {
-                        "name": "Neunzehn",
-                        "text": "Neunzehn"
-                    },
-                    "sp": {
-                        "name": "Diecinueve",
-                        "text": "Diecinueve"
-                    }
-                }
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
             },
             {
                 "name": "Minutes",
@@ -2090,32 +1543,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                         "name": "Minuten",
                         "text": "Minuten"
                     },
                     "sp": {
                         "name": "Minutos",
                         "text": "Minutos"
-=======
-                        "name": "Und",
-                        "text": "und"
-                    },
-                    "sp": {
-                        "name": "Y",
-                        "text": "Y"
->>>>>>> add numbers page and tile data
-=======
-                        "name": "Minuten",
-                        "text": "Minuten"
-                    },
-                    "sp": {
-                        "name": "Minutos",
-                        "text": "Minutos"
->>>>>>> add spanish and deutsch translations
                     }
                 }
             },
@@ -2127,288 +1560,17 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-<<<<<<< HEAD
                         "name": "Tausend",
                         "text": "Tausend"
                     },
                     "sp": {
                         "name": "Mil",
                         "text": "Mil"
-=======
-                        "name": "Und",
-                        "text": "und"
-=======
-                        "name": "Tausend",
-                        "text": "Tausend"
->>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
-                    },
-                    "sp": {
-<<<<<<< HEAD
-                        "name": "Y",
-                        "text": "Y"
->>>>>>> add numbers page and tile data
                     }
                 }
-            },
-            {
-<<<<<<< HEAD
-                "name": "Twenty",
-                "text": "20",
-                "image": "https://img.icons8.com/color/48/000000/20.png",
-                "id": 25,
-                "messages": {
-                    "de": {
-                        "name": "Zwanzig",
-                        "text": "Zwanzig"
-                    },
-                    "sp": {
-                        "name": "Veinte",
-                        "text": "Veinte"
-=======
-                        "name": "Mil",
-                        "text": "Mil"
->>>>>>> add spanish and deutsch translations
-                    }
-                }
-            },
-            {
-<<<<<<< HEAD
-                "name": "Thirty",
-                "text": "30",
-                "image": "https://img.icons8.com/color/48/000000/30.png",
-                "id": 26,
-                "messages": {
-                    "de": {
-                        "name": "Dreiβig",
-                        "text": "Dreiβig"
-                    },
-                    "sp": {
-                        "name": "Treinta",
-                        "text": "Treinta"
-                    }
-                }
-            },
-            {
-                "name": "Fourty",
-                "text": "40",
-                "image": "https://img.icons8.com/color/48/000000/40.png",
-                "id": 27,
-                "messages": {
-                    "de": {
-                        "name": "Vierzig",
-                        "text": "Vierzig"
-                    },
-                    "sp": {
-                        "name": "Cuarenta",
-                        "text": "Cuarenta"
-                    }
-                }
-            },
-            {
-                "name": "Fifty",
-                "text": "50",
-                "image": "https://img.icons8.com/color/48/000000/50.png",
-                "id": 28,
-                "messages": {
-                    "de": {
-                        "name": "Fünfzig",
-                        "text": "Fünfzig"
-                    },
-                    "sp": {
-                        "name": "Cincuenta",
-                        "text": "Cincuenta"
-                    }
-                }
-            },
-            {
-                "name": "Sixty",
-                "text": "60",
-                "image": "https://img.icons8.com/color/48/000000/60.png",
-                "id": 29,
-                "messages": {
-                    "de": {
-                        "name": "Sechzig",
-                        "text": "Sechzig"
-                    },
-                    "sp": {
-                        "name": "Sesenta",
-                        "text": "Sesenta"
-                    }
-                }
-            },
-            {
-                "name": "Seventy",
-                "text": "70",
-                "image": "https://img.icons8.com/color/48/000000/70.png",
-                "id": 30,
-                "messages": {
-                    "de": {
-                        "name": "Siebzig",
-                        "text": "Siebzig"
-                    },
-                    "sp": {
-                        "name": "Setenta",
-                        "text": "Setenta"
-                    }
-                }
-            },
-            {
-                "name": "Eighty",
-                "text": "80",
-                "image": "https://img.icons8.com/color/48/000000/80.png",
-                "id": 31,
-                "messages": {
-                    "de": {
-                        "name": "Achtzig",
-                        "text": "Achtzig"
-                    },
-                    "sp": {
-                        "name": "Ochenta",
-                        "text": "Ochenta"
-                    }
-                }
-            },
-            {
-                "name": "Ninety",
-                "text": "90",
-                "image": "https://img.icons8.com/color/48/000000/90.png",
-                "id": 32,
-                "messages": {
-                    "de": {
-                        "name": "Neunzig",
-                        "text": "Neunzig"
-=======
-
-
-
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Minuten",
-                        "text": "Minuten"
-<<<<<<< HEAD
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                    },
-                    "sp": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "name": "Noventa",
-                        "text": "Noventa"
-=======
-
-
-
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Minutos",
-                        "text": "Minutos"
-<<<<<<< HEAD
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                    }
-                }
-            },
-            {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "name": "Hundred",
-                "text": "Hundred",
-                "accent": "mint",
-                "image": "https://img.icons8.com/color/48/000000/100.png",
-                "id": 33,
-=======
-
-
-
-=======
->>>>>>> add numbers page and tile data
-                "name": "Thousand",
-                "text": "thousand",
-                "image": "https://img.icons8.com/color/96/000000/1000-tons.png",
-                "id": 24,
-                "accent": "mint",
-<<<<<<< HEAD
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                "messages": {
-                    "de": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "name": "Hundert",
-                        "text": "Hundert"
-=======
-
-
-
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Tausend",
-                        "text": "Tausend"
-<<<<<<< HEAD
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                    },
-                    "sp": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "name": "Ciento",
-                        "text": "Ciento"
-=======
-
-
-
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Mil",
-                        "text": "Mil"
-<<<<<<< HEAD
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                    }
-                }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                "name": "twenty",
-=======
-                "name": "Twenty",
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
-=======
->>>>>>> add numbers page and tile data
             },
             {
                 "name": "Twenty",
-<<<<<<< HEAD
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                 "text": "20",
                 "image": "https://img.icons8.com/color/48/000000/20.png",
                 "id": 25,
@@ -2536,47 +1698,11 @@
                 }
             },
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> add numbers page and tile data
                 "name": "Hundred",
                 "text": "Hundred",
                 "accent": "mint",
-<<<<<<< HEAD
-
-
-
-                "image": "https://img.icons8.com/color/48/000000/100.png",
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 33
->>>>>>> add numbers page and tile data
-=======
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-                "id": 33,
-
-
-
-=======
-                "name": "Numbers",
-                "text": " ",
-                "accent": "violet",
-                "image": "https://img.icons8.com/officexs/64/000000/superscript.png",
-                "navigation": "numbers",
-                "id": 56,
->>>>>>> add back to tiles button in keyboard section
-=======
                 "image": "https://img.icons8.com/color/48/000000/100.png",
                 "id": 33,
->>>>>>> add numbers page and tile data
                 "messages": {
                     "de": {
                         "name": "Hundert",
@@ -2587,16 +1713,6 @@
                         "text": "Ciento"
                     }
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
             },
             {
                 "name": "Degrees",
@@ -2606,48 +1722,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                         "name": "Grad",
                         "text": "Grad"
                     },
                     "sp": {
                         "name": "Grados",
                         "text": "Grados"
-=======
-                        "name": "Und",
-                        "text": "und"
-                    },
-                    "sp": {
-                        "name": "Y",
-                        "text": "Y"
->>>>>>> add numbers page and tile data
-=======
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Grad",
-                        "text": "Grad"
-                    },
-                    "sp": {
-                        "name": "Grados",
-                        "text": "Grados"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> add spanish and deutsch translations
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                     }
                 }
             },
@@ -2659,48 +1739,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                         "name": "Pfund",
                         "text": "Pfund"
                     },
                     "sp": {
                         "name": "Libra",
                         "text": "Libra"
-=======
-                        "name": "Und",
-                        "text": "und"
-                    },
-                    "sp": {
-                        "name": "Y",
-                        "text": "Y"
->>>>>>> add numbers page and tile data
-=======
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Pfund",
-                        "text": "Pfund"
-                    },
-                    "sp": {
-                        "name": "Libra",
-                        "text": "Libra"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> add more spanish and deutsch translations in pounds, miles and point tiles
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
                     }
                 }
             },
@@ -2712,442 +1756,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                         "name": "Dollars",
                         "text": "Dollars"
                     },
                     "sp": {
                         "name": "Dolares",
                         "text": "Dolares"
-<<<<<<< HEAD
-                    }
-                }
-            },
-            {
-                "name": "To",
-                "text": "To",
-                "accent": "mint",
-                "image": "https://img.icons8.com/officexs/64/000000/students.png",
-                "id": 37,
-                "messages": {
-                    "de": {
-                        "name": "Zu",
-                        "text": "zu"
-                    },
-                    "sp": {
-                        "name": "A",
-                        "text": "A"
-                    }
-                }
-            },
-            {
-                "name": "In",
-                "text": "In",
-                "image": "https://img.icons8.com/officexs/64/000000/walking.png",
-                "id": 38,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Meters",
-                        "text": "Meters"
-                    },
-                    "sp": {
-                        "name": "Metros",
-                        "text": "Metros"
-                    }
-                }
-            },
-            {
-                "name": "Days",
-                "text": "Days",
-                "image": "https://img.icons8.com/officel/16/000000/day-camera.png",
-                "id": 39,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Tage",
-                        "text": "Tage"
-                    },
-                    "sp": {
-                        "name": "Dias",
-                        "text": "Dias"
-                    }
-                }
-            },
-            {
-                "name": "Percent",
-                "text": "Percent",
-                "image": "https://img.icons8.com/dusk/64/000000/percentage.png",
-                "id": 40,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Prozent",
-                        "text": "Prozent"
-                    },
-                    "sp": {
-                        "name": "Por Ciento",
-                        "text": "Por Ciento"
-                    }
-                }
-            },
-            {
-                "name": "Times",
-                "text": "Times",
-                "image": "https://img.icons8.com/dusk/64/000000/property-time.png",
-                "id": 41,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Mal",
-                        "text": "Mal"
-                    },
-                    "sp": {
-                        "name": "Veces",
-                        "text": "Veces"
-                    }
-                }
-            },
-            {
-                "name": "Hours",
-                "text": "Hours",
-                "image": "https://img.icons8.com/dusk/64/000000/future.png",
-                "id": 42,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Dienststunden",
-                        "text": "Dienststunden"
-                    },
-                    "sp": {
-                        "name": "Horas",
-                        "text": "Horas"
-                    }
-                }
-            },
-            {
-                "name": "Months",
-                "text": "Months",
-                "image": "https://img.icons8.com/dusk/64/000000/calendar-plus.png",
-                "id": 43,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Monate",
-                        "text": "Monate"
-                    },
-                    "sp": {
-                        "name": "Meses",
-                        "text": "Meses"
-                    }
-                }
-            },
-            {
-                "name": "Years",
-                "text": "Years",
-                "image": "https://img.icons8.com/cute-clipart/64/000000/minus-1year.png",
-                "id": 44,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Jahren",
-                        "text": "Jahren"
-                    },
-                    "sp": {
-                        "name": "Años",
-                        "text": "Años"
-                    }
-                }
-            },
-            {
-                "name": "Half",
-                "text": "Half",
-                "image": "https://img.icons8.com/dusk/64/000000/half-heart.png",
-                "id": 45,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Halb",
-                        "text": "Halb"
-                    },
-                    "sp": {
-                        "name": "Medio",
-                        "text": "Medio"
-                    }
-                }
-            },
-            {
-                "name": "Feet",
-                "text": "Feet",
-                "image": "https://img.icons8.com/cotton/64/000000/tape-measure-sewing--v2.png",
-                "id": 46,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Meters",
-                        "text": "Meters"
-                    },
-                    "sp": {
-                        "name": "Metros",
-                        "text": "Metros"
-                    }
-                }
-            },
-            {
-                "name": "Miles",
-                "text": "Miles",
-                "image": "https://img.icons8.com/cute-clipart/64/000000/maximum-speed.png",
-                "id": 47,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Kilometer",
-                        "text": "Kilometer"
-                    },
-                    "sp": {
-                        "name": "Kilómetros",
-                        "text": "Kilómetros"
-=======
->>>>>>> add translations to 'tiles' button
-=======
-                        "name": "Und",
-                        "text": "und"
-                    },
-                    "sp": {
-                        "name": "Y",
-                        "text": "Y"
->>>>>>> add numbers page and tile data
-=======
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                        "name": "Dollars",
-                        "text": "Dollars"
-                    },
-                    "sp": {
-                        "name": "Dolares",
-                        "text": "Dolares"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> add translation to dollars tile
-=======
-
-
-
->>>>>>> Add "Tiles" button in Keyboard Folder  (#94)
-=======
->>>>>>> add numbers page and tile data
-                    }
-                }
-            },
-            {
-                "name": "To",
-                "text": "To",
-                "accent": "mint",
-                "image": "https://img.icons8.com/officexs/64/000000/students.png",
-                "id": 37,
-                "messages": {
-                    "de": {
-                        "name": "Zu",
-                        "text": "zu"
-                    },
-                    "sp": {
-                        "name": "A",
-                        "text": "A"
-                    }
-                }
-            },
-            {
-                "name": "In",
-                "text": "In",
-                "image": "https://img.icons8.com/officexs/64/000000/walking.png",
-                "id": 38,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Im",
-                        "text": "im"
-                    },
-                    "sp": {
-                        "name": "En",
-                        "text": "En"
-                    }
-                }
-            },
-            {
-                "name": "Days",
-                "text": "Days",
-                "image": "https://img.icons8.com/officel/16/000000/day-camera.png",
-                "id": 39,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Tage",
-                        "text": "Tage"
-                    },
-                    "sp": {
-                        "name": "Dias",
-                        "text": "Dias"
-                    }
-                }
-            },
-            {
-                "name": "Percent",
-                "text": "Percent",
-                "image": "https://img.icons8.com/dusk/64/000000/percentage.png",
-                "id": 40,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Prozent",
-                        "text": "Prozent"
-                    },
-                    "sp": {
-                        "name": "Por Ciento",
-                        "text": "Por Ciento"
-                    }
-                }
-            },
-            {
-                "name": "Times",
-                "text": "Times",
-                "image": "https://img.icons8.com/dusk/64/000000/property-time.png",
-                "id": 41,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Mal",
-                        "text": "Mal"
-                    },
-                    "sp": {
-                        "name": "Veces",
-                        "text": "Veces"
-                    }
-                }
-            },
-            {
-                "name": "Hours",
-                "text": "Hours",
-                "image": "https://img.icons8.com/dusk/64/000000/future.png",
-                "id": 42,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Dienststunden",
-                        "text": "Dienststunden"
-                    },
-                    "sp": {
-                        "name": "Horas",
-                        "text": "Horas"
-                    }
-                }
-            },
-            {
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> add numbers page and tile data
-                "name": "Months",
-                "text": "Months",
-                "image": "https://img.icons8.com/dusk/64/000000/calendar-plus.png",
-                "id": 43,
-                "accent": "mint",
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> add numbers page and tile data
-                "messages": {
-                    "de": {
-                        "name": "Monate",
-                        "text": "Monate"
-                    },
-                    "sp": {
-                        "name": "Meses",
-                        "text": "Meses"
-                    }
-                }
-            },
-            {
-                "name": "Years",
-                "text": "Years",
-                "image": "https://img.icons8.com/cute-clipart/64/000000/minus-1year.png",
-                "id": 44,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Jahren",
-                        "text": "Jahren"
-                    },
-                    "sp": {
-                        "name": "Años",
-                        "text": "Años"
-                    }
-                }
-            },
-            {
-                "name": "Half",
-                "text": "Half",
-                "image": "https://img.icons8.com/dusk/64/000000/half-heart.png",
-                "id": 45,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Halb",
-                        "text": "Halb"
-                    },
-                    "sp": {
-                        "name": "Medio",
-                        "text": "Medio"
-                    }
-                }
-            },
-            {
-                "name": "Feet",
-                "text": "Feet",
-                "image": "https://img.icons8.com/cotton/64/000000/tape-measure-sewing--v2.png",
-                "id": 46,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Meters",
-                        "text": "Meters"
-                    },
-                    "sp": {
-                        "name": "Metros",
-                        "text": "Metros"
-                    }
-                }
-            },
-            {
-                "name": "Miles",
-                "text": "Miles",
-                "image": "https://img.icons8.com/cute-clipart/64/000000/maximum-speed.png",
-                "id": 47,
-                "accent": "mint",
-                "messages": {
-                    "de": {
-                        "name": "Kilometer",
-                        "text": "Kilometer"
-                    },
-                    "sp": {
-                        "name": "Kilómetros",
-                        "text": "Kilómetros"
-=======
->>>>>>> add translation to dollars tile
-=======
->>>>>>> resolve conflicts with base
                     }
                 }
             },
@@ -3312,12 +1926,12 @@
                 "accent": "mint",
                 "messages": {
                     "de": {
-                        "name": "Im",
-                        "text": "im"
+                        "name": "Meters",
+                        "text": "Meters"
                     },
                     "sp": {
-                        "name": "En",
-                        "text": "En"
+                        "name": "Metros",
+                        "text": "Metros"
                     }
                 }
             },
@@ -3340,4 +1954,3 @@
             }
         ]
     }
-}
