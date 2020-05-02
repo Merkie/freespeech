@@ -72,6 +72,41 @@
 						</v-row>
 					</v-container>
 				</v-btn>
+				<v-divider
+					class="mx-4"
+					inset
+					vertical
+				/>
+				<v-btn
+					raised
+					tile
+					class="mx-auto"
+					color="grey darken-1"
+					style="height: unset; color: white;"
+					@click="$emit('savesentence')"
+				>
+					<v-container
+						justify="center"
+					>
+						<v-row
+							align="center"
+							justify="center"
+						>
+							<v-icon class="pr-2">
+								save
+							</v-icon>
+						</v-row>
+						<v-row>
+							<v-card-text
+								class
+								align="center"
+								justify="center"
+							>
+								<h3>{{ $t('SAVE') }}</h3>
+							</v-card-text>
+						</v-row>
+					</v-container>
+				</v-btn>
 			</v-card-title>
 			<v-card-text class="py-0">
 				<p
