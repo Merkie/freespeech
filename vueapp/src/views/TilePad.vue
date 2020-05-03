@@ -5,6 +5,7 @@
 			:tile-pad-to-display="sentenceTiles"
 			@clearSentence="sentenceTiles = []"
 			@speakSentence="speakSentence"
+			@saveSentence="saveSentence"
 			@removeFromSentence="sentenceTiles.splice($event, 1)"
 		/>
 		<edit-mode-header
@@ -140,6 +141,26 @@ export default {
 			let textToSpeak = this.sentenceTiles.map(tile => tile.text).join(' ');
 			this.speakText(textToSpeak);
 			this.logTaps();
+		}, 
+		saveSentence () {
+			var savedSentences =TileData.sentences.tileData;
+			let textToSave = this.sentenceTiles.map(tile => tile.text).join(' ');
+			//let savedBefore = 
+			//(savedSentences).length>0;
+			var last_id = (savedSentences).length;
+			var sentence = { 'name':textToSave,
+				'text' :textToSave,
+				'id': last_id };
+			var myJSON = JSON.stringify(sentence);
+			console.log(myJSON);
+			//var data =Object.tileData;
+			savedSentences[last_id]= sentence;
+			console.log(TileData.sentences.tileData);
+			TileData.sentences.tileData[last_id]= sentence;
+			console.log(savedSentences);
+
+
+			
 		}, 
 		logTaps () {
 			this.sentenceTiles.forEach(tile => {
