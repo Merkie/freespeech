@@ -83,7 +83,7 @@
 					class="mx-auto"
 					color="grey darken-1"
 					style="height: unset; color: white;"
-					@click="$emit('savesentence')"
+					@click="$emit('saveSentence')"
 				>
 					<v-container
 						justify="center"
@@ -102,7 +102,7 @@
 								align="center"
 								justify="center"
 							>
-								<h3>{{ $t('SAVE') }}</h3>
+								<h3>{{ ('SAVE') }}</h3>
 							</v-card-text>
 						</v-row>
 					</v-container>
