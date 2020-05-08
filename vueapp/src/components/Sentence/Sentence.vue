@@ -115,30 +115,54 @@
 				>
 					{{ $t('sentence.instructions') }}
 				</p>
+				
 				<v-row
 					v-else
 					dense
 					class="mb-4"
 				>
-					<v-col
-						v-for="(tile, tileIndex) in tilePadToDisplay"
-						:key="tileIndex"
-						:cols="
-							$vuetify.breakpoint.xsOnly
-								? 4
-								: $vuetify.breakpoint.smAndDown
-									? 3
-									: 1
-						"
-						class="d-flex child-flex"
-					>
-						<Tile
-							:tile-data="tile"
-							in-sentence-component
-							:sentence-index="tileIndex"
-							@removeFromSentence="$emit('removeFromSentence', $event)"
-						/>
-					</v-col>
+					<template v-if="this.$route.params.layout==='sentences' || retr==''">
+						<v-col
+							v-for="(tile, tileIndex) in tilePadToDisplay"
+							:key="tileIndex"
+							:cols="
+								$vuetify.breakpoint.xsOnly
+									? 4
+									: $vuetify.breakpoint.smAndDown
+										? 3
+										: 6
+							"
+							class="d-flex child-flex"
+						>	
+							<Tile
+								:tile-data="tile"
+								in-sentence-component
+								:sentence-index="tileIndex"
+								@removeFromSentence="$emit('removeFromSentence', $event)"
+							/>
+						</v-col>
+					</template>
+					<template v-else>
+						<v-col
+							v-for="(tile, tileIndex) in tilePadToDisplay"
+							:key="tileIndex"
+							:cols="
+								$vuetify.breakpoint.xsOnly
+									? 4
+									: $vuetify.breakpoint.smAndDown
+										? 3
+										: 1
+							"
+							class="d-flex child-flex"
+						>	
+							<Tile
+								:tile-data="tile"
+								in-sentence-component
+								:sentence-index="tileIndex"
+								@removeFromSentence="$emit('removeFromSentence', $event)"
+							/>
+						</v-col>
+					</template>
 				</v-row>
 			</v-card-text>
 		</v-card>
