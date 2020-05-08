@@ -34,6 +34,27 @@
 				>
 					<template v-for="(tile, tileIndex) in  tilePadToDisplay.tileData">
 						<v-col
+							v-if="sentencePad"
+							:key="tileIndex + 1"
+							:cols="
+								$vuetify.breakpoint.xsOnly
+									? 3
+									: $vuetify.breakpoint.smAndDown
+										? 2
+										: 6
+							"
+							class="d-flex child-flex"
+							style="padding: 4px"
+						>
+							<Tile
+								:tile-data="tile"
+								:tile-page="currentTilePadPage"
+								@speakText="speakText"
+								@addToSentence="sentenceTiles.push($event)"
+							/>
+						</v-col>
+						<v-col
+							v-else
 							:key="tileIndex + 1"
 							:cols="
 								$vuetify.breakpoint.xsOnly
@@ -85,6 +106,11 @@ export default {
 			sentenceTiles: [],
 		};
 	},
+	sentencePad:{
+		type: Boolean,
+		default: false
+	},
+	
 	computed: {
 		...mapState('settings', ['sentenceMode']),
 		...mapState('tilePad', ['editMode']),
@@ -107,6 +133,13 @@ export default {
 				? this.customTilePadData
 				: this.tileData;
 			let routeParam = this.$route.params.layout;
+			if (routeParam ==='sentences'){
+				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+				this.sentencePad = true;
+			}else{
+				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+				this.sentencePad = false;
+			}
 			if (typeof routeParam === 'undefined') {
 				return tilePadTiles.home;
 			} else {
@@ -144,16 +177,16 @@ export default {
 		}, 
 		saveSentence () {
 			var savedSentences =TileData.sentences.tileData;
-			let textToSave = this.sentenceTiles.map(tile => tile.text).join(' ');
-			//let savedBefore = 
-			//(savedSentences).length>0;
+			let textToSave = this.sentenceTiles.map(tile => tile.name).join(' ');
+			let images = this.sentenceTiles.map(tile => tile.image);
 			var last_id = (savedSentences).length;
 			var sentence = { 'name':textToSave,
 				'text' :textToSave,
-				'id': last_id };
+				'id': last_id, 
+				'accent':'mint',
+				'image': images };
 			var myJSON = JSON.stringify(sentence);
 			console.log(myJSON);
-			//var data =Object.tileData;
 			savedSentences[last_id]= sentence;
 			console.log(TileData.sentences.tileData);
 			TileData.sentences.tileData[last_id]= sentence;
