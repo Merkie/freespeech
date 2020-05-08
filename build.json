@@ -1973,6 +1973,26 @@
         ]
     },
     "sentences": {
-        "tileData": []
+        "tileData": [{
+            "name": "Back To Tiles",
+            "text": "Back To Tiles",
+            "accent": "peach",
+            "image": ["https://img.icons8.com/flat_round/64/000000/circled-left-2--v1.png",
+                "https://img.icons8.com/officexs/64/000000/students.png",
+                "https://img.icons8.com/dusk/64/000000/thumbnails.png"
+            ],
+            "navigation": "home",
+            "id": 26,
+            "messages": {
+                "de": {
+                    "name": "zurück zu Fliesen",
+                    "text": "zurück zu Fliesen"
+                },
+                "sp": {
+                    "name": "espalda a Losas",
+                    "text": "espalda a Losas"
+                }
+            }
+        }]
     }
 }
