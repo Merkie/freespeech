@@ -171,23 +171,6 @@
                 }
             },
             {
-                "name": "Up",
-                "text": "Up",
-                "accent": "mint",
-                "image": "https://img.icons8.com/officexs/64/000000/finger-and-thumb.png",
-                "id": 10,
-                "messages": {
-                    "de": {
-                        "name": "Auf",
-                        "text": "auf"
-                    },
-                    "sp": {
-                        "name": "Arriba",
-                        "text": "Arriba"
-                    }
-                }
-            },
-            {
                 "name": "Keyboard",
                 "text": " ",
                 "accent": "mint",
@@ -202,6 +185,41 @@
                     "sp": {
                         "name": "Teclado",
                         "text": "Teclado"
+                    }
+                }
+            },
+            {
+                "name": "Saved",
+                "text": " ",
+                "accent": "mint",
+                "image": "https://img.icons8.com/cotton/64/000000/save.png",
+                "navigation": "sentences",
+                "id": 11,
+                "messages": {
+                    "de": {
+                        "name": "Tastatur",
+                        "text": "Tastatur"
+                    },
+                    "sp": {
+                        "name": "Teclado",
+                        "text": "Teclado"
+                    }
+                }
+            },
+            {
+                "name": "Up",
+                "text": "Up",
+                "accent": "mint",
+                "image": "https://img.icons8.com/officexs/64/000000/finger-and-thumb.png",
+                "id": 10,
+                "messages": {
+                    "de": {
+                        "name": "Auf",
+                        "text": "auf"
+                    },
+                    "sp": {
+                        "name": "Arriba",
+                        "text": "Arriba"
                     }
                 }
             },
