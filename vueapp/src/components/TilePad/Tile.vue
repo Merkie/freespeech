@@ -42,11 +42,24 @@
 			>{{
 				taps
 			}}</span>
-			<v-row
+			<v-row v-if="Array.isArray(localeTileData.image)"
 				align="center"
 				justify="center"
 			>
-				<v-img
+				<v-img class="sentence_img" v-for="image in localeTileData.image" :key="image" 
+					
+					max-height="40"
+					max-width="40"
+					aspect-ratio="1"
+					:src="image"
+					
+				/>
+			</v-row>
+			<v-row v-else
+				align="center"
+				justify="center"
+			>
+				<v-img 
 					max-height="32"
 					max-width="32"
 					aspect-ratio="1"
@@ -85,7 +98,7 @@ export default {
 					name: '',
 					text: '',
 					accent: '',
-					image: '',
+					image: [],
 					id: 0,
 					messages: {},
 				};
@@ -202,5 +215,8 @@ export default {
   position: absolute;
   bottom: 3px;
   right: 3px;
+}
+.sentence_img{
+	margin-right: 20px;
 }
 </style>
