@@ -121,7 +121,7 @@
 					dense
 					class="mb-4"
 				>
-					<template v-if="this.$route.params.layout==='sentences'">
+					<template v-if="$route.params.layout==='sentences'">
 						<v-col
 							v-for="(tile, tileIndex) in tilePadToDisplay"
 							:key="tileIndex"
