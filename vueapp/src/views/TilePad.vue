@@ -180,10 +180,7 @@ export default {
 				'id': last_id, 
 				'accent':'mint',
 				'image': images };
-			var myJSON = JSON.stringify(sentence);
-			console.log(myJSON);
 			savedSentences[last_id]= sentence;
-			console.log(TileData.sentences.tileData);
 			TileData.sentences.tileData[last_id]= sentence;
 			console.log(savedSentences);
 
