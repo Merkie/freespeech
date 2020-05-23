@@ -4,9 +4,20 @@ import Sentence from '@/components/Sentence/Sentence';
 import Tile from '@/components/TilePad/Tile.vue';
 import i18n from '@/i18n';
 import Vuetify from 'vuetify/lib';
+import VueRouter from 'vue-router';
+import TilePad from '@/views/TilePad';
+
+const routes =[{
+	path: '/layout/:layout',
+	name: 'tilePadWithRoute',
+	component: TilePad,
+	props: true
+}];
+const router = new VueRouter({ routes });
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
+localVue.use(VueRouter);
 const tilePadToDisplay = [
 	{
 		'name': 'No',
@@ -74,6 +85,7 @@ let vuetify = new Vuetify({
 function getWrapper () {
 	return shallowMount(Sentence, {
 		localVue,
+		router: router,
 		propsData:{
 			tilePadToDisplay
 		},
