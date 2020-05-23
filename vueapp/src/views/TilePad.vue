@@ -133,13 +133,8 @@ export default {
 				? this.customTilePadData
 				: this.tileData;
 			let routeParam = this.$route.params.layout;
-			if (routeParam ==='sentences'){
-				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-				this.sentencePad = true;
-			}else{
-				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-				this.sentencePad = false;
-			}
+			// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+			this.sentencePad = routeParam ==='sentences';
 			if (typeof routeParam === 'undefined') {
 				return tilePadTiles.home;
 			} else {
