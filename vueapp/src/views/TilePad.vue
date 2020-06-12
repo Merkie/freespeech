@@ -177,14 +177,17 @@ export default {
 			var savedSentences =TileData.sentences.tileData;
 			let textToSave = this.sentenceTiles.map(tile => tile.name).join(' ');
 			let images = this.sentenceTiles.map(tile => tile.image);
-			var last_id = (savedSentences).length;
-			var sentence = { 'name':textToSave,
-				'text' :textToSave,
-				'id': last_id, 
-				'accent':'mint',
-				'image': images };
-			savedSentences[last_id]= sentence;
-			TileData.sentences.tileData[last_id]= sentence;
+			if (textToSave.length >0){
+				var last_id = (savedSentences).length;
+				var sentence = { 'name':textToSave,
+					'text' :textToSave,
+					'id': last_id, 
+					'accent':'mint',
+					'image': images };
+				savedSentences[last_id]= sentence;
+				TileData.sentences.tileData[last_id]= sentence;
+			}
+			
 
 
 			
