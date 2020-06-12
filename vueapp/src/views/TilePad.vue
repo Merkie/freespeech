@@ -170,6 +170,9 @@ export default {
 			this.speakText(textToSpeak);
 			this.logTaps();
 		}, 
+		/**
+		 * Saves the sentence that is currently in the sentenceTiles variavble in the settings file 
+		 */
 		saveSentence () {
 			var savedSentences =TileData.sentences.tileData;
 			let textToSave = this.sentenceTiles.map(tile => tile.name).join(' ');
@@ -182,7 +185,6 @@ export default {
 				'image': images };
 			savedSentences[last_id]= sentence;
 			TileData.sentences.tileData[last_id]= sentence;
-			console.log(savedSentences);
 
 
 			
