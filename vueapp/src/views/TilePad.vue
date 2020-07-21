@@ -128,6 +128,7 @@ export default {
 			logTileTap: 'tilePad/logTileTap',
 		}),
 		speakText (textToSpeak) {
+			SPEECH_SYNTHESIS.cancel();
 			let speechSynthesisUtterance = new SpeechSynthesisUtterance(textToSpeak);
 
 			speechSynthesisUtterance.voice = this.voices[this.selectedVoiceIndex];
