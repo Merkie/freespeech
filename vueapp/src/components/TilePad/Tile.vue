@@ -1,3 +1,4 @@
+<!-- Add a new tile button, appears in edit mode -->
 <template>
 	<v-btn
 		raised
@@ -75,6 +76,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 
+/* Tile creation */
 export default {
 	name: 'Tile',
 	props: {
@@ -82,6 +84,7 @@ export default {
 			type: Object,
 			default() {
 				return {
+					/* All attributes from json file for each tile object */
 					name: '',
 					text: '',
 					accent: '',
@@ -116,10 +119,11 @@ export default {
 			displayTapCount: 'settings/displayTapCount',
 			tileTapsCount: 'tilePad/tileTapsCount',
 		}),
+		
+		/* Make card color, if hex value return that. */
+		//Might delete this feature and replace with just listed accents for simplicity.
 		cardColor: function () {
 			switch (this.localeTileData.accent) {
-			case 'red':
-				return '#FF9AA2';
 			case 'blush':
 				return '#FFB7B2';
 			case 'peach':
@@ -130,8 +134,10 @@ export default {
 				return '#B5EAD7';
 			case 'violet':
 				return '#C7CEEA';
+			case 'white':
+				return '#FFFFFF';
 			default:
-				return this.localeTileData.accent;
+				return '#FFFFFF';
 			}
 		},
 		localeTileData() {

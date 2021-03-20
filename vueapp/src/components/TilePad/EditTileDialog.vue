@@ -44,10 +44,18 @@
 								<p class="text-left">
 									{{ $t('editMode.tile.accentColor') }}
 								</p>
+								<!--
 								<v-color-picker
 									v-model="color"
 									hide-inputs
 								/>
+								-->
+								<v-select
+									:items="tileColors"
+									v-model="currentTileBeingEdited.accent"
+									filled
+									label="Accent"
+								></v-select>
 							</v-col>
 
 						</v-row>
@@ -81,9 +89,14 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
+	...mapGetters('tilePad', [
+		'currentTileBeingEdited',
+	]),
 	name: 'EditTileDialog',
 	data () {
 		return {
+			tileColors: ['blush', 'peach', 'pear', 'mint', 'violet', 'white'],
+			currentColor: 'peach',
 			valid:false,
 			color: '',
 			newTileObject: {},
@@ -130,10 +143,6 @@ export default {
 				}
 				return;
 			}else{
-				this.saveEditsToTileBeingEdited({
-					key: 'accent',
-					value: this.color
-				});
 				this.saveTileEdit();
 				this.toggleEditDialogVisibility();
 			}

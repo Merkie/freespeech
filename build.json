@@ -1,10 +1,10 @@
 {
     "home": {
         "tileData": [{
-                "name": "No",
-                "text": "No",
+                "name": "ignore",
+                "text": "ignore",
                 "accent": "peach",
-                "image": "https://img.icons8.com/officexs/64/000000/cancel-2.png",
+                "image": "./assets/motivate.gif",
                 "id": 0,
                 "messages": {
                     "de": {
