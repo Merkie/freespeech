@@ -29,6 +29,7 @@
     "buttonSave": "Save Changes",
     "instructions": "You can edit tiles while in edit mode by clicking on them to edit them or clicking and dragging them to move them around. Press the save icon or the button above to save your changes.",
     "tile": {
+      "navigation": "Navigation",
       "title": "Edit",
       "name": "Name",
       "imageUrl": "Image URL",

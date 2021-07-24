@@ -44,18 +44,26 @@
 								<p class="text-left">
 									{{ $t('editMode.tile.accentColor') }}
 								</p>
-								<!--
-								<v-color-picker
-									v-model="color"
-									hide-inputs
-								/>
-								-->
 								<v-select
 									:items="tileColors"
 									v-model="currentTileBeingEdited.accent"
 									filled
 									label="Accent"
 								></v-select>
+
+								<p class="text-left" >
+									{{ $t('editMode.tile.navigation') }}
+								</p>
+								<v-select
+									:disabled=disabled
+									:items="navigations"
+									v-model="currentTileBeingEdited.navigation"
+									filled
+									label="Navigation"
+								></v-select>
+
+								<v-btn @click="currentTileBeingEdited.navigation=null">Remove navigation</v-btn>
+
 							</v-col>
 
 						</v-row>
@@ -87,6 +95,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import TileData from '../../../../build.json';
 
 export default {
 	...mapGetters('tilePad', [
@@ -95,6 +104,7 @@ export default {
 	name: 'EditTileDialog',
 	data () {
 		return {
+			navigations: Object.keys(TileData),
 			tileColors: ['blush', 'peach', 'pear', 'mint', 'violet', 'white'],
 			currentColor: 'peach',
 			valid:false,
@@ -157,6 +167,7 @@ export default {
 				this.newTileObject[key] = value;
 			}			
 		}
+
 
 	},
 };
