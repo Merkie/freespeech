@@ -36,10 +36,7 @@ Please make sure to follow our [Code Of Conduct](/.github/CODE_OF_CONDUCT.md) in
 
     [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/merkie)
 
-* **Bailey Townsend** - *Core Team Member/Developer/Collaborator* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105) 
-
-    [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/T6T61FYPX)
-
+* **Bailey Townsend** - *Core Team Member/Developer/Collaborator* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 
 ## Contributors
 None of this would be possible without you all. Thank you!

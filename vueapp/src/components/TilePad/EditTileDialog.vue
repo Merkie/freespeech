@@ -13,7 +13,7 @@
 					<v-form
 						ref="form"
 						v-model="valid"
-					>	
+					>
 						<v-row>
 
 							<v-col cols="12">
@@ -122,14 +122,15 @@ export default {
 			'customTilePadData'
 		]),
 		areRequiredFieldsFilled:function(){
-			return !!this.newTileObject.name && !!this.newTileObject.text; 
+			return !!this.newTileObject.name && !!this.newTileObject.text;
 		}
 	},
 	methods: {
 		...mapActions('tilePad', [
-			'toggleEditDialogVisibility', 
+			'toggleEditDialogVisibility',
 			'saveEditsToTileBeingEdited',
-			'createNewTile']),
+			'createNewTile',
+			'saveTileEdit']),
 		validate () {
 			this.$refs.form.validate();
 		},
@@ -137,13 +138,13 @@ export default {
 			this.$refs.form.resetValidation();
 		},
 		saveCurrentEdit () {
-			
+
 			if(this.currentTileBeingEdited.newTile){
 				this.validate();
-				
+
 				if(this.valid)
-				{		
-					this.resetValidation();			
+				{
+					this.resetValidation();
 					var maxid = 0;
 
 					this.newTileObject.id = maxid + 1;
@@ -165,7 +166,7 @@ export default {
 				});
 			}else{
 				this.newTileObject[key] = value;
-			}			
+			}
 		}
 
 

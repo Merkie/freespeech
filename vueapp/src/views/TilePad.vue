@@ -16,12 +16,7 @@
 			style="{text-align: center}"
 		>
 			<v-row dense>
-				<Tile
-					v-if="editMode"
-					id="newTile"
-					:new-tile="true"							
-					:tile-page="currentTilePadPage"
-				/>
+
 
 			</v-row>
 			<v-row dense>
@@ -101,7 +96,7 @@ export default {
 			) {
 				this.setCustomTilePadData(this.tileData);
 			}
-		
+
 			let tilePadTiles = this.customTilePadOption
 				? this.customTilePadData
 				: this.tileData;
@@ -141,7 +136,7 @@ export default {
 			let textToSpeak = this.sentenceTiles.map(tile => tile.text).join(' ');
 			this.speakText(textToSpeak);
 			this.logTaps();
-		}, 
+		},
 		logTaps () {
 			this.sentenceTiles.forEach(tile => {
 				this.logTileTap(tile.id);
