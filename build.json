@@ -206,9 +206,10 @@
                 }
             },
             {
-                "name": "Feel",
-                "text": "Feel",
+                "name": "1st Navigation Menu",
+                "text": "1st Navigation Menu",
                 "accent": "peach",
+                "navigation": "1",
                 "image": "https://img.icons8.com/officexs/64/000000/in-love.png",
                 "id": 12,
                 "messages": {
@@ -1957,7 +1958,7 @@
     "1": {
         "tileData": [
           {
-            "name": "",
+            "name": "Hello World",
             "text": "",
             "accent": "white",
             "image": "",

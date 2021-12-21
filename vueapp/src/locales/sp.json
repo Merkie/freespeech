@@ -35,7 +35,10 @@
       "textToSpeak": "Texto a pronunciar",
       "accentColor": "Color de énfasis",
       "butonSave": "Guardar",
-      "buttonClose": "Cancelar"
-    }
+      "buttonClose": "Cancelar",
+	  "navigationLabel" : "Puede ingresar manualmente para un nuevo mosaico de navegación",
+	  "navigation" : "navegación"
+
+	}
   }
 }

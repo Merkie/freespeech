@@ -12,9 +12,10 @@
 				<v-container>
 					<v-form
 						ref="form"
+						id="editTileForm"
 						v-model="valid"
 					>
-						<v-row>
+						<v-row >
 
 							<v-col cols="12">
 								<v-text-field
@@ -54,13 +55,13 @@
 								<p class="text-left" >
 									{{ $t('editMode.tile.navigation') }}
 								</p>
-								<v-select
-									:disabled=disabled
+								<v-combobox
 									:items="navigations"
 									v-model="currentTileBeingEdited.navigation"
 									filled
-									label="Navigation"
-								></v-select>
+									@blur="update('navigation', $event)"
+									:label="$t('editMode.tile.navigationLabel')"
+								></v-combobox>
 
 								<v-btn @click="currentTileBeingEdited.navigation=null">Remove navigation</v-btn>
 
@@ -95,7 +96,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import TileData from '../../../../build.json';
 
 export default {
 	...mapGetters('tilePad', [
@@ -104,7 +104,6 @@ export default {
 	name: 'EditTileDialog',
 	data () {
 		return {
-			navigations: Object.keys(TileData),
 			tileColors: ['blush', 'peach', 'pear', 'mint', 'violet', 'white'],
 			currentColor: 'peach',
 			valid:false,
@@ -123,7 +122,11 @@ export default {
 		]),
 		areRequiredFieldsFilled:function(){
 			return !!this.newTileObject.name && !!this.newTileObject.text;
+		},
+		navigations: function (){
+			return  Object.keys(this.customTilePadData);
 		}
+
 	},
 	methods: {
 		...mapActions('tilePad', [
@@ -154,22 +157,28 @@ export default {
 				}
 				return;
 			}else{
+
 				this.saveTileEdit();
 				this.toggleEditDialogVisibility();
 			}
 		},
-		update (key, value) {
+		update (key, value ) {
+
 			if(!this.currentTileBeingEdited.newTile){
+				let valueToSave;
+				if(typeof value.target !== undefined){
+					valueToSave = value.target.value;
+				}else{
+					valueToSave = value;
+				}
 				this.saveEditsToTileBeingEdited({
 					'key': key,
-					'value': value
+					'value': valueToSave
 				});
 			}else{
 				this.newTileObject[key] = value;
 			}
 		}
-
-
 	},
 };
 </script>

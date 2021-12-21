@@ -1,3 +1,6 @@
+import blankKeyboardTemplate from  '../../staticData/blankKeyboardTemplate.json';
+const cloneDeep = require('clone-deep');
+
 const state = {
 	customTilePadData: {},
 	editMode: false,
@@ -24,6 +27,16 @@ const mutations = {
 	},
 	SET_TILE_BEING_EDITED (state) {
 		let indexOfTileInCustomTilePadData = state.customTilePadData[state.currentTileBeingEdited.page].tileData.findIndex(tile => tile.id == state.currentTileBeingEdited.id);
+		//Checks to see if the navigation/keyboard exits. If not creates a new one in the local data for the custom keyboard
+		if(state.currentTileBeingEdited.navigation !== undefined){
+			let navigationDoesNotExist = !Object.keys(state.customTilePadData).includes(state.currentTileBeingEdited.navigation);
+			if(navigationDoesNotExist){
+				let blankTemplate = cloneDeep(blankKeyboardTemplate);
+				state.customTilePadData[state.currentTileBeingEdited.navigation] = { tileData: blankTemplate };
+
+			}
+		}
+
 		state.customTilePadData[state.currentTileBeingEdited.page].tileData.splice(indexOfTileInCustomTilePadData, state.currentTileBeingEdited);
 	},
 	SET_EDIT_MODE (state, value) {
@@ -41,8 +54,8 @@ const mutations = {
 	},
 	CREATE_NEW_TILE(state, value){
 		let maxid = 0;
-		state.customTilePadData[state.currentTileBeingEdited.page].tileData.map(function(obj){     
-			if (obj.id > maxid) maxid = obj.id;    
+		state.customTilePadData[state.currentTileBeingEdited.page].tileData.map(function(obj){
+			if (obj.id > maxid) maxid = obj.id;
 		});
 		value.id = maxid + 1;
 		state.customTilePadData[state.currentTileBeingEdited.page].tileData.unshift(value);
