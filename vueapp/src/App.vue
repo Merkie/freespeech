@@ -121,6 +121,7 @@ export default {
 		}
 	},
 	created() {
+		this.systemSaveBackupOfTilePad();
 		if (this.locale === null) {
 			const defaultLanguage = navigator.languages
 				? navigator.languages[0]
@@ -146,7 +147,8 @@ export default {
 			setSelectedVoiceIndex: 'settings/setSelectedVoiceIndex',
 			setVoices: 'settings/setVoices',
 			setVoiceOptions: 'settings/setVoiceOptions',
-			toggleEditMode: 'tilePad/toggleEditMode'
+			toggleEditMode: 'tilePad/toggleEditMode',
+			systemSaveBackupOfTilePad: 'tilePad/systemSaveBackupOfTilePad'
 		}),
 		handlePasscodeInput (input) {
 			this.passcodeEntry = false;

@@ -11,7 +11,7 @@ const cloneDeep = require('clone-deep');
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-const opts = {    
+const opts = {
 	description: 'iPhone 6 (portrait)',
 	width: 375,
 	height: 667,
@@ -28,7 +28,7 @@ const opts = {
 let vuetify = new Vuetify({
 	mocks: {
 		$vuetify: {
-			breakpoint: opts,			
+			breakpoint: opts,
 		},
 	}
 });
@@ -53,17 +53,20 @@ function getWrapper () {
 			},
 		}),
 		router,
-		vuetify		
+		vuetify
 	});
 }
 
-describe('TilePad.Vue', () => {
-	let wrapper; 
+/***
+ * This feature has been removed for now till it can be re added at a later date
+ */
+describe.skip('TilePad.Vue', () => {
+	let wrapper;
 
 	beforeEach(() => {
 		wrapper = getWrapper();
 	});
-    
+
 	it('new tile is showing in edit mode only', async () => {
 		wrapper.vm.$store.commit('tilePad/SET_EDIT_MODE', false);
 		await wrapper.vm.$nextTick();

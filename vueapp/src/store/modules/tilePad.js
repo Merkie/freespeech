@@ -1,9 +1,14 @@
+import blankKeyboardTemplate from  '../../staticData/blankKeyboardTemplate.json';
+const cloneDeep = require('clone-deep');
+
 const state = {
 	customTilePadData: {},
 	editMode: false,
 	editDialogVisibility: false,
 	currentTileBeingEdited: {},
-	tileTapsCount: []
+	tileTapsCount: [],
+	systemBackupTilePads:[]
+
 };
 
 const mutations = {
@@ -24,6 +29,16 @@ const mutations = {
 	},
 	SET_TILE_BEING_EDITED (state) {
 		let indexOfTileInCustomTilePadData = state.customTilePadData[state.currentTileBeingEdited.page].tileData.findIndex(tile => tile.id == state.currentTileBeingEdited.id);
+		//Checks to see if the navigation/keyboard exits. If not creates a new one in the local data for the custom keyboard
+		if(state.currentTileBeingEdited.navigation !== undefined){
+			let navigationDoesNotExist = !Object.keys(state.customTilePadData).includes(state.currentTileBeingEdited.navigation);
+			if(navigationDoesNotExist){
+				let blankTemplate = cloneDeep(blankKeyboardTemplate);
+				state.customTilePadData[state.currentTileBeingEdited.navigation] = { tileData: blankTemplate };
+
+			}
+		}
+
 		state.customTilePadData[state.currentTileBeingEdited.page].tileData.splice(indexOfTileInCustomTilePadData, state.currentTileBeingEdited);
 	},
 	SET_EDIT_MODE (state, value) {
@@ -41,12 +56,27 @@ const mutations = {
 	},
 	CREATE_NEW_TILE(state, value){
 		let maxid = 0;
-		state.customTilePadData[state.currentTileBeingEdited.page].tileData.map(function(obj){     
-			if (obj.id > maxid) maxid = obj.id;    
+		state.customTilePadData[state.currentTileBeingEdited.page].tileData.map(function(obj){
+			if (obj.id > maxid) maxid = obj.id;
 		});
 		value.id = maxid + 1;
 		state.customTilePadData[state.currentTileBeingEdited.page].tileData.unshift(value);
 		state.currentTileBeingEdited = {};
+	},
+	/***
+	 * This is a backup that runs when version number changes inchase we break something
+	 * @param state
+	 * @param value
+	 * @constructor
+	 */
+	SAVE_SYSTEM_BACKUP(state, value){
+		state.systemBackupTilePads.push(
+			{
+				version: process.env.VUE_APP_CURRENT_VERSION,
+				tilePad: value,
+				date: new Date().toLocaleDateString()
+			}
+		);
 	}
 };
 
@@ -74,6 +104,12 @@ const actions = {
 	},
 	logTileTap: ({ commit }, value) => {
 		commit('LOG_TILE_TAP', value);
+	},
+	systemSaveBackupOfTilePad:({ commit, state }) =>{
+		let currentVersion = process.env.VUE_APP_CURRENT_VERSION;
+		if(state.systemBackupTilePads.filter(x => x.version === currentVersion).length === 0){
+			commit('SAVE_SYSTEM_BACKUP', state.customTilePadData);
+		}
 	}
 };
 
