@@ -63,7 +63,7 @@
 									:label="$t('editMode.tile.navigationLabel')"
 								></v-combobox>
 
-								<v-btn @click="currentTileBeingEdited.navigation=null">Remove navigation</v-btn>
+								<v-btn @click="currentTileBeingEdited.navigation=''">Remove navigation</v-btn>
 
 							</v-col>
 
