@@ -59,7 +59,7 @@
 									:items="navigations"
 									v-model="currentTileBeingEdited.navigation"
 									filled
-									@blur="update('navigation', $event)"
+									@blur="onBlurUpdate('navigation', $event)"
 									:label="$t('editMode.tile.navigationLabel')"
 								></v-combobox>
 
@@ -163,17 +163,20 @@ export default {
 			}
 		},
 		update (key, value ) {
-
 			if(!this.currentTileBeingEdited.newTile){
-				let valueToSave;
-				if(typeof value.target !== undefined){
-					valueToSave = value.target.value;
-				}else{
-					valueToSave = value;
-				}
 				this.saveEditsToTileBeingEdited({
 					'key': key,
-					'value': valueToSave
+					'value': value
+				});
+			}else{
+				this.newTileObject[key] = value;
+			}
+		},
+		onBlurUpdate(key, value){
+			if(!this.currentTileBeingEdited.newTile){
+				this.saveEditsToTileBeingEdited({
+					'key': key,
+					'value': value.target.value
 				});
 			}else{
 				this.newTileObject[key] = value;
