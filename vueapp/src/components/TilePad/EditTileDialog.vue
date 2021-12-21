@@ -16,8 +16,8 @@
 						v-model="valid"
 					>
 						<v-row >
-
 							<v-col cols="12">
+
 								<v-text-field
 									:value="currentTileBeingEdited.name"
 									:label="$t('editMode.tile.name')"
@@ -28,13 +28,18 @@
 									:value="currentTileBeingEdited.image"
 									:label="$t('editMode.tile.imageUrl')"
 									@input="update('image', $event)"
+									append-icon="emoji_emotions"
+									@click:append="showEmojiPicker = !showEmojiPicker"
 								/>
+								<!--								<v-image>{{currentTileBeingEdited.image}}</v-image>-->
 								<v-img
 									max-height="32"
 									max-width="32"
 									aspect-ratio="1"
 									:src="currentTileBeingEdited.image"
 								/>
+								<VEmojiPicker v-show="showEmojiPicker" @select="selectEmoji"  :customEmojis="customEmojis" />
+
 								<v-text-field
 									class="pt-5"
 									:value="currentTileBeingEdited.text"
@@ -96,8 +101,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { VEmojiPicker } from 'v-emoji-picker';
+// import okay from '../../public/iicons/brands/airbnb.svg';
+
 
 export default {
+	components: {
+		VEmojiPicker
+	},
 	...mapGetters('tilePad', [
 		'currentTileBeingEdited',
 	]),
@@ -111,7 +122,15 @@ export default {
 			newTileObject: {},
 			rules: {
 				required: value => !!value || 'This field is required.'
-			}
+			},
+			showEmojiPicker: false,
+			customEmojis: [
+				{
+					data: 'okay',
+					category: 'Peoples',
+					aliases: ['idk']
+				}
+			]
 		};
 	},
 	computed: {
@@ -181,6 +200,10 @@ export default {
 			}else{
 				this.newTileObject[key] = value;
 			}
+		},
+		selectEmoji(emoji) {
+			this.currentTileBeingEdited.image = emoji.data;
+			console.log(emoji);
 		}
 	},
 };
