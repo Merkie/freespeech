@@ -46,6 +46,8 @@ None of this would be possible without you all. Thank you!
 
 Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
+Special Thanks to [Icons8](https://icons8.com/) for providing tile icons.
+
 ## Community
 
 <a href="https://discord.gg/76PrNC6">
