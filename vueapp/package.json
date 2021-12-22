@@ -43,6 +43,7 @@
     "eslint-plugin-vue": "^6.1.2",
     "istanbul-instrumenter-loader": "^3.0.1",
     "material-design-icons-iconfont": "^5.0.1",
+    "node-html-parser": "^5.1.0",
     "null-loader": "^3.0.0",
     "nyc": "^15.0.0",
     "raw-loader": "^4.0.0",

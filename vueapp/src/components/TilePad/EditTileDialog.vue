@@ -24,6 +24,7 @@
 									@input="update('name', $event)"
 									:rules="[rules.required]"
 								/>
+
 								<v-text-field
 									:value="currentTileBeingEdited.image"
 									:label="$t('editMode.tile.imageUrl')"
@@ -31,14 +32,24 @@
 									append-icon="emoji_emotions"
 									@click:append="showEmojiPicker = !showEmojiPicker"
 								/>
-								<!--								<v-image>{{currentTileBeingEdited.image}}</v-image>-->
 								<v-img
 									max-height="32"
 									max-width="32"
 									aspect-ratio="1"
 									:src="currentTileBeingEdited.image"
 								/>
-								<VEmojiPicker v-show="showEmojiPicker" @select="selectEmoji"  :customEmojis="customEmojis" />
+								<v-dialog
+									v-model="showEmojiPicker"
+									scrollable
+									max-width="300px">
+									<VEmojiPicker
+
+										@select="selectEmoji"
+										:customEmojis="customEmojis"
+										:customCategories="customCategories"
+										:initialCategory="initialCustomCategory"/>
+								</v-dialog>
+
 
 								<v-text-field
 									class="pt-5"
@@ -102,7 +113,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { VEmojiPicker } from 'v-emoji-picker';
-// import okay from '../../public/iicons/brands/airbnb.svg';
+import emojiIcons from '../../staticData/emojiIcons.json';
+import emojiCategories from '../../staticData/emojiIconsCategories.json';
 
 
 export default {
@@ -124,13 +136,8 @@ export default {
 				required: value => !!value || 'This field is required.'
 			},
 			showEmojiPicker: false,
-			customEmojis: [
-				{
-					data: 'okay',
-					category: 'Peoples',
-					aliases: ['idk']
-				}
-			]
+			customEmojis: emojiIcons,
+			customCategories:emojiCategories
 		};
 	},
 	computed: {
@@ -144,6 +151,12 @@ export default {
 		},
 		navigations: function (){
 			return  Object.keys(this.customTilePadData);
+		},
+		initialCustomCategory: function (){
+			return this.customCategories[0].name;
+		},
+		svgIcon:function (){
+			return this.currentTileBeingEdited.image.toLowerCase().startWith('<svg');
 		}
 
 	},
@@ -202,13 +215,18 @@ export default {
 			}
 		},
 		selectEmoji(emoji) {
-			this.currentTileBeingEdited.image = emoji.data;
+
+			this.currentTileBeingEdited.image = `/icons/${emoji.category}/${emoji.filename}`;
 			console.log(emoji);
+			this.showEmojiPicker = !this.showEmojiPicker;
 		}
 	},
 };
 </script>
 
-<style>
+<style scoped>
+ .colorSvg {
+		 fill: blue;
+ }
 
 </style>
