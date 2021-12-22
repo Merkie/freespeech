@@ -224,9 +224,6 @@ export default {
 };
 </script>
 
-<style scoped>
- .colorSvg {
-		 fill: blue;
- }
+<style>
 
 </style>
