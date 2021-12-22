@@ -29,11 +29,12 @@ categoriesDirectories.filter(x => x !== categoriesIconsDir).forEach(directory =>
 	let icons = fs.readdirSync(path.resolve(iconsDir, directory));
 	icons.forEach( icon => {
 		let iconSvg = getSvg(path.resolve(iconsDir,directory,icon));
+		let aliases = parseAliases(icon);
 		customIcons.push(
 			{
 				category: directory,
 				data: iconSvg.toString(),
-				aliases: [icon.replace('.svg', '')],
+				aliases: aliases,
 				filename: icon
 			});
 	});
@@ -90,4 +91,24 @@ function setAttributes(svgElement){
 	svgElement.setAttribute('height', 32);
 	svgElement.setAttribute('width', 32);
 	return svgElement;
+}
+
+
+/**
+ * Creates aliases for the emoji picker for easier look up
+ * @param fileName
+ * @returns {*[]}
+ */
+function parseAliases(fileName){
+	fileName = fileName.replace('.svg', '');
+	let splitForNewPhrase = fileName.split('-');
+	let aliases = [];
+
+	splitForNewPhrase.forEach(phrase => {
+		let newPhrase ='';
+		let splitForSpaces = phrase.split('_');
+		splitForSpaces.forEach(word => newPhrase += word + ' ');
+		aliases.push(newPhrase.trim());
+	});
+	return aliases;
 }
