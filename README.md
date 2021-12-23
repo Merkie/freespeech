@@ -1,44 +1,31 @@
-# Freespeech
+# [Free Speech](http://freespeechaac.com/) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/merkie/freespeech/blob/main/LICENSE)
 
-A free program designed to help people who are non-verbal.
+Free Speech is an augmentative and alternative communication web application designed to help the non-verbal communicate without cost.
 
-## Why Was This Created?
+* **Free & Open-Source, Forever:** Free Speech is committed to providing its services at no cost for the entire duration of the application's lifespan. We believe that communication is a right that everyone deserves to have access too regaurdless of income status.
+* **Hosted on the Internet:** Free Speech is completely hosted from your web browser, meaning it will run on about anything with an internet connection. Our team reccommends tablets, touch screen laptops, and computers to run the software, however smart-phones can be used too.
+* **Fully Customizable:** Free Speech's edit mode makes it easy for just about anyone to start programming AAC tile layouts. The app is designed to support both extensive large-scale custom tile layouts as well as small and quick edits on the fly. You can also export and import tile layouts from a file, meaning they're sharable across devices. Your customizations save automatically in the browser, so there's no need to worry about lost progress.
 
-Freespeech was created in response to the few programs out there for non-verbal people that all cost upwards of $200 to $300. As a sibling of a non-verbal sister, I understand that these heavy costs can be big investments for families, especially ones that are not in the financial position to spend that kind of money. I hope Freespeech can get to the point where it can be a viable alternative to the other expensive apps out there. My goal is to help people communicate without a hefty cost.
+## Quick start
 
-Many people requested to donate to the project. I'd first recommend you donate to the [Make A Wish](https://secure2.wish.org/site/SPageServer?pagename=donate_now&chid=100-000) charity as they gave my Sister, Della, a wish. If you feel inclined to donate to me and the development of this project, feel free to support me on [ko-fi](https://ko-fi.com/merkie). I am trying to buy myself a new computer as I am currently developing off my parent's laptop. Any money left over after expenses will go to Make A Wish.
+### For regular users:
 
-## What can run this program and what is its purpose?
+* Navigate to [http://app.freespeechaac.com/](http://app.freespeechaac.com/) on the device you wish to use the software on.
+* If you are using a computer, bookmark that tab in the browser to come back to it, your changes will save in the browser.
+* If you're using iOS, open [Free Speech](http://app.freespeechaac.com/) in Safari, then click middle share button on the bottom row of buttons. Then, scroll down on the share pop-up and click on "Add to Home Screen". This will add Free Speech as an app on the iOS home screen. Your changes will save in the app.
+* If you're using Android, open [Free Speech](http://app.freespeechaac.com/) in Chrome, then tap on the three dots on the top right. Navigate to "Add to Home Screen" on the pop up and select that item, name the app "Free Speech" and add the app to your home screen. Your changes will save in the app.
 
-This can currently only be ran in web browsers such as chrome and firefox however it will in the future be supported as an IOS and Android applications. This program was created to help non-verbal people and allows the use of a series of buttons to produce sentences that allow them to communicate easily. It also provides a base that the users can modify to help them communicate with ease. 
-
-## What is the plan for the future?
-
-The program is always evolving and so the future development ideas can be found in the issues section under the issues [enhancement](https://github.com/Merkie/freespeech/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) tab.
-
-## How do I use the program?
-
-The web site for the program is up and useable, you can find it [here](http://freespeechaac.com/).
-
-## Contributing
-
-Can find our source code on [Github](https://github.com/Merkie/freespeech).
-
-Please read [our Contributing guide](/.github/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. When contributing, email me at archercalder@gmail.com.
-
-Please make sure to follow our [Code Of Conduct](/.github/CODE_OF_CONDUCT.md) in all manners when contributing to this project.
-
+### For Developers:
+* First make sure you have your Node and NPM installed and updated. If you need to install Node, [visit this website](https://nodejs.org/en/download/).
+* Run `git clone https://github.com/merkie/freespeech freespeech` in your directory of choice then `cd freepeech/vueapp`
+* Next, run `npm i` and after that is complete you can run the Vue app on your machine by running `npm run serve` you can also build the application by running `npm run build`
+* Please be sure to also read our [contributing guide](https://github.com/Merkie/freespeech/blob/master/.github/CONTRIBUTING.md)!
 
 ## Authors
 
-### Core Team
-* **Archer Calder** - *Initial work/Core Team Member/Creator* - [Merkie](https://github.com/Merkie)
+* **Archer Calder** - *Founder/Lead Developer* - [GitHub](https://github.com/Merkie) [Donate](https://ko-fi.com/merkie)
+* **Bailey Townsend** - *Core Team Member/Lead Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 
-    [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/merkie)
-
-* **Bailey Townsend** - *Core Team Member/Developer/Collaborator* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
-
-## Contributors
 None of this would be possible without you all. Thank you!
 <a href="https://github.com/Merkie/freespeech/graphs/contributors">
   <img src="https://contributors-img.firebaseapp.com/image?repo=Merkie/freespeech" />
@@ -46,19 +33,14 @@ None of this would be possible without you all. Thank you!
 
 Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
-Special Thanks to [Icons8](https://icons8.com/) for providing tile icons.
+## Special Thanks
+<a href="https://icons8.com/"><img src="https://logos-download.com/wp-content/uploads/2020/06/Icons8_Logo_full.png" width=200px></a>
+Thanks to Icons8 for providing all icons and graphics for the Free Speech AAC project!
+<a href="https://www.cnn.com/2021/12/19/us/texas-teen-freespeech-app/index.html"><img src="https://1000logos.net/wp-content/uploads/2021/04/CNN-logo.png" width=200px></a>
+Thanks to CNN for covering Free Speech AAC!
+<a href="https://www.bbc.com/news/av/disability-57515272"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/BBC_Logo_2021.svg/2560px-BBC_Logo_2021.svg.png" width=200px></a>
+Thanks to the BBC for covering Free Speech AAC!
 
-## Community
+### License
 
-<a href="https://discord.gg/76PrNC6">
-  <img src="https://discordapp.com/api/guilds/680203682528100464/widget.png?style=banner3" />
-</a>
-
-## License
-
-This project is licensed under the [MIT License.](LICENSE.md)
-
-## Acknowledgments
-
-* Thanks to TikTok for getting this project recognition.
-
+Free Speech AAC is [MIT licensed](./LICENSE).
