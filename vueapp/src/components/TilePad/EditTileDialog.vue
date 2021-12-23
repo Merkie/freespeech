@@ -47,7 +47,9 @@
 										@select="selectEmoji"
 										:customEmojis="customEmojis"
 										:customCategories="customCategories"
-										:initialCategory="initialCustomCategory"/>
+										:initialCategory="initialCustomCategory"
+										:emojiSize="64"
+										:showCategories="false"/>
 								</v-dialog>
 
 
