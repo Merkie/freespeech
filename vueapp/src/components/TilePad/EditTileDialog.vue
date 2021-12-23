@@ -55,13 +55,12 @@
 								<p class="text-left" >
 									{{ $t('editMode.tile.navigation') }}
 								</p>
-								<v-combobox
-									:items="navigations"
-									v-model="currentTileBeingEdited.navigation"
-									filled
-									@blur="onBlurUpdate('navigation', $event)"
+
+								<v-text-field
+									:value="currentTileBeingEdited.navigation"
 									:label="$t('editMode.tile.navigationLabel')"
-								></v-combobox>
+									@input="update('navigation', $event)"
+								/>
 
 								<v-btn @click="currentTileBeingEdited.navigation=''">Remove navigation</v-btn>
 
