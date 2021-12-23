@@ -36,8 +36,12 @@ Made with [contributors-img](https://contributors-img.firebaseapp.com).
 ## Special Thanks
 <a href="https://icons8.com/"><img src="https://logos-download.com/wp-content/uploads/2020/06/Icons8_Logo_full.png" width=200px></a>
 Thanks to Icons8 for providing all icons and graphics for the Free Speech AAC project!
+
+
 <a href="https://www.cnn.com/2021/12/19/us/texas-teen-freespeech-app/index.html"><img src="https://1000logos.net/wp-content/uploads/2021/04/CNN-logo.png" width=200px></a>
 Thanks to CNN for covering Free Speech AAC!
+
+
 <a href="https://www.bbc.com/news/av/disability-57515272"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/BBC_Logo_2021.svg/2560px-BBC_Logo_2021.svg.png" width=200px></a>
 Thanks to the BBC for covering Free Speech AAC!
 
