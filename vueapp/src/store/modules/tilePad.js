@@ -55,12 +55,19 @@ const mutations = {
 		}
 	},
 	CREATE_NEW_TILE(state, value){
+		var newTile = {};
 		let maxid = 0;
 		state.customTilePadData[state.currentTileBeingEdited.page].tileData.map(function(obj){
 			if (obj.id > maxid) maxid = obj.id;
 		});
-		value.id = maxid + 1;
-		state.customTilePadData[state.currentTileBeingEdited.page].tileData.unshift(value);
+		const { name, accent, image, messages, text } = { ...value };
+		newTile.id = maxid + 1;
+		newTile.name = name;
+		newTile.accent = accent;
+		newTile.image = image;
+		newTile.messages = messages;
+		newTile.text = text;
+		state.customTilePadData[state.currentTileBeingEdited.page].tileData.unshift(newTile);
 		state.currentTileBeingEdited = {};
 	},
 	/***
@@ -81,6 +88,9 @@ const mutations = {
 };
 
 const actions = {
+	createNewTile: ({ commit }, value) => {
+		commit('CREATE_NEW_TILE', value);
+	},
 	setCustomTilePadData: ({ commit }, value) => {
 		commit('SET_CUSTOM_TILE_PAD_DATA', value);
 	},

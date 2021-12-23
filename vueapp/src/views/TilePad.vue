@@ -16,7 +16,12 @@
 			style="{text-align: center}"
 		>
 			<v-row dense>
-
+				<Tile
+					v-if="editMode"
+					id="newTile"
+					:new-tile="true"			
+					:tile-page="currentTilePadPage"
+				/>
 
 			</v-row>
 			<v-row dense>

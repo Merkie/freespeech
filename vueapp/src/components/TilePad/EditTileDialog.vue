@@ -148,9 +148,7 @@ export default {
 				if(this.valid)
 				{
 					this.resetValidation();
-					var maxid = 0;
 
-					this.newTileObject.id = maxid + 1;
 					delete this.currentTileBeingEdited.newTile;
 					this.createNewTile(this.newTileObject);
 					this.toggleEditDialogVisibility();
