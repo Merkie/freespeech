@@ -62,8 +62,6 @@
 									@input="update('navigation', $event)"
 								/>
 
-								<v-btn @click="currentTileBeingEdited.navigation=''">Remove navigation</v-btn>
-
 							</v-col>
 
 						</v-row>
