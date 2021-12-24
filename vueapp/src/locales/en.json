@@ -37,7 +37,7 @@
       "accentColor": "Accent color",
       "buttonSave": "Save",
       "buttonClose": "Close",
-	  "navigationLabel" : "Can manually enter for a new Navigation tile"
+	  "navigationLabel" : "Navigation name"
     }
   }
 }
