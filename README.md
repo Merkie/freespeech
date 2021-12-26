@@ -23,7 +23,7 @@ Free Speech is an augmentative and alternative communication web application des
 
 ## Authors
 
-* **Archer Calder** - *Founder/Lead Developer* - [GitHub](https://github.com/Merkie) [Donate](https://ko-fi.com/merkie)
+* **Archer Calder** - *Founder/Lead Developer* - [GitHub](https://github.com/Merkie) [Donate](https://ko-fi.com/merkie) *archercalder@gmail.com*
 * **Bailey Townsend** - *Core Team Member/Lead Developer* - [GitHub](https://github.com/fatfingers23) [Linkedin](https://www.linkedin.com/in/bailey-townsend-25b195105)
 
 None of this would be possible without you all. Thank you!
