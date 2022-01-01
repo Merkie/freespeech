@@ -14,6 +14,10 @@
                     "sp": {
                         "name": "No",
                         "text": "No"
+                    },
+                    "fr": {
+                        "name": "Non",
+                        "text": "Non"
                     }
                 }
             },
@@ -31,6 +35,10 @@
                     "sp": {
                         "name": "Poco",
                         "text": "Poco"
+                    },
+                    "fr": {
+                        "name": "Petit",
+                        "text": "Petit"
                     }
                 }
             },
@@ -48,6 +56,10 @@
                     "sp": {
                         "name": "Apagado",
                         "text": "Apagado"
+                    },
+                    "fr": {
+                        "name": "Eteint",
+                        "text": "Eteint"
                     }
                 }
             },
@@ -63,6 +75,10 @@
                         "text": "gut"
                     },
                     "sp": {
+                        "name": "Bien",
+                        "text": "Bien"
+                    },
+                    "fr": {
                         "name": "Bien",
                         "text": "Bien"
                     }
@@ -82,6 +98,10 @@
                     "sp": {
                         "name": "Algo",
                         "text": "Algo"
+                    },
+                    "fr": {
+                        "name": "Un peu",
+                        "text": "Un peu"
                     }
                 }
             },
@@ -99,6 +119,10 @@
                     "sp": {
                         "name": "Terminado",
                         "text": "Terminado"
+                    },
+                    "fr": {
+                        "name": "Fini",
+                        "text": "Fini"
                     }
                 }
             },
@@ -114,6 +138,10 @@
                         "text": "schlecht"
                     },
                     "sp": {
+                        "name": "Mal",
+                        "text": "Mal"
+                    },
+                    "fr": {
                         "name": "Mal",
                         "text": "Mal"
                     }
@@ -133,6 +161,10 @@
                     "sp": {
                         "name": "Fuera",
                         "text": "Fuera"
+                    },
+                    "fr": {
+                        "name": "Dehors",
+                        "text": "Dehors"
                     }
                 }
             },
@@ -150,6 +182,10 @@
                     "sp": {
                         "name": "Mío",
                         "text": "Mío"
+                    },
+                    "fr": {
+                        "name": "Mon",
+                        "text": "Mon"
                     }
                 }
             },
@@ -167,6 +203,10 @@
                     "sp": {
                         "name": "Abajo",
                         "text": "Abajo"
+                    },
+                    "fr": {
+                        "name": "En dessous",
+                        "text": "En dessous"
                     }
                 }
             },
@@ -184,6 +224,10 @@
                     "sp": {
                         "name": "Arriba",
                         "text": "Arriba"
+                    },
+                    "fr": {
+                        "name": "Au dessus",
+                        "text": "Au dessus"
                     }
                 }
             },
@@ -202,6 +246,10 @@
                     "sp": {
                         "name": "Teclado",
                         "text": "Teclado"
+                    },
+                    "fr": {
+                        "name": "Clavier",
+                        "text": "Clavier"
                     }
                 }
             },
@@ -218,6 +266,10 @@
                         "text": "fühlen"
                     },
                     "sp": {
+                        "name": "Sentir",
+                        "text": "Sentir"
+                    },
+                    "fr": {
                         "name": "Sentir",
                         "text": "Sentir"
                     }
@@ -237,6 +289,10 @@
                     "sp": {
                         "name": "Trabajo",
                         "text": "Trabajo"
+                    },
+                    "fr": {
+                        "name": "Travail",
+                        "text": "Travail"
                     }
                 }
             },
@@ -254,6 +310,10 @@
                     "sp": {
                         "name": "Nuevo",
                         "text": "Nuevo"
+                    },
+                    "fr": {
+                        "name": "Nouveau",
+                        "text": "Nouveau"
                     }
                 }
             },
@@ -271,6 +331,10 @@
                     "sp": {
                         "name": "Jugar",
                         "text": "Jugar"
+                    },
+                    "fr": {
+                        "name": "Jouer",
+                        "text": "Jouer"
                     }
                 }
             },
@@ -288,6 +352,10 @@
                     "sp": {
                         "name": "Tener",
                         "text": "Tener"
+                    },
+                    "fr": {
+                        "name": "Ont",
+                        "text": "Ont"
                     }
                 }
             },
@@ -305,6 +373,10 @@
                     "sp": {
                         "name": "Alto",
                         "text": "Alto"
+                    },
+                    "fr": {
+                        "name": "Stop",
+                        "text": "Stop"
                     }
                 }
             },
@@ -322,6 +394,10 @@
                     "sp": {
                         "name": "Leer",
                         "text": "Leer"
+                    },
+                    "fr": {
+                        "name": "Lire",
+                        "text": "Lire"
                     }
                 }
             },
@@ -339,6 +415,10 @@
                     "sp": {
                         "name": "Rápido",
                         "text": "Rápido"
+                    },
+                    "fr": {
+                        "name": "Rapide",
+                        "text": "Rapide"
                     }
                 }
             },
@@ -356,6 +436,10 @@
                     "sp": {
                         "name": "Tú",
                         "text": "Tú"
+                    },
+                    "fr": {
+                        "name": "Toi",
+                        "text": "Toi"
                     }
                 }
             },
@@ -373,6 +457,10 @@
                     "sp": {
                         "name": "Gusta",
                         "text": "Me gusta"
+                    },
+                    "fr": {
+                        "name": "Aime",
+                        "text": "Aime"
                     }
                 }
             },
@@ -390,6 +478,10 @@
                     "sp": {
                         "name": "Más",
                         "text": "Más"
+                    },
+                    "fr": {
+                        "name": "Plus",
+                        "text": "Plus"
                     }
                 }
             },
@@ -407,6 +499,10 @@
                     "sp": {
                         "name": "Ellos",
                         "text": "Ellos"
+                    },
+                    "fr": {
+                        "name": "Ils",
+                        "text": "Ils"
                     }
                 }
             },
@@ -424,6 +520,10 @@
                     "sp": {
                         "name": "Tiempo",
                         "text": "Tiempo"
+                    },
+                    "fr": {
+                        "name": "Temps",
+                        "text": "Temps"
                     }
                 }
             },
@@ -441,6 +541,10 @@
                     "sp": {
                         "name": "Grande",
                         "text": "Grande"
+                    },
+                    "fr": {
+                        "name": "Grand",
+                        "text": "Grand"
                     }
                 }
             },
@@ -458,6 +562,10 @@
                     "sp": {
                         "name": "Ir",
                         "text": "Ir"
+                    },
+                    "fr": {
+                        "name": "Aller",
+                        "text": "Aller"
                     }
                 }
             },
@@ -475,6 +583,10 @@
                     "sp": {
                         "name": "Querer",
                         "text": "Querer"
+                    },
+                    "fr": {
+                        "name": "Veut",
+                        "text": "Veut"
                     }
                 }
             },
@@ -492,6 +604,10 @@
                     "sp": {
                         "name": "Ayuda",
                         "text": "Ayuda"
+                    },
+                    "fr": {
+                        "name": "Aide",
+                        "text": "Aide"
                     }
                 }
             },
@@ -509,6 +625,10 @@
                     "sp": {
                         "name": "Esto",
                         "text": "Esto"
+                    },
+                    "fr": {
+                        "name": "Ca",
+                        "text": "Ca"
                     }
                 }
             },
@@ -526,6 +646,10 @@
                     "sp": {
                         "name": "Hacer",
                         "text": "Hacer"
+                    },
+                    "fr": {
+                        "name": "Faire",
+                        "text": "Faire"
                     }
                 }
             },
@@ -541,6 +665,10 @@
                         "text": "komme"
                     },
                     "sp": {
+                        "name": "Venir",
+                        "text": "Venir"
+                    },
+                    "fr": {
                         "name": "Venir",
                         "text": "Venir"
                     }
@@ -560,6 +688,10 @@
                     "sp": {
                         "name": "Todo",
                         "text": "Todo"
+                    },
+                    "fr": {
+                        "name": "Tout",
+                        "text": "Tout"
                     }
                 }
             },
@@ -577,6 +709,10 @@
                     "sp": {
                         "name": "El",
                         "text": "El"
+                    },
+                    "fr": {
+                        "name": "Il",
+                        "text": "Il"
                     }
                 }
             },
@@ -594,6 +730,10 @@
                     "sp": {
                         "name": "Tener",
                         "text": "Tener"
+                    },
+                    "fr": {
+                        "name": "Chercher",
+                        "text": "Chercher"
                     }
                 }
             },
@@ -611,6 +751,10 @@
                     "sp": {
                         "name": "Color",
                         "text": "Color"
+                    },
+                    "fr": {
+                        "name": "Couleur",
+                        "text": "Couleur"
                     }
                 }
             },
@@ -628,6 +772,10 @@
                     "sp": {
                         "name": "Mi",
                         "text": "Mi"
+                    },
+                    "fr": {
+                        "name": "Mon",
+                        "text": "Mon"
                     }
                 }
             },
@@ -645,6 +793,10 @@
                     "sp": {
                         "name": "Me",
                         "text": "Me"
+                    },
+                    "fr": {
+                        "name": "Moi",
+                        "text": "Moi"
                     }
                 }
             },
@@ -662,6 +814,10 @@
                     "sp": {
                         "name": "Y",
                         "text": "Y"
+                    },
+                    "fr": {
+                        "name": "Et",
+                        "text": "Et"
                     }
                 }
             },
@@ -679,6 +835,10 @@
                     "sp": {
                         "name": "Usar",
                         "text": "Usar"
+                    },
+                    "fr": {
+                        "name": "Porter",
+                        "text": "Porter"
                     }
                 }
             },
@@ -696,6 +856,10 @@
                     "sp": {
                         "name": "Eso",
                         "text": "Eso"
+                    },
+                    "fr": {
+                        "name": "Ceci",
+                        "text": "Ceci"
                     }
                 }
             },
@@ -713,6 +877,10 @@
                     "sp": {
                         "name": "Soy",
                         "text": "Soy"
+                    },
+                    "fr": {
+                        "name": "Suis",
+                        "text": "Suis"
                     }
                 }
             },
@@ -730,6 +898,10 @@
                     "sp": {
                         "name": "Por favor",
                         "text": "Por favor"
+                    },
+                    "fr": {
+                        "name": "STP",
+                        "text": "S'il te plait"
                     }
                 }
             },
@@ -747,6 +919,10 @@
                     "sp": {
                         "name": "Que",
                         "text": "Que"
+                    },
+                    "fr": {
+                        "name": "Quoi",
+                        "text": "Quoi"
                     }
                 }
             },
@@ -771,6 +947,10 @@
                     "sp": {
                         "name": "Ahí",
                         "text": "Ahí"
+                    },
+                    "fr": {
+                        "name": "Là",
+                        "text": "Là"
                     }
                 }
             },
@@ -788,6 +968,10 @@
                     "sp": {
                         "name": "En",
                         "text": "En"
+                    },
+                    "fr": {
+                        "name": "Dans",
+                        "text": "Dans"
                     }
                 }
             },
@@ -803,6 +987,10 @@
                         "text": "ein"
                     },
                     "sp": {
+                        "name": "Un",
+                        "text": "Un"
+                    },
+                    "fr": {
                         "name": "Un",
                         "text": "Un"
                     }
@@ -822,6 +1010,10 @@
                     "sp": {
                         "name": "Estaban",
                         "text": "Estaban"
+                    },
+                    "fr": {
+                        "name": "Etaient",
+                        "text": "Etaient"
                     }
                 }
             },
@@ -839,6 +1031,10 @@
                     "sp": {
                         "name": "Sobre",
                         "text": "Sobre"
+                    },
+                    "fr": {
+                        "name": "Sur",
+                        "text": "Sur"
                     }
                 }
             },
@@ -856,6 +1052,10 @@
                     "sp": {
                         "name": "Estaba",
                         "text": "Estaba"
+                    },
+                    "fr": {
+                        "name": "Etait",
+                        "text": "Etait"
                     }
                 }
             },
@@ -873,6 +1073,10 @@
                     "sp": {
                         "name": "Yo",
                         "text": "Yo"
+                    },
+                    "fr": {
+                        "name": "Je",
+                        "text": "Je"
                     }
                 }
             },
@@ -888,6 +1092,10 @@
                         "text": "ende"
                     },
                     "sp": {
+                        "name": "Fin",
+                        "text": "Fin"
+                    },
+                    "fr": {
                         "name": "Fin",
                         "text": "Fin"
                     }
@@ -907,6 +1115,10 @@
                     "sp": {
                         "name": "Es",
                         "text": "Es"
+                    },
+                    "fr": {
+                        "name": "Est",
+                        "text": "Est"
                     }
                 }
             },
@@ -922,6 +1134,10 @@
                         "text": "zu"
                     },
                     "sp": {
+                        "name": "A",
+                        "text": "A"
+                    },
+                    "fr": {
                         "name": "A",
                         "text": "A"
                     }
@@ -941,6 +1157,10 @@
                     "sp": {
                         "name": "Nosotros",
                         "text": "Nosotros"
+                    },
+                    "fr": {
+                        "name": "Nous",
+                        "text": "Nous"
                     }
                 }
             },
@@ -955,6 +1175,10 @@
                     "sp": {
                         "name": "Números",
                         "text": "Números"
+                    },
+                    "fr": {
+                        "name": "Numeros",
+                        "text": "Numeros"
                     }
                 }
             },
@@ -972,6 +1196,10 @@
                     "sp": {
                         "name": "Están",
                         "text": "Están"
+                    },
+                    "fr": {
+                        "name": "Sont",
+                        "text": "Sont"
                     }
                 }
             },
@@ -989,6 +1217,10 @@
                     "sp": {
                         "name": "El",
                         "text": "El"
+                    },
+                    "fr": {
+                        "name": "Le",
+                        "text": "Le"
                     }
                 }
             },
@@ -1006,6 +1238,10 @@
                     "sp": {
                         "name": "Una",
                         "text": "Una"
+                    },
+                    "fr": {
+                        "name": "Un",
+                        "text": "Un"
                     }
                 }
             }
@@ -1157,6 +1393,10 @@
                     "sp": {
                         "name": "Losas",
                         "text": "Losas"
+                    },
+                    "fr": {
+                        "name": "Losas",
+                        "text": "Losas"
                     }
                 }
             }
@@ -1177,6 +1417,10 @@
                     "sp": {
                         "name": "Y",
                         "text": "Y"
+                    },
+                    "fr": {
+                        "name": "Y",
+                        "text": "Y"
                     }
                 }
 
@@ -1192,6 +1436,10 @@
                         "text": "Null"
                     },
                     "sp": {
+                        "name": "Cero",
+                        "text": "Cero"
+                    },
+                    "fr": {
                         "name": "Cero",
                         "text": "Cero"
                     }
@@ -1210,6 +1458,10 @@
                     "sp": {
                         "name": "Uno",
                         "text": "Uno"
+                    },
+                    "fr": {
+                        "name": "Uno",
+                        "text": "Uno"
                     }
                 }
             },
@@ -1224,6 +1476,10 @@
                         "text": "Zwei"
                     },
                     "sp": {
+                        "name": "Dos",
+                        "text": "Dos"
+                    },
+                    "fr": {
                         "name": "Dos",
                         "text": "Dos"
                     }
@@ -1242,6 +1498,10 @@
                     "sp": {
                         "name": "Tres",
                         "text": "Tres"
+                    },
+                    "fr": {
+                        "name": "Tres",
+                        "text": "Tres"
                     }
                 }
             },
@@ -1256,6 +1516,10 @@
                         "text": "Vier"
                     },
                     "sp": {
+                        "name": "Cuatro",
+                        "text": "Cuatro"
+                    },
+                    "fr": {
                         "name": "Cuatro",
                         "text": "Cuatro"
                     }
@@ -1274,6 +1538,10 @@
                     "sp": {
                         "name": "Cinco",
                         "text": "Cinco"
+                    },
+                    "fr": {
+                        "name": "Cinco",
+                        "text": "Cinco"
                     }
                 }
             },
@@ -1288,6 +1556,10 @@
                         "text": "Sechs"
                     },
                     "sp": {
+                        "name": "Seis",
+                        "text": "Seis"
+                    },
+                    "fr": {
                         "name": "Seis",
                         "text": "Seis"
                     }
@@ -1306,6 +1578,10 @@
                     "sp": {
                         "name": "Siete",
                         "text": "Siete"
+                    },
+                    "fr": {
+                        "name": "Siete",
+                        "text": "Siete"
                     }
                 }
             },
@@ -1322,6 +1598,10 @@
                     "sp": {
                         "name": "Ocho",
                         "text": "Ocho"
+                    },
+                    "fr": {
+                        "name": "Ocho",
+                        "text": "Ocho"
                     }
                 }
             },
@@ -1336,6 +1616,10 @@
                         "text": "Neun"
                     },
                     "sp": {
+                        "name": "Nueve",
+                        "text": "Nueve"
+                    },
+                    "fr": {
                         "name": "Nueve",
                         "text": "Nueve"
                     }
@@ -1356,6 +1640,10 @@
                     "sp": {
                         "name": "Losas",
                         "text": "Losas"
+                    },
+                    "fr": {
+                        "name": "Losas",
+                        "text": "Losas"
                     }
                 }
             },
@@ -1371,6 +1659,10 @@
                         "text": "Komma"
                     },
                     "sp": {
+                        "name": "Coma",
+                        "text": "Coma"
+                    },
+                    "fr": {
                         "name": "Coma",
                         "text": "Coma"
                     }
@@ -1389,6 +1681,10 @@
                     "sp": {
                         "name": "Diez",
                         "text": "Diez"
+                    },
+                    "fr": {
+                        "name": "Diez",
+                        "text": "Diez"
                     }
                 }
             },
@@ -1403,6 +1699,10 @@
                         "text": "Elf"
                     },
                     "sp": {
+                        "name": "Once",
+                        "text": "Once"
+                    },
+                    "fr": {
                         "name": "Once",
                         "text": "Once"
                     }
@@ -1421,6 +1721,10 @@
                     "sp": {
                         "name": "Doce",
                         "text": "Doce"
+                    },
+                    "fr": {
+                        "name": "Doce",
+                        "text": "Doce"
                     }
                 }
             },
@@ -1435,6 +1739,10 @@
                         "text": "Dreizehn"
                     },
                     "sp": {
+                        "name": "Trece",
+                        "text": "Trece"
+                    },
+                    "fr": {
                         "name": "Trece",
                         "text": "Trece"
                     }
@@ -1453,6 +1761,10 @@
                     "sp": {
                         "name": "Catorce",
                         "text": "Catorce"
+                    },
+                    "fr": {
+                        "name": "Catorce",
+                        "text": "Catorce"
                     }
                 }
             },
@@ -1467,6 +1779,10 @@
                         "text": "Fünfzehn"
                     },
                     "sp": {
+                        "name": "Quince",
+                        "text": "Quince"
+                    },
+                    "fr": {
                         "name": "Quince",
                         "text": "Quince"
                     }
@@ -1485,6 +1801,10 @@
                     "sp": {
                         "name": "Dieciséis",
                         "text": "Dieciséis"
+                    },
+                    "fr": {
+                        "name": "Dieciséis",
+                        "text": "Dieciséis"
                     }
                 }
             },
@@ -1499,6 +1819,10 @@
                         "text": "Siebzehn"
                     },
                     "sp": {
+                        "name": "Diecisiete",
+                        "text": "Diecisiete"
+                    },
+                    "fr": {
                         "name": "Diecisiete",
                         "text": "Diecisiete"
                     }
@@ -1517,6 +1841,10 @@
                     "sp": {
                         "name": "Dieciocho",
                         "text": "Dieciocho"
+                    },
+                    "fr": {
+                        "name": "Dieciocho",
+                        "text": "Dieciocho"
                     }
                 }
             },
@@ -1531,6 +1859,10 @@
                         "text": "Neunzehn"
                     },
                     "sp": {
+                        "name": "Diecinueve",
+                        "text": "Diecinueve"
+                    },
+                    "fr": {
                         "name": "Diecinueve",
                         "text": "Diecinueve"
                     }
@@ -1550,6 +1882,10 @@
                     "sp": {
                         "name": "Minutos",
                         "text": "Minutos"
+                    },
+                    "fr": {
+                        "name": "Minutos",
+                        "text": "Minutos"
                     }
                 }
             },
@@ -1565,6 +1901,10 @@
                         "text": "Tausend"
                     },
                     "sp": {
+                        "name": "Mil",
+                        "text": "Mil"
+                    },
+                    "fr": {
                         "name": "Mil",
                         "text": "Mil"
                     }
@@ -1583,6 +1923,10 @@
                     "sp": {
                         "name": "Veinte",
                         "text": "Veinte"
+                    },
+                    "fr": {
+                        "name": "Veinte",
+                        "text": "Veinte"
                     }
                 }
             },
@@ -1597,6 +1941,10 @@
                         "text": "Dreiβig"
                     },
                     "sp": {
+                        "name": "Treinta",
+                        "text": "Treinta"
+                    },
+                    "fr": {
                         "name": "Treinta",
                         "text": "Treinta"
                     }
@@ -1615,6 +1963,10 @@
                     "sp": {
                         "name": "Cuarenta",
                         "text": "Cuarenta"
+                    },
+                    "fr": {
+                        "name": "Cuarenta",
+                        "text": "Cuarenta"
                     }
                 }
             },
@@ -1629,6 +1981,10 @@
                         "text": "Fünfzig"
                     },
                     "sp": {
+                        "name": "Cincuenta",
+                        "text": "Cincuenta"
+                    },
+                    "fr": {
                         "name": "Cincuenta",
                         "text": "Cincuenta"
                     }
@@ -1647,6 +2003,10 @@
                     "sp": {
                         "name": "Sesenta",
                         "text": "Sesenta"
+                    },
+                    "fr": {
+                        "name": "Sesenta",
+                        "text": "Sesenta"
                     }
                 }
             },
@@ -1661,6 +2021,10 @@
                         "text": "Siebzig"
                     },
                     "sp": {
+                        "name": "Setenta",
+                        "text": "Setenta"
+                    },
+                    "fr": {
                         "name": "Setenta",
                         "text": "Setenta"
                     }
@@ -1679,6 +2043,10 @@
                     "sp": {
                         "name": "Ochenta",
                         "text": "Ochenta"
+                    },
+                    "fr": {
+                        "name": "Ochenta",
+                        "text": "Ochenta"
                     }
                 }
             },
@@ -1693,6 +2061,10 @@
                         "text": "Neunzig"
                     },
                     "sp": {
+                        "name": "Noventa",
+                        "text": "Noventa"
+                    },
+                    "fr": {
                         "name": "Noventa",
                         "text": "Noventa"
                     }
@@ -1712,6 +2084,10 @@
                     "sp": {
                         "name": "Ciento",
                         "text": "Ciento"
+                    },
+                    "fr": {
+                        "name": "Ciento",
+                        "text": "Ciento"
                     }
                 }
             },
@@ -1727,6 +2103,10 @@
                         "text": "Grad"
                     },
                     "sp": {
+                        "name": "Grados",
+                        "text": "Grados"
+                    },
+                    "fr": {
                         "name": "Grados",
                         "text": "Grados"
                     }
@@ -1746,6 +2126,10 @@
                     "sp": {
                         "name": "Libra",
                         "text": "Libra"
+                    },
+                    "fr": {
+                        "name": "Libra",
+                        "text": "Libra"
                     }
                 }
             },
@@ -1761,6 +2145,10 @@
                         "text": "Dollars"
                     },
                     "sp": {
+                        "name": "Dolares",
+                        "text": "Dolares"
+                    },
+                    "fr": {
                         "name": "Dolares",
                         "text": "Dolares"
                     }
@@ -1780,6 +2168,10 @@
                     "sp": {
                         "name": "A",
                         "text": "A"
+                    },
+                    "fr": {
+                        "name": "A",
+                        "text": "A"
                     }
                 }
             },
@@ -1795,6 +2187,10 @@
                         "text": "im"
                     },
                     "sp": {
+                        "name": "En",
+                        "text": "En"
+                    },
+                    "fr": {
                         "name": "En",
                         "text": "En"
                     }
@@ -1814,6 +2210,10 @@
                     "sp": {
                         "name": "Dias",
                         "text": "Dias"
+                    },
+                    "fr": {
+                        "name": "Dias",
+                        "text": "Dias"
                     }
                 }
             },
@@ -1829,6 +2229,10 @@
                         "text": "Prozent"
                     },
                     "sp": {
+                        "name": "Por Ciento",
+                        "text": "Por Ciento"
+                    },
+                    "fr": {
                         "name": "Por Ciento",
                         "text": "Por Ciento"
                     }
@@ -1848,6 +2252,10 @@
                     "sp": {
                         "name": "Veces",
                         "text": "Veces"
+                    },
+                    "fr": {
+                        "name": "Veces",
+                        "text": "Veces"
                     }
                 }
             },
@@ -1863,6 +2271,10 @@
                         "text": "Dienststunden"
                     },
                     "sp": {
+                        "name": "Horas",
+                        "text": "Horas"
+                    },
+                    "fr": {
                         "name": "Horas",
                         "text": "Horas"
                     }
@@ -1882,6 +2294,10 @@
                     "sp": {
                         "name": "Meses",
                         "text": "Meses"
+                    },
+                    "fr": {
+                        "name": "Meses",
+                        "text": "Meses"
                     }
                 }
             },
@@ -1897,6 +2313,10 @@
                         "text": "Jahren"
                     },
                     "sp": {
+                        "name": "Años",
+                        "text": "Años"
+                    },
+                    "fr": {
                         "name": "Años",
                         "text": "Años"
                     }
@@ -1916,6 +2336,10 @@
                     "sp": {
                         "name": "Medio",
                         "text": "Medio"
+                    },
+                    "fr": {
+                        "name": "Medio",
+                        "text": "Medio"
                     }
                 }
             },
@@ -1933,6 +2357,10 @@
                     "sp": {
                         "name": "Metros",
                         "text": "Metros"
+                    },
+                    "fr": {
+                        "name": "Metros",
+                        "text": "Metros"
                     }
                 }
             },
@@ -1948,6 +2376,10 @@
                         "text": "Kilometer"
                     },
                     "sp": {
+                        "name": "Kilómetros",
+                        "text": "Kilómetros"
+                    },
+                    "fr": {
                         "name": "Kilómetros",
                         "text": "Kilómetros"
                     }
@@ -1971,6 +2403,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -1986,6 +2422,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2005,6 +2445,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2020,6 +2464,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2039,6 +2487,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2054,6 +2506,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2073,6 +2529,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2088,6 +2548,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2107,6 +2571,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2124,6 +2592,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2139,6 +2611,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2159,6 +2635,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2174,6 +2654,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2193,6 +2677,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2208,6 +2696,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2227,6 +2719,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2242,6 +2738,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2261,6 +2761,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2276,6 +2780,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2295,6 +2803,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2310,6 +2822,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2329,6 +2845,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2344,6 +2864,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2363,6 +2887,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2378,6 +2906,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2397,6 +2929,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2412,6 +2948,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2431,6 +2971,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2446,6 +2990,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2465,6 +3013,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2480,6 +3032,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2499,6 +3055,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2514,6 +3074,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2533,6 +3097,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2548,6 +3116,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2567,6 +3139,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2582,6 +3158,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2601,6 +3181,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2616,6 +3200,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2635,6 +3223,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2650,6 +3242,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2669,6 +3265,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2686,6 +3286,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2701,6 +3305,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2727,6 +3335,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2742,6 +3354,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2761,6 +3377,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2776,6 +3396,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2795,6 +3419,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2810,6 +3438,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2829,6 +3461,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2844,6 +3480,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2863,6 +3503,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2878,6 +3522,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2897,6 +3545,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2909,6 +3561,10 @@
             "id": 56,
             "messages": {
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2928,6 +3584,10 @@
               "sp": {
                 "name": "",
                 "text": ""
+              },
+              "fr": {
+                "name": "",
+                "text": ""
               }
             }
           },
@@ -2943,6 +3603,10 @@
                 "text": ""
               },
               "sp": {
+                "name": "",
+                "text": ""
+              },
+              "fr": {
                 "name": "",
                 "text": ""
               }
@@ -2984,6 +3648,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -2999,6 +3667,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3018,6 +3690,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3033,6 +3709,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3052,6 +3732,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3067,6 +3751,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3086,6 +3774,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3101,6 +3793,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3120,6 +3816,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3137,6 +3837,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3152,6 +3856,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3172,6 +3880,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3187,6 +3899,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3206,6 +3922,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3221,6 +3941,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3240,6 +3964,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3255,6 +3983,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3274,6 +4006,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3289,6 +4025,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3308,6 +4048,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3323,6 +4067,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3342,6 +4090,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3357,6 +4109,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3376,6 +4132,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3391,6 +4151,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3410,6 +4174,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3425,6 +4193,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3444,6 +4216,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3459,6 +4235,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3478,6 +4258,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3493,6 +4277,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3512,6 +4300,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3527,6 +4319,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3546,6 +4342,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3561,6 +4361,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3580,6 +4384,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3595,6 +4403,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3614,6 +4426,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3629,6 +4445,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3648,6 +4468,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3663,6 +4487,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3682,6 +4510,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3699,6 +4531,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3714,6 +4550,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3740,6 +4580,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3755,6 +4599,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3774,6 +4622,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3789,6 +4641,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3808,6 +4664,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3823,6 +4683,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3842,6 +4706,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3857,6 +4725,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3876,6 +4748,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3891,6 +4767,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3910,6 +4790,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3922,6 +4806,10 @@
         "id": 56,
         "messages": {
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3941,6 +4829,10 @@
             "sp": {
             "name": "",
             "text": ""
+            },
+            "fr": {
+            "name": "",
+            "text": ""
             }
         }
         },
@@ -3956,6 +4848,10 @@
             "text": ""
             },
             "sp": {
+            "name": "",
+            "text": ""
+            },
+            "fr": {
             "name": "",
             "text": ""
             }
@@ -3997,6 +4893,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4012,6 +4912,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4031,6 +4935,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4046,6 +4954,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4065,6 +4977,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4080,6 +4996,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4099,6 +5019,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4114,6 +5038,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4133,6 +5061,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4150,6 +5082,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4165,6 +5101,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4185,6 +5125,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4200,6 +5144,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4219,6 +5167,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4234,6 +5186,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4253,6 +5209,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4268,6 +5228,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4287,6 +5251,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4302,6 +5270,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4321,6 +5293,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4336,6 +5312,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4355,6 +5335,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4370,6 +5354,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4389,6 +5377,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4404,6 +5396,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4423,6 +5419,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4438,6 +5438,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4457,6 +5461,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4472,6 +5480,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4491,6 +5503,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4506,6 +5522,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4525,6 +5545,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4540,6 +5564,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4559,6 +5587,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4574,6 +5606,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4593,6 +5629,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4608,6 +5648,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4627,6 +5671,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4642,6 +5690,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4661,6 +5713,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4676,6 +5732,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4695,6 +5755,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4712,6 +5776,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4727,6 +5795,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4753,6 +5825,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4768,6 +5844,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4787,6 +5867,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4802,6 +5886,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4821,6 +5909,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4836,6 +5928,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4855,6 +5951,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4870,6 +5970,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4889,6 +5993,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4904,6 +6012,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4923,6 +6035,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4935,6 +6051,10 @@
             "id": 56,
             "messages": {
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -4954,6 +6074,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -4969,6 +6093,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5010,6 +6138,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5025,6 +6157,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5044,6 +6180,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5059,6 +6199,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5078,6 +6222,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5093,6 +6241,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5112,6 +6264,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5127,6 +6283,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5146,6 +6306,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5163,6 +6327,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5178,6 +6346,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5198,6 +6370,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5213,6 +6389,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5232,6 +6412,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5247,6 +6431,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5266,6 +6454,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5281,6 +6473,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5300,6 +6496,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5315,6 +6515,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5334,6 +6538,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5349,6 +6557,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5368,6 +6580,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5383,6 +6599,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5402,6 +6622,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5417,6 +6641,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5436,6 +6664,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5451,6 +6683,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5470,6 +6706,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5485,6 +6725,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5504,6 +6748,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5519,6 +6767,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5538,6 +6790,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5553,6 +6809,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5572,6 +6832,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5587,6 +6851,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5606,6 +6874,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5621,6 +6893,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5640,6 +6916,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5655,6 +6935,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5674,6 +6958,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5689,6 +6977,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5708,6 +7000,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5725,6 +7021,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5740,6 +7040,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5766,6 +7070,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5781,6 +7089,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5800,6 +7112,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5815,6 +7131,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5834,6 +7154,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5849,6 +7173,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5868,6 +7196,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5883,6 +7215,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5902,6 +7238,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5917,6 +7257,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5936,6 +7280,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5948,6 +7296,10 @@
             "id": 56,
             "messages": {
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -5967,6 +7319,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -5982,6 +7338,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6023,6 +7383,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6038,6 +7402,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6057,6 +7425,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6072,6 +7444,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6091,6 +7467,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6106,6 +7486,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6125,6 +7509,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6140,6 +7528,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6159,6 +7551,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6176,6 +7572,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6191,6 +7591,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6211,6 +7615,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6226,6 +7634,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6245,6 +7657,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6260,6 +7676,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6279,6 +7699,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6294,6 +7718,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6313,6 +7741,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6328,6 +7760,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6347,6 +7783,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6362,6 +7802,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6381,6 +7825,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6396,6 +7844,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6415,6 +7867,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6430,6 +7886,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6449,6 +7909,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6464,6 +7928,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6483,6 +7951,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6498,6 +7970,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6517,6 +7993,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6532,6 +8012,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6551,6 +8035,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6566,6 +8054,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6585,6 +8077,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6600,6 +8096,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6619,6 +8119,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6634,6 +8138,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6653,6 +8161,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6668,6 +8180,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6687,6 +8203,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6702,6 +8222,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6721,6 +8245,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6738,6 +8266,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6753,6 +8285,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6779,6 +8315,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6794,6 +8334,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6813,6 +8357,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6828,6 +8376,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6847,6 +8399,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6862,6 +8418,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6881,6 +8441,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6896,6 +8460,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6915,6 +8483,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6930,6 +8502,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6949,6 +8525,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6961,6 +8541,10 @@
             "id": 56,
             "messages": {
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -6980,6 +8564,10 @@
                 "sp": {
                 "name": "",
                 "text": ""
+                },
+                "fr": {
+                "name": "",
+                "text": ""
                 }
             }
             },
@@ -6995,6 +8583,10 @@
                 "text": ""
                 },
                 "sp": {
+                "name": "",
+                "text": ""
+                },
+                "fr": {
                 "name": "",
                 "text": ""
                 }
@@ -7015,6 +8607,11 @@
                 "sp": {
                     "name": "Losas",
                     "text": "Losas"
+                }
+                ,
+                "fr": {
+                    "name": "Tuiles",
+                    "text": "Tuiles"
                 }
             }
         }

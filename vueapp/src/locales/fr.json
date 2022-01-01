@@ -1,0 +1,43 @@
+{
+  "languageName": "Français",
+  "app": {
+    "titleEnterPasscode": "Entrer le code pour debloquer",
+    "errorIncorrectPasscode": "Code incorrect"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "optionVoice": "Voix",
+    "optionCustomTilePad": "Tuiles personalisées",
+    "optionCreateSentences": "Créer des Phrases",
+    "optionLanguage": "Language",
+    "optionPasscodeEnabled": "Code Activé",
+    "buttonClose": "Fermer",
+    "titleSetPasscode": "Définir Code",
+    "buttonReset": "RemiSe à zero Paramètres et Tuiles",
+    "buttonExport": "Exporter Paramètres et Tuiles",
+    "buttonImport": "Importer Paramètres et Tuiles",
+    "displayTapCounter": "Afficher le compteur de touches"
+  },
+  "sentence": {
+    "title": "Phrase",
+    "instructions": "Ajouter des tuiles à cette phrase en tappant dessus ci-dessous.",
+    "buttonSpeak": "Parler",
+    "buttonClear": "Effacer"
+  },
+  "editMode": {
+    "title": "Vous êtes en mode édition!",
+    "buttonSave": "Enregistrer les modifications",
+    "instructions": "You can edit tiles while in edit mode by clicking on them to edit them or clicking and dragging them to move them around. Press the save icon or the button above to save your changes.",
+    "tile": {
+      "navigation": "Navigation",
+      "title": "Editer",
+      "name": "Nom",
+      "imageUrl": "URL de l'Image",
+      "textToSpeak": "Texte à dire",
+      "accentColor": "Couleur Accentuée",
+      "buttonSave": "Enregistrer",
+      "buttonClose": "Fermer",
+	  "navigationLabel" : "Nom de Navigation"
+    }
+  }
+}
