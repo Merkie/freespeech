@@ -23,7 +23,7 @@
 				<draggable
 					v-model="tilePadToDisplay.tileData"
 					style="display: contents"
-					:options="{disabled: !editMode, handle: '#drag-handle'}"
+					handle='#drag-handle'
 					class="tilePadContainer"
 				>
 					<template v-for="(tile, tileIndex) in  tilePadToDisplay.tileData">
