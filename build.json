@@ -1395,8 +1395,8 @@
                         "text": "Losas"
                     },
                     "fr": {
-                        "name": "Losas",
-                        "text": "Losas"
+                        "name": "Tuiles",
+                        "text": "Tuiles"
                     }
                 }
             }
@@ -1419,8 +1419,8 @@
                         "text": "Y"
                     },
                     "fr": {
-                        "name": "Y",
-                        "text": "Y"
+                        "name": "Et",
+                        "text": "Et"
                     }
                 }
 
@@ -1440,8 +1440,8 @@
                         "text": "Cero"
                     },
                     "fr": {
-                        "name": "Cero",
-                        "text": "Cero"
+                        "name": "Zero",
+                        "text": "Zero"
                     }
                 }
             },
@@ -1460,8 +1460,8 @@
                         "text": "Uno"
                     },
                     "fr": {
-                        "name": "Uno",
-                        "text": "Uno"
+                        "name": "Un",
+                        "text": "Un"
                     }
                 }
             },
@@ -1480,8 +1480,8 @@
                         "text": "Dos"
                     },
                     "fr": {
-                        "name": "Dos",
-                        "text": "Dos"
+                        "name": "Deux",
+                        "text": "Deux"
                     }
                 }
             },
@@ -1500,8 +1500,8 @@
                         "text": "Tres"
                     },
                     "fr": {
-                        "name": "Tres",
-                        "text": "Tres"
+                        "name": "Trois",
+                        "text": "Trois"
                     }
                 }
             },
@@ -1520,8 +1520,8 @@
                         "text": "Cuatro"
                     },
                     "fr": {
-                        "name": "Cuatro",
-                        "text": "Cuatro"
+                        "name": "Quatre",
+                        "text": "Quatre"
                     }
                 }
             },
@@ -1540,8 +1540,8 @@
                         "text": "Cinco"
                     },
                     "fr": {
-                        "name": "Cinco",
-                        "text": "Cinco"
+                        "name": "Cinq",
+                        "text": "Cinq"
                     }
                 }
             },
@@ -1560,8 +1560,8 @@
                         "text": "Seis"
                     },
                     "fr": {
-                        "name": "Seis",
-                        "text": "Seis"
+                        "name": "Six",
+                        "text": "Six"
                     }
                 }
             },
@@ -1580,8 +1580,8 @@
                         "text": "Siete"
                     },
                     "fr": {
-                        "name": "Siete",
-                        "text": "Siete"
+                        "name": "Sept",
+                        "text": "Sept"
                     }
                 }
             },
@@ -1600,8 +1600,8 @@
                         "text": "Ocho"
                     },
                     "fr": {
-                        "name": "Ocho",
-                        "text": "Ocho"
+                        "name": "Huit",
+                        "text": "Huit"
                     }
                 }
             },
@@ -1620,8 +1620,8 @@
                         "text": "Nueve"
                     },
                     "fr": {
-                        "name": "Nueve",
-                        "text": "Nueve"
+                        "name": "Neuf",
+                        "text": "Neuf"
                     }
                 }
             },
@@ -1643,7 +1643,7 @@
                     },
                     "fr": {
                         "name": "Losas",
-                        "text": "Losas"
+                        "text": "Tuiles"
                     }
                 }
             },
@@ -1663,8 +1663,8 @@
                         "text": "Coma"
                     },
                     "fr": {
-                        "name": "Coma",
-                        "text": "Coma"
+                        "name": "Point",
+                        "text": "Point"
                     }
                 }
             },
@@ -1683,8 +1683,8 @@
                         "text": "Diez"
                     },
                     "fr": {
-                        "name": "Diez",
-                        "text": "Diez"
+                        "name": "Dix",
+                        "text": "Dix"
                     }
                 }
             },
@@ -1703,8 +1703,8 @@
                         "text": "Once"
                     },
                     "fr": {
-                        "name": "Once",
-                        "text": "Once"
+                        "name": "Onze",
+                        "text": "Onze"
                     }
                 }
             },
@@ -1723,8 +1723,8 @@
                         "text": "Doce"
                     },
                     "fr": {
-                        "name": "Doce",
-                        "text": "Doce"
+                        "name": "Douze",
+                        "text": "Douze"
                     }
                 }
             },
@@ -1743,8 +1743,8 @@
                         "text": "Trece"
                     },
                     "fr": {
-                        "name": "Trece",
-                        "text": "Trece"
+                        "name": "Treize",
+                        "text": "Treize"
                     }
                 }
             },
@@ -1763,8 +1763,8 @@
                         "text": "Catorce"
                     },
                     "fr": {
-                        "name": "Catorce",
-                        "text": "Catorce"
+                        "name": "Quatorze",
+                        "text": "Quatorze"
                     }
                 }
             },
@@ -1783,8 +1783,8 @@
                         "text": "Quince"
                     },
                     "fr": {
-                        "name": "Quince",
-                        "text": "Quince"
+                        "name": "Quinze",
+                        "text": "Quinze"
                     }
                 }
             },
@@ -1803,8 +1803,8 @@
                         "text": "Dieciséis"
                     },
                     "fr": {
-                        "name": "Dieciséis",
-                        "text": "Dieciséis"
+                        "name": "Seize",
+                        "text": "Seize"
                     }
                 }
             },
@@ -1823,8 +1823,8 @@
                         "text": "Diecisiete"
                     },
                     "fr": {
-                        "name": "Diecisiete",
-                        "text": "Diecisiete"
+                        "name": "Dix-Sept",
+                        "text": "Dix-Sept"
                     }
                 }
             },
@@ -1843,8 +1843,8 @@
                         "text": "Dieciocho"
                     },
                     "fr": {
-                        "name": "Dieciocho",
-                        "text": "Dieciocho"
+                        "name": "Dix-Huit",
+                        "text": "Dix-Huit"
                     }
                 }
             },
@@ -1863,8 +1863,8 @@
                         "text": "Diecinueve"
                     },
                     "fr": {
-                        "name": "Diecinueve",
-                        "text": "Diecinueve"
+                        "name": "Dix-Neuf",
+                        "text": "Dix-Neuf"
                     }
                 }
             },
@@ -1884,8 +1884,8 @@
                         "text": "Minutos"
                     },
                     "fr": {
-                        "name": "Minutos",
-                        "text": "Minutos"
+                        "name": "Minutes",
+                        "text": "Minutes"
                     }
                 }
             },
@@ -1905,8 +1905,8 @@
                         "text": "Mil"
                     },
                     "fr": {
-                        "name": "Mil",
-                        "text": "Mil"
+                        "name": "Mille",
+                        "text": "Mille"
                     }
                 }
             },
@@ -1925,8 +1925,8 @@
                         "text": "Veinte"
                     },
                     "fr": {
-                        "name": "Veinte",
-                        "text": "Veinte"
+                        "name": "Vingt",
+                        "text": "Vingt"
                     }
                 }
             },
@@ -1945,8 +1945,8 @@
                         "text": "Treinta"
                     },
                     "fr": {
-                        "name": "Treinta",
-                        "text": "Treinta"
+                        "name": "Trente",
+                        "text": "Trente"
                     }
                 }
             },
@@ -1965,8 +1965,8 @@
                         "text": "Cuarenta"
                     },
                     "fr": {
-                        "name": "Cuarenta",
-                        "text": "Cuarenta"
+                        "name": "Quarante",
+                        "text": "Quarante"
                     }
                 }
             },
@@ -1985,8 +1985,8 @@
                         "text": "Cincuenta"
                     },
                     "fr": {
-                        "name": "Cincuenta",
-                        "text": "Cincuenta"
+                        "name": "Cinquante",
+                        "text": "Cinquante"
                     }
                 }
             },
@@ -2005,8 +2005,8 @@
                         "text": "Sesenta"
                     },
                     "fr": {
-                        "name": "Sesenta",
-                        "text": "Sesenta"
+                        "name": "Soixante",
+                        "text": "Soixante"
                     }
                 }
             },
@@ -2025,8 +2025,8 @@
                         "text": "Setenta"
                     },
                     "fr": {
-                        "name": "Setenta",
-                        "text": "Setenta"
+                        "name": "Soixante-Dix",
+                        "text": "Soixante-Dix"
                     }
                 }
             },
@@ -2045,8 +2045,8 @@
                         "text": "Ochenta"
                     },
                     "fr": {
-                        "name": "Ochenta",
-                        "text": "Ochenta"
+                        "name": "Quatre-Vingt",
+                        "text": "Quatre-Vingt"
                     }
                 }
             },
@@ -2065,8 +2065,8 @@
                         "text": "Noventa"
                     },
                     "fr": {
-                        "name": "Noventa",
-                        "text": "Noventa"
+                        "name": "Quatre-Vingt-Dix",
+                        "text": "Quatre-Vingt-Dix"
                     }
                 }
             },
@@ -2086,8 +2086,8 @@
                         "text": "Ciento"
                     },
                     "fr": {
-                        "name": "Ciento",
-                        "text": "Ciento"
+                        "name": "Cent",
+                        "text": "Cent"
                     }
                 }
             },
@@ -2107,8 +2107,8 @@
                         "text": "Grados"
                     },
                     "fr": {
-                        "name": "Grados",
-                        "text": "Grados"
+                        "name": "Degrés",
+                        "text": "Degrés"
                     }
                 }
             },
@@ -2128,8 +2128,8 @@
                         "text": "Libra"
                     },
                     "fr": {
-                        "name": "Libra",
-                        "text": "Libra"
+                        "name": "Kilo",
+                        "text": "Kilo"
                     }
                 }
             },
@@ -2149,8 +2149,8 @@
                         "text": "Dolares"
                     },
                     "fr": {
-                        "name": "Dolares",
-                        "text": "Dolares"
+                        "name": "Euros",
+                        "text": "Euros"
                     }
                 }
             },
@@ -2191,8 +2191,8 @@
                         "text": "En"
                     },
                     "fr": {
-                        "name": "En",
-                        "text": "En"
+                        "name": "Dans",
+                        "text": "Dans"
                     }
                 }
             },
@@ -2212,8 +2212,8 @@
                         "text": "Dias"
                     },
                     "fr": {
-                        "name": "Dias",
-                        "text": "Dias"
+                        "name": "Jours",
+                        "text": "Jours"
                     }
                 }
             },
@@ -2233,8 +2233,8 @@
                         "text": "Por Ciento"
                     },
                     "fr": {
-                        "name": "Por Ciento",
-                        "text": "Por Ciento"
+                        "name": "Pourcent",
+                        "text": "Pourcent"
                     }
                 }
             },
@@ -2254,8 +2254,8 @@
                         "text": "Veces"
                     },
                     "fr": {
-                        "name": "Veces",
-                        "text": "Veces"
+                        "name": "Temps",
+                        "text": "Temps"
                     }
                 }
             },
@@ -2275,8 +2275,8 @@
                         "text": "Horas"
                     },
                     "fr": {
-                        "name": "Horas",
-                        "text": "Horas"
+                        "name": "Heures",
+                        "text": "Heures"
                     }
                 }
             },
@@ -2296,8 +2296,8 @@
                         "text": "Meses"
                     },
                     "fr": {
-                        "name": "Meses",
-                        "text": "Meses"
+                        "name": "Mois",
+                        "text": "Mois"
                     }
                 }
             },
@@ -2317,8 +2317,8 @@
                         "text": "Años"
                     },
                     "fr": {
-                        "name": "Años",
-                        "text": "Años"
+                        "name": "Années",
+                        "text": "Années"
                     }
                 }
             },
@@ -2338,8 +2338,8 @@
                         "text": "Medio"
                     },
                     "fr": {
-                        "name": "Medio",
-                        "text": "Medio"
+                        "name": "Moitié",
+                        "text": "Moitié"
                     }
                 }
             },
@@ -2359,8 +2359,8 @@
                         "text": "Metros"
                     },
                     "fr": {
-                        "name": "Metros",
-                        "text": "Metros"
+                        "name": "Mètres",
+                        "text": "Mètres"
                     }
                 }
             },
@@ -2380,8 +2380,8 @@
                         "text": "Kilómetros"
                     },
                     "fr": {
-                        "name": "Kilómetros",
-                        "text": "Kilómetros"
+                        "name": "Kilomètres",
+                        "text": "Kilomètres"
                     }
                 }
             }
