@@ -30,6 +30,7 @@
     "instructions": "Puedes editar los mosaicos haciendo clic sobre ellos. También puedes arrastrarlos para reordenarlos. Haz clic en el botón de arriba para guardar tus cambios.",
     "tile": {
       "title": "Editar",
+      "addnewtile": "Agregar un mosaico nuevo",
       "name": "Nombre",
       "imageUrl": "URL de la imagen",
       "textToSpeak": "Texto a pronunciar",

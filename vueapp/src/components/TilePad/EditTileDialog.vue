@@ -6,7 +6,7 @@
 	>
 		<v-card>
 			<v-card-title>
-				<span class="headline"> <v-icon>{{ currentTileBeingEdited.newTile ? 'add' : 'edit' }}</v-icon>{{ currentTileBeingEdited.newTile ? "Add a new tile" : "Edit" }}</span>
+				<span class="headline"> <v-icon>{{ currentTileBeingEdited.newTile ? 'add' : 'edit' }}</v-icon>{{ currentTileBeingEdited.newTile ? $t('editMode.tile.addnewtile') : $t('editMode.tile.title') }}</span>
 			</v-card-title>
 			<v-card-text>
 				<v-container>
@@ -161,6 +161,9 @@ export default {
 		},
 		update (key, value ) {
 			if(!this.currentTileBeingEdited.newTile){
+				
+				console.log('key',key);
+				console.log('value',value);
 				this.saveEditsToTileBeingEdited({
 					'key': key,
 					'value': value

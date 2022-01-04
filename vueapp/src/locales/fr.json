@@ -31,6 +31,7 @@
     "tile": {
       "navigation": "Navigation",
       "title": "Editer",
+      "addnewtile": "Ajouter une nouvelle tuile",
       "name": "Nom",
       "imageUrl": "URL de l'Image",
       "textToSpeak": "Texte à dire",
