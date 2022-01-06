@@ -19,7 +19,7 @@
 				<v-img
 					max-height="32"
 					max-width="32"
-					aspect-ratio="1"					
+					aspect-ratio="1"
 					src="https://img.icons8.com/officexs/64/000000/plus-math.png"
 				/>
 			</v-row>
@@ -109,7 +109,7 @@ export default {
 		newTile:{
 			type: Boolean,
 			default: false
-		}	
+		}
 	},
 	computed: {
 		...mapState('settings', ['sentenceMode']),
@@ -119,7 +119,7 @@ export default {
 			displayTapCount: 'settings/displayTapCount',
 			tileTapsCount: 'tilePad/tileTapsCount',
 		}),
-		
+
 		/* Make card color, if hex value return that. */
 		//Might delete this feature and replace with just listed accents for simplicity.
 		cardColor: function () {
@@ -162,7 +162,7 @@ export default {
 	},
 	methods: {
 		...mapActions('tilePad', [
-			'toggleEditDialogVisibility', 
+			'toggleEditDialogVisibility',
 			'setCurrentTileBeingEdited',
 			'createNewTile',
 			'logTileTap']),

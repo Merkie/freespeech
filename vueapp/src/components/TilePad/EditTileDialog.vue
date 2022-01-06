@@ -16,18 +16,21 @@
 						v-model="valid"
 					>
 						<v-row >
-
 							<v-col cols="12">
+
 								<v-text-field
 									:value="currentTileBeingEdited.name"
 									:label="$t('editMode.tile.name')"
 									@input="update('name', $event)"
 									:rules="[rules.required]"
 								/>
+
 								<v-text-field
 									:value="currentTileBeingEdited.image"
 									:label="$t('editMode.tile.imageUrl')"
 									@input="update('image', $event)"
+									append-icon="emoji_emotions"
+									@click:append="showEmojiPicker = !showEmojiPicker"
 								/>
 								<v-img
 									max-height="32"
@@ -35,6 +38,21 @@
 									aspect-ratio="1"
 									:src="currentTileBeingEdited.image"
 								/>
+								<v-dialog
+									v-model="showEmojiPicker"
+									scrollable
+									max-width="300px">
+									<VEmojiPicker
+
+										@select="selectEmoji"
+										:customEmojis="customEmojis"
+										:customCategories="customCategories"
+										:initialCategory="initialCustomCategory"
+										:emojiSize="64"
+										:showCategories="false"/>
+								</v-dialog>
+
+
 								<v-text-field
 									class="pt-5"
 									:value="currentTileBeingEdited.text"
@@ -93,8 +111,15 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { VEmojiPicker } from 'v-emoji-picker';
+import emojiIcons from '../../staticData/emojiIcons.json';
+import emojiCategories from '../../staticData/emojiIconsCategories.json';
+
 
 export default {
+	components: {
+		VEmojiPicker
+	},
 	...mapGetters('tilePad', [
 		'currentTileBeingEdited',
 	]),
@@ -108,7 +133,10 @@ export default {
 			newTileObject: {},
 			rules: {
 				required: value => !!value || 'This field is required.'
-			}
+			},
+			showEmojiPicker: false,
+			customEmojis: emojiIcons,
+			customCategories:emojiCategories
 		};
 	},
 	computed: {
@@ -122,6 +150,12 @@ export default {
 		},
 		navigations: function (){
 			return  Object.keys(this.customTilePadData);
+		},
+		initialCustomCategory: function (){
+			return this.customCategories[0].name;
+		},
+		svgIcon:function (){
+			return this.currentTileBeingEdited.image.toLowerCase().startWith('<svg');
 		}
 
 	},
@@ -181,6 +215,12 @@ export default {
 			}else{
 				this.newTileObject[key] = value;
 			}
+		},
+		selectEmoji(emoji) {
+
+			this.currentTileBeingEdited.image = `/icons/${emoji.category}/${emoji.filename}`;
+			console.log(emoji);
+			this.showEmojiPicker = !this.showEmojiPicker;
 		}
 	},
 };
