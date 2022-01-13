@@ -8,6 +8,7 @@ const state = {
 	voices: [],
 	voiceOptions: [], 
 	displayTapCount: false,
+	extraMode: false
 };
 
 const mutations = {
@@ -37,7 +38,10 @@ const mutations = {
 	},
 	SET_DISPLAY_TAP_COUNT: (state, value) => {
 		state.displayTapCount = value;
-	}
+	},
+	TOGGLE_EXTRA_MODE(state, value) {
+		state.extraMode = value;
+	},
 };
 
 const actions = {
@@ -76,6 +80,9 @@ const actions = {
 	},
 	setDisplayTapCount: ({ commit }, value) => {
 		commit('SET_DISPLAY_TAP_COUNT', value);
+	},
+	toggleExtraMode: ({ commit }, value) => {
+		commit('TOGGLE_EXTRA_MODE', value);
 	}
 };
 
@@ -88,6 +95,7 @@ const getters = {
 	voices: (state) => state.voices,
 	voiceOptions: (state) => state.voiceOptions,
 	displayTapCount: (state) => state.displayTapCount,
+	extraMode: (state) => state.extraMode
 };
 
 export default {

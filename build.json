@@ -1011,6 +1011,44 @@
             }
         ]
     },
+    "options": {
+        "tileData": [{
+                "name": "Delete",
+                "id": 0,
+                "icon": "icons8-Color-Trash-Can"
+            },
+            {
+                "name": "Add",
+                "id": 1,
+                "icon": "icons8-Color-Add"
+            },
+            {
+                "name": "Pages",
+                "id": 2,
+                "icon": "icons8-Color-Check-All"
+            },
+            {
+                "name": "Import",
+                "id": 3,
+                "icon": "icons8-Color-Import"
+            },
+            {
+                "name": "Export",
+                "id": 4,
+                "icon": "icons8-Color-Export"
+            },
+            {
+                "name": "Save",
+                "id": 5,
+                "icon": "icons8-Color-Add"
+            },
+            {
+                "name": "Quit",
+                "id": 6,
+                "icon": "icons8-Color-Add"
+            }
+        ]
+    },
     "keyboard": {
         "tileData": [{
                 "name": "A",

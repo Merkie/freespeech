@@ -8,7 +8,6 @@ const state = {
 	currentTileBeingEdited: {},
 	tileTapsCount: [],
 	systemBackupTilePads:[]
-
 };
 
 const mutations = {

@@ -15,12 +15,22 @@
 		"buttonReset": "Alle Einstellungen und Kacheln zurücksetzen",
 		"buttonExport": "Einstellungen & Kacheln exportieren",
 		"buttonImport": "Einstellungen & Kacheln importieren",
-		"titleSetPasscode": "Passcode einstellen"
+		"titleSetPasscode": "Passcode einstellen",
+		"extraModeSettings": "unsicherer Editor"
 	},
 	"sentence": {
 		"title": "Satz",
 		"instructions": "Fügen Sie diesem Satz Kacheln hinzu, indem Sie unten darauf tippen.",
 		"buttonSpeak": "Sprechen",
 		"buttonClear": "Löschen"
+	},
+	"options": {
+		"Delete": "Löschen",
+		"Add": "Hinzufügen",
+		"Pages": "Seiten",
+		"Import": "Importieren",
+		"Export": "Exportieren",
+		"Save": "Speichern Sie",
+		"Quit": "Beenden Sie"
 	}
 }

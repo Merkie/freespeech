@@ -4,8 +4,54 @@
 			outlined
 			class="px-4 sentenceCard"
 		>
+			<v-row dense v-if="extraMode">
+				<template v-for="(tile, tileIndex) in  tileData.options.tileData">
+					<v-col
+						:key="tileIndex + 1"
+						:cols="
+							$vuetify.breakpoint.xsOnly
+								? 3
+								: $vuetify.breakpoint.smAndDown
+									? 2
+									: 1
+						"
+						class="d-flex child-flex"
+						style="padding: 10px"
+					>
+						<v-btn
+							raised
+							tile
+							class="mx-auto"
+							color="white"
+							style="height: unset;"
+						>
+							<v-container
+								justify="center"
+							>
+								<v-row
+									align="center"
+									justify="center"
+								>	
+									<img :src="require('../../../public/img/icons/' + tile.icon + '.svg')" :alt="tile.name" />
+								</v-row>
+								<v-row>
+									<v-card-text
+										class
+										align="center"
+										justify="center"
+									>	
+										{{ $t('options.' + tile.name) }}
+									</v-card-text>
+								</v-row>
+							</v-container>
+						</v-btn>		
+					</v-col>
+				</template>
+			</v-row>
 			<v-card-title>
+				
 				{{ $t('sentence.title') }}
+				
 				<v-spacer />
 				<v-btn
 					raised
@@ -15,6 +61,7 @@
 					style="height: unset"
 					@click="$emit('speakSentence')"
 				>
+				
 					<v-container
 						justify="center"
 					>
@@ -111,12 +158,14 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 import Tile from '@/components/TilePad/Tile';
+import TileData from '../../../../build.json';
 
 export default {
 	name: 'Sentence',
 	components: {
-		Tile
+		Tile,
 	},
 	props: {
 		tilePadToDisplay: {
@@ -125,7 +174,19 @@ export default {
 				return [];
 			}
 		}
-	}
+	},
+	computed: {
+		...mapState('settings', ['sentenceMode', 'extraMode']),
+		...mapGetters({
+			locale: 'settings/locale'
+		}),
+	},
+	
+	data () {
+		return {
+			tileData: TileData,
+		};
+	},
 };
 </script>
 <style scoped>

@@ -16,12 +16,12 @@
 			style="{text-align: center}"
 		>
 			<v-row dense>
-				<!--<Tile
+				<Tile
 					v-if="editMode"
 					id="newTile"
 					:new-tile="true"			
 					:tile-page="currentTilePadPage"
-				/>-->
+				/>
 
 			</v-row>
 			<v-row dense>
@@ -31,7 +31,7 @@
 					:options="{disabled: !editMode, handle: '#drag-handle'}"
 					class="tilePadContainer"
 				>
-					<template v-for="(tile, tileIndex) in  tilePadToDisplay.tileData">
+					<template  v-for="(tile, tileIndex) in !extraMode ? tilePadToDisplay.tileData.slice(tilePadToDisplay.tileData.length-60) : tilePadToDisplay.tileData">
 						<v-col
 							:key="tileIndex + 1"
 							:cols="
@@ -53,6 +53,7 @@
 						</v-col>
 					</template>
 				</draggable>
+				
 			</v-row>
 		</v-container>
 	</div>
@@ -85,7 +86,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapState('settings', ['sentenceMode']),
+		...mapState('settings', ['sentenceMode', 'extraMode']),
 		...mapState('tilePad', ['editMode']),
 		...mapGetters({
 			selectedVoiceIndex: 'settings/selectedVoiceIndex',

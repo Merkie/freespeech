@@ -36,6 +36,11 @@
 			:label="$t('settings.displayTapCounter')"
 		/>
 
+		<v-switch
+			v-model="extraModeActive"
+			:label="$t('settings.extraModeSettings')"
+		/>
+
 		<v-dialog
 			v-model="passcodeEntry"
 			width="400"
@@ -131,6 +136,7 @@ export default {
 			voiceOptions: 'settings/voiceOptions',
 			voices: 'settings/voices',
 			displayTapCount: 'settings/displayTapCount',
+			extraMode: 'settings/extraMode'
 		}),
 		selectedVoiceIndex: {
 			get() {
@@ -198,6 +204,14 @@ export default {
 			set(value){
 				this.setDisplayTapCount(value);
 			}
+		},
+		extraModeActive: {
+			get(){
+				return this.extraMode;
+			},
+			set(value){
+				this.toggleExtraMode(value);
+			}
 		}
 	},
 	methods: {
@@ -210,6 +224,7 @@ export default {
 			toggleCustomTilePad: 'settings/toggleCustomTilePad',
 			toggleSentenceMode: 'settings/toggleSentenceMode',
 			setDisplayTapCount: 'settings/setDisplayTapCount',
+			toggleExtraMode: 'settings/toggleExtraMode'
 		}),
 		exportSettings() {
 			const json = JSON.stringify({

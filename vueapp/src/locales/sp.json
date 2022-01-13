@@ -16,7 +16,8 @@
     "buttonReset": "Restablecer todas las Configuraciones & Mosaicos",
     "buttonExport": "Exportar Configuraciones & Mosaicos",
     "buttonImport": "Importar Configuraciones & Mosaicos",
-    "displayTapCounter": "Mostrar uso de los mosaicos"
+    "displayTapCounter": "Mostrar uso de los mosaicos",
+    "extraModeSettings": "Editor no seguro"
   },
   "sentence": {
     "title": "Oración",
@@ -40,5 +41,14 @@
 	  "navigation" : "navegación"
 
 	}
+  },
+  "options": {
+    "Delete": "Eliminar",
+    "Add": "Agregar",
+    "Pages": "Paginas",
+    "Import": "Importar",
+    "Export": "Exportar",
+    "Save": "Guardar",
+    "Quit": "Cerrar"
   }
 }
