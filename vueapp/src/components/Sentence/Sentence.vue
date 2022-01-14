@@ -5,9 +5,9 @@
 			class="px-4 sentenceCard"
 		>
 			<v-row dense v-if="extraMode">
-				<template v-for="(tile, tileIndex) in  tileData.options.tileData">
+				<template v-for="(option, optionIndex) in  tileData.options.tileData">
 					<v-col
-						:key="tileIndex + 1"
+						:key="optionIndex + 1"
 						:cols="
 							$vuetify.breakpoint.xsOnly
 								? 3
@@ -32,7 +32,7 @@
 									align="center"
 									justify="center"
 								>	
-									<img :src="require('../../../public/img/icons/' + tile.icon + '.svg')" :alt="tile.name" />
+									<img :src="require('../../../public/img/icons/' + option.icon + '.svg')" :alt="option.name" />
 								</v-row>
 								<v-row>
 									<v-card-text
@@ -40,7 +40,7 @@
 										align="center"
 										justify="center"
 									>	
-										{{ $t('options.' + tile.name) }}
+										{{ $t('options.' + option.name) }}
 									</v-card-text>
 								</v-row>
 							</v-container>

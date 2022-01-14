@@ -4,9 +4,12 @@ import Sentence from '@/components/Sentence/Sentence';
 import Tile from '@/components/TilePad/Tile.vue';
 import i18n from '@/i18n';
 import Vuetify from 'vuetify/lib';
+import Vuex from 'vuex';
+import settings from '@/store/modules/settings';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
+localVue.use(Vuex);
 const tilePadToDisplay = [
 	{
 		'name': 'No',
@@ -74,6 +77,11 @@ let vuetify = new Vuetify({
 function getWrapper () {
 	return shallowMount(Sentence, {
 		localVue,
+		store: new Vuex.Store({
+			modules: {
+				settings
+			},
+		}),
 		propsData:{
 			tilePadToDisplay
 		},

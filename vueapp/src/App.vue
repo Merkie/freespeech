@@ -107,7 +107,6 @@ export default {
 		...mapGetters({
 			customTilePad: 'settings/customTilePad',
 			editMode: 'tilePad/editMode',
-			extraMode: 'tilePad/extraMode',
 			locale: 'settings/locale',
 			locked: 'settings/locked',
 			passcode: 'settings/passcode',
@@ -148,7 +147,6 @@ export default {
 			setVoices: 'settings/setVoices',
 			setVoiceOptions: 'settings/setVoiceOptions',
 			toggleEditMode: 'tilePad/toggleEditMode',
-			toggleExtraMode: 'tilePad/toggleExtraMode',
 			systemSaveBackupOfTilePad: 'tilePad/systemSaveBackupOfTilePad'
 		}),
 		handlePasscodeInput (input) {
@@ -176,9 +174,6 @@ export default {
 		},
 		disableEditMode() {
 			this.$store.dispatch('tilePad/setEditMode', false);
-		},
-		disableExtraMode() {
-			this.$store.dispatch('tilePad/setExtraMode', false);
 		},
 		toggleLocked(){
 			if (this.locked) {
