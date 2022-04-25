@@ -8,6 +8,7 @@ const state = {
 	voices: [],
 	voiceOptions: [], 
 	displayTapCount: false,
+	optionAllLowercase: false,
 };
 
 const mutations = {
@@ -37,6 +38,9 @@ const mutations = {
 	},
 	SET_DISPLAY_TAP_COUNT: (state, value) => {
 		state.displayTapCount = value;
+	},
+	SET_ALL_LOWERCASE: (state, value) =>{
+		state.optionAllLowercase = value;
 	}
 };
 
@@ -76,6 +80,9 @@ const actions = {
 	},
 	setDisplayTapCount: ({ commit }, value) => {
 		commit('SET_DISPLAY_TAP_COUNT', value);
+	},
+	setAllLowercase: ({ commit }, value) => {
+		commit('SET_ALL_LOWERCASE', value);
 	}
 };
 
@@ -88,6 +95,7 @@ const getters = {
 	voices: (state) => state.voices,
 	voiceOptions: (state) => state.voiceOptions,
 	displayTapCount: (state) => state.displayTapCount,
+	optionAllLowercase: (state)=>state.optionAllLowercase,
 };
 
 export default {

@@ -36,6 +36,11 @@
 			:label="$t('settings.displayTapCounter')"
 		/>
 
+		<v-switch
+			v-model="allLowercase"
+			:label="$t('settings.optionAllLowercase')"
+		/>
+
 		<v-dialog
 			v-model="passcodeEntry"
 			width="400"
@@ -131,6 +136,7 @@ export default {
 			voiceOptions: 'settings/voiceOptions',
 			voices: 'settings/voices',
 			displayTapCount: 'settings/displayTapCount',
+			optionAllLowercase: 'settings/optionAllLowercase',
 		}),
 		selectedVoiceIndex: {
 			get() {
@@ -198,6 +204,14 @@ export default {
 			set(value){
 				this.setDisplayTapCount(value);
 			}
+		},
+		allLowercase: {
+			get(){
+				return this.optionAllLowercase;
+			},
+			set(value){
+				this.setAllLowercase(value);
+			}
 		}
 	},
 	methods: {
@@ -210,6 +224,7 @@ export default {
 			toggleCustomTilePad: 'settings/toggleCustomTilePad',
 			toggleSentenceMode: 'settings/toggleSentenceMode',
 			setDisplayTapCount: 'settings/setDisplayTapCount',
+			setAllLowercase: 'settings/setAllLowercase',
 		}),
 		exportSettings() {
 			const json = JSON.stringify({
