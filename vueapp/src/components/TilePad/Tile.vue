@@ -60,7 +60,7 @@
 					align="center"
 					justify="center"
 				>
-					<h3>{{ localeTileData.name }}</h3>
+					<h3>{{ allLowercase ? localeTileData.name.toLowerCase() :  localeTileData.name.toUpperCase() }}</h3>
 					<img
 						v-if="editMode"
 						id="drag-handle"
@@ -117,6 +117,7 @@ export default {
 			editMode: 'tilePad/editMode',
 			locale: 'settings/locale',
 			displayTapCount: 'settings/displayTapCount',
+			allLowercase: 'settings/optionAllLowercase',
 			tileTapsCount: 'tilePad/tileTapsCount',
 		}),
 		
@@ -208,5 +209,8 @@ export default {
   position: absolute;
   bottom: 3px;
   right: 3px;
+}
+.v-card__text{
+	text-transform: none;
 }
 </style>

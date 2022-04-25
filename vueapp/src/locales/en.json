@@ -16,7 +16,8 @@
     "buttonReset": "Reset All Settings & Tiles",
     "buttonExport": "Export Settings & Tiles",
     "buttonImport": "Import Settings & Tiles",
-    "displayTapCounter": "Display Tap Counter"
+    "displayTapCounter": "Display Tap Counter",
+    "optionAllLowercase": "All Lowercase Letters"
   },
   "sentence": {
     "title": "Sentence",
