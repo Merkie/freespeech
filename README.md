@@ -33,6 +33,9 @@ None of this would be possible without you all. Thank you!
 
 Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
+## Sponsors
+<a href="https://opensource.optum.com/"><img src="https://i.postimg.cc/NGRqXYJs/optum.png" width=200px></a>
+
 ## Special Thanks
 <a href="https://icons8.com/"><img src="https://logos-download.com/wp-content/uploads/2020/06/Icons8_Logo_full.png" width=200px></a>
 Thanks to Icons8 for providing all icons and graphics for the Free Speech AAC project!
