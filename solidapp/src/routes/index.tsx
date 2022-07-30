@@ -1,18 +1,15 @@
-import Counter from "~/components/Counter";
-import "./index.css";
+import { createSignal } from "solid-js";
+
+import Header from "~/components/Header";
+import "./styles/index.css";
+
+export const [authenticatedUser, setAuthenticatedUser] = createSignal(null);
 
 export default function Home() {
+
   return (
     <main>
-      <h1>Hello world!</h1>
-      <Counter />
-      <p>
-        Visit{" "}
-        <a href="https://solidjs.com" target="_blank">
-          solidjs.com
-        </a>{" "}
-        to learn how to build Solid apps.
-      </p>
+      <Header />
     </main>
   );
 }
