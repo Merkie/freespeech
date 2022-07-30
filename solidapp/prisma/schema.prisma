@@ -13,13 +13,20 @@ datasource db {
 model User {
   id          String   @id @default(cuid())
   name        String
-  email       String
+  email       String   @unique
   auth        String
   authType    String   @default("password")
   accountType String   @default("personal")
   LayoutIds   String[] @default([])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
+}
+
+model Session {
+  id          String   @id @default(cuid())
+  userId      String
+  token       String   @default(cuid())
+  createdAt   DateTime @default(now())
 }
 
 model Tile {
