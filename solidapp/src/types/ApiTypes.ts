@@ -2,6 +2,7 @@ export interface IResponse {
   // status?: string;
   token?: string;
   error?: string;
+  data?: any;
 }
 
 export interface ICreateUserRequestBody {
@@ -14,4 +15,8 @@ export interface ICreateUserRequestBody {
 export interface IValidateUserRequestBody {
   email: string;
   password: string;
+}
+
+export interface IMeRequestBody {
+  token: string;
 }

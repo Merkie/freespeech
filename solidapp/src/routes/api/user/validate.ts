@@ -2,7 +2,6 @@ import { json } from "solid-start/server";
 import { PrismaClient } from "@prisma/client";
 import crypto from "crypto";
 
-
 // Types
 import { IValidateUserRequestBody } from "~/types/ApiTypes";
 

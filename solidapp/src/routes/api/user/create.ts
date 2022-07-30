@@ -2,7 +2,6 @@ import { json } from "solid-start/server";
 import { PrismaClient } from "@prisma/client";
 import crypto from "crypto";
 
-
 // Types
 import { ICreateUserRequestBody } from "~/types/ApiTypes";
 
@@ -37,8 +36,7 @@ export const post = async({ request }: { request: Request }) => {
             userId: user.id
             }
         });
-
-        // Return a new session token
+        
         return json({token: session.token});
     } catch(e) {
         // Duplicate email error

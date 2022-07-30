@@ -1,3 +1,4 @@
+import { setStore } from "~/root";
 import { IResponse } from "~/types/ApiTypes";
 
 export default function Signup() {
@@ -27,8 +28,9 @@ export default function Signup() {
       return;
     }
 
-    // Upon success
-    console.log(data);
+    // Set session and redirect to the main page
+    setStore('session', data.token);
+    window.location.href = "/";
   }
 
   return (

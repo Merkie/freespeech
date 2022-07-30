@@ -1,15 +1,18 @@
-import { createSignal } from "solid-js";
+import { createSignal, Show } from "solid-js";
 
 import Header from "~/components/Header";
 import "./styles/index.css";
 
-export const [authenticatedUser, setAuthenticatedUser] = createSignal(null);
+// import { authenticatedUser } from "~/root";
 
-export default function Home() {
+export default async function Home() {
 
   return (
     <main>
       <Header />
+      {/* <Show when={authenticatedUser}>
+        <p>{authenticatedUser.name}</p>
+      </Show> */}
     </main>
   );
 }
