@@ -16,6 +16,7 @@ model User {
   email       String   @unique
   auth        String
   authType    String   @default("password")
+  authSalt    String?
   accountType String   @default("personal")
   LayoutIds   String[] @default([])
   createdAt   DateTime @default(now())
@@ -23,10 +24,10 @@ model User {
 }
 
 model Session {
-  id          String   @id @default(cuid())
-  userId      String
-  token       String   @default(cuid())
-  createdAt   DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @default(cuid())
+  createdAt DateTime @default(now())
 }
 
 model Tile {

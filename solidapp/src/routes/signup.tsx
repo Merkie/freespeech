@@ -1,6 +1,6 @@
 import { IResponse } from "~/types/ApiTypes";
 
-export default function Login() {
+export default function Signup() {
   let name: HTMLInputElement;
   let email: HTMLInputElement;
   let password: HTMLInputElement;
