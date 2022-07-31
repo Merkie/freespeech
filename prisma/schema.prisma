@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  auth        String
+  authType    String   @default("password")
+  authSalt    String?
+  accountType String   @default("personal")
+  LayoutIds   String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @default(cuid())
+  createdAt DateTime @default(now())
+}
+
+model Tile {
+  id               String   @id @default(cuid())
+  text             String
+  authorId         String
+  displayText      String? // If display text is different from text
+  navigationPageId String? // If this tile is a navigation page
+  imageSrc         String? // If this tile has an image
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now())
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  title     String
+  authorId  String
+  slug      String
+  tileIds   String[] @default([])
+  access    String   @default("private")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Layout {
+  id        String   @id @default(cuid())
+  title     String
+  authorId  String
+  PageIds   String[] @default([])
+  access    String   @default("private")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
