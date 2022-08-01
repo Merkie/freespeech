@@ -3,6 +3,7 @@ __pycache__
 .DS_Store
 dist
 node_modules
+.env
 
 # local env files
 .env.local
