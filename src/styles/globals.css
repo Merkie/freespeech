@@ -1,3 +1,7 @@
+:root {
+  --brand-color: #095DDB;
+}
+
 * {
   margin: 0;
 }
