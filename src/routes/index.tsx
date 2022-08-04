@@ -78,11 +78,7 @@ export default function Home() {
               <span>a tap away.</span>
             </p>
             <p class="hero-desc">
-              With FreeSpeech, AAC is accessible to just about anyone who needs
-              it. Our mission is to offer a web-based AAC application with an
-              intuitevly rhobust set of features, it's simple as that. When you
-              start adapting your vocabulary into FreeSpeech, we promise you
-              just might enjoy using AAC.
+              Forget the cost- we've got you covered.
             </p>
             <img class="blob-img" src="/blob.svg" />
             <img
