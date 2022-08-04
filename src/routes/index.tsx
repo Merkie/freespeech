@@ -2,7 +2,7 @@
 import { createEffect, createResource, createSignal, Show } from "solid-js";
 import { createLocalStorage } from "@solid-primitives/storage";
 import { Icon } from "solid-heroicons";
-import { chatAlt_2, arrowRight, menu } from "solid-heroicons/solid";
+import { chatAlt_2, arrowRight, menu, externalLink } from "solid-heroicons/solid";
 
 // CSS
 import "~/styles/globals.css";
@@ -44,13 +44,16 @@ export default function Home() {
           <Icon path={chatAlt_2} /> FreeSpeech <span>AAC</span>
         </p>
         <div class="nav-item">
-          <p>item 1</p>
+          <Link href="/docs">Documentation</Link>
         </div>
         <div class="nav-item">
-          <p>item 2</p>
+          <p>Enterprise</p>
         </div>
-        <div class="mobile-spacer">
-
+        <div class="spacer"></div>
+        <div class="nav-item">
+          <p class="nav-btn">
+            App <Icon width="1.5rem" path={arrowRight} />
+          </p>
         </div>
         <div class="mobile-menu nav-item">
           <Icon style="width: 30px;" path={menu} />
@@ -62,25 +65,53 @@ export default function Home() {
         <div class="corner-piece">
           <div class="inner-piece"></div>
         </div>
-       
+
         <div class="hero-content">
           <div class="hero-new">
             <span>NEW</span> Apply for the FreeSpeech beta{" "}
             <Icon path={arrowRight} />
           </div>
           <div class="hero-text">
-            <p>AAC is just <br class="hero-text-break" /> <span>a tap away.</span></p>
-            <p class="hero-desc">With FreeSpeech, AAC is accessible to just about anyone who needs it. Our mission is to offer a web-based AAC application with an intuitevly rhobust set of features, it's simple as that. When you start adapting your vocabulary into FreeSpeech, we promise you just might enjoy using AAC.</p>
+            <p>
+              AAC is just <br class="hero-text-break" />{" "}
+              <span>a tap away.</span>
+            </p>
+            <p class="hero-desc">
+              With FreeSpeech, AAC is accessible to just about anyone who needs
+              it. Our mission is to offer a web-based AAC application with an
+              intuitevly rhobust set of features, it's simple as that. When you
+              start adapting your vocabulary into FreeSpeech, we promise you
+              just might enjoy using AAC.
+            </p>
             <img class="blob-img" src="/blob.svg" />
             <img
               class="bubbly-img"
               src="/handy-line-running-silver-speechbubble.svg"
             />
           </div>
-          {/* 
-           */}
         </div>
       </div>
+      <div class="main-content">
+        <div class="info-section">
+          <h1>We do things differently.</h1>
+          <p style="max-width:50%;">
+            Our developers are committed to not only providing a free
+            alternative and augmentative communication application, but a
+            cutting-edge one as well. Now, "cutting-edge" doesn't always imply a
+            greater difficulty to use or a steeper learning curve, we've
+            actually found that our more advanced software provides an easier
+            user experience for our end users. <a href="">Learn more <Icon path={externalLink} /></a></p>
+            <h1 style="text-align: right;">We do things differently.</h1>
+            <p style="text-align: right; max-width: 50%; float: right;">
+            Our developers are committed to not only providing a free
+            alternative and augmentative communication application, but a
+            cutting-edge one as well. Now, "cutting-edge" doesn't always imply a
+            greater difficulty to use or a steeper learning curve, we've
+            actually found that our more advanced software provides an easier
+            user experience for our end users. <a href="">Learn more <Icon path={externalLink} /></a></p>
+          </div>
+      </div>
+
       {/* <Show when={!userObject()}>
         <Link href="/login">login</Link>
         <Link href="/signup">signup</Link>

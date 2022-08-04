@@ -1,5 +1,6 @@
 :root {
   --brand-color: #095DDB;
+  --background: #F2F4F8;
 }
 
 * {
@@ -8,4 +9,6 @@
 
 body {
   font-family: 'Helvetica Neue', sans-serif;
+  background-color: var(--background);
+  overflow-x: hidden;
 }
