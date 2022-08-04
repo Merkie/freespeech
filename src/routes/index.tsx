@@ -60,6 +60,7 @@ export default function Home() {
         </div>
       </div>
       <div class="hero-container">
+        <img class="hero-bg-image" src="/index-background.png" alt="" />
         <div class="left-hero-bg"></div>
         <div class="right-hero-bg"></div>
         <div class="corner-piece">
