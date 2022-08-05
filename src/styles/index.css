@@ -245,6 +245,10 @@
   filter: opacity(.1);
 }
 
+.main-content p {
+  max-width: 50%;
+}
+
 @media only screen and (max-width: 900px) {
   .hero-text {
     width: 100%;
@@ -265,6 +269,15 @@
 
   .blob-img {
     display: none;
+  }
+
+  .main-content p {
+    max-width: 100%;
+    margin-bottom: 50px;
+  }
+
+  .main-content * {
+    text-align: center !important;
   }
 }
 
@@ -300,6 +313,7 @@
 }
 
 @media only screen and (max-width: 500px) {
+
   .hero-text {
     width: fit-content;
     margin-left: auto;
@@ -316,6 +330,10 @@
 
   .hero-new svg {
     display: none;
+  }
+
+  .hero-new:hover {
+    transform: translateX(0px);
   }
 }
 
@@ -334,10 +352,6 @@
 
   .hero-new {
     font-size: 13px;
-  }
-
-  .hero-new:hover {
-    transform: translateX(0px);
   }
 
   .hero-new span {

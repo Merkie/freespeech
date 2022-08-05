@@ -91,7 +91,7 @@ export default function Home() {
       <div class="main-content">
         <div class="info-section">
           <h1>We do things differently.</h1>
-          <p style="max-width:50%;">
+          <p>
             Our developers are committed to not only providing a free
             alternative and augmentative communication application, but a
             cutting-edge one as well. Now, "cutting-edge" doesn't always imply a
@@ -99,7 +99,7 @@ export default function Home() {
             actually found that our more advanced software provides an easier
             user experience for our end users. <a href="">Learn more <Icon path={externalLink} /></a></p>
             <h1 style="text-align: right;">We do things differently.</h1>
-            <p style="text-align: right; max-width: 50%; float: right;">
+            <p style="text-align: right; float: right;">
             Our developers are committed to not only providing a free
             alternative and augmentative communication application, but a
             cutting-edge one as well. Now, "cutting-edge" doesn't always imply a
