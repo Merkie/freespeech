@@ -42,6 +42,7 @@
   color: rgb(235, 235, 235);
   font-size: 16px !important;
   padding-left: 20px !important;
+  cursor: pointer;
 }
 
 .inner-select {
@@ -54,4 +55,14 @@
 
 .inner-open {
   display: block;
+}
+
+.content {
+  position: absolute;
+  top: 50px;
+  left: 240px;
+  width: calc(100vw - 200px);
+  height: calc(100vh - 50px - 40px);
+  overflow-y: auto;
+  padding: 20px;
 }

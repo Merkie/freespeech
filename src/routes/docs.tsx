@@ -1,7 +1,8 @@
 import { Icon } from "solid-heroicons";
 import { arrowSmRight } from "solid-heroicons/outline";
-import { createSignal, For, Show } from "solid-js";
+import { createEffect, createSignal, For, onMount, Show } from "solid-js";
 import SiteHeader from "~/components/SiteHeader";
+import {micromark} from 'micromark';
 
 import "~/styles/docs.css";
 
@@ -9,13 +10,26 @@ export default function Documentation() {
   const [currentPage, setCurrentPage] = createSignal(0);
 
   const docsContent = [
-    { name: "Introduction" },
+    { name: "Introduction", content: "introduction" },
     {
       name: "Getting Started",
       inner: [{ name: "Installation" }, { name: "Usage" }],
     },
     { name: "Interface" },
   ];
+
+  let content;
+
+  const renderContent = async () => {
+    const response = fetch(`/docs/${docsContent[currentPage()].content}.md`);
+    response.then(res => res.text()).then(text => { content.innerHTML = micromark(text); });
+  };
+
+  createEffect(() => {
+    console.log('Rendering docs for index: '+currentPage());
+    renderContent();
+  });
+
 
   return (
     <>
@@ -74,6 +88,7 @@ export default function Documentation() {
           }}
         </For>
       </div>
+      <div ref={content} class="content"></div>
     </>
   );
 }
