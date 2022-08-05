@@ -5,11 +5,17 @@ import SiteHeader from "~/components/SiteHeader";
 import {micromark} from 'micromark';
 
 import "~/styles/docs.css";
+import { IDocs } from "~/types/ApiTypes";
 
 export default function Documentation() {
-  const [currentPage, setCurrentPage] = createSignal(0);
+  // Ref for the content div, thats where markdown gets compiled to
+  let content: HTMLDivElement;
+  
+  // Float for the current page the user is viewing.
+  const [currentPage, setCurrentPage] = createSignal(0.0);
 
-  const docsContent = [
+  // Content of the docs
+  const docsContent: IDocs[] = [
     { name: "Introduction", content: "introduction" },
     {
       name: "Getting Started",
@@ -18,18 +24,19 @@ export default function Documentation() {
     { name: "Interface" },
   ];
 
-  let content;
-
+  // Function for fetching the docs, maybe make this in API
   const renderContent = async () => {
     const response = fetch(`/docs/${docsContent[currentPage()].content}.md`);
     response.then(res => res.text()).then(text => { content.innerHTML = micromark(text); });
   };
 
+  // This is where the page gets rerendered if the current page changes
+  // I think you have to use a signal here to make sure the page is rerendered
+  // so thats why theres a log.
   createEffect(() => {
     console.log('Rendering docs for index: '+currentPage());
     renderContent();
   });
-
 
   return (
     <>
@@ -51,11 +58,8 @@ export default function Documentation() {
                   </Show>
                 </p>
                 <div
-                  class={`inner-pages ${
-                    Math.floor(currentPage()) == i()
-                      ? "inner-open"
-                      : "inner-closed"
-                  }`}
+                  class="inner-pages"
+                  style={{"display": currentPage() == i() ? "block" : "none"}}
                 >
                   <For each={page.inner}>
                     {(innerPage, j) => {
@@ -63,6 +67,10 @@ export default function Documentation() {
                         <p
                           onClick={() =>
                             setCurrentPage(
+                              // TODO: Maybe find something less complicated than this sketch vv
+                              // Basically the issue is that I need a way to get the index of the page
+                              // and subpage. I use this float system but it requires 3 casts,
+                              // float int and string
                               parseFloat(
                                 `${Math.floor(currentPage())}.${j() + 1}`
                               )

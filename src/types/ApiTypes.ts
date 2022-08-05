@@ -32,3 +32,8 @@ export interface IMeUserResponse {
 export interface ILogoutUserRequest {
   userId: string;
 }
+export interface IDocs {
+  name: string;
+  content?: string; // TODO: remove this question mark when we have docs
+  inner?: IDocs[];
+}
