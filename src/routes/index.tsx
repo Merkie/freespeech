@@ -55,7 +55,7 @@ export default function Home() {
           </div>
           <div class="hero-text">
             <p>
-              AAC is just <br class="hero-text-break" />{" "}
+              Communication is just <br class="hero-text-break" />{" "}
               <span>a tap away.</span>
             </p>
             <p class="hero-desc">

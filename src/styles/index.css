@@ -229,6 +229,7 @@
     margin-right: auto;
     /* transform: translateY(50px); */
     text-align: center;
+    transform: scale(0.8) translateY(-50px);
   }
 
   .hero-new {
