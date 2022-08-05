@@ -12,3 +12,7 @@ body {
   background-color: var(--background);
   overflow-x: hidden;
 }
+
+.spacer {
+  flex-grow: 1;
+}

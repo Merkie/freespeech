@@ -9,7 +9,7 @@ import "~/styles/globals.css";
 import "~/styles/index.css";
 
 // Components
-import Header from "~/components/Header";
+import SiteHeader from "~/components/SiteHeader";
 
 // API
 import { me } from "~/lib/user/me";
@@ -39,26 +39,7 @@ export default function Home() {
 
   return (
     <main>
-      <div class="app-header">
-        <p class="brand">
-          <Icon path={chatAlt_2} /> FreeSpeech <span>AAC</span>
-        </p>
-        <div class="nav-item">
-          <Link href="/docs">Documentation</Link>
-        </div>
-        <div class="nav-item">
-          <p>Enterprise</p>
-        </div>
-        <div class="spacer"></div>
-        <div class="nav-item">
-          <p class="nav-btn">
-            App <Icon width="1.5rem" path={arrowRight} />
-          </p>
-        </div>
-        <div class="mobile-menu nav-item">
-          <Icon style="width: 30px;" path={menu} />
-        </div>
-      </div>
+      <SiteHeader />
       <div class="hero-container">
         <img class="hero-bg-image" src="/index-background.png" alt="" />
         <div class="left-hero-bg"></div>
