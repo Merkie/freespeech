@@ -1,14 +1,15 @@
-import { IValidateUserRequest, IValidateUserResponse } from "~/types/ApiTypes";
+import { ILoginUserRequest, ILoginUserResponse } from "~/types/ApiTypes";
 
-export async function validate(request: IValidateUserRequest): Promise<IValidateUserResponse> { 
+// API function
+export async function login(request: ILoginUserRequest): Promise<ILoginUserResponse> { 
   // Fetch the server response
-  const response = await fetch("/api/user/validate", {
+  const response = await fetch("/api/user/login", {
     method: "POST",
     body: JSON.stringify(request),
   });
 
   // Consume the JSON object
-  const data: IValidateUserResponse = (await response.json() as IValidateUserResponse);
+  const data: ILoginUserResponse = (await response.json() as ILoginUserResponse);
 
   return data;
 }

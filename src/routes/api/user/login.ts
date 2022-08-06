@@ -2,13 +2,14 @@ import { json } from "solid-start/server";
 
 import { PrismaClient } from "@prisma/client";
 import crypto from "crypto";
-import { IValidateUserRequest } from "~/types/ApiTypes";
-
-// Database client
+import { ILoginUserRequest } from "~/types/ApiTypes";
+ 
+// Database Client
 const prisma = new PrismaClient();
 
+// SSR
 export const post = async ({ request }: { request: Request }) => {
-  const body: IValidateUserRequest = await request.json(); // JSON body of the request
+  const body: ILoginUserRequest = await request.json(); // JSON body of the request
 
   // Find the user according to the email
   const user = await prisma.user.findFirst({
@@ -26,14 +27,13 @@ export const post = async ({ request }: { request: Request }) => {
     .toString("hex"); // Create the hash
 
   // If the hash is not correct, return an error
-  if (hash !== user.auth)
-    return json({ error: "Invalid password." });
-  
+  if (hash !== user.auth) return json({ error: "Invalid password." });
+
   // If the password is correct, return a token
   const session = await prisma.session.create({
     data: {
       userId: user.id,
-    }
+    },
   });
 
   return json({ token: session.token });

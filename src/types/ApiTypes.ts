@@ -1,13 +1,12 @@
-export interface IValidateUserRequest {
+export interface ILoginUserRequest {
   email: string;
   password: string;
 }
 
-export interface IValidateUserResponse {
+export interface ILoginUserResponse {
   error?: string;
   token?: string;
 }
-
 export interface ICreateUserRequest {
   name: string;
   email: string;

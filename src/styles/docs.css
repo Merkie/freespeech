@@ -8,7 +8,7 @@ code {
 }
 
 .left-col {
-  position: absolute;
+  position: fixed;
   top: 50px;
   left: 0;
   width: 200px;
@@ -17,6 +17,7 @@ code {
   color: white;
   border-right: 1px solid #206BDE 1px solid;;
   padding: 20px;
+  overflow-y: auto;
 }
 
 .left-col p {
@@ -64,6 +65,5 @@ code {
   left: 240px;
   width: calc(100vw - 300px);
   height: calc(100vh - 50px - 40px);
-  overflow-y: auto;
   padding: 20px;
 }

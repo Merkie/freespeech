@@ -1,9 +1,10 @@
 import { setLocalStore } from "~/root";
 import "~/styles/globals.css";
-import { IValidateUserRequest, IValidateUserResponse } from "~/types/ApiTypes";
 
-import { validate } from "~/lib/user/login";
+import { ILoginUserRequest, ILoginUserResponse } from "~/types/ApiTypes";
+
 import { me } from "~/lib/user/me";
+import { login  } from "~/lib/user/login"
 
 export default function Login() {
   
@@ -12,12 +13,12 @@ export default function Login() {
 
   async function handleLogin() {
 
-    const request: IValidateUserRequest = {
+    const request: ILoginUserRequest = {
       email: emailInputRef.value,
       password: passwordInputRef.value
     };
 
-    const response = await validate(request);
+    const response: ILoginUserResponse = await login(request);
 
     if(response.error) {
       alert(response.error);
