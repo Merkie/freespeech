@@ -1,4 +1,8 @@
-a, h1 {
+.content h1 {
+  color: var(--brand-color);
+}
+
+.content a {
   color: var(--brand-color);
 }
 
