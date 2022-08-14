@@ -4,11 +4,11 @@
 FreeSpeech AAC is a free and open-source assistive communication app written in TypeScript.
 
 ### Cloning the project
-Clone and enter into the project directory
+* Clone and enter into the project directory
 `git clone https://github.com/merkie/freespeech freespeech && cd freespeech`
-Install dependencies
+* Install dependencies
 `yarn` or `npm install` or `pnpm install`
-Run the start command
+* Run the start command
 `yarn start`
 
 ### Project structure
