@@ -1,0 +1,25 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-plugin-solid-styled": "^0.5.1",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.0",
+    "vite-plugin-solid": "^2.3.0"
+  },
+  "dependencies": {
+    "@blueprintjs/core": "^4.8.0",
+    "@solidjs/router": "^0.4.2",
+    "solid-heroicons": "^2.0.3",
+    "solid-js": "^1.4.7",
+    "solid-styled": "^0.5.1"
+  }
+}
