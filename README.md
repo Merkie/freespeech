@@ -1,7 +1,7 @@
 
 # [FreeSpeech AAC](http://freespeechaac.com/) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/merkie/freespeech/blob/main/LICENSE)
 
-FreeSpeech AAC is a free and open-source assistive communication app written in TypeScript.
+FreeSpeech AAC is a free and open-source assistive communication app written in TypeScript. [Talk with us on Discord!](https://discord.gg/rEzaDqdfet)
 
 ### Cloning the project
 * Clone and enter into the project directory
