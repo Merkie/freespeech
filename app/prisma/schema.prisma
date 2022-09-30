@@ -57,6 +57,7 @@ model TilePage {
   name       String
   tiles      Tile[]
   public     Boolean  @default(false)
+  columns    Int      @default(8)
   user       User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
   user_id    String
   created_at DateTime @default(now())

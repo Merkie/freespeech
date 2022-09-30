@@ -19,8 +19,7 @@
 	import type { Project, TilePage, Tile } from '@prisma/client';
 
 	// Props
-	export let data: { project: Project };
-	let pages = (data.project as unknown as { pages: Array<any> }).pages;
+	export let data: { project: Project & { pages: TilePage[] & { tiles: Tile[] }[] } };
 
 	interface IState {
 		isEditing: boolean;
@@ -33,19 +32,19 @@
 	let isEditingDragging = false;
 
 	// Get items from the project
-	let items = pages[0].tiles.sort((a: Tile, b: Tile) => {
+	let items = data.project.pages[0].tiles.sort((a: Tile, b: Tile) => {
 		return a.index - b.index;
 	});
 
 	// Adding a new tile
 	const handle_tile_add = async () => {
 		if(!$session?.access_token) return; 
-		items = [...items, {
+		items = [...items, ({
 			id: parseInt(Math.random()*1000+''),
 			index: items.length,
 			display: 'An unnamed tile'
-		}]
-		const response = await add_tile(pages[0].id, $session.access_token);
+		} as Tile)]
+		const response = await add_tile(data.project.pages[0].id, $session.access_token);
 		if (!response.tile) return;
 		items[items.length - 1] = response.tile;
 	};
@@ -58,7 +57,7 @@
 		if (isEditing && $session?.access_token) {
 			console.log('Saving tiles...', items);
 			// Get list of tiles that need to be updated
-			const updates = items.map((item: Tile, index: number) => {
+			const updates: Tile[] = [] || items.map((item: Tile, index: number) => {
 				if (item.index !== index) {
 					return {
 						id: item.id,
