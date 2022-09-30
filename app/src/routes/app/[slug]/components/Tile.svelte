@@ -1,8 +1,14 @@
 <script lang="ts">
 	import type { Tile } from '@prisma/client';
 	export let tile: Tile;
+	export let isEditingInspect: boolean;
+	export let inspectorCallback: Function;
 
 	const handleInteraction = () => {
+		if(isEditingInspect) {
+			inspectorCallback(tile);
+			return; // return to prevent the tile from being interracted with
+		}
 		// get the speak text with tile.speak having first priority
 		const speak_text = tile.speak || tile.display;
 		// speak the text

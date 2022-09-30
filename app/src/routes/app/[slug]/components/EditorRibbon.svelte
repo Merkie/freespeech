@@ -1,18 +1,36 @@
 <script lang="ts">
-	import { ArrowsExpand } from '@steeze-ui/heroicons';
+	import { CursorText, Image, MagicWand, Link1, Opacity, Move } from '@steeze-ui/radix-icons';
+
 	import { Icon } from '@steeze-ui/svelte-icon';
 
+	export let toggleInspect: Function;
 	export let toggleDragging: Function;
+	export let toggleColor: Function;
+
+	export let isEditingInspect: boolean;
 	export let isEditingDragging: boolean;
+	export let isEditingColor: boolean;
 </script>
 
 <section>
 	<div>
 		<span>
+			<button on:click={() => toggleInspect()} class={isEditingInspect ? 'selected' : ''}>
+				<Icon src={MagicWand} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ (isEditingInspect ? '1' : '.5')}>Inspect</p>
+		</span>
+		<span>
 			<button on:click={() => toggleDragging()} class={isEditingDragging ? 'selected' : ''}>
-				<Icon src={ArrowsExpand} width={'25px'} />
+				<Icon src={Move} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ (isEditingDragging ? '1' : '.5')}>Move</p>
+		</span>
+		<span>
+			<button on:click={() => toggleColor()} class={isEditingColor ? 'selected' : ''}>
+				<Icon src={Opacity} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ (isEditingColor ? '1' : '.5')}>Color</p>
 		</span>
 	</div>
 </section>
@@ -34,10 +52,12 @@
 	div {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		height: 100%;
 		width: auto;
 		padding-left: 10px;
 		padding-right: 10px;
+		gap: 10px;
 	}
 
 	span {
@@ -59,7 +79,9 @@
 		color: var(--text);
 		background-color: var(--surface-2);
 		border: 1px solid var(--surface-4);
-		padding: 5px;
 		border-radius: 5px;
+		padding: 5px;
+		padding-left: 20px;
+		padding-right: 20px;
 	}
 </style>

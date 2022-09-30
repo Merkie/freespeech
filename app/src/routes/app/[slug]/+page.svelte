@@ -24,10 +24,15 @@
 	// State
 	let state: {
 		isEditing: boolean;
+		isEditingInspect: boolean;
 		isEditingDragging: boolean;
+		isEditingColor: boolean;
 	};
 	let isEditing = false;
+	let isEditingInspect = false;
 	let isEditingDragging = false;
+	let isEditingColor = false;
+	let editedTiles: Tile[] = [];
 
 	// Get items from the project
 	let items = data.project.pages[0].tiles.sort((a: Tile, b: Tile) => {
@@ -51,20 +56,38 @@
 		items = newItems;
 	};
 
+	const updateItem = async (tile: Tile) => {
+		items = items.map((item) => {
+			if (item.id === tile.id) {
+				return tile;
+			}
+			return item;
+		});
+
+		editedTiles = editedTiles.filter((item) => {
+			return item.id !== tile.id;
+		});
+		editedTiles = [...editedTiles, tile];
+	};
+
 	const toggleEditing = async () => {
 		if (isEditing && $session?.access_token) {
 			console.log('Saving tiles...', items);
+
 			// Get list of tiles that need to be updated
-			const updates: Tile[] = [] || items.map((item: Tile, index: number) => {
-				if (item.index !== index) {
+			//@ts-ignore
+			const updates: Tile[] = items.map((item: Tile, index: number) => {
+				if (item.index !== index) { 
 					return {
 						id: item.id,
 						index
 					};
 				}
 			});
+
+			console.log('Updates:', updates);
 			// Send the updates to the server
-			await update_tiles(updates, $session.access_token);
+			await update_tiles([...editedTiles, ...updates], $session.access_token);
 		}
 		isEditing = !isEditing;
 	};
@@ -72,16 +95,20 @@
 	$: {
 		state = {
 			isEditing,
-			isEditingDragging
+			isEditingInspect,
+			isEditingDragging,
+			isEditingColor
 		};
 	}
 </script>
 
-<TileGrid {...state} addTile={handle_tile_add} {updateItems} {items} />
+<TileGrid {...state} addTile={handle_tile_add} {updateItems} {updateItem} {items} />
 {#if isEditing}
 	<EditorRibbon
+		toggleInspect={() => (isEditingInspect = !isEditingInspect)}
 		toggleDragging={() => (isEditingDragging = !isEditingDragging)}
-		{isEditingDragging}
+		toggleColor={() => (isEditingColor = !isEditingColor)}
+		{...state}
 	/>
 {/if}
 <AppNavigation>
