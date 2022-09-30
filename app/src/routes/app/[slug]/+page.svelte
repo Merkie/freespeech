@@ -21,13 +21,11 @@
 	// Props
 	export let data: { project: Project & { pages: TilePage[] & { tiles: Tile[] }[] } };
 
-	interface IState {
+	// State
+	let state: {
 		isEditing: boolean;
 		isEditingDragging: boolean;
-	}
-
-	// State
-	let state: IState;
+	};
 	let isEditing = false;
 	let isEditingDragging = false;
 
