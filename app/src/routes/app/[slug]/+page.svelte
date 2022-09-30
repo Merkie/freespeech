@@ -39,9 +39,15 @@
 
 	// Adding a new tile
 	const handle_tile_add = async () => {
+		if(!$session?.access_token) return; 
+		items = [...items, {
+			id: parseInt(Math.random()*1000+''),
+			index: items.length,
+			display: 'An unnamed tile'
+		}]
 		const response = await add_tile(pages[0].id, $session.access_token);
 		if (!response.tile) return;
-		items = [...items, response.tile];
+		items[items.length - 1] = response.tile;
 	};
 
 	const updateItems = async (newItems: Array<Tile>) => {
@@ -49,9 +55,9 @@
 	};
 
 	const toggleEditing = async () => {
-		if (isEditing) {
-			// get list of indexes
-			console.log(items);
+		if (isEditing && $session?.access_token) {
+			console.log('Saving tiles...', items);
+			// Get list of tiles that need to be updated
 			const updates = items.map((item: Tile, index: number) => {
 				if (item.index !== index) {
 					return {
@@ -60,7 +66,8 @@
 					};
 				}
 			});
-			const response = await update_tiles(updates, $session.access_token);
+			// Send the updates to the server
+			await update_tiles(updates, $session.access_token);
 		}
 		isEditing = !isEditing;
 	};

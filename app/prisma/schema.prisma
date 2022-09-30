@@ -39,7 +39,7 @@ model Tile {
   image      String?
   navigation String?
   modifier   String?
-  index      Int
+  index      Int       @default(autoincrement())
   public     Boolean   @default(false)
   user       User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
   user_id    String
