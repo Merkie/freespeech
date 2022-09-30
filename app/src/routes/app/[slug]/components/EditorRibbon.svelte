@@ -8,9 +8,12 @@
 
 <section>
 	<div>
-		<button on:click={() => toggleDragging()} class={isEditingDragging ? 'selected' : ''}>
-			<Icon src={ArrowsExpand} width={'25px'} />
-		</button>
+		<span>
+			<button on:click={() => toggleDragging()} class={isEditingDragging ? 'selected' : ''}>
+				<Icon src={ArrowsExpand} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ (isEditingDragging ? '1' : '.5')}>Move</p>
+		</span>
 	</div>
 </section>
 
@@ -21,7 +24,7 @@
 		position: absolute;
 		bottom: 71px;
 		width: 100%;
-		height: 50px;
+		height: 80px;
 	}
 
 	.selected {
@@ -35,6 +38,17 @@
 		width: auto;
 		padding-left: 10px;
 		padding-right: 10px;
+	}
+
+	span {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	span p {
+		font-size: 12px;
+		margin-top: 10px;
 	}
 
 	button {
