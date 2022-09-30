@@ -5,7 +5,9 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const POST: RequestHandler = async ({ request, cookies }) => {
 	const body: { email: string; password: string } = await request.json();
 
+	// Try to create a new user and authenticate
 	try {
+		// Create a new user
 		const userSession = await auth.createUser('email', body.email, {
 			password: body.password,
 			user_data: {
@@ -13,6 +15,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 				username: body.email
 			}
 		});
+
+		// Set the cookie
 		setCookie(cookies, ...userSession.cookies);
 	} catch (error) {
 		return new Response(JSON.stringify({ message: 'error' }), { status: 200 });

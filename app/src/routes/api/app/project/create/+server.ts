@@ -11,6 +11,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		return new Response(JSON.stringify({ message: 'error' }), { status: 200 });
 	}
 
+	// Create a new tile
 	const tile = await client.tile.create({
 		data: {
 			display: 'An unnamed tile',
@@ -23,6 +24,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 	});
 
+	// Create a new page with the tile in it
 	const page = await client.tilePage.create({
 		data: {
 			name: 'Home',
@@ -39,6 +41,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 	});
 
+	// Create a new project with the page in it
 	const project = await client.project.create({
 		data: {
 			name: body.name,
@@ -57,5 +60,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 	});
 
+	// TODO: Return the user's project
 	return new Response(JSON.stringify({ message: 'ok' }), { status: 200 });
 };

@@ -8,41 +8,33 @@ export const POST: RequestHandler = async ({ request }) => {
 	const session = await auth.validateRequest(request);
 	const body: { updates: Array<Tile> } = await request.json();
 
-	console.log(body.updates);
-
 	if (!session.user) {
 		return new Response(JSON.stringify({ message: 'error' }), { status: 200 });
 	}
 
 	body.updates.forEach(async (tile) => {
 		if (!tile) return;
-		const tile_id = tile.id;
-		// @ts-ignore
-		delete tile.id;
 
+		// check and make sure the user owns the tile
 		const fetchedTile = await client.tile.findFirst({
 			where: {
-				id: tile_id,
+				id: tile.id,
 				user_id: session.user.user_id
 			}
 		});
+
+		// if the tile doesn't exist, or the user doesn't own it, return
 		if (!fetchedTile) return;
-		try {
-			console.log('success');
-			console.log(tile, tile_id);
-			await client.tile.update({
-				where: {
-					id: tile_id
-				},
-				data: {
-					index: tile_id
-				}
-			});
-		} catch (e) {
-			console.log('error');
-			console.log(tile, tile_id);
-			console.log(e);
-		}
+
+		// update the tile
+		await client.tile.update({
+			where: {
+				id: tile.id
+			},
+			data: {
+				...tile // the tile object is destructured here
+			}
+		});
 	});
 
 	return new Response(JSON.stringify({ message: 'ok' }), { status: 200 });
