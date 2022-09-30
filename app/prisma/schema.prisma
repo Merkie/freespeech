@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String         @id @unique
+  identifier_token String         @unique
+  email            String         @unique
+  username         String         @unique @default("Anonymous")
+  image            String         @default("")
+  hashed_password  String?
+  RefreshToken     RefreshToken[]
+  Tile             Tile[]
+  TilePage         TilePage[]
+  Project          Project[]
+
+  @@map("user")
+}
+
+model RefreshToken {
+  id            Int    @id @unique @default(autoincrement())
+  refresh_token String @unique
+  user          User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user_id       String
+
+  @@index([user_id])
+  @@map("refresh_token")
+}
+
+model Tile {
+  id         Int       @id @unique @default(autoincrement())
+  display    String
+  speak      String?
+  image      String?
+  navigation String?
+  modifier   String?
+  index      Int
+  public     Boolean   @default(false)
+  user       User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user_id    String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  TilePage   TilePage? @relation(fields: [tilePageId], references: [id])
+  tilePageId Int?
+
+  @@index([user_id])
+  @@map("tile")
+}
+
+model TilePage {
+  id         Int      @id @unique @default(autoincrement())
+  name       String
+  tiles      Tile[]
+  public     Boolean  @default(false)
+  user       User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  String?
+
+  @@index([user_id])
+  @@map("tile_page")
+}
+
+model Project {
+  id          String     @id @unique @default(cuid())
+  name        String
+  description String?
+  image       String?
+  user        User       @relation(fields: [userId], references: [id])
+  pages       TilePage[]
+  index       Int
+  public      Boolean    @default(false)
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  userId      String
+
+  @@map("project")
+}
+
+model S3Resource {
+  id         Int      @id @unique @default(autoincrement())
+  url        String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
