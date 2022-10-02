@@ -41,8 +41,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 	});
 
-	console.log(new_tile);
-
 	await client.tilePage.update({
 		where: {
 			id: page.id

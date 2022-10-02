@@ -1,23 +1,10 @@
-<script>
+<script lang="ts">
 	import { handleSilentRefresh } from 'lucia-sveltekit/client';
-
+	export let data;
+	
 	handleSilentRefresh();
-</script>
 
-<main>
-	<slot />
-</main>
-
-<style>
-	/* Main styles */
-	main {
-		position: relative;
-		height: 100vh;
-		width: 100vw;
-	}
-
-	/* Colors */
-	:global(body) {
+	let theme = `
 		--surface-1: #1c2127;
 		--surface-2: #252a31;
 		--surface-3: #2f343c;
@@ -27,10 +14,42 @@
 		--text: white;
 
 		--success: #32a467;
-		--primary: #2d72d2;
+		--primary: #2d72d2;`;
+
+		if(data.theme) {
+			theme = theme + data.theme.split(';').map((line: string) => { return '--'+line.trim()+';' }).join(' ');
+		}
+</script>
+
+<main style={theme}>
+	<slot />
+</main>
+
+<style>
+	/* Main styles */
+	main {
+		position: relative;
+		height: 100vh;
+		width: 100vw;
+		
 		color: var(--text);
 		background-color: var(--background);
 		font-family: 'Inter', sans-serif;
+	}
+
+	/* Colors */
+	:global(body) {
+		/* --surface-1: #1c2127;
+		--surface-2: #252a31;
+		--surface-3: #2f343c;
+		--surface-4: #383e47;
+		--surface-5: #404854;
+		--background: #111418;
+		--text: white;
+
+		--success: #32a467;
+		--primary: #2d72d2; */
+		
 	}
 
 	/* Global styles */

@@ -61,5 +61,5 @@ export const POST: RequestHandler = async ({ request }) => {
 	});
 
 	// TODO: Return the user's project
-	return new Response(JSON.stringify({ message: 'ok' }), { status: 200 });
+	return new Response(JSON.stringify({ message: 'ok', project }), { status: 200 });
 };

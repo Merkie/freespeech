@@ -14,6 +14,7 @@ model User {
   username         String         @unique @default("Anonymous")
   image            String         @default("")
   hashed_password  String?
+  theme            String?
   RefreshToken     RefreshToken[]
   Tile             Tile[]
   TilePage         TilePage[]

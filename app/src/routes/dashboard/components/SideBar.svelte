@@ -3,6 +3,7 @@
 	import { Chat, ViewGrid, User } from '@steeze-ui/heroicons';
 	import { SelectedDashboardPage } from '$lib/stores';
 	import { DashboardPages } from '$lib/types';
+	import { EyeOpen } from '@steeze-ui/radix-icons';
 </script>
 
 <section>
@@ -18,6 +19,12 @@
 		on:click={() => ($SelectedDashboardPage = DashboardPages.account)}
 	>
 		<Icon src={User} theme="solid" width="20px" /><span>Account</span>
+	</div>
+	<div
+		class={$SelectedDashboardPage == DashboardPages.appearance ? 'selected' : ''}
+		on:click={() => ($SelectedDashboardPage = DashboardPages.appearance)}
+	>
+		<Icon src={EyeOpen} theme="solid" width="20px" /><span>Appearance</span>
 	</div>
 </section>
 
