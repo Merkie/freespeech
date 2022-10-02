@@ -202,6 +202,7 @@
 	}
 
 	$: {
+		items; // needed to trigger the update
 		state = {
 			isEditing,
 			isEditingInspect,
