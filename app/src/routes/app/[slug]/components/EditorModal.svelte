@@ -1,27 +1,34 @@
 <script lang="ts">
+  // API
 	import { create_object } from "$lib/api/aws";
 
+  // Stores
 	import { InspectedTile,
           ProjectData,
           CurrentPageIndex,
           EditedTiles } from '$lib/stores';
-  import { getSession } from 'lucia-sveltekit/client';
+
+  // Types
   import type { Tile } from '@prisma/client';
 
-  let session = getSession();
-
+  // Session
+  import { getSession } from 'lucia-sveltekit/client';
+  const session = getSession();
+  
+  // Bindings
   let display = $InspectedTile?.display;
   let speak = $InspectedTile?.speak;
   let image = $InspectedTile?.image;
   let navigation = $InspectedTile?.navigation;
-
   let files: FileList;
 
+  // Handling uploading a file
 	export const handle_upload = async (file: File) => {
 		const response = await create_object(file);
     image = response.url;
 	};
 
+  // Update one tile
   const updateItem = async (tile: Tile) => {
 		if(!$session?.access_token) return;
 

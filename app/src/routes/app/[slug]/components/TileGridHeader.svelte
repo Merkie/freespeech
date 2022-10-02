@@ -1,17 +1,21 @@
 <script lang="ts">
-	import type { Tile } from '@prisma/client';
-	import { ArrowLeft, ArrowRight, SpeakerLoud, Trash } from '@steeze-ui/radix-icons';
+  // Icons
   import { Icon } from '@steeze-ui/svelte-icon';
-  
+  import { ArrowLeft, ArrowRight, SpeakerLoud, Trash } from '@steeze-ui/radix-icons';
+
+  // Stores
   import { PageHistoryIndex, PageHistory, ProjectData, CurrentPageIndex, AppSentence } from '$lib/stores';
 
+  // Components
   import TileComponent from './Tile.svelte';
 
+  // Speak the entire sentence
   const speakSentence = () => {
     const utterance = new SpeechSynthesisUtterance($AppSentence.map(tile => tile.speak || tile.display).join(' '));
     speechSynthesis.speak(utterance);
   }
 
+  // Navigate to the previous page
   const navigate_backwards = async () => {
 		$PageHistoryIndex += 1;
 		if ($PageHistoryIndex > $PageHistory.length - 1) {
@@ -20,6 +24,7 @@
 		$CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === $PageHistory[$PageHistoryIndex].toUpperCase());
 	}
 
+  // Navigate to the next page
 	const navigate_forwards = async () => {
 		$PageHistoryIndex -= 1;
 		if ($PageHistoryIndex < 0) {
@@ -28,16 +33,18 @@
 		$CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === $PageHistory[$PageHistoryIndex].toUpperCase());
 	}
 
-  const remove_from_sentence = (tile: Tile) => {
-    $AppSentence = $AppSentence.filter((t) => t.id !== tile.id);
+  // Remove a word from the sentence given the index
+  const remove_from_sentence = (index: number) => {
+    $AppSentence.splice(index, 1);
+    $AppSentence = [...$AppSentence];
   }
 </script>
 
 <section class="sentence-container">
   <section class="sentence-section">
-    {#each $AppSentence as sentence_tile}
-      <span on:click={() => remove_from_sentence(sentence_tile)}>
-        <TileComponent tile={sentence_tile} />
+    {#each $AppSentence as sentence_tile, index}
+      <span on:click={() => remove_from_sentence(index)}>
+        <TileComponent dummy={true} tile={sentence_tile} />
       </span>
     {/each}
   </section>

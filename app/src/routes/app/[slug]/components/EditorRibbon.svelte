@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { CursorText, Image, MagicWand, Link1, Opacity, Move } from '@steeze-ui/radix-icons';
-
+	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
+	import { MagicWand, Opacity, Move } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { CurrentPageIndex,
@@ -9,19 +9,19 @@
 					IsEditingInspect,
 					IsEditingDragging,
 					IsEditingColor,
-					IsInEditMode,
-					PageHistory,
-					PageHistoryIndex,
-					EditedTiles
 					} from '$lib/stores';
-
-	import { getSession } from 'lucia-sveltekit/client';
+	
+	// API
 	import { edit_page } from '$lib/api/app';
-	let session = getSession();
+
+	// Session
+	import { getSession } from 'lucia-sveltekit/client';
+	const session = getSession();
 
 	// Bindings
 	let pageColumnsInput: HTMLInputElement;
 
+	// Edit the columns of the page
 	const edit_page_columns = async (columns: number) => {
 			$ProjectData.pages[$CurrentPageIndex].columns = columns;
 
@@ -32,6 +32,7 @@
 			await edit_page(page, $session.access_token);
 	};
 
+	// Handle the input of editing the column amount
 	const handle_columns_edit = () => {
 		// Try and catch used here for empty strings and other weird non-int inputs
 		try{

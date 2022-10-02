@@ -1,29 +1,45 @@
 <script lang="ts">
+	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { Plus } from '@steeze-ui/heroicons';
 
+	// Session
 	import { getSession } from 'lucia-sveltekit/client';
 	let session = getSession();
 
-
-	import { IsInEditMode,
-					InspectedTile,
-					ProjectData,  
+	// Stores
+	import { ProjectData,  
 					CurrentPageIndex,
 				} from '$lib/stores';
+	
+	// Types
 	import type { Tile } from '@prisma/client';
+	
+	// API
 	import { create_tile } from '$lib/api/app';
 
+	// Add a new tile
 	const handle_tile_add = async () => {
+		// If no session, return
 		if(!$session?.access_token) return; 
+		
+		// Create new tile
 		const new_tile = ({
 			id: parseInt(Math.random().toString().split('.')[1]),
 			index: $ProjectData.pages[$CurrentPageIndex].tiles.length,
 			display: 'An unnamed tile'
 		} as Tile);
+		
+		// Add it to the list
 		$ProjectData.pages[$CurrentPageIndex].tiles = [...$ProjectData.pages[$CurrentPageIndex].tiles, new_tile]
+		
+		// Create the tile in the database
 		const response = await create_tile($ProjectData.pages[$CurrentPageIndex].id, new_tile, $session.access_token);
+		
+		// If there was an error, return
 		if (!response.tile) return;
+		
+		// Update the tile with the new id
 		$ProjectData.pages[response.tile.index] = response.tile;
 	};
 </script>

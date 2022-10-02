@@ -1,6 +1,8 @@
 <script lang="ts">
+	// Types
 	import type { Tile } from '@prisma/client';
-	import { getSession } from 'lucia-sveltekit/client';
+	
+	// Stores
 	import { InspectedTile,
 					IsInEditMode,
 					IsEditingInspect,
@@ -11,11 +13,13 @@
 					} from '$lib/stores';
 	import { create_page } from '$lib/api/app';
 
-	// Prop
-	export let tile: Tile;
-	
 	// Session
+	import { getSession } from 'lucia-sveltekit/client';
 	const session = getSession();
+
+	// Props
+	export let tile: Tile;
+	export let dummy: boolean = false;
 	
 	// Navigate to another page 
 	const navigate = async (navigation: string) => {
@@ -47,7 +51,9 @@
 		}
 	};
 
+	// Handle interraction with tile
 	const handleInteraction = () => {
+		if(dummy) return;
 		if($IsInEditMode) {
 			if($IsEditingInspect) {
 				$InspectedTile = tile;

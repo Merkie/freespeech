@@ -1,26 +1,34 @@
 <script lang="ts">
-	import Tile from './Tile.svelte';
-	import AddTileGhost from './AddTileGhost.svelte';
+	// Util
 	import { flip } from 'svelte/animate';
 	import { dndzone } from 'svelte-dnd-action';
 
+	// Types
 	import type { Tile as ITile } from '@prisma/client';
-	import EditorModal from './EditorModal.svelte';
-	import { getSession } from 'lucia-sveltekit/client';
-	let session = getSession();
-	// export let items: Array<ITile>;
 
+	// Components
+	import EditorModal from './EditorModal.svelte';
+	import Tile from './Tile.svelte';
+	import AddTileGhost from './AddTileGhost.svelte';
+	
+
+	// Stores
 	import { IsInEditMode,
 					InspectedTile,
 					ProjectData,  
 					CurrentPageIndex,
 					IsEditingDragging
 				} from '$lib/stores';
+
+	// API
 	import { reorder_page } from '$lib/api/app';
 
-	let items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
+	// Session
+	import { getSession } from 'lucia-sveltekit/client';
+	let session = getSession();
 
-	const flipDurationMs = 300;
+	// Items is needed for drag and drop functionality
+	let items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
 	
 	// Considering a Dnd action
 	const handleDndConsider = (e: { detail: any }) => {
@@ -42,13 +50,10 @@
 		});
 
 		if(!$session?.access_token) return;
-		console.log(updates);
 		await reorder_page($ProjectData.pages[$CurrentPageIndex].id, updates, $session.access_token);
 	};
 
-	// Style of the dropzone when moving a tile
-	let dropTargetStyle = { opacity: '.5' };
-
+	// Set the items to the store
 	$: {
 		items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
 	}
@@ -57,14 +62,14 @@
 <section>
 	<div
 		style={'grid-template-columns: repeat('+$ProjectData.pages[$CurrentPageIndex].columns+', minmax(0, 1fr));'}
-		use:dndzone={{ items, flipDurationMs, dropTargetStyle, dragDisabled: !$IsEditingDragging }}
+		use:dndzone={{ items, flipDurationMs: 300, dropTargetStyle: { opacity: '.5' }, dragDisabled: !$IsEditingDragging }}
 		on:consider={handleDndConsider}
 		on:finalize={handleDndFinalize}
 	>
 		{#each items as item (item.id)}
 			<span
 				animate:flip={{
-					duration: flipDurationMs
+					duration: 300
 				}}
 			>
 				<Tile tile={item} />
