@@ -5,6 +5,7 @@
 	export let isEditing: boolean;
 	export let inspectorCallback: Function;
 	export let navigateCallback: Function;
+	export let addToSentence: Function;
 
 	const handleInteraction = () => {
 		if(isEditing) {
@@ -25,6 +26,7 @@
 		const speak_text = tile.speak || tile.display;
 		// speak the text
 		var utterance = new SpeechSynthesisUtterance(speak_text);
+		addToSentence(tile);
 		window.speechSynthesis.speak(utterance);
 	};
 </script>

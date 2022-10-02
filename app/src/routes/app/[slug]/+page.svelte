@@ -19,6 +19,7 @@
 
 	// types
 	import type { Project, TilePage, Tile } from '@prisma/client';
+	import TileGridHeader from './components/TileGridHeader.svelte';
 
 	// Props
 	export let data: { project: Project & { pages: TilePage[] & { tiles: Tile[] }[] } };
@@ -35,6 +36,7 @@
 	let isEditingDragging = false;
 	let isEditingColor = false;
 	let editedTiles: Tile[] = [];
+	let sentence: Tile[] = [];
 
 	$ProjectData = data.project;
 
@@ -44,6 +46,9 @@
 	let items = $ProjectData.pages[currentPageIndex].tiles.sort((a: Tile, b: Tile) => {
 		return a.index - b.index;
 	});
+
+	let pageHistory = ['HOME'];
+	let pageHistoryIndex = 0;
 
 	// Adding a new tile
 	const handle_tile_add = async () => {
@@ -83,8 +88,6 @@
 	};
 
 	const save = async () => {
-		console.log('Saving tiles...', editedTiles);
-
 		if(editedTiles.length > 0) {
 			// Send each tile to the server for updates
 			editedTiles.forEach(async (tile: Tile) => {
@@ -98,51 +101,56 @@
 
 			// reset editedTiles
 			editedTiles = [];
-		} else {
-			console.log('No tiles to update');
 		}
 
+		// Wait 3 seconds before getting the page again
+		// This will not result in lost data, im just waiting because sometimes the DB can take
+		// a while to update the user's data.
 		await new Promise((resolve) => setTimeout(resolve, 3000));
 
-		// Reset the state
+		// Reset the state from the server
+		// This will clear any old data that was not updated/saved
 		const response = await fetch_project($ProjectData.id, $session?.access_token+'');
-		if(response.project) {
-			console.log('Non-updated project', $ProjectData);
-			$ProjectData = response.project;
-			console.log('Updated project', $ProjectData);
-			console.log('Response', response.project);
-		}
+		if(response.project) $ProjectData = response.project;
 	}
 
 	const toggleEditing = async () => {
 		isEditing = !isEditing;
+		// If we just turned editing off, save the tiles
 		if (!isEditing) {
 			await save();
 		}
 	};
 
 	const navigateCallback = async (navigation: string) => {
-		console.log('Navigating to', navigation);
-		console.log('Pages: ', $ProjectData.pages.map((page) => page.name));
+		// Reset page history index to 0
+		pageHistoryIndex = 0;
 
+		// Get the new index of the page based on the name of the navigation
 		const newIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === navigation.toUpperCase());
-
+		
+		// Checking to see if the page exists, if it doesnt we have to create one
 		if (newIndex !== -1) {
+			// If it does exist just set the currentPageIndex to the new index
 			currentPageIndex = newIndex;
-			items = $ProjectData.pages[currentPageIndex].tiles.sort((a: Tile, b: Tile) => {
-				return a.index - b.index;
-			});
+
+			// Add the page to the pageHistory
+			pageHistory = [$ProjectData.pages[currentPageIndex].name, ...pageHistory];
 		} else { 
-			if(!$session) return;
-			console.log('Creating new page...');
-			const response = await create_page($ProjectData.id, navigation, $session.access_token);
-			console.log(response);
+			// If it doesnt exist we have to create a new page
+
+			// Send create_page request to the server
+			const response = await create_page($ProjectData.id, navigation, $session?.access_token+'');
 			if (!response.page) return;
+			
+			// Add the page to ProjectData
 			$ProjectData.pages = [...$ProjectData.pages, response.page];
+			
+			// Set the currentPageIndex to the new index
 			currentPageIndex = $ProjectData.pages.length - 1;
-			items = $ProjectData.pages[currentPageIndex].tiles.sort((a: Tile, b: Tile) => {
-				return a.index - b.index;
-			});
+
+			// Add the page to the pageHistory
+			pageHistory = [$ProjectData.pages[currentPageIndex].name, ...pageHistory];
 		}
 	};
 
@@ -162,6 +170,37 @@
 		const response = await edit_page(page, $session.access_token);
 	};
 
+	const navigateBackwards = async () => {
+		pageHistoryIndex += 1;
+		if (pageHistoryIndex > pageHistory.length - 1) {
+			pageHistoryIndex = pageHistory.length - 1;
+		}
+		currentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === pageHistory[pageHistoryIndex].toUpperCase());
+	}
+
+	const navigateForwards = async () => {
+		pageHistoryIndex -= 1;
+		if (pageHistoryIndex < 0) {
+			pageHistoryIndex = 0;
+		}
+		currentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === pageHistory[pageHistoryIndex].toUpperCase());
+	}
+
+	const addToSentence = async (tile: Tile) => {
+		sentence = [...sentence, tile];
+	}
+
+	const deleteSentence = () => {
+		speechSynthesis.cancel();
+		sentence = [];
+	}
+
+	const removeFromSentence = (tile: Tile) => {
+		sentence = sentence.filter((item) => {
+			return item.id !== tile.id;
+		});
+	}
+
 	$: {
 		state = {
 			isEditing,
@@ -169,10 +208,37 @@
 			isEditingDragging,
 			isEditingColor
 		};
+		try {
+			items = $ProjectData.pages[currentPageIndex].tiles.sort((a: Tile, b: Tile) => {
+				return a.index - b.index;
+			});
+		}
+		catch(e) {}
+		
 	}
 </script>
 
-<TileGrid {...state} addTile={handle_tile_add} columns={$ProjectData.pages[currentPageIndex].columns} {reorderPage} {updateItems} {updateItem} {items} {navigateCallback} />
+<TileGridHeader
+	{navigateBackwards}
+	{navigateForwards} 
+	{removeFromSentence}
+	{deleteSentence}
+	{sentence}
+	pageName={$ProjectData.pages[currentPageIndex].name}
+	canNavigateBackwards={(pageHistory.length > 1 && pageHistoryIndex < pageHistory.length-1)}
+	canNavigateForwards={(pageHistory.length > 1 && pageHistoryIndex > 0)}
+/>
+<TileGrid 
+	{...state}
+	addTile={handle_tile_add}
+	columns={$ProjectData.pages[currentPageIndex].columns}
+	{reorderPage} 
+	{updateItems}
+	{updateItem}
+	{items}
+	{navigateCallback}
+	{addToSentence}
+/>
 {#if isEditing}
 	<EditorRibbon
 		toggleInspect={() => (isEditingInspect = !isEditingInspect)}
@@ -184,7 +250,11 @@
 	/>
 {/if}
 <AppNavigation>
-	<AppNavigationButton name={'Home'} iconsrc={Home} callback={() => console.log('Home pressed')} />
+	<AppNavigationButton 
+		name={'Home'}
+		iconsrc={Home}
+		callback={() => console.log('Home pressed')}
+	/>
 	<AppNavigationButton
 		name={isEditing ? 'Save Changes' : 'Edit'}
 		iconsrc={isEditing ? Check : Pencil}

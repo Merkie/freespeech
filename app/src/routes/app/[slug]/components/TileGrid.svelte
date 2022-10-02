@@ -19,6 +19,7 @@
 	export let updateItem: Function;
 	export let navigateCallback: Function;
 	export let reorderPage: Function;
+	export let addToSentence: Function;
 
 	let isEditorModalOpen = false;
 	let editorModalTile: ITile;
@@ -68,7 +69,7 @@
 					duration: flipDurationMs
 				}}
 			>
-				<Tile tile={item} {isEditing} {isEditingInspect} {inspectorCallback} {navigateCallback} />
+				<Tile tile={item} {addToSentence} {isEditing} {isEditingInspect} {inspectorCallback} {navigateCallback} />
 			</span>
 		{/each}
 
@@ -85,7 +86,7 @@
 <style>
 	section {
 		background-color: var(--background);
-		height: calc(100% - 50px);
+		height: calc(100% - 200px);
 	}
 	div {
 		display: grid;
