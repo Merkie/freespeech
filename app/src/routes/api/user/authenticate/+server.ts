@@ -1,4 +1,4 @@
-import { auth } from '$lib/lucia';
+import { auth } from '$lib/resources';
 import { setCookie } from 'lucia-sveltekit';
 import type { RequestHandler } from '@sveltejs/kit';
 

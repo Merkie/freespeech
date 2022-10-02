@@ -1,5 +1,5 @@
-import { client } from '$lib/prisma';
-import { auth } from '$lib/lucia';
+import { client } from '$lib/resources';
+import { auth } from '$lib/resources';
 
 import type { RequestHandler } from '@sveltejs/kit';
 import type { Tile } from '@prisma/client';

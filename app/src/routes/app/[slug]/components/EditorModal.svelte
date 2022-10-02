@@ -1,14 +1,19 @@
 <script lang="ts">
 	import { create_object } from "$lib/api/aws";
-	import type { Tile } from "@prisma/client";
-  export let tile: Tile;
-  export let updateTileCallback: Function;
-  export let closeModalCallback: Function;
 
-  let display = tile.display;
-  let speak = tile.speak;
-  let image = tile.image;
-  let navigation = tile.navigation;
+	import { InspectedTile,
+          ProjectData,
+          CurrentPageIndex,
+          EditedTiles } from '$lib/stores';
+  import { getSession } from 'lucia-sveltekit/client';
+  import type { Tile } from '@prisma/client';
+
+  let session = getSession();
+
+  let display = $InspectedTile?.display;
+  let speak = $InspectedTile?.speak;
+  let image = $InspectedTile?.image;
+  let navigation = $InspectedTile?.navigation;
 
   let files: FileList;
 
@@ -17,19 +22,41 @@
     image = response.url;
 	};
 
+  const updateItem = async (tile: Tile) => {
+		if(!$session?.access_token) return;
+
+		$ProjectData.pages[$CurrentPageIndex].tiles = $ProjectData.pages[$CurrentPageIndex].tiles.map((item) => {
+			if (item.id === tile.id) {
+				return tile;
+			}
+			return item;
+		});
+
+		// Remove the tile from editedTiles if its there
+		$EditedTiles = $EditedTiles.filter((item) => {
+			return item.id !== tile.id;
+		});
+
+		// Add it to the list
+		$EditedTiles = [...$EditedTiles, tile];
+	};
+
   $: {
-    updateTileCallback({
-      ...tile,
-      display,
-      speak,
-      image,
-      navigation
+    // Update the item when the display changes
+    updateItem({
+      ...$InspectedTile,
+      ...{
+        display,
+        speak,
+        image,
+        navigation
+      } as Tile
     });
   }
 </script>
 
 <div>
-  <span><h4>Inspector</h4> <button class="close" on:click={() => closeModalCallback()}>Close</button></span>
+  <span><h4>Inspector</h4> <button class="close" on:click={() => ($InspectedTile = undefined)}>Close</button></span>
   <p>Display text:</p>
   <input type="text" bind:value={display}  >
   <p>Speak text (optional):</p>

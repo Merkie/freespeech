@@ -3,28 +3,40 @@
 
 	import { Icon } from '@steeze-ui/svelte-icon';
 
-	// Callback functions
-	export let toggleInspect: Function;
-	export let toggleDragging: Function;
-	export let toggleColor: Function;
-	export let editPageColumns: Function;
+	// Stores
+	import { CurrentPageIndex,
+					ProjectData,
+					IsEditingInspect,
+					IsEditingDragging,
+					IsEditingColor,
+					IsInEditMode,
+					PageHistory,
+					PageHistoryIndex,
+					EditedTiles
+					} from '$lib/stores';
 
-	// Editing State
-	export let isEditingInspect: boolean;
-	export let isEditingDragging: boolean;
-	export let isEditingColor: boolean;
-
-	// Other needed values
-	export let pageColumns: number;
+	import { getSession } from 'lucia-sveltekit/client';
+	import { edit_page } from '$lib/api/app';
+	let session = getSession();
 
 	// Bindings
 	let pageColumnsInput: HTMLInputElement;
+
+	const edit_page_columns = async (columns: number) => {
+			$ProjectData.pages[$CurrentPageIndex].columns = columns;
+
+			if(!$session?.access_token) return;
+			let page = $ProjectData.pages[$CurrentPageIndex];
+			// @ts-ignore
+			delete page.tiles;
+			await edit_page(page, $session.access_token);
+	};
 
 	const handle_columns_edit = () => {
 		// Try and catch used here for empty strings and other weird non-int inputs
 		try{
 			if(parseInt(pageColumnsInput.value) > 0) {
-				editPageColumns(parseInt(pageColumnsInput.value));
+				edit_page_columns(parseInt(pageColumnsInput.value));
 			}
 		} catch(e) {}
 	}
@@ -33,25 +45,25 @@
 <section>
 	<div>
 		<span>
-			<button on:click={() => toggleInspect()} class={isEditingInspect ? 'selected' : ''}>
+			<button on:click={() => $IsEditingInspect = !$IsEditingInspect} class={$IsEditingInspect ? 'selected' : ''}>
 				<Icon src={MagicWand} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ (isEditingInspect ? '1' : '.5')}>Inspect</p>
+			<p style={'opacity: '+ ($IsEditingInspect ? '1' : '.5')}>Inspect</p>
 		</span>
 		<span>
-			<button on:click={() => toggleDragging()} class={isEditingDragging ? 'selected' : ''}>
+			<button on:click={() => $IsEditingDragging = !$IsEditingDragging} class={$IsEditingDragging ? 'selected' : ''}>
 				<Icon src={Move} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ (isEditingDragging ? '1' : '.5')}>Move</p>
+			<p style={'opacity: '+ ($IsEditingDragging ? '1' : '.5')}>Move</p>
 		</span>
 		<span>
-			<button on:click={() => toggleColor()} class={isEditingColor ? 'selected' : ''}>
+			<button on:click={() => $IsEditingColor = !$IsEditingColor} class={$IsEditingColor ? 'selected' : ''}>
 				<Icon src={Opacity} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ (isEditingColor ? '1' : '.5')}>Color</p>
+			<p style={'opacity: '+ ($IsEditingColor ? '1' : '.5')}>Color</p>
 		</span>
 		<span>
-			<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={pageColumns} on:input={handle_columns_edit} />
+			<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
 			<p style="opacity: 0.5">Columns</p>
 		</span>
 	</div>

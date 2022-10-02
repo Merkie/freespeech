@@ -1,32 +1,72 @@
 <script lang="ts">
 	import type { Tile } from '@prisma/client';
+	import { getSession } from 'lucia-sveltekit/client';
+	import { InspectedTile,
+					IsInEditMode,
+					IsEditingInspect,
+					AppSentence,
+					CurrentPageIndex,
+					PageHistory,
+					ProjectData
+					} from '$lib/stores';
+	import { create_page } from '$lib/api/app';
+
+	// Prop
 	export let tile: Tile;
-	export let isEditingInspect: boolean;
-	export let isEditing: boolean;
-	export let inspectorCallback: Function;
-	export let navigateCallback: Function;
-	export let addToSentence: Function;
+	
+	// Session
+	const session = getSession();
+	
+	// Navigate to another page 
+	const navigate = async (navigation: string) => {
+		// get new Index
+		let newIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === navigation.toUpperCase());
+
+		// Checking to see if the page exists, if it doesnt we have to create one
+		if (newIndex !== -1) {
+			// If it does exist just set the currentPageIndex to the new index
+			$CurrentPageIndex = newIndex;
+
+			// Add the page to the pageHistory
+			$PageHistory = [$ProjectData.pages[$CurrentPageIndex].name, ...$PageHistory];
+		} else { 
+			// If it doesnt exist we have to create a new page
+
+			// Send create_page request to the server
+			const response = await create_page($ProjectData.id, navigation, $session?.access_token+'');
+		if (!response.page) return;
+		
+			// Add the page to ProjectData
+			$ProjectData.pages = [...$ProjectData.pages, response.page];
+		
+			// Set the currentPageIndex to the new index
+			$CurrentPageIndex = $ProjectData.pages.length - 1;
+
+			// Add the page to the pageHistory
+			$PageHistory = [$ProjectData.pages[$CurrentPageIndex].name, ...$PageHistory];
+		}
+	};
 
 	const handleInteraction = () => {
-		if(isEditing) {
-			if(isEditingInspect) {
-				inspectorCallback(tile);
+		if($IsInEditMode) {
+			if($IsEditingInspect) {
+				$InspectedTile = tile;
 				return; // return to prevent the tile from being interracted with
 			}
 		} else {
 			if(tile.navigation) {
-				navigateCallback(tile.navigation);
+				navigate(tile.navigation)
 			}
 		}
-		
-		
-		
-		
+
+		// Add the tile to the sentence
+		$AppSentence = [...$AppSentence, tile]
+
 		// get the speak text with tile.speak having first priority
 		const speak_text = tile.speak || tile.display;
+
 		// speak the text
 		var utterance = new SpeechSynthesisUtterance(speak_text);
-		addToSentence(tile);
 		window.speechSynthesis.speak(utterance);
 	};
 </script>

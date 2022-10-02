@@ -1,5 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { s3 } from '$lib/aws';
+import { s3 } from '$lib/resources';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const body: { content: string; filename: string } = await request.json();

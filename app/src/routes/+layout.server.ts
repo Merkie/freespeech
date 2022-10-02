@@ -1,5 +1,5 @@
-import { auth } from '$lib/lucia';
-import { client } from '$lib/prisma';
+import { auth } from '$lib/resources';
+import { client } from '$lib/resources';
 
 export const load = auth.handleServerSession(async ({ request }) => {
 	// Try to return the user theme

@@ -1,5 +1,5 @@
 import { redirect, type ServerLoad } from '@sveltejs/kit';
-import { client } from '$lib/prisma';
+import { client } from '$lib/resources';
 
 export const load: ServerLoad = async ({ parent }) => {
 	const auth = await parent(); // Get the auth data from the parent route

@@ -1,8 +1,8 @@
-import { auth } from '$lib/lucia';
+import { auth } from '$lib/resources';
 import { setCookie } from 'lucia-sveltekit';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { User } from '@prisma/client';
-import { client } from '$lib/prisma';
+import { client } from '$lib/resources';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
 	const session = await auth.validateRequest(request);

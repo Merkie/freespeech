@@ -1,4 +1,4 @@
-import { client } from '$lib/prisma';
+import { client } from '$lib/resources';
 import { redirect, type ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ parent, params }) => {

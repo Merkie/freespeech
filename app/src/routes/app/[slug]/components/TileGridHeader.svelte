@@ -2,28 +2,41 @@
 	import type { Tile } from '@prisma/client';
 	import { ArrowLeft, ArrowRight, SpeakerLoud, Trash } from '@steeze-ui/radix-icons';
   import { Icon } from '@steeze-ui/svelte-icon';
-  export let navigateForwards: Function;
-  export let navigateBackwards: Function;
-  export let deleteSentence: Function;
-  export let removeFromSentence: Function;
-  export let pageName: string;
-  export let canNavigateBackwards: Boolean;
-  export let canNavigateForwards: Boolean;
   
-  export let sentence: Tile[];
+  import { PageHistoryIndex, PageHistory, ProjectData, CurrentPageIndex, AppSentence } from '$lib/stores';
 
   import TileComponent from './Tile.svelte';
 
   const speakSentence = () => {
-    const utterance = new SpeechSynthesisUtterance(sentence.map(tile => tile.speak || tile.display).join(' '));
+    const utterance = new SpeechSynthesisUtterance($AppSentence.map(tile => tile.speak || tile.display).join(' '));
     speechSynthesis.speak(utterance);
+  }
+
+  const navigate_backwards = async () => {
+		$PageHistoryIndex += 1;
+		if ($PageHistoryIndex > $PageHistory.length - 1) {
+			$PageHistoryIndex = $PageHistory.length - 1;
+		}
+		$CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === $PageHistory[$PageHistoryIndex].toUpperCase());
+	}
+
+	const navigate_forwards = async () => {
+		$PageHistoryIndex -= 1;
+		if ($PageHistoryIndex < 0) {
+			$PageHistoryIndex = 0;
+		}
+		$CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === $PageHistory[$PageHistoryIndex].toUpperCase());
+	}
+
+  const remove_from_sentence = (tile: Tile) => {
+    $AppSentence = $AppSentence.filter((t) => t.id !== tile.id);
   }
 </script>
 
 <section class="sentence-container">
   <section class="sentence-section">
-    {#each sentence as sentence_tile}
-      <span on:click={() => removeFromSentence(sentence_tile)}>
+    {#each $AppSentence as sentence_tile}
+      <span on:click={() => remove_from_sentence(sentence_tile)}>
         <TileComponent tile={sentence_tile} />
       </span>
     {/each}
@@ -31,17 +44,17 @@
   <button on:click={speakSentence}>
     <Icon width="50px" src={SpeakerLoud} />
   </button>
-  <button on:click={() => deleteSentence()}>
+  <button on:click={() => $AppSentence =[]}>
     <Icon width="50px" src={Trash} />
   </button>
 </section>
 
 <div>
-	<button disabled={!canNavigateBackwards} on:click={() => navigateBackwards()}>
+	<button disabled={!($PageHistory.length > 1 && $PageHistoryIndex < $PageHistory.length-1)} on:click={navigate_backwards}>
     <Icon src={ArrowLeft} size="50px;" />
   </button>
-	<h1>{pageName}</h1>
-	<button disabled={!canNavigateForwards}  on:click={() => navigateForwards()}>
+	<h1>{$ProjectData.pages[$CurrentPageIndex].name}</h1>
+	<button disabled={!($PageHistory.length > 1 && $PageHistoryIndex > 0)}  on:click={navigate_forwards}>
     <Icon src={ArrowRight} size="50px;" />
   </button>
 </div>
