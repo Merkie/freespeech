@@ -9,6 +9,9 @@ export const load: ServerLoad = async ({ parent }) => {
 	const projects = await client.project.findMany({
 		where: {
 			userId: auth['_lucia'].user.user_id
+		},
+		orderBy: {
+			updated_at: 'desc'
 		}
 	});
 

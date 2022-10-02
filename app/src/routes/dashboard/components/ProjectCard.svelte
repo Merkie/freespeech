@@ -2,7 +2,7 @@
 	import ProjectEditModal from './ProjectEditModal.svelte';
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import type { Project } from '@prisma/client';
-	import { Pencil1, Trash } from '@steeze-ui/radix-icons';
+	import { DragHandleDots1, Pencil1, Trash } from '@steeze-ui/radix-icons';
 	export let project: Project;
 	import { getSession } from 'lucia-sveltekit/client';
 	const session = getSession();
@@ -29,7 +29,9 @@
 	<button  on:click={() => isEditing = true}>
 		<Icon size="30px" src={Pencil1} />
 	</button>
-	<Icon size="30px" src={Trash} />
+	<button>
+			<Icon size="30px" src={Trash} />
+	</button>
 </div>
 
 {#if isEditing}

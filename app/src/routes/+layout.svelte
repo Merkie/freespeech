@@ -14,7 +14,8 @@
 		--text: white;
 
 		--success: #32a467;
-		--primary: #2d72d2;`;
+		--primary: #2d72d2;
+		--failure: #d23f31;`;
 
 		if(data.theme) {
 			theme = theme + data.theme.split(';').map((line: string) => { return '--'+line.trim()+';' }).join(' ');

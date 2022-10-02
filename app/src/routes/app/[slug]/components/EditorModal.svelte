@@ -29,7 +29,7 @@
 </script>
 
 <div>
-  <span><h4>Inspector</h4> <button on:click={() => closeModalCallback()}>Close</button></span>
+  <span><h4>Inspector</h4> <button class="close" on:click={() => closeModalCallback()}>Close</button></span>
   <p>Display text:</p>
   <input type="text" bind:value={display}  >
   <p>Speak text (optional):</p>
@@ -37,7 +37,7 @@
   <p>Image (optional):</p>
   <input type="text"  bind:value={image}>
   <input bind:files type="file" />
-  <button on:click={() => handle_upload(files[0])}>Upload</button>
+  <button class="upload" on:click={() => handle_upload(files[0])}>Upload</button>
   <p>Navigation (optional):</p>
   <input type="text" bind:value={navigation}>
 </div>
@@ -45,6 +45,7 @@
 <style>
   div {
     position: absolute;
+    z-index: 999;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -56,5 +57,47 @@
     display: flex;
     gap: 10px;
     flex-direction: column;
+    box-shadow: 0 0 0 100000px rgba(0,0,0,.5);
+    font-size: 20px;
+  }
+
+  span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .close {
+    background-color: var(--surface-1);
+    border: 1px solid var(--surface-4);
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  .close:hover {
+    background-color: var(--failure);
+  }
+
+  div * {
+    font-size: 20px;
+  }
+
+  input {
+    background-color: var(--background);
+    color: var(--text);
+    border: 1px solid var(--surface-4);
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .upload {
+    background-color: var(--primary);
+    color: var(--text);
+    border: 1px solid var(--surface-4);
+    padding: 10px;
+    border-radius: 5px;
   }
 </style>
