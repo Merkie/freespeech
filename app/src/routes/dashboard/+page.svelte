@@ -1,17 +1,28 @@
 <script lang="ts">
-	import SideBar from './components/SideBar.svelte';
-	import TopBar from './components/TopBar.svelte';
-	import ProjectCard from './components/ProjectCard.svelte';
+	// Types
 	import { DashboardPages } from '$lib/types';
-	import { SelectedDashboardPage } from '$lib/stores';
-	import { create_project } from '$lib/api/app';
-	import { getSession } from 'lucia-sveltekit/client';
-	const session = getSession();
 	import type { Project } from '@prisma/client';
+
+	// Props
 	export let data: { projects: Array<Project>, theme: string };
 
+	// Components
+	import SideBar from './components/SideBar.svelte';
+	import ProjectCard from './components/ProjectCard.svelte';
+	import TopBar from './components/TopBar.svelte';
+
+	// Stores
+	import { SelectedDashboardPage } from '$lib/stores';
+	
+	// API
+	import { create_project } from '$lib/api/app';
 	import { edit_user } from '$lib/api/user';
 
+	// Session
+	import { getSession } from 'lucia-sveltekit/client';
+	const session = getSession();
+	
+	// Bindings
 	let themeTextarea: HTMLTextAreaElement;
 
 	// Handles making a new project
@@ -24,7 +35,8 @@
 			data = data; // Force update
 		}
 	};
-
+	
+	// Handles changing the theme from the settings menu
 	const handle_theme_change = async () => {
 		if(!$session?.access_token) return;
 		await edit_user({ theme: themeTextarea.value }, $session.access_token);
@@ -36,16 +48,19 @@
 
 	<div class="content">
 		{#if $SelectedDashboardPage == DashboardPages.projects}
-			<button on:click={handle_project_creation}
-			>Add Project</button>
+			<h1>Projects</h1>
+			
 			{#each data.projects as project}
 				<ProjectCard {project} />
 			{/each}
+			<button class="new-project" on:click={handle_project_creation}
+			>Create New Project</button>
 		{/if}
 		{#if $SelectedDashboardPage == DashboardPages.account}
 			<h1>Account</h1>
 		{/if}
 		{#if $SelectedDashboardPage == DashboardPages.appearance}
+			<h1>Appearance</h1>
 			<textarea bind:this={themeTextarea} value={data.theme} on:change={handle_theme_change} />
 			<button on:click={() => window.location.assign('/dashboard')} >Refresh</button>
 		{/if}
@@ -63,10 +78,25 @@
 		gap: 10px;
 	}
 
+	h1 {
+		margin-top: 20px;
+	}
+
 	.content {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+	}
+
+	.new-project {
+		background-color: var(--success);
+		color: var(--text);
+		border: none;
+		padding: 10px;
+		border-radius: 5px;
+		margin-left: 10px;
+		margin-top: 10px;
+		width: calc(100% - 30px);
 	}
 </style>

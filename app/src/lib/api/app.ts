@@ -1,5 +1,5 @@
 import { post, get } from './api.lib';
-import type { Tile, TilePage } from '@prisma/client';
+import type { Project, Tile, TilePage } from '@prisma/client';
 
 export const fetch_project = async (project_id: string, access_token: string) => {
 	return await post(`/api/app/project/fetch`, { project_id }, access_token);
@@ -7,6 +7,10 @@ export const fetch_project = async (project_id: string, access_token: string) =>
 
 export const create_project = async (name: string, description: string, access_token: string) => {
 	return await post('/api/app/project/create', { name, description }, access_token);
+};
+
+export const edit_project = async (project_id: string, updates: Project, access_token: string) => {
+	return await post('/api/app/project/edit', { project_id, updates }, access_token);
 };
 
 export const create_page = async (project_id: string, name: string, access_token: string) => {
