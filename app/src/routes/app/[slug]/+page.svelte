@@ -10,7 +10,7 @@
 	let session = getSession();
 
 	// API
-	import { add_tile, update_tiles } from '$lib/api/app';
+	import { create_tile, create_page, reorder_page, edit_tile } from '$lib/api/app';
 
 	// Icons
 	import { Home, Pencil, Cog, Check } from '@steeze-ui/heroicons';
@@ -33,23 +33,25 @@
 	let isEditingDragging = false;
 	let isEditingColor = false;
 	let editedTiles: Tile[] = [];
+	let currentPageIndex = data.project.pages.findIndex((page) => page.name.toUpperCase() === 'HOME');
 
 	// Get items from the project
-	let items = data.project.pages[0].tiles.sort((a: Tile, b: Tile) => {
+	let items = data.project.pages[currentPageIndex].tiles.sort((a: Tile, b: Tile) => {
 		return a.index - b.index;
 	});
 
 	// Adding a new tile
 	const handle_tile_add = async () => {
 		if(!$session?.access_token) return; 
-		items = [...items, ({
-			id: parseInt(Math.random()*1000+''),
+		const new_tile = ({
+			id: parseInt(Math.random().toString().split('.')[1]),
 			index: items.length,
 			display: 'An unnamed tile'
-		} as Tile)]
-		const response = await add_tile(data.project.pages[0].id, $session.access_token);
+		} as Tile);
+		items = [...items, new_tile]
+		const response = await create_tile(data.project.pages[currentPageIndex].id, new_tile, $session.access_token);
 		if (!response.tile) return;
-		items[items.length - 1] = response.tile;
+		items[response.tile.index] = response.tile;
 	};
 
 	const updateItems = async (newItems: Array<Tile>) => {
@@ -57,6 +59,8 @@
 	};
 
 	const updateItem = async (tile: Tile) => {
+		if(!$session?.access_token) return;
+
 		items = items.map((item) => {
 			if (item.id === tile.id) {
 				return tile;
@@ -64,32 +68,70 @@
 			return item;
 		});
 
+		// Remove the tile from editedTiles if its there
 		editedTiles = editedTiles.filter((item) => {
 			return item.id !== tile.id;
 		});
+
+		// Add it to the list
 		editedTiles = [...editedTiles, tile];
 	};
 
+	const save = async () => {
+		console.log('Saving tiles...', editedTiles);
+
+		if(editedTiles.length > 0) {
+			// Send each tile to the server for updates
+			editedTiles.forEach(async (tile: Tile) => {
+				// Set the tile page just incase
+				tile.tilePageId = data.project.pages[currentPageIndex].id;
+
+				// Send the tile to the server
+				const res = await edit_tile(tile, $session?.access_token+'');
+				console.log('Saved tile', res);
+			})
+
+			// reset editedTiles
+			editedTiles = [];
+		} else {
+			console.log('No tiles to update');
+		}
+	}
+
 	const toggleEditing = async () => {
-		if (isEditing && $session?.access_token) {
-			console.log('Saving tiles...', items);
-
-			// Get list of tiles that need to be updated
-			//@ts-ignore
-			const updates: Tile[] = items.map((item: Tile, index: number) => {
-				if (item.index !== index) { 
-					return {
-						id: item.id,
-						index
-					};
-				}
-			});
-
-			console.log('Updates:', updates);
-			// Send the updates to the server
-			await update_tiles([...editedTiles, ...updates], $session.access_token);
+		if (isEditing) {
+			await save();
 		}
 		isEditing = !isEditing;
+	};
+
+	const navigateCallback = async (navigation: string) => {
+		console.log('Navigating to', navigation);
+		console.log('Pages: ', data.project.pages.map((page) => page.name));
+		const newIndex = data.project.pages.findIndex((page) => page.name.toUpperCase() === navigation.toUpperCase());
+
+		if (newIndex !== -1) {
+			currentPageIndex = newIndex;
+			items = data.project.pages[currentPageIndex].tiles.sort((a: Tile, b: Tile) => {
+				return a.index - b.index;
+			});
+		} else { 
+			if(!$session) return;
+			console.log('Creating new page...');
+			const response = await create_page(data.project.id, navigation, $session.access_token);
+			console.log(response);
+			if (!response.page) return;
+			data.project.pages = [...data.project.pages, response.page];
+			currentPageIndex = data.project.pages.length - 1;
+			items = data.project.pages[currentPageIndex].tiles.sort((a: Tile, b: Tile) => {
+				return a.index - b.index;
+			});
+		}
+	};
+
+	const reorderPage = async (newItems: Tile[]) => {
+		if(!$session?.access_token) return;
+		await reorder_page(data.project.pages[currentPageIndex].id, newItems, $session.access_token);
 	};
 
 	$: {
@@ -102,7 +144,7 @@
 	}
 </script>
 
-<TileGrid {...state} addTile={handle_tile_add} {updateItems} {updateItem} {items} />
+<TileGrid {...state} addTile={handle_tile_add} {reorderPage} {updateItems} {updateItem} {items} {navigateCallback} />
 {#if isEditing}
 	<EditorRibbon
 		toggleInspect={() => (isEditingInspect = !isEditingInspect)}

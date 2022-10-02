@@ -8,11 +8,12 @@
   let display = tile.display;
   let speak = tile.speak;
   let image = tile.image;
+  let navigation = tile.navigation;
 
   let files: FileList;
 
-	export const handle_upload = async () => {
-		const response = await create_object(files[0]);
+	export const handle_upload = async (file: File) => {
+		const response = await create_object(file);
     image = response.url;
 	};
 
@@ -22,12 +23,13 @@
       display,
       speak,
       image,
+      navigation
     });
   }
 </script>
 
 <div>
-  <span><h4>Inspector</h4> <button on:click={closeModalCallback}>Close</button></span>
+  <span><h4>Inspector</h4> <button on:click={() => closeModalCallback()}>Close</button></span>
   <p>Display text:</p>
   <input type="text" bind:value={display}  >
   <p>Speak text (optional):</p>
@@ -35,7 +37,9 @@
   <p>Image (optional):</p>
   <input type="text"  bind:value={image}>
   <input bind:files type="file" />
-  <button on:click={handle_upload}>Click me</button>
+  <button on:click={() => handle_upload(files[0])}>Upload</button>
+  <p>Navigation (optional):</p>
+  <input type="text" bind:value={navigation}>
 </div>
 
 <style>

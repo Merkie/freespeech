@@ -15,6 +15,8 @@
 	export let addTile: Function;
 	export let updateItems: Function;
 	export let updateItem: Function;
+	export let navigateCallback: Function;
+	export let reorderPage: Function;
 
 	let isEditorModalOpen = false;
 	let editorModalTile: ITile;
@@ -23,16 +25,28 @@
 	const handleDndConsider = (e: { detail: any }) => {
 		updateItems(e.detail.items);
 	};
+	
 	const handleDndFinalize = (e: { detail: any }) => {
 		updateItems(e.detail.items);
+		
+		const updates = e.detail.items.map((item: ITile, index: number) => {
+				if(item.index !== index) {
+					return {
+						id: item.id,
+						index: index
+					}
+				}
+		});
+
+		reorderPage(updates);
 	};
 
-	const inspectorCallback = (tile: Tile) => {
+	const inspectorCallback = (tile: ITile) => {
 		editorModalTile = tile;
 		isEditorModalOpen = true;
 	}
 
-	const updateTileCallback = async (tile: Tile) => {
+	const updateTileCallback = async (tile: ITile) => {
 		await updateItem(tile);
 	}
 
@@ -52,7 +66,7 @@
 					duration: flipDurationMs
 				}}
 			>
-				<Tile tile={item} {isEditingInspect} {inspectorCallback} />
+				<Tile tile={item} {isEditing} {isEditingInspect} {inspectorCallback} {navigateCallback} />
 			</span>
 		{/each}
 
