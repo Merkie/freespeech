@@ -8,6 +8,8 @@
 	import EditorModal from './EditorModal.svelte';
 	export let items: Array<ITile>;
 
+	export let columns: number;
+
 	export let isEditing: boolean;
 	export let isEditingDragging: boolean;
 	export let isEditingInspect: boolean;
@@ -55,7 +57,7 @@
 
 <section>
 	<div
-		style={'grid-template-columns: repeat(8, minmax(0, 1fr));'}
+		style={'grid-template-columns: repeat('+columns+', minmax(0, 1fr));'}
 		use:dndzone={{ items, flipDurationMs, dropTargetStyle, dragDisabled: !isEditingDragging }}
 		on:consider={handleDndConsider}
 		on:finalize={handleDndFinalize}

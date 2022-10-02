@@ -3,13 +3,31 @@
 
 	import { Icon } from '@steeze-ui/svelte-icon';
 
+	// Callback functions
 	export let toggleInspect: Function;
 	export let toggleDragging: Function;
 	export let toggleColor: Function;
+	export let editPageColumns: Function;
 
+	// Editing State
 	export let isEditingInspect: boolean;
 	export let isEditingDragging: boolean;
 	export let isEditingColor: boolean;
+
+	// Other needed values
+	export let pageColumns: number;
+
+	// Bindings
+	let pageColumnsInput: HTMLInputElement;
+
+	const handle_columns_edit = () => {
+		// Try and catch used here for empty strings and other weird non-int inputs
+		try{
+			if(parseInt(pageColumnsInput.value) > 0) {
+				editPageColumns(parseInt(pageColumnsInput.value));
+			}
+		} catch(e) {}
+	}
 </script>
 
 <section>
@@ -31,6 +49,10 @@
 				<Icon src={Opacity} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ (isEditingColor ? '1' : '.5')}>Color</p>
+		</span>
+		<span>
+			<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={pageColumns} on:input={handle_columns_edit} />
+			<p style="opacity: 0.5">Columns</p>
 		</span>
 	</div>
 </section>
@@ -64,6 +86,7 @@
 		display: flex;
 		align-items: center;
 		flex-direction: column;
+		max-width: 100px;
 	}
 
 	span p {
@@ -71,7 +94,7 @@
 		margin-top: 10px;
 	}
 
-	button {
+	button, input {
 		display: flex;
 		align-items: center;
 		border: none;
@@ -83,5 +106,7 @@
 		padding: 5px;
 		padding-left: 20px;
 		padding-right: 20px;
+		text-align: center;
+		font-size: 20px;
 	}
 </style>

@@ -2,59 +2,40 @@ import { client } from '$lib/prisma';
 import { auth } from '$lib/lucia';
 
 import type { RequestHandler } from '@sveltejs/kit';
-import type { Tile } from '@prisma/client';
+import type { TilePage } from '@prisma/client';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const session = await auth.validateRequest(request);
-	const body: {
-		page_id: string;
-		tile: Tile;
-	} = await request.json();
+	const body: { page: TilePage } = await request.json();
 
 	if (!session.user) {
 		return new Response(JSON.stringify({ message: 'error' }), { status: 200 });
 	}
 
+	// Get the page with the user's id
 	const page = await client.tilePage.findFirst({
 		where: {
-			id: parseInt(body.page_id + ''),
+			id: parseInt(body.page.id + ''),
 			user_id: session.user.user_id
-		},
-		include: {
-			tiles: true
 		}
 	});
 
+	// If the page doesn't exist, return an error
 	if (!page) {
 		return new Response(JSON.stringify({ message: 'error' }), { status: 200 });
 	}
 
-	const new_tile: Tile = await client.tile.create({
-		data: {
-			display: body.tile.display,
-			index: body.tile.index,
-			user: {
-				connect: {
-					id: session.user.user_id
-				}
-			}
-		}
-	});
-
-	console.log(new_tile);
-
+	// Update the page
 	await client.tilePage.update({
 		where: {
 			id: page.id
 		},
 		data: {
-			tiles: {
-				connect: {
-					id: new_tile.id
-				}
-			}
+			name: body.page.name,
+			columns: parseInt(body.page.columns + '')
 		}
 	});
 
-	return new Response(JSON.stringify({ message: 'success', tile: new_tile }), { status: 200 });
+	// Return a success message
+	return new Response(JSON.stringify({ message: 'ok' }), { status: 200 });
 };
