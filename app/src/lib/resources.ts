@@ -5,7 +5,10 @@ import { PrismaClient } from '@prisma/client';
 import AWS from 'aws-sdk';
 dotenv.config();
 
-export const s3 = new AWS.S3();
+export const s3 = new AWS.S3({
+	accessKeyId: process.env.FS_AWS_ACCESS_KEY_ID,
+	secretAccessKey: process.env.FS_AWS_SECRET_ACCESS_KEY
+});
 export const client = new PrismaClient();
 export const auth = lucia({
 	adapter: prisma(client),
