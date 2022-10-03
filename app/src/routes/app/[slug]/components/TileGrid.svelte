@@ -29,7 +29,7 @@
 
 	// Items is needed for drag and drop functionality
 	let items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
-	
+
 	// Considering a Dnd action
 	const handleDndConsider = (e: { detail: any }) => {
 		items = e.detail.items;
@@ -37,7 +37,10 @@
 	
 	// Finalizing a Dnd action
 	const handleDndFinalize = async (e: { detail: any }) => {
-		items = e.detail.items;
+		items = e.detail.items.map((item: ITile, index: number) => {
+			item.index = index;
+			return item;
+		});
 		$ProjectData.pages[$CurrentPageIndex].tiles = items;
 		
 		const updates = e.detail.items.map((item: ITile, index: number) => {
@@ -55,7 +58,8 @@
 
 	// Set the items to the store
 	$: {
-		items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
+		
+			items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
 	}
 </script>
 
