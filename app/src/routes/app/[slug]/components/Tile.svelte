@@ -55,15 +55,31 @@
 
 	// Handle interraction with tile
 	const handleInteraction = () => {
-		if(dummy) return;
-		if($IsInEditMode) {
+		if(dummy) return; // If the tile is a dummy tile, do nothing
+		if($IsInEditMode) { // If the user is in edit mode
 			if($IsEditingInspect) {
 				$InspectedTile = tile;
 				return; // return to prevent the tile from being interracted with
 			}
-		} else {
-			if(tile.navigation) {
-				navigate(tile.navigation)
+		} else if(tile.navigation) { // If the user is not in edit mode and the tile has a navigation
+			navigate(tile.navigation)
+		} else if(tile.modifier) { // If the user is not in edit mode and the tile has a modifier
+			if(tile.modifier[0] === '+') { // Adding a suffix
+				// Add to the sentence display
+				$AppSentence[$AppSentence.length - 1].display = $AppSentence[$AppSentence.length - 1].display + tile.modifier.split('+')[1];
+				
+				// Add to .speak if there is .speak
+				if($AppSentence[$AppSentence.length - 1].speak) {
+					$AppSentence[$AppSentence.length - 1].speak = $AppSentence[$AppSentence.length - 1].speak + tile.modifier.split('+')[1];
+				}
+			} else if(tile.modifier[tile.modifier.length-1] === '+') { // Adding a prefix
+				// Add to the sentence display
+				$AppSentence[$AppSentence.length - 1].display = tile.modifier.split('+')[0] + $AppSentence[$AppSentence.length - 1].display;
+				
+				// Add to .speak if there is .speak
+				if($AppSentence[$AppSentence.length - 1].speak) {
+					$AppSentence[$AppSentence.length - 1].speak = tile.modifier.split('+')[0] + $AppSentence[$AppSentence.length - 1].speak;
+				}
 			}
 		}
 
@@ -85,11 +101,17 @@
 								opacity: ${tile.invisible ? 0 : 1};
 								justify-content: ${tile.image ? 'space-between' : 'center'};
 								height: ${$UserTileSize}px;
-								font-size: ${$UserFontSize}px;`}
+								font-size: ${$UserFontSize}px;
+								overflow: ${tile.navigation ? 'auto' : 'hidden'};`}
 							on:click={handleInteraction}>
 	{#if tile.navigation}
-		<div style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
+		<div class="folder-piece" style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
 	{/if}
+
+	{#if tile.accented}
+		<div class="corner-piece" style={`background: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
+	{/if}
+	
 	<p style={"font-size: "+(!tile.image && tile.display.length < 10 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>{tile.display}</p>
 	{#if tile.image}
 		<img src={tile.image} alt="icon" />
@@ -117,7 +139,16 @@
 		font-size: 20px;
 	}
 
-	div {
+	.corner-piece {
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		top: -27px;
+		right: -27px;
+		rotate: 45deg;
+	}
+
+	.folder-piece {
 		width: 30%;
 		height: 10px;
 		position: absolute;

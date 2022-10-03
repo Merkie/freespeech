@@ -43,6 +43,7 @@ model Tile {
   modifier        String?
   backgroundColor String?
   borderColor     String?
+  accented        Boolean   @default(false)
   silent          Boolean   @default(false)
   invisible       Boolean   @default(false)
   index           Int       @default(autoincrement())

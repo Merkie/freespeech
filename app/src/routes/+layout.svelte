@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { handleSilentRefresh } from 'lucia-sveltekit/client';
-	import { DarkTheme } from '$lib/theme';
+	import { DarkTheme, LightTheme } from '$lib/theme';
 	export let data;
 	
 	handleSilentRefresh();
 
-	let theme = DarkTheme;
+	let theme = LightTheme;
 
 	if(data.theme) {
 		// add the custom theme to the theme object
@@ -33,6 +33,7 @@
 	:global(*) {
 		margin: 0;
 		transition-duration: 0.1s;
+		scrollbar-width: none;
 	}
 
 	/* Button styles */

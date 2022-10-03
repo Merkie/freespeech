@@ -4,6 +4,8 @@ export const DarkTheme = `
   --surface-3: #2f343c;
   --surface-4: #383e47;
   --surface-5: #404854;
+
+  
   --background: #111418;
   --text: white;
 
@@ -44,6 +46,77 @@ export const DarkTheme = `
   --tile-grid-header-background: var(--surface-1);
   --tile-grid-header-border: var(--surface-4);
   --tile-grid-header-button-text-color: var(--text);
+  --dashboard-project-card-background: var(--surface-1);
+  --dashboard-project-card-border: var(--surface-4);
+  --dashboard-project-card-hover-background: var(--surface-2);
+  --dashboard-project-card-button-background: var(--surface-2);
+  --dashboard-project-card-button-border: var(--surface-4);
+  --side-bar-background: var(--surface-1);
+  --side-bar-border: var(--surface-4);
+  --side-bar-option-background: var(--surface-2);
+  --side-bar-option-border: var(--surface-4);
+  --side-bar-option-text: var(--text);
+  --side-bar-selected-option-background: var(--surface-3);
+  --side-bar-selected-option-border: var(--surface-5);
+  --side-bar-selected-option-text: var(--text);
+  --portal-background: var(--surface-1);
+  --portal-border: var(--surface-4);
+  --portal-input-background: var(--background);
+  --portal-input-border: var(--surface-4);
+  --portal-input-text: var(--text);
+`;
+
+export const LightTheme = `
+  --surface-1: #1c2127;
+  --surface-2: #252a31;
+  --surface-3: #2f343c;
+  --surface-4: #383e47;
+  --surface-5: #404854;
+
+  --background: #e4e4e4;
+  --text: white;
+
+  --success: #32a467;
+  --success-text: white;
+  --primary: #2d72d2;
+  --failure: #d23f31;
+  --failure-border: #d23f31;
+  --failure-text: white;
+  
+  --app-navigation-background: var(--surface-1);
+  --app-navigation-border: var(--surface-4); 
+  --app-navigation-button-background: var(--surface-2);
+  --app-navigation-button-border: var(--surface-4);
+  --app-navigation-button-text: var(--text);
+  --editor-modal-background: var(--surface-2);
+  --editor-modal-border: var(--surface-4);
+  --editor-modal-input-border: var(--surface-4);
+  --editor-modal-input-text: var(--text);
+  --editor-modal-input-background: var(--background);
+  --upload-button-background: var(--primary);
+  --upload-button-text: var(--text);
+  --upload-button-border: var(--surface-4);
+  --editor-ribbon-background: var(--surface-1);
+  --editor-ribbon-border: var(--surface-4);
+  --editor-ribbon-button-selected: var(--primary);
+  --editor-ribbon-button-text: var(--text);
+  --editor-ribbon-button-background: var(--surface-2);
+  --editor-ribbon-button-border: var(--surface-4);
+  --web-view-background: var(--surface-1);
+  --web-view-border: var(--surface-4);
+  --settings-view-navigation-background: var(--surface-1);
+  --settings-view-navigation-border: var(--surface-4);
+  --settings-view-navigation-text: var(--text);
+  --tile-background: white;
+  --tile-border: black;
+  --tile-text-color: black;
+  --tile-grid-header-background: var(--surface-2);
+  --tile-grid-sentence-builder-header-background: white;
+  --tile-grid-header-border: var(--surface-4);
+  --tile-grid-header-button-text-color: black;
+  --tile-grid-header-button-background: white;
+  --tile-grid-header-button-border: black;
+  --tile-grid-header-navigation-button-color: var(--text);
   --dashboard-project-card-background: var(--surface-1);
   --dashboard-project-card-border: var(--surface-4);
   --dashboard-project-card-hover-background: var(--surface-2);

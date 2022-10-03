@@ -63,6 +63,7 @@
 		color: var(--text);
 		border-radius: 5px;
 		padding: 10px;
+		padding-right: 0px;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
