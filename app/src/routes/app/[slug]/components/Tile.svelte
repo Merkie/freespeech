@@ -69,7 +69,7 @@
 		const speak_text = tile.speak || tile.display;
 
 		// speak the text
-		if(!tile.silent) {
+		if(!tile.silent && !tile.invisible) {
 			// Add to sentence
 			$AppSentence = [...$AppSentence, tile]
 			var utterance = new SpeechSynthesisUtterance(speak_text);
