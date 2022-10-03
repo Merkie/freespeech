@@ -10,7 +10,7 @@
 <h1>Home</h1>
 {#if authenticated}
 	<p>Logged in as: {data['_lucia'].user.email}</p>
-	<a href="/settings">settings</a>
+	<a href="/dashboard">Dashboard</a>
 	<button on:click={async () => signOut('/')}>Sign out</button>
 {/if}
 
