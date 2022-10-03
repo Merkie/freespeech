@@ -40,7 +40,7 @@
 		if (!response.tile) return;
 		
 		// Update the tile with the new id
-		$ProjectData.pages[response.tile.index] = response.tile;
+		$ProjectData.pages[$CurrentPageIndex].tiles[response.tile.index].id = response.tile.id;
 	};
 </script>
 

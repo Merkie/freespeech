@@ -20,6 +20,10 @@
   let speak = $InspectedTile?.speak;
   let image = $InspectedTile?.image;
   let navigation = $InspectedTile?.navigation;
+  let backgroundColor = $InspectedTile?.backgroundColor;
+  let borderColor = $InspectedTile?.borderColor;
+  let invisible = $InspectedTile?.invisible;
+  let silent = $InspectedTile?.silent;
   let files: FileList;
 
   // Handling uploading a file
@@ -56,7 +60,11 @@
         display,
         speak,
         image,
-        navigation
+        navigation,
+        backgroundColor,
+        borderColor,
+        invisible,
+        silent
       } as Tile
     });
   }
@@ -64,16 +72,50 @@
 
 <div>
   <span><h4>Inspector</h4> <button class="close" on:click={() => ($InspectedTile = undefined)}>Close</button></span>
+  <span>
   <p>Display text:</p>
   <input type="text" bind:value={display}  >
+  </span>
+
+  <span>
   <p>Speak text (optional):</p>
   <input type="text" bind:value={speak}>
+  </span>
+
+  <span>
+  <p>Silent:</p>
+  <input type="checkbox" bind:checked={silent}>
+  </span>
+
+  <span>
   <p>Image (optional):</p>
   <input type="text"  bind:value={image}>
+  </span>
+
+  <span>
   <input bind:files type="file" />
   <button class="upload" on:click={() => handle_upload(files[0])}>Upload</button>
+  </span>
+
+  <span>
   <p>Navigation (optional):</p>
   <input type="text" bind:value={navigation}>
+  </span>
+
+  <span>
+  <p>Background Color (optional):</p>
+  <input type="text" bind:value={backgroundColor}>
+  </span>
+
+  <span>
+  <p>Border Color (optional):</p>
+  <input type="text" bind:value={borderColor}>
+  </span>
+
+  <span>
+  <p>Invisible:</p>
+  <input type="checkbox" bind:checked={invisible}>
+  </span>
 </div>
 
 <style>
@@ -93,6 +135,7 @@
     flex-direction: column;
     box-shadow: 0 0 0 100000px rgba(0,0,0,.5);
     font-size: 20px;
+    flex-wrap: wrap;
   }
 
   span {

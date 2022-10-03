@@ -30,7 +30,7 @@
 
 <style>
 	section {
-		width: 250px;
+		width: 350px;
 		height: 100vh;
 		background-color: var(--surface-1);
 		border-right: var(--surface-4) solid 1px;

@@ -4,6 +4,8 @@
 	import AppNavigation from './components/AppNavigation.svelte';
 	import EditorRibbon from './components/EditorRibbon.svelte';
 	import TileGrid from './components/TileGrid.svelte';
+	import SettingsPage from './components/SettingsPage.svelte';
+
 
 	// Session
 	import { getSession } from 'lucia-sveltekit/client';
@@ -20,7 +22,8 @@
 	import { CurrentPageIndex,
 					ProjectData,
 					IsInEditMode,
-					EditedTiles
+					EditedTiles,
+					InSettingsMenu
 					} from '$lib/stores';
 	import { edit_tile } from '$lib/api/app';
 
@@ -49,26 +52,33 @@
 	}
 </script>
 
-<TileGridHeader />
-<TileGrid />
-{#if $IsInEditMode}
-	<EditorRibbon/>
+{#if !$InSettingsMenu}
+	<TileGridHeader />
+	<TileGrid />
+	{#if $IsInEditMode}
+		<EditorRibbon/>
+	{/if}
+{:else}
+	<SettingsPage />
 {/if}
+
 <AppNavigation>
 	<AppNavigationButton 
 		name={'Home'}
 		iconsrc={Home}
-		callback={() => console.log('Home pressed')}
+		callback={() => {
+			$CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === 'HOME'); $InSettingsMenu = false;
+		}}
 	/>
 	<AppNavigationButton
 		name={$IsInEditMode ? 'Save Changes' : 'Edit'}
 		iconsrc={$IsInEditMode ? Check : Pencil}
 		background={$IsInEditMode ? 'var(--success)' : 'inital'}
-		callback={() => {$IsInEditMode = !$IsInEditMode; if(!$IsInEditMode) save()}}
+		callback={() => {if($InSettingsMenu) return; $IsInEditMode = !$IsInEditMode; if(!$IsInEditMode) save()}}
 	/>
 	<AppNavigationButton
 		name={'Settings'}
 		iconsrc={Cog}
-		callback={() => console.log('Settings pressed')}
+		callback={() => $InSettingsMenu = true}
 	/>
 </AppNavigation>

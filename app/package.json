@@ -33,9 +33,11 @@
 		"@prisma/client": "^4.4.0",
 		"@steeze-ui/radix-icons": "^1.1.0",
 		"@steeze-ui/svelte-icon": "^1.3.2",
+		"@types/cytoscape": "^3.19.9",
 		"atob": "^2.1.2",
 		"aws-sdk": "^2.1223.0",
 		"b64-to-blob": "^1.2.19",
+		"cytoscape": "^3.23.0",
 		"dotenv": "^16.0.2",
 		"lucia-sveltekit": "^0.8.7",
 		"svelte-hero-icons": "^4.1.3"

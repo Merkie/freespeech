@@ -27,5 +27,6 @@ export const PageHistory: Writable<string[]> = writable(['HOME']);
 export const PageHistoryIndex: Writable<number> = writable(0);
 export const EditedTiles: Writable<Tile[]> = writable([]);
 export const IsEditingDragging: Writable<boolean> = writable(false);
-export const IsEditingInspect: Writable<boolean> = writable(false);
+export const IsEditingInspect: Writable<boolean> = writable(true);
 export const IsEditingColor: Writable<boolean> = writable(false);
+export const InSettingsMenu: Writable<boolean> = writable(false);

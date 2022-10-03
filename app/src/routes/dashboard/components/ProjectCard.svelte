@@ -57,6 +57,17 @@
 		border-radius: 5px;
 	}
 
+	button {
+		background-color: var(--surface-2);
+		border: 1px solid var(--surface-4);
+		color: var(--text);
+		border-radius: 5px;
+		padding: 10px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+	}
+
 	div:hover {
 		background-color: var(--surface-2);
 	}

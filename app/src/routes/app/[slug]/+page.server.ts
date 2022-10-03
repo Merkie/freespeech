@@ -26,7 +26,6 @@ export const load: ServerLoad = async ({ parent, params }) => {
 	if (!project) {
 		throw redirect(302, '/dashboard');
 	}
-
 	// return the projects
 	return { project };
 };

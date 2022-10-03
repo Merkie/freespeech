@@ -34,20 +34,25 @@ model RefreshToken {
 }
 
 model Tile {
-  id         Int       @id @unique @default(autoincrement())
-  display    String
-  speak      String?
-  image      String?
-  navigation String?
-  modifier   String?
-  index      Int       @default(autoincrement())
-  public     Boolean   @default(false)
-  user       User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
-  user_id    String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  TilePage   TilePage? @relation(fields: [tilePageId], references: [id])
-  tilePageId Int?
+  id              Int       @id @unique @default(autoincrement())
+  tap_count       Int       @default(0)
+  display         String
+  speak           String?
+  image           String?
+  navigation      String?
+  modifier        String?
+  backgroundColor String?
+  borderColor     String?
+  silent          Boolean   @default(false)
+  invisible       Boolean   @default(false)
+  index           Int       @default(autoincrement())
+  public          Boolean   @default(false)
+  user            User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user_id         String
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  TilePage        TilePage? @relation(fields: [tilePageId], references: [id])
+  tilePageId      Int?
 
   @@index([user_id])
   @@map("tile")

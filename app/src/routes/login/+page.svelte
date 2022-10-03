@@ -13,4 +13,4 @@
 
 <input type="text" bind:value={email} />
 <input type="password" bind:value={password} />
-<button on:click={handleLogin}>Create User</button>
+<button on:click={handleLogin}>Login User</button>

@@ -73,11 +73,15 @@
 
 		// speak the text
 		var utterance = new SpeechSynthesisUtterance(speak_text);
-		window.speechSynthesis.speak(utterance);
+		if(!tile.silent)
+			window.speechSynthesis.speak(utterance);
 	};
 </script>
 
-<button on:click={handleInteraction}>
+<button style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} on:click={handleInteraction}>
+	{#if tile.navigation}
+		<div style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
+	{/if}
 	{#if tile.image}
 		<img src={tile.image} width="50px;" alt="icon" />
 	{/if}
@@ -86,6 +90,7 @@
 
 <style>
 	button {
+		position: relative;
 		width: 100%;
 		height: 100px;
 		background-color: var(--surface-2);
@@ -99,5 +104,19 @@
 		align-items: center;
 		gap: 10px;
 		justify-content: center;
+	}
+
+	div {
+		width: 30%;
+		height: 10px;
+		position: absolute;
+		top: -5px;
+		left: -1px;
+		background-color: var(--surface-2);
+		border: 1px solid var(--surface-4);
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		border-bottom: none;
+		border-right: none;
 	}
 </style>

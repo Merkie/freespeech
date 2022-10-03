@@ -25,6 +25,10 @@ export const edit_page = async (page: TilePage, access_token: string) => {
 	return await post('/api/app/page/edit', { page }, access_token);
 };
 
+export const remove_page = async (page_id: number, access_token: string) => {
+	return await post('/api/app/page/remove', { page_id }, access_token);
+};
+
 export const create_tile = async (page_id: number, tile: Tile, access_token: string) => {
 	return await post('/api/app/tile/create', { page_id, tile }, access_token);
 };

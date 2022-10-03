@@ -27,8 +27,7 @@
 
 			if(!$session?.access_token) return;
 			let page = $ProjectData.pages[$CurrentPageIndex];
-			// @ts-ignore
-			delete page.tiles;
+			// delete page.tiles;
 			await edit_page(page, $session.access_token);
 	};
 

@@ -9,7 +9,7 @@
 		padding: 10px;
 		display: flex;
 		gap: 10px;
-		position: absolute;
+		position: fixed;
 		width: calc(100% - 20px);
 		bottom: 0;
 		height: 50px;
