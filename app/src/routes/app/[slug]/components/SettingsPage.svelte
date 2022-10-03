@@ -144,9 +144,8 @@
     width: auto;
     margin: 20px;
     height: 500px;
-    color: var(--text);
-    background: var(--surface-1);
-    border: 1px solid var(--surface-4);
+    background: var(--web-view-background);
+    border: 1px solid var(--web-view-border);
     border-radius: 10px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
@@ -159,16 +158,16 @@
     padding-left: 20px;
     padding-right: 20px;
     margin: 20px;
-    color: var(--text);
-    background: var(--surface-1);
-    border: 1px solid var(--surface-4);
+    color: var(--settings-view-navigation-text);
+    background: var(--settings-view-navigation-background);
+    border: 1px solid var(--settings-view-navigation-border);
     border-radius: 10px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 
   .remove-btn {
     background: var(--failure);
-    color: var(--text);
+    color: var(--failure-text);
     border: none;
     border-radius: 5px;
     padding: 5px;
@@ -179,7 +178,7 @@
 
   .dashboard-btn {
     background: var(--success);
-    color: var(--text);
+    color: var(--success-text);
     border: none;
     border-radius: 5px;
     padding: 5px;

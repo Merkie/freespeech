@@ -16,9 +16,9 @@
 
 <style>
 	button {
-		background-color: var(--surface-2);
-		border: 1px solid var(--surface-4);
-		color: var(--text);
+		background: var(--app-navigation-button-background);
+		border: 1px solid var(--app-navigation-button-border);
+		color: var(--app-navigation-button-text);
 		padding: 5px;
 		border-radius: 5px;
 		flex: 1;

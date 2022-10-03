@@ -1,25 +1,16 @@
 <script lang="ts">
 	import { handleSilentRefresh } from 'lucia-sveltekit/client';
+	import { DarkTheme } from '$lib/theme';
 	export let data;
 	
 	handleSilentRefresh();
 
-	let theme = `
-		--surface-1: #1c2127;
-		--surface-2: #252a31;
-		--surface-3: #2f343c;
-		--surface-4: #383e47;
-		--surface-5: #404854;
-		--background: #111418;
-		--text: white;
+	let theme = DarkTheme;
 
-		--success: #32a467;
-		--primary: #2d72d2;
-		--failure: #d23f31;`;
-
-		if(data.theme) {
-			theme = theme + data.theme.split(';').map((line: string) => { return '--'+line.trim()+';' }).join(' ');
-		}
+	if(data.theme) {
+		// add the custom theme to the theme object
+		theme = theme + data.theme.split(';').map((line: string) => { return '--'+line.trim()+';' }).join(' ');
+	}
 </script>
 
 <main style={theme}>
@@ -36,21 +27,6 @@
 		color: var(--text);
 		background-color: var(--background);
 		font-family: 'Inter', sans-serif;
-	}
-
-	/* Colors */
-	:global(body) {
-		/* --surface-1: #1c2127;
-		--surface-2: #252a31;
-		--surface-3: #2f343c;
-		--surface-4: #383e47;
-		--surface-5: #404854;
-		--background: #111418;
-		--text: white;
-
-		--success: #32a467;
-		--primary: #2d72d2; */
-		
 	}
 
 	/* Global styles */
@@ -71,5 +47,6 @@
 
 	:global(button:active) {
 		transform: scale(0.99);
+
 	}
 </style>

@@ -4,8 +4,8 @@
 
 <style>
 	div {
-		background-color: var(--surface-1);
-		border-top: 1px solid var(--surface-4);
+		background: var(--app-navigation-background);
+		border-top: 1px solid var(--app-navigation-border);
 		padding: 10px;
 		display: flex;
 		gap: 10px;

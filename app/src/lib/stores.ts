@@ -1,4 +1,5 @@
 import { writable, type Writable } from 'svelte/store';
+import { browser } from '$app/environment';
 
 // Types
 import type { Project, Tile, TilePage } from '@prisma/client';
@@ -30,3 +31,27 @@ export const IsEditingDragging: Writable<boolean> = writable(false);
 export const IsEditingInspect: Writable<boolean> = writable(true);
 export const IsEditingColor: Writable<boolean> = writable(false);
 export const InSettingsMenu: Writable<boolean> = writable(false);
+// const storedTileSize = parseInt(localStorage.getItem('freespeech-tile-size') + '') || 100;
+// export const UserTileSize: Writable<number> = writable(storedTileSize);
+
+// Tile Size
+const initialTileSize = browser
+	? window.localStorage.getItem('freespeech-tile-size') ?? '100'
+	: '100';
+export const UserTileSize = writable<number>(parseInt(initialTileSize + ''));
+UserTileSize.subscribe((value) => {
+	if (browser) {
+		window.localStorage.setItem('freespeech-tile-size', value + '');
+	}
+});
+
+// Font Size
+const initialFontSize = browser
+	? window.localStorage.getItem('freespeech-font-size') ?? '20'
+	: '20';
+export const UserFontSize = writable<number>(parseInt(initialFontSize + ''));
+UserFontSize.subscribe((value) => {
+	if (browser) {
+		window.localStorage.setItem('freespeech-font-size', value + '');
+	}
+});

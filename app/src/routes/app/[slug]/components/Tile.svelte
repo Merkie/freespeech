@@ -9,7 +9,9 @@
 					AppSentence,
 					CurrentPageIndex,
 					PageHistory,
-					ProjectData
+					ProjectData,
+					UserTileSize,
+					UserFontSize
 					} from '$lib/stores';
 	import { create_page } from '$lib/api/app';
 
@@ -78,14 +80,20 @@
 	};
 </script>
 
-<button style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} on:click={handleInteraction}>
+<button style={`background: ${tile.backgroundColor || 'auto'};
+								border-color: ${tile.borderColor || 'auto'};
+								opacity: ${tile.invisible ? 0 : 1};
+								justify-content: ${tile.image ? 'space-between' : 'center'};
+								height: ${$UserTileSize}px;
+								font-size: ${$UserFontSize}px;`}
+							on:click={handleInteraction}>
 	{#if tile.navigation}
 		<div style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
 	{/if}
+	<p style={"font-size: "+(!tile.image && tile.display.length < 10 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>{tile.display}</p>
 	{#if tile.image}
 		<img src={tile.image} alt="icon" />
 	{/if}
-	<p style={"font-size: "+(!tile.image && tile.display.length < 10 ? '35px' : 'inherit')}>{tile.display}</p>
 </button>
 
 <style>
@@ -96,10 +104,9 @@
 	button {
 		position: relative;
 		width: 100%;
-		height: 100px;
-		background-color: var(--surface-2);
-		border: 2px solid var(--surface-4);
-		color: var(--text);
+		background-color: var(--tile-background);
+		border: 2px solid var(--tile-border);
+		color: var(--tile-text-color);
 		padding: 5px;
 		border-radius: 5px;
 		font-size: 20px;
@@ -107,7 +114,7 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 10px;
-		justify-content: center;
+		font-size: 20px;
 	}
 
 	div {
@@ -116,8 +123,8 @@
 		position: absolute;
 		top: -5px;
 		left: -2px;
-		background-color: var(--surface-2);
-		border: 2px solid var(--surface-4);
+		background-color: var(--tile-background);
+		border: 2px solid var(--tile-border);
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
 		border-bottom: none;

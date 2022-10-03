@@ -32,8 +32,8 @@
 	section {
 		width: 350px;
 		height: 100vh;
-		background-color: var(--surface-1);
-		border-right: var(--surface-4) solid 1px;
+		background: var(--side-bar-background);
+		border-right: var(--side-bar-border) solid 1px;
 	}
 
 	h1 {
@@ -56,9 +56,9 @@
 		padding: 10px;
 		margin: 10px;
 		border-radius: 5px;
-		background-color: var(--surface-2);
-		border: var(--surface-4) solid 1px;
-		color: var(--text);
+		background-color: var(--side-bar-option-background);
+		border: var(--side-bar-option-border) solid 1px;
+		color: var(--side-bar-option-text);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
@@ -66,12 +66,12 @@
 	}
 
 	div:hover {
-		background-color: var(--surface-3);
-		border: var(--surface-5) solid 1px;
+		background-color: var(----side-bar-selected-option-background);
+		border: var(--side-bar-selected-option-border) solid 1px;
 	}
 
 	.selected {
-		background-color: var(--surface-3);
-		border: var(--surface-5) solid 1px;
+		background-color: var(----side-bar-selected-option-background);
+		border: var(--side-bar-selected-option-border) solid 1px;
 	}
 </style>

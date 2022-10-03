@@ -95,17 +95,18 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    background-color: var(--surface-1);
-    border-top: 1px solid var(--surface-4);
-    border-bottom: 1px solid var(--surface-4);
+    background: var(--tile-grid-header-background);
+    border-top: 1px solid var(--tile-grid-header-border);
+    border-bottom: 1px solid var(--tile-grid-header-border);
     filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
     padding-top: 5px;
+    overflow-y: hidden;
   }
   button {
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--text);
+    color: var(--tile-grid-header-button-text-color);
   }
   button:disabled {
     opacity: .5;

@@ -40,8 +40,8 @@
 
 <style>
 	div {
-		background-color: var(--surface-1);
-		border: 1px solid var(--surface-4);
+		background-color: var(--dashboard-project-card-background);
+		border: 1px solid var(--dashboard-project-card-border);
 		border-radius: 5px;
 		padding: 10px;
 		margin: 10px;
@@ -58,8 +58,8 @@
 	}
 
 	button {
-		background-color: var(--surface-2);
-		border: 1px solid var(--surface-4);
+		background-color: var(--dashboard-project-card-button-background);
+		border: 1px solid var(--dashboard-project-card-button-border);
 		color: var(--text);
 		border-radius: 5px;
 		padding: 10px;
@@ -69,6 +69,6 @@
 	}
 
 	div:hover {
-		background-color: var(--surface-2);
+		background-color: var(--dashboard-project-card-hover-background);
 	}
 </style>
