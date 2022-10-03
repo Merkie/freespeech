@@ -65,16 +65,16 @@
 			}
 		}
 
-		// Add the tile to the sentence
-		$AppSentence = [...$AppSentence, tile]
-
 		// get the speak text with tile.speak having first priority
 		const speak_text = tile.speak || tile.display;
 
 		// speak the text
-		var utterance = new SpeechSynthesisUtterance(speak_text);
-		if(!tile.silent)
+		if(!tile.silent) {
+			// Add to sentence
+			$AppSentence = [...$AppSentence, tile]
+			var utterance = new SpeechSynthesisUtterance(speak_text);
 			window.speechSynthesis.speak(utterance);
+		}
 	};
 </script>
 
