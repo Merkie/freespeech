@@ -98,7 +98,7 @@
 		width: 100%;
 		height: 100px;
 		background-color: var(--surface-2);
-		border: 1px solid var(--surface-4);
+		border: 2px solid var(--surface-4);
 		color: var(--text);
 		padding: 5px;
 		border-radius: 5px;
@@ -115,9 +115,9 @@
 		height: 10px;
 		position: absolute;
 		top: -5px;
-		left: -1px;
+		left: -2px;
 		background-color: var(--surface-2);
-		border: 1px solid var(--surface-4);
+		border: 2px solid var(--surface-4);
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
 		border-bottom: none;
