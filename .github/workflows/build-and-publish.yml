@@ -18,8 +18,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}-
       - name: npm install
-        run: cd vueapp && npm ci && cd ../
+        run: cd app && npm ci && cd ../
       - name: lint
-        run: cd vueapp && npm run lint && cd ../
+        run: cd app && npm run lint && cd ../
       - name: production build
-        run: cd vueapp && npm run build && cd ../
+        run: cd app && npm run build && cd ../
