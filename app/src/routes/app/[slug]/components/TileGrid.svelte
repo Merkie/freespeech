@@ -93,6 +93,7 @@
 <style>
 	section {
 		background-color: var(--background);
+		height: 100px;
 		height: calc(100% - 200px);
 	}
 	div {

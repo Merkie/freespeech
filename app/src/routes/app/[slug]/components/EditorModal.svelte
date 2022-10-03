@@ -138,8 +138,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 10px;
-    background-color: var(--surface-2);
-    border: 1px solid var(--surface-4);
+    background: var(--editor-modal-background);
+    border: 1px solid var(--editor-modal-border);
     border-radius: 10px;
     max-width: 500px;
     display: flex;
@@ -157,17 +157,13 @@
   }
 
   .close {
-    background-color: var(--surface-1);
-    border: 1px solid var(--surface-4);
+    background: var(--failure);
+    border: 1px solid var(--failure-border);
     border-radius: 5px;
     padding: 5px;
     font-size: 15px;
     cursor: pointer;
-    color: var(--text);
-  }
-
-  .close:hover {
-    background-color: var(--failure);
+    color: var(--failure-text);
   }
 
   div * {
@@ -175,17 +171,17 @@
   }
 
   input {
-    background-color: var(--background);
-    color: var(--text);
-    border: 1px solid var(--surface-4);
+    background: var(--editor-modal-input-background);
+    color: var(--editor-modal-input-text);
+    border: 1px solid var(--editor-modal-input-border);
     padding: 10px;
     border-radius: 5px;
   }
 
   .upload {
-    background-color: var(--primary);
-    color: var(--text);
-    border: 1px solid var(--surface-4);
+    background: var(--upload-button-background);
+    color: var(--upload-button-text);
+    border: 1px solid var(--upload-button-border);
     padding: 10px;
     border-radius: 5px;
   }
