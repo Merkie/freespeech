@@ -5,7 +5,7 @@ FreeSpeech AAC is a free and open-source assistive communication app written in 
 
 ### Cloning the project
 * Clone and enter into the project directory
-`git clone https://github.com/merkie/freespeech freespeech && cd freespeech`
+`git clone https://github.com/merkie/freespeech freespeech && cd freespeech/app`
 * Install dependencies
 `yarn` or `npm install` or `pnpm install`
 * Run the start command
