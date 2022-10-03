@@ -9,7 +9,11 @@
 					IsEditingInspect,
 					IsEditingDragging,
 					IsEditingColor,
+					UserTileSize,
+					UserFontSize
 					} from '$lib/stores';
+
+	console.log($UserTileSize)
 	
 	// API
 	import { edit_page } from '$lib/api/app';
@@ -66,13 +70,21 @@
 			<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
 			<p style="opacity: 0.5">Columns</p>
 		</span>
+		<span>
+			<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserTileSize}  />
+			<p style="opacity: 0.5">Tile Height</p>
+		</span>
+		<span>
+			<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserFontSize} />
+			<p style="opacity: 0.5">Font size</p>
+		</span>
 	</div>
 </section>
 
 <style>
 	section {
-		background-color: var(--surface-1);
-		border-top: 1px solid var(--surface-4);
+		background: var(--editor-ribbon-background);
+		border-top: 1px solid var(--editor-ribbon-border);
 		position: fixed;
 		bottom: 71px;
 		width: 100%;
@@ -80,7 +92,7 @@
 	}
 
 	.selected {
-		background-color: var(--primary);
+		background: var(--editor-ribbon-button-selected);
 	}
 
 	div {
@@ -98,7 +110,7 @@
 		display: flex;
 		align-items: center;
 		flex-direction: column;
-		max-width: 100px;
+		/* max-width: 100px; */
 	}
 
 	span p {
@@ -111,14 +123,18 @@
 		align-items: center;
 		border: none;
 		background-color: transparent;
-		color: var(--text);
-		background-color: var(--surface-2);
-		border: 1px solid var(--surface-4);
+		color: var(--editor-ribbon-button-text);
+		background: var(--editor-ribbon-button-background);
+		border: 1px solid var(--editor-ribbon-button-border);
 		border-radius: 5px;
 		padding: 5px;
 		padding-left: 20px;
 		padding-right: 20px;
 		text-align: center;
 		font-size: 20px;
+	}
+
+	input { 
+		width: 70px !important;
 	}
 </style>

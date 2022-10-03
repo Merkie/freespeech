@@ -26,9 +26,9 @@
 		align-items: center;
 		justify-content: center;
 		gap: 20px;
-		background-color: var(--surface-1);
+		background: var(--portal-background);
 		border-radius: 5px;
-		border: 1px solid var(--surface-4);
+		border: 1px solid var(--portal-border);
 		width: fit-content;
 		position: absolute;
 		top: 50%;
@@ -38,12 +38,12 @@
 	}
 
 	input, button {
-		color: var(--text) !important;
+		color: var(--portal-input-text) !important;
 		width: 100%;
 		max-width: 300px;
 		height: 50px;
-		border: 1px solid var(--surface-4);
-		background-color: var(--background);
+		border: 1px solid var(--portal-input-border);
+		background-color: var(--portal-input-background);
 		border-radius: 5px;
 		padding: 10px;
 		font-size: 16px;

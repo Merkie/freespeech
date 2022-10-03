@@ -10,6 +10,7 @@
 	// Stores
 	import { ProjectData,  
 					CurrentPageIndex,
+					UserTileSize
 				} from '$lib/stores';
 	
 	// Types
@@ -44,14 +45,13 @@
 	};
 </script>
 
-<button on:click={handle_tile_add}>
+<button style={`height: ${$UserTileSize}px;`} on:click={handle_tile_add}>
 	<Icon size="20px" src={Plus} />
 </button>
 
 <style>
 	button {
 		width: 100%;
-		height: 100px;
 		background-color: var(--background);
 		border: 1px dashed var(--text);
 		color: var(--text);
