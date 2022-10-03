@@ -123,7 +123,6 @@
   <p><b>Total Pages:</b> {$ProjectData.pages.length}</p>
 </section>
 
-<main>
   <h3>Navigations</h3>
   {#each $ProjectData.pages as page}
       <span>
@@ -133,14 +132,8 @@
   {/each}
   <h3>Graph View</h3>
   <div bind:this={cyElement} />
-</main>
 
 <style>
-  main {
-    height: max-content;
-    background-color: var(--background);
-    padding-bottom: 100px;
-  }
 
   h1, h3, section { 
     padding: 20px;

@@ -13,6 +13,7 @@
 
   // Session
   import { getSession } from 'lucia-sveltekit/client';
+	import { onMount } from "svelte";
   const session = getSession();
   
   // Bindings
@@ -25,6 +26,8 @@
   let invisible = $InspectedTile?.invisible;
   let silent = $InspectedTile?.silent;
   let files: FileList;
+  let modal: HTMLElement;
+
 
   // Handling uploading a file
 	export const handle_upload = async (file: File) => {
@@ -52,6 +55,15 @@
 		$EditedTiles = [...$EditedTiles, tile];
 	};
 
+  onMount(() => {
+    modal.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        $InspectedTile = undefined
+      }
+  });
+  });
+  
+
   $: {
     // Update the item when the display changes
     updateItem({
@@ -70,7 +82,7 @@
   }
 </script>
 
-<div>
+<div bind:this={modal}>
   <span><h4>Inspector</h4> <button class="close" on:click={() => ($InspectedTile = undefined)}>Close</button></span>
   <span>
   <p>Display text:</p>

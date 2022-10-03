@@ -73,7 +73,7 @@
 	section {
 		background-color: var(--surface-1);
 		border-top: 1px solid var(--surface-4);
-		position: absolute;
+		position: fixed;
 		bottom: 71px;
 		width: 100%;
 		height: 80px;

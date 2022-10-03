@@ -52,15 +52,19 @@
 	}
 </script>
 
+<main>
 {#if !$InSettingsMenu}
 	<TileGridHeader />
 	<TileGrid />
 	{#if $IsInEditMode}
 		<EditorRibbon/>
 	{/if}
+	
 {:else}
 	<SettingsPage />
 {/if}
+</main>
+
 
 <AppNavigation>
 	<AppNavigationButton 
@@ -82,3 +86,11 @@
 		callback={() => $InSettingsMenu = true}
 	/>
 </AppNavigation>
+
+<style>
+	main {
+    height: max-content;
+    background-color: var(--background);
+    padding-bottom: 100px;
+  }
+</style>
