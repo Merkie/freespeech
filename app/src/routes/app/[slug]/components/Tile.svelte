@@ -83,12 +83,16 @@
 		<div style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
 	{/if}
 	{#if tile.image}
-		<img src={tile.image} width="50px;" alt="icon" />
+		<img src={tile.image} alt="icon" />
 	{/if}
-	<p>{tile.display}</p>
+	<p style={"font-size: "+(!tile.image && tile.display.length < 10 ? '35px' : 'inherit')}>{tile.display}</p>
 </button>
 
 <style>
+	img {
+		max-height: 60%;
+		max-width: 50%;
+	}
 	button {
 		position: relative;
 		width: 100%;
