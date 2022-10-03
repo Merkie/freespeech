@@ -11,7 +11,10 @@
 					PageHistory,
 					ProjectData,
 					UserTileSize,
-					UserFontSize
+					UserFontSize,
+					EditingColor,
+					EditingType,
+					IsEditingColor
 					} from '$lib/stores';
 	import { create_page } from '$lib/api/app';
 
@@ -61,6 +64,16 @@
 				$InspectedTile = tile;
 				return; // return to prevent the tile from being interracted with
 			}
+			if($IsEditingColor) {
+				if($EditingType === 'background') {
+					tile.backgroundColor = $EditingColor;
+				} else if($EditingType === 'border') {
+					tile.borderColor = $EditingColor;
+				} else if($EditingType === 'accent') {
+					tile.accented = !tile.accented;
+				}
+				return;
+			}
 		} else if(tile.navigation) { // If the user is not in edit mode and the tile has a navigation
 			navigate(tile.navigation)
 		} else if(tile.modifier) { // If the user is not in edit mode and the tile has a modifier
@@ -104,6 +117,7 @@
 								font-size: ${$UserFontSize}px;
 								overflow: ${tile.navigation ? 'auto' : 'hidden'};`}
 							on:click={handleInteraction}>
+
 	{#if tile.navigation}
 		<div class="folder-piece" style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
 	{/if}

@@ -10,7 +10,9 @@
 					IsEditingDragging,
 					IsEditingColor,
 					UserTileSize,
-					UserFontSize
+					UserFontSize,
+					EditingType,
+					EditingColor
 					} from '$lib/stores';
 
 	console.log($UserTileSize)
@@ -65,6 +67,18 @@
 				<Icon src={Opacity} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingColor ? '1' : '.5')}>Color</p>
+			{#if $IsEditingColor}
+				<div class="editing-color-popup">
+					<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
+					<input type="text" placeholder="color" bind:value={$EditingColor}>
+					<select bind:value={$EditingType}>
+						<option value="background">Background Color</option>
+						<option value="border">Border Color</option>
+						<option value="text">Text Color</option>
+						<option value="accent">Toggle Accent</option>
+					</select>
+				</div>
+			{/if}
 		</span>
 		<span>
 			<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
@@ -104,6 +118,26 @@
 		padding-left: 10px;
 		padding-right: 10px;
 		gap: 10px;
+	}
+
+	.editing-color-popup {
+		position: absolute;
+		top: -90px;
+		left: 20px;
+		height: 70px;
+		background: var(--editor-ribbon-button-background);
+		border: 1px solid var(--editor-ribbon-button-border);
+		border-radius: 5px;
+		align-items: left;
+	}
+
+	.editing-color {
+		width: 50px;
+		height: 50px;
+		background: var(--editor-ribbon-button-background);
+		border: 1px solid var(--editor-ribbon-button-border);
+		border-radius: 5px;
+		margin: 5px;
 	}
 
 	span {
