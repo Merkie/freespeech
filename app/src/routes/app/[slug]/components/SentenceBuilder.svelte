@@ -9,7 +9,6 @@
   // Components
   import TileComponent from './Tile.svelte';
 
-
   // Speak the entire sentence
   const speakSentence = () => {
     const utterance = new SpeechSynthesisUtterance($AppSentence.map(tile => tile.modifier || tile.speak || tile.display).join(' ').replaceAll('+ ', '').replaceAll(' +', ''));
@@ -24,6 +23,9 @@
 </script>
 
 <section class="sentence-container">
+  <button class="trash" on:click={() => {$AppSentence = []; speechSynthesis.cancel();}}>
+    <Icon width="40px" src={Trash} />
+  </button>
   <section style={`scrollbar-width: ${$AppSentence.length > 0 ? 'thin' : 'none'}`} class="sentence-section">
     {#each $AppSentence as sentence_tile, index}
       <span on:click={() => remove_from_sentence(index)}>
@@ -31,11 +33,8 @@
       </span>
     {/each}
   </section>
-  <button on:click={speakSentence}>
-    <Icon width="50px" src={SpeakerLoud} />
-  </button>
-  <button on:click={() => {$AppSentence = []; speechSynthesis.cancel();}}>
-    <Icon width="50px" src={Trash} />
+  <button class="speak" on:click={speakSentence}>
+    <Icon width="40px" src={SpeakerLoud} />
   </button>
 </section>
 
@@ -51,19 +50,37 @@
     padding: 20px;
     overflow-y: hidden;
     overflow-x: scroll;
+    height: 120px;
   }
 
   .sentence-container {
     height: 140px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     background: var(--tile-grid-sentence-builder-header-background);
     padding-right: 20px;
+    padding-left: 20px;
   }
 
   span {
-    min-width: 200px !important;
-    max-width: 200px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+  }
+
+  .trash {
+    background: var(--failure);
+    border: 1px solid var(--failure-border);
+    color: var(--failure-text);
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .speak {
+    background: var(--success);
+    border: 1px solid var(--success-border);
+    color: var(--success-text);
+    padding: 20px;
+    border-radius: 20px;
   }
 </style>
