@@ -6,11 +6,11 @@
 	let element: HTMLElement;
 </script>
 
-<section style={`left: ${visible ? '20px' : '-20px'};
+<section style={`};
 								 opacity: ${visible ? '1' : '0'};
 								 pointer-events: ${visible ? 'auto' : 'none'};
 								 ${height ? 'height: '+height+';' : ''}
-								 ${top ? 'top: '+top+';' : ''}`} bind:this={element} class={`${warning ? 'warning' : ''}`}>
+								 `} bind:this={element} class={`${warning ? 'warning' : ''}`}>
 	{#if warning}
 		<div class="warning-bg" />
 	{/if}
@@ -19,8 +19,9 @@
 
 <style>
   section {
-		position: absolute;
-		top: -110px;
+		position: fixed;
+		bottom: 80px;
+		left: 10px;
 		height: 70px;
 		display: flex;
 		background: var(--editor-ribbon-background);
@@ -35,7 +36,7 @@
 
 	.warning {
 		height: auto;
-		top: -70px;
+		/* top: -70px; */
 		background-color: var(--warning);
 		border: 1px solid var(--warning-border);
 		color: var(--warning-text);

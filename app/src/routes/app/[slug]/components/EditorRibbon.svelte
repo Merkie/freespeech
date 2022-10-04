@@ -205,15 +205,15 @@
 			<EditorRibbonPopout visible={isEditingCalibrate}>
 				<span>
 					<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
-					<p style="opacity: 0.5">Columns</p>
+					<p style="opacity: 0.5; display: block;">Columns</p>
 				</span>
 				<span>
 					<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserTileSize}  />
-					<p style="opacity: 0.5">Tile Height</p>
+					<p style="opacity: 0.5; display: block;">Tile Height</p>
 				</span>
 				<span>
 					<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserFontSize} />
-					<p style="opacity: 0.5">Font size</p>
+					<p style="opacity: 0.5; display: block;">Font size</p>
 				</span>
 			</EditorRibbonPopout>
 		</span>
@@ -236,7 +236,7 @@
 		border-top: 1px solid var(--editor-ribbon-border);
 		position: fixed;
 		bottom: 71px;
-		width: 100%;
+		width: fit-content;
 		height: 80px;
 	}
 
@@ -306,5 +306,23 @@
 
 	button:disabled {
 		opacity: .5;
+	}
+
+	@media (max-width: 1200px) {
+		section {
+			top: 200px;
+			right: 0;
+			height: 100%;
+		}
+
+		div {
+			flex-direction: column;
+			justify-content: start;
+			padding: 10px;
+		}
+
+		span p {
+			display: none;
+		}
 	}
 </style>

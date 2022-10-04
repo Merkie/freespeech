@@ -99,11 +99,18 @@
 		background-color: var(--tile-grid-background);
 		flex: 1;
 		overflow-y: scroll;
+		width: 100%;
 	}
 	div {
 		/* grid-template-columns: repeat(8, calc(100% / 8)); */
 		display: grid;
 		grid-gap: 10px;
 		padding: 10px;
+	}
+
+	@media (max-width: 1200px) {
+		div {
+			width: calc(100% - 100px);
+		}
 	}
 </style>
