@@ -34,6 +34,9 @@
 	// Props
 	export let tile: Tile;
 	export let dummy: boolean = false;
+
+	// API
+	import { handle_tile_interaction } from '$lib/api/app';
 	
 	// Navigate to another page 
 	const navigate = async (navigation: string) => {
@@ -159,6 +162,7 @@
 			}
 			var utterance = new SpeechSynthesisUtterance(speak_text);
 			window.speechSynthesis.speak(utterance);
+			await handle_tile_interaction(tile.id, $session?.access_token+'');
 			$AppSentence = [...$AppSentence, tile]
 		}
 	};

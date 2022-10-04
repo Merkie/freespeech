@@ -44,3 +44,7 @@ export const update_tiles = async (updates: Array<Tile>, access_token: string) =
 export const remove_tile = async (tile_id: number, access_token: string) => {
 	return await post('/api/app/tile/remove', { tile_id }, access_token);
 };
+
+export const handle_tile_interaction = async (tile_id: number, access_token: string) => {
+	return await post('/api/app/tile/interaction', { tile_id }, access_token);
+};
