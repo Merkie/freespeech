@@ -4,12 +4,15 @@
 	export let top: string = '';
 	export let visible: boolean;
 	let element: HTMLElement;
+
+	import { IsInEditMode } from '$lib/stores';
 </script>
 
 <section style={`};
-								 opacity: ${visible ? '1' : '0'};
+								 opacity: ${visible && $IsInEditMode ? '1' : '0'};
 								 pointer-events: ${visible ? 'auto' : 'none'};
 								 ${height ? 'height: '+height+';' : ''}
+								 left: ${visible && $IsInEditMode ? '10px' : '-100px'};
 								 `} bind:this={element} class={`${warning ? 'warning' : ''}`}>
 	{#if warning}
 		<div class="warning-bg" />
@@ -20,8 +23,7 @@
 <style>
   section {
 		position: fixed;
-		bottom: 80px;
-		left: 10px;
+		bottom: 80px !important;
 		height: 70px;
 		display: flex;
 		background: var(--editor-ribbon-background);

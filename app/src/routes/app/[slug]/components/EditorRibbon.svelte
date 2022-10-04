@@ -9,6 +9,7 @@
 					IsEditingInspect,
 					IsEditingDragging,
 					IsEditingColor,
+					IsInEditMode,
 					UserTileSize,
 					UserFontSize,
 					EditingColorType,
@@ -116,7 +117,7 @@
 	let isEditingCalibrate = false; 
 </script>
 
-<section>
+<section style={`bottom: ${$IsInEditMode ? '71px' : '-10px'}`}>
 	<div>
 		<!-- <span>
 			<button on:click={() => disable_all_tools_except('inspect')} class={$IsEditingInspect ? 'selected' : ''}>
@@ -129,12 +130,6 @@
 				<Icon src={Text} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingText ? '1' : '.5')}>Text</p>
-			<EditorRibbonPopout top={'-80px'} height={'auto'} visible={$IsEditingText}>
-				<select bind:value={$EditingTextType}>
-					<option value="display">Display Text</option>
-					<option value="speak">Speak Text</option>
-				</select>
-			</EditorRibbonPopout>
 		</span>
 		<span>
 			<button on:click={() => disable_all_tools_except('image')} class={$IsEditingImage ? 'selected' : ''}>
@@ -153,15 +148,6 @@
 				<Icon src={Opacity} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingColor ? '1' : '.5')}>Color</p>
-			<EditorRibbonPopout visible={$IsEditingColor}>
-				<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
-				<input type="text" placeholder="color" bind:value={$EditingColor}>
-				<select bind:value={$EditingColorType}>
-					<option value="background">Background</option>
-					<option value="border">Border</option>
-					<option value="text">Text</option>
-				</select>
-			</EditorRibbonPopout>
 		</span>
 		<span>
 			<button on:click={() => disable_all_tools_except('accent')} class={$IsEditingAccent ? 'selected' : ''}>
@@ -193,42 +179,57 @@
 				<Icon src={Download} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingTemplate ? '1' : '.5')}>Template</p>
-			<EditorRibbonPopout top={'-60px'} height={'auto'} visible={$IsEditingTemplate}>
-				<p style="margin: 0; font-size: 20px;">Templating from: <b>{$PageHistory[1]}</b></p>
-			</EditorRibbonPopout>
 		</span>
 		<span>
 			<button on:click={() => disable_all_tools_except('calibrate')} class={isEditingCalibrate ? 'selected' : ''}>
 				<Icon src={Dimensions} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ (isEditingCalibrate ? '1' : '.5')}>Calibrate</p>
-			<EditorRibbonPopout visible={isEditingCalibrate}>
-				<span>
-					<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
-					<p style="opacity: 0.5; display: block;">Columns</p>
-				</span>
-				<span>
-					<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserTileSize}  />
-					<p style="opacity: 0.5; display: block;">Tile Height</p>
-				</span>
-				<span>
-					<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserFontSize} />
-					<p style="opacity: 0.5; display: block;">Font size</p>
-				</span>
-			</EditorRibbonPopout>
 		</span>
 		<span>
 			<button on:click={() => disable_all_tools_except('trash')} class={$IsEditingTrash ? 'selected' : ''}>
 				<Icon src={Trash} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingTrash ? '1' : '.5')}>Trash</p>
-			<EditorRibbonPopout top={'-60px'} visible={$IsEditingTrash} warning={true}>
-				<b>Warning: You're currently in trash mode!</b>
-			</EditorRibbonPopout>
 		</span>
-
 	</div>
 </section>
+
+<EditorRibbonPopout visible={$IsEditingColor}>
+	<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
+	<input type="text" placeholder="color" bind:value={$EditingColor}>
+	<select bind:value={$EditingColorType}>
+		<option value="background">Background</option>
+		<option value="border">Border</option>
+		<option value="text">Text</option>
+	</select>
+</EditorRibbonPopout>
+<EditorRibbonPopout visible={$IsEditingTrash} warning={true}>
+	<b>Warning: You're currently in trash mode!</b>
+</EditorRibbonPopout>
+<EditorRibbonPopout visible={isEditingCalibrate}>
+	<span>
+		<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
+		<p style="opacity: 0.5; display: block;">Columns</p>
+	</span>
+	<span>
+		<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserTileSize}  />
+		<p style="opacity: 0.5; display: block;">Tile Height</p>
+	</span>
+	<span>
+		<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserFontSize} />
+		<p style="opacity: 0.5; display: block;">Font size</p>
+	</span>
+</EditorRibbonPopout>
+<EditorRibbonPopout height={'auto'} visible={$IsEditingTemplate}>
+	<p style="margin: 0; font-size: 20px;">Templating from: <b>{$PageHistory[1]}</b></p>
+</EditorRibbonPopout>
+<EditorRibbonPopout height={'auto'} visible={$IsEditingText}>
+	<select bind:value={$EditingTextType}>
+		<option value="display">Display Text</option>
+		<option value="speak">Speak Text</option>
+	</select>
+</EditorRibbonPopout>
 
 <style>
 	section {
@@ -237,7 +238,11 @@
 		position: fixed;
 		bottom: 71px;
 		width: fit-content;
+		left: 50%;
+		transform: translateX(-50%);
 		height: 80px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
 	}
 
 	b {
@@ -313,6 +318,8 @@
 			top: 200px;
 			right: 0;
 			height: 100%;
+			bottom: none !important;
+			transform: none;
 		}
 
 		div {

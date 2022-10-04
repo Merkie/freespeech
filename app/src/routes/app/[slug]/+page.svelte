@@ -62,10 +62,8 @@
 		<SentenceBuilder />
 		<TileGridHeader />
 		<TileGrid />
-		{#if $IsInEditMode}
-			<EditorRibbon/>
-			<EditorNavigationModal />
-		{/if}
+		<EditorRibbon/>
+		<EditorNavigationModal />
 	{:else}
 		<SettingsPage />
 	{/if}
