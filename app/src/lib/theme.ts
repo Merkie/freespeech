@@ -12,8 +12,11 @@ export const LightTheme = `
   --success-text: white;
   --primary: #2d72d2;
   --failure: #d23f31;
-  --failure-border: #d23f31;
+  --failure-border: #8E292C;
   --failure-text: white;
+  --warning: #F0B726;
+  --warning-text: #111418;
+  --warning-border: #D1980B;
   
   --app-navigation-background: var(--surface-1);
   --app-navigation-border: var(--surface-4); 

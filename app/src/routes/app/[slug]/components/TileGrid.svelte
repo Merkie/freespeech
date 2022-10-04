@@ -66,8 +66,9 @@
 	}
 </script>
 
-<section style={"--tile-height: "+$UserTileSize+"px; --num-rows: "+parseInt(`${$ProjectData.pages[$CurrentPageIndex].tiles.length/$ProjectData.pages[$CurrentPageIndex].columns}`)+';'}>
+<section>
 	<div
+	style={`grid-template-columns: repeat(${$ProjectData.pages[$CurrentPageIndex].columns}, 1fr);`}
 		use:dndzone={{ items, flipDurationMs: 300, dropTargetStyle: { opacity: '.5' }, dragDisabled: !$IsEditingDragging }}
 		on:consider={handleDndConsider}
 		on:finalize={handleDndFinalize}
@@ -100,7 +101,7 @@
 		overflow-y: scroll;
 	}
 	div {
-		grid-template-columns: repeat(8, calc(100% / 8));
+		/* grid-template-columns: repeat(8, calc(100% / 8)); */
 		display: grid;
 		grid-gap: 10px;
 		padding: 10px;

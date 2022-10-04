@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text } from '@steeze-ui/radix-icons';
+	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { CurrentPageIndex,
@@ -24,6 +24,7 @@
 
 	// Session
 	import { getSession } from 'lucia-sveltekit/client';
+	import EditorRibbonPopout from './EditorRibbonPopout.svelte';
 	const session = getSession();
 
 	// Bindings
@@ -49,6 +50,7 @@
 		} catch(e) {}
 	}
 
+	// Disable all tools except
 	const disable_all_tools_except = (tool: string) => {
 		$IsEditingInspect = false;
 		$IsEditingDragging = false;
@@ -57,6 +59,7 @@
 		$IsEditingAccent = false;
 		$IsEditingInvisible = false;
 		$IsEditingTemplate = false;
+		isEditingCalibrate = false;
 
 		switch(tool) {
 			case 'inspect':
@@ -80,8 +83,14 @@
 			case 'template':
 				$IsEditingTemplate = true;
 				break;
+			case 'calibrate':
+				isEditingCalibrate = true;
+				break;
 		}
 	}
+
+	// State
+	let isEditingCalibrate = false; 
 </script>
 
 <section>
@@ -103,17 +112,15 @@
 				<Icon src={Opacity} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingColor ? '1' : '.5')}>Color</p>
-			{#if $IsEditingColor}
-				<div class="editing-color-popup">
-					<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
-					<input type="text" placeholder="color" bind:value={$EditingColor}>
-					<select bind:value={$EditingType}>
-						<option value="background">Background</option>
-						<option value="border">Border</option>
-						<option value="text">Text</option>
-					</select>
-				</div>
-			{/if}
+			<EditorRibbonPopout visible={$IsEditingColor}>
+				<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
+				<input type="text" placeholder="color" bind:value={$EditingColor}>
+				<select bind:value={$EditingType}>
+					<option value="background">Background</option>
+					<option value="border">Border</option>
+					<option value="text">Text</option>
+				</select>
+			</EditorRibbonPopout>
 		</span>
 		<span>
 			<button on:click={() => disable_all_tools_except('accent')} class={$IsEditingAccent ? 'selected' : ''}>
@@ -134,23 +141,35 @@
 			<p style={'opacity: '+ ($IsEditingTemplate ? '1' : '.5')}>Template</p>
 		</span>
 		<span>
+			<button on:click={() => disable_all_tools_except('calibrate')} class={isEditingCalibrate ? 'selected' : ''}>
+				<Icon src={Dimensions} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ (isEditingCalibrate ? '1' : '.5')}>Calibrate</p>
+			<EditorRibbonPopout visible={isEditingCalibrate}>
+				<span>
+					<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
+					<p style="opacity: 0.5">Columns</p>
+				</span>
+				<span>
+					<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserTileSize}  />
+					<p style="opacity: 0.5">Tile Height</p>
+				</span>
+				<span>
+					<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserFontSize} />
+					<p style="opacity: 0.5">Font size</p>
+				</span>
+			</EditorRibbonPopout>
+		</span>
+		<span>
 			<button on:click={() => disable_all_tools_except('trash')} class={$IsEditingTrash ? 'selected' : ''}>
 				<Icon src={Trash} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingTrash ? '1' : '.5')}>Trash</p>
+			<EditorRibbonPopout visible={$IsEditingTrash} warning={true}>
+				<b>Warning: You're currently in trash mode!</b>
+			</EditorRibbonPopout>
 		</span>
-		<span>
-			<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
-			<p style="opacity: 0.5">Columns</p>
-		</span>
-		<span>
-			<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserTileSize}  />
-			<p style="opacity: 0.5">Tile Height</p>
-		</span>
-		<span>
-			<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserFontSize} />
-			<p style="opacity: 0.5">Font size</p>
-		</span>
+
 	</div>
 </section>
 
@@ -162,6 +181,11 @@
 		bottom: 71px;
 		width: 100%;
 		height: 80px;
+	}
+
+	b {
+		filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.35));
+		opacity: .8;
 	}
 
 	.selected {
@@ -177,26 +201,6 @@
 		padding-left: 10px;
 		padding-right: 10px;
 		gap: 10px;
-	}
-
-	.editing-color-popup {
-		position: absolute;
-		top: -90px;
-		left: 20px;
-		height: 70px;
-		background: var(--editor-ribbon-button-background);
-		border: 1px solid var(--editor-ribbon-button-border);
-		border-radius: 5px;
-		align-items: left;
-	}
-
-	.editing-color {
-		width: 50px;
-		height: 50px;
-		background: var(--editor-ribbon-button-background);
-		border: 1px solid var(--editor-ribbon-button-border);
-		border-radius: 5px;
-		margin: 5px;
 	}
 
 	span {
@@ -226,6 +230,15 @@
 		padding-right: 20px;
 		text-align: center;
 		font-size: 20px;
+	}
+
+	.editing-color {
+		width: 50px;
+		height: 50px;
+		background: var(--editor-ribbon-button-background);
+		border: 1px solid var(--editor-ribbon-button-border);
+		border-radius: 5px;
+		margin: 5px;
 	}
 
 	input { 
