@@ -66,7 +66,7 @@
 	}
 </script>
 
-<section>
+<section style={`--editor-offset: ${$IsInEditMode ? '110px' : '0px'};`}>
 	<div
 	style={`grid-template-columns: repeat(${$ProjectData.pages[$CurrentPageIndex].columns}, 1fr);`}
 		use:dndzone={{ items, flipDurationMs: 300, dropTargetStyle: { opacity: '.5' }, dragDisabled: !$IsEditingDragging }}
@@ -110,7 +110,7 @@
 
 	@media (max-width: 1200px) {
 		div {
-			width: calc(100% - 100px);
+			width: calc(100% - var(--editor-offset));
 		}
 	}
 </style>

@@ -117,7 +117,7 @@
 	let isEditingCalibrate = false; 
 </script>
 
-<section style={`bottom: ${$IsInEditMode ? '71px' : '-10px'}`}>
+<section style={`bottom: ${$IsInEditMode ? '71px' : '-10px'}; opacity: ${$IsInEditMode ? '1' : '0'};`}>
 	<div>
 		<!-- <span>
 			<button on:click={() => disable_all_tools_except('inspect')} class={$IsEditingInspect ? 'selected' : ''}>
@@ -238,7 +238,6 @@
 		position: fixed;
 		bottom: 71px;
 		width: fit-content;
-		left: 50%;
 		transform: translateX(-50%);
 		height: 80px;
 		border-top-left-radius: 10px;
@@ -313,13 +312,20 @@
 		opacity: .5;
 	}
 
+	@media (min-width: 1200px) {
+		section {
+			left: 50%;
+		}
+	}
+
 	@media (max-width: 1200px) {
 		section {
 			top: 200px;
-			right: 0;
 			height: 100%;
 			bottom: none !important;
 			transform: none;
+			right: 0 !important;
+			border-radius: 0;
 		}
 
 		div {
