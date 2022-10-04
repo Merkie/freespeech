@@ -3,11 +3,12 @@
 	import type { IconSource } from '@steeze-ui/svelte-icon/types';
 	export let iconsrc: IconSource; // src of icon
 	export let name: string; // name of button
-	export let background: string = '';
+	export let background: string = ''; // background color of button
+	export let border: string = ''; // border color of button
 	export let callback: Function; // onclick
 </script>
 
-<button style={'background-color: ' + background} on:click={() => callback()}>
+<button style={`background-color: ${background}; border-color: ${border}`} on:click={() => callback()}>
 	<span>
 		<Icon size="18px" src={iconsrc} theme="solid" />
 	</span>

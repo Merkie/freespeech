@@ -202,6 +202,7 @@
 
   .dashboard-btn {
     background: var(--success);
+    border: 1px solid var(--success-border);
     color: var(--success-text);
     border: none;
     border-radius: 5px;

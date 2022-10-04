@@ -45,6 +45,8 @@
 
 	.brand {
 		background-color: var(--primary);
+		border: 1px solid var(--primary-border);
+		color: var(--primary-text);
 		border-radius: 5px;
 		padding: 10px;
 		display: flex;

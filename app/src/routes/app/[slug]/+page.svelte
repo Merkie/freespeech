@@ -84,6 +84,7 @@
 		name={$IsInEditMode ? 'Save Changes' : 'Edit'}
 		iconsrc={$IsInEditMode ? Check : Pencil}
 		background={$IsInEditMode ? 'var(--success)' : 'inital'}
+		border={$IsInEditMode ? 'var(--success-border)' : 'inital'}
 		callback={() => {if($InSettingsMenu) return; $IsInEditMode = !$IsInEditMode; if(!$IsInEditMode) save()}}
 	/>
 	<AppNavigationButton

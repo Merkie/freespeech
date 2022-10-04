@@ -91,6 +91,7 @@
 
 	.new-project {
 		background-color: var(--success);
+    border: 1px solid var(--success-border);
 		color: var(--text);
 		border: none;
 		padding: 10px;

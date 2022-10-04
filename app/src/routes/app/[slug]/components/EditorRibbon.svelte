@@ -194,7 +194,9 @@
 	}
 
 	.selected {
-		background: var(--editor-ribbon-button-selected);
+		background: var(--primary);
+		border-color: var(--primary-border);
+		color: var(--primary-text);
 	}
 
 	div {

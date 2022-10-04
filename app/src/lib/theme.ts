@@ -10,7 +10,10 @@ export const LightTheme = `
 
   --success: #32a467;
   --success-text: white;
+  --success-border: #72CA9B;
   --primary: #2d72d2;
+  --primary-border: #4C90F0;
+  --primary-text: white;
   --failure: #d23f31;
   --failure-border: #8E292C;
   --failure-text: white;
@@ -37,7 +40,6 @@ export const LightTheme = `
   --upload-button-border: var(--surface-4);
   --editor-ribbon-background: var(--surface-1);
   --editor-ribbon-border: var(--surface-4);
-  --editor-ribbon-button-selected: var(--primary);
   --editor-ribbon-button-text: white;
   --editor-ribbon-button-background: var(--surface-2);
   --editor-ribbon-button-border: var(--surface-4);
