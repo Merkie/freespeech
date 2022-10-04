@@ -6,6 +6,7 @@
 	import TileGrid from './components/TileGrid.svelte';
 	import SettingsPage from './components/SettingsPage.svelte';
 	import EditorToolbox from './components/EditorToolbox.svelte';
+	import SentenceBuilder from './components/SentenceBuilder.svelte';
 
 
 	// Session
@@ -56,16 +57,16 @@
 </script>
 
 <main style={`background-color: ${!$InSettingsMenu ? 'var(--tile-grid-background)' : 'var(--background)'};`}>
-{#if !$InSettingsMenu}
-	<TileGridHeader />
-	<TileGrid />
-	{#if $IsInEditMode}
-		<EditorRibbon/>
+	{#if !$InSettingsMenu}
+		<SentenceBuilder />
+		<TileGridHeader />
+		<TileGrid />
+		{#if $IsInEditMode}
+			<EditorRibbon/>
+		{/if}
+	{:else}
+		<SettingsPage />
 	{/if}
-	
-{:else}
-	<SettingsPage />
-{/if}
 </main>
 
 <AppNavigation>
