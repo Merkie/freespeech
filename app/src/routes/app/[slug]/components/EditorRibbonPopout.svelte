@@ -1,11 +1,15 @@
 <script lang="ts">
 	export let warning = false;
+	export let height: string = '';
+	export let top: string = '';
 	export let visible: boolean;
 	let element: HTMLElement;
 </script>
 
 <section style={`left: ${visible ? '20px' : '-20px'};
-								 opacity: ${visible ? '1' : '0'};`} bind:this={element} class={`${warning ? 'warning' : ''}`}>
+								 opacity: ${visible ? '1' : '0'};
+								 ${height ? 'height: '+height+';' : ''}
+								 ${top ? 'top: '+top+';' : ''}`} bind:this={element} class={`${warning ? 'warning' : ''}`}>
 	{#if warning}
 		<div class="warning-bg" />
 	{/if}

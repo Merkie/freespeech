@@ -16,7 +16,8 @@
 					IsEditingTrash,
 					IsEditingAccent,
 					IsEditingInvisible,
-					IsEditingTemplate
+					IsEditingTemplate,
+					PageHistory
 					} from '$lib/stores';
 	
 	// API
@@ -135,10 +136,14 @@
 			<p style={'opacity: '+ ($IsEditingInvisible ? '1' : '.5')}>Invisible</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('template')} class={$IsEditingTemplate ? 'selected' : ''}>
+			<!-- TODO: Need to try and figure out a way to get the navigation parent including the page history index-->
+			<button disabled={$PageHistory.length < 2} on:click={() => disable_all_tools_except('template')} class={$IsEditingTemplate ? 'selected' : ''}>
 				<Icon src={Text} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingTemplate ? '1' : '.5')}>Template</p>
+			<EditorRibbonPopout top={'-60px'} height={'auto'} visible={$IsEditingTemplate}>
+				<p style="margin: 0; font-size: 20px;">Templating from: <b>{$PageHistory[1]}</b></p>
+			</EditorRibbonPopout>
 		</span>
 		<span>
 			<button on:click={() => disable_all_tools_except('calibrate')} class={isEditingCalibrate ? 'selected' : ''}>
@@ -165,7 +170,7 @@
 				<Icon src={Trash} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingTrash ? '1' : '.5')}>Trash</p>
-			<EditorRibbonPopout visible={$IsEditingTrash} warning={true}>
+			<EditorRibbonPopout top={'-60px'} visible={$IsEditingTrash} warning={true}>
 				<b>Warning: You're currently in trash mode!</b>
 			</EditorRibbonPopout>
 		</span>
@@ -243,5 +248,9 @@
 
 	input { 
 		width: 70px !important;
+	}
+
+	button:disabled {
+		opacity: .5;
 	}
 </style>
