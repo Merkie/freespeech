@@ -69,3 +69,14 @@ UserFontSize.subscribe((value) => {
 		window.localStorage.setItem('freespeech-font-size', value + '');
 	}
 });
+
+// Sentence Builder
+const initialSentenceBuilder: boolean = browser
+	? window.localStorage.getItem('freespeech-sentence-builder')?.toLowerCase() === 'true' ?? true
+	: true;
+export const UserSentenceBuilder = writable<boolean>(initialSentenceBuilder);
+UserSentenceBuilder.subscribe((value) => {
+	if (browser) {
+		window.localStorage.setItem('freespeech-sentence-builder', value + '');
+	}
+});

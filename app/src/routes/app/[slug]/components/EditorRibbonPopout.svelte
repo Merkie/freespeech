@@ -37,6 +37,7 @@
 	}
 
 	.warning {
+		font-size: 20px;
 		height: auto;
 		/* top: -70px; */
 		background-color: var(--warning);

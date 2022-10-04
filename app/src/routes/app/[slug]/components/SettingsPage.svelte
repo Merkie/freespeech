@@ -10,7 +10,8 @@
 					ProjectData,
 					InSettingsMenu,
           PageHistory,
-          PageHistoryIndex
+          PageHistoryIndex,
+          UserSentenceBuilder
 					} from '$lib/stores';
 	import type { Tile, TilePage, Project } from '@prisma/client';
 
@@ -116,6 +117,8 @@
   $ProjectData.pages.forEach((page) => {
     total_terms += (page as TilePage & { tiles: Tile[] } ).tiles.length;
   });
+
+  console.log($UserSentenceBuilder);
 </script>
 
 <h1>Settings</h1>
@@ -128,6 +131,10 @@
   <p><b>Size:</b> {kiloBytes.toFixed(2)}KB</p>
   <p><b>Total Terms:</b> {total_terms}</p>
   <p><b>Total Pages:</b> {$ProjectData.pages.length}</p>
+  <p><b>Sentence Builder:</b> <select on:change={(e) => $UserSentenceBuilder = (e.target.value == "true")} value={$UserSentenceBuilder ? 'true' : 'false'}>
+    <option value="true">Enabled</option>
+    <option value="false">Disabled</option>
+  </select></p>
 </section>
 
   <h3>Navigations</h3>

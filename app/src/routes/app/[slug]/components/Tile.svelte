@@ -255,7 +255,7 @@
 		<div class="corner-piece" style={`background: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
 	{/if}
 
-	<p on:keyup={(e) => {tile[$EditingTextType] = e.originalTarget.innerText; add_to_edited_tiles();}} contenteditable={$EditingTextTile == tile.id && $EditingTextType === 'display'} style={"font-size: "+(!tile.image && tile.display.length < 7 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>
+	<p on:keyup={(e) => {tile[$EditingTextType] = e.originalTarget.innerText; add_to_edited_tiles();}} contenteditable={$EditingTextTile == tile.id && $EditingTextType === 'display'} style={"font-size: "+(!tile.image && tile.display.length < 4 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>
 		{#if $EditingTextType === 'speak' && $IsEditingText && $IsInEditMode}
 		 	<p contenteditable={$EditingTextTile == tile.id && $EditingTextType === 'speak'} style="all: unset; opacity: 0.5; font-size: small;">
 				{tile.speak || "..."}

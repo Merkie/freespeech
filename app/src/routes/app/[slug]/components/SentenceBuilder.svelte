@@ -4,7 +4,8 @@
   import { SpeakerLoud, Trash } from '@steeze-ui/radix-icons';
 
   // Stores
-  import { AppSentence } from '$lib/stores';
+  import { AppSentence,
+          UserSentenceBuilder } from '$lib/stores';
 
   // Components
   import TileComponent from './Tile.svelte';
@@ -22,9 +23,10 @@
   }
 </script>
 
+{#if $UserSentenceBuilder}
 <section class="sentence-container">
   <button class="trash" on:click={() => {$AppSentence = []; speechSynthesis.cancel();}}>
-    <Icon width="40px" src={Trash} />
+    <Icon width="30px" src={Trash} />
   </button>
   <section style={`scrollbar-width: ${$AppSentence.length > 0 ? 'thin' : 'none'}`} class="sentence-section">
     {#each $AppSentence as sentence_tile, index}
@@ -34,9 +36,10 @@
     {/each}
   </section>
   <button class="speak" on:click={speakSentence}>
-    <Icon width="40px" src={SpeakerLoud} />
+    <Icon width="30px" src={SpeakerLoud} />
   </button>
 </section>
+{/if}
 
 <style>
   .sentence-section {
