@@ -12,7 +12,7 @@
 	<p>Logged in as: {data['_lucia'].user.email}</p>
 	<a href="/dashboard">Dashboard</a>
 	<button on:click={async () => signOut('/')}>Sign out</button>
+{:else}
+	<a href="/signup">signup</a>
+	<a href="/login">login</a>
 {/if}
-
-<a href="/signup">signup</a>
-<a href="/login">login</a>
