@@ -25,6 +25,8 @@
 					IsEditingColor,
 					IsEditingText,
 					IsEditingImage,
+					IsEditingNavigation,
+					EditingNavigationTile,
 					EditingTextType,
 					EditingTextTile,
 					EditedTiles,
@@ -46,7 +48,7 @@
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
-	let fileUploading: boolean = false;
+	let loading: boolean = false;
 	// API
 	import { handle_tile_interaction } from '$lib/api/app';
 
@@ -63,11 +65,13 @@
 			// Add the page to the pageHistory
 			$PageHistory = [$ProjectData.pages[$CurrentPageIndex].name, ...$PageHistory];
 		} else { 
+			loading = true;
 			// If it doesnt exist we have to create a new page
 
 			// Send create_page request to the server
 			const response = await create_page($ProjectData.id, navigation, $session?.access_token+'');
-		if (!response.page) return;
+			loading = false;
+			if (!response.page) return;
 		
 			// Add the page to ProjectData
 			$ProjectData.pages = [...$ProjectData.pages, response.page];
@@ -91,11 +95,11 @@
 
 	// Handling uploading a file
 	export const handle_upload = async (file: File) => {
-		fileUploading = true;
+		loading = true;
 		const response = await create_object(file);
     tile.image = response.url;
 		add_to_edited_tiles();
-		fileUploading = false;
+		loading = false;
 	};
 
 	// Handle interraction with tile
@@ -139,6 +143,11 @@
 				if(tile.link) return;
 				fileInput.click();
 				add_to_edited_tiles();
+				return;
+			}
+			if($IsEditingNavigation) {
+				if(tile.link) return;
+				$EditingNavigationTile = {...tile};
 				return;
 			}
 			if($IsEditingTemplate) {
@@ -206,13 +215,13 @@
 	};
 </script>
 
-<button disabled={fileUploading} style={`background: ${tile.backgroundColor || 'auto'};
+<button disabled={loading} style={`background: ${tile.backgroundColor || 'auto'};
 								border-color: ${tile.borderColor || 'auto'};
 								color: ${tile.textColor || 'auto'};
 								opacity: ${tile.invisible ? 0 : 1};
 								opacity: ${tile.link && $IsInEditMode ? 0.5 : 'auto'};
 								opacity: ${tile.silent && $IsEditingSilent ? 0.5 : 'auto'};
-								opacity: ${fileUploading ? 0.5 : 'auto'};
+								opacity: ${loading ? 0.5 : 'auto'};
 								height: ${$UserTileSize}px;
 								font-size: ${$UserFontSize}px;
 								justify-content: ${tile.image ? 'space-between' : 'center'};								font-size: ${$UserFontSize}px;
@@ -226,7 +235,7 @@
 		</div>
 	{/if}
 
-	{#if fileUploading}
+	{#if loading}
 		<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 			<Spinner />
 		</div>

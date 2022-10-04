@@ -30,6 +30,7 @@
 					PageHistoryIndex
 					} from '$lib/stores';
 	import { edit_tile } from '$lib/api/app';
+	import EditorNavigationModal from './components/EditorNavigationModal.svelte';
 
 	// Props
 	export let data: { project: Project & { pages: TilePage[] & { tiles: Tile[] }[] } };
@@ -63,6 +64,7 @@
 		<TileGrid />
 		{#if $IsInEditMode}
 			<EditorRibbon/>
+			<EditorNavigationModal />
 		{/if}
 	{:else}
 		<SettingsPage />

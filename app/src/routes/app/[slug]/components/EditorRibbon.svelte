@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download, SpeakerOff, Image } from '@steeze-ui/radix-icons';
+	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download, SpeakerOff, Image, Rocket } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { CurrentPageIndex,
@@ -19,6 +19,7 @@
 					IsEditingInvisible,
 					IsEditingTemplate,
 					IsEditingSilent,
+					IsEditingNavigation,
 					IsEditingImage,
 					PageHistory,
 					IsEditingText
@@ -68,6 +69,7 @@
 		$IsEditingText = false;
 		$IsEditingSilent = false;
 		$IsEditingImage = false;
+		$IsEditingNavigation = false;
 		isEditingCalibrate = false;
 
 		switch(tool) {
@@ -104,6 +106,9 @@
 			case 'image':
 				$IsEditingImage = true;
 				break;
+			case 'navigation':
+				$IsEditingNavigation = true;
+				break;
 		}
 	}
 
@@ -113,12 +118,12 @@
 
 <section>
 	<div>
-		<span>
+		<!-- <span>
 			<button on:click={() => disable_all_tools_except('inspect')} class={$IsEditingInspect ? 'selected' : ''}>
 				<Icon src={MagicWand} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingInspect ? '1' : '.5')}>Inspect</p>
-		</span>
+		</span> -->
 		<span>
 			<button on:click={() => disable_all_tools_except('text')} class={$IsEditingText ? 'selected' : ''}>
 				<Icon src={Text} width={'25px'} />
@@ -175,6 +180,12 @@
 				<Icon src={SpeakerOff} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingSilent ? '1' : '.5')}>Silent</p>
+		</span>
+		<span>
+			<button on:click={() => disable_all_tools_except('navigation')} class={$IsEditingNavigation ? 'selected' : ''}>
+				<Icon src={Rocket} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingNavigation ? '1' : '.5')}>Navigation</p>
 		</span>
 		<span>
 			<!-- TODO: Need to try and figure out a way to get the navigation parent including the page history index-->
