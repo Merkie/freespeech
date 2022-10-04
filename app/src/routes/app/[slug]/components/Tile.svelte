@@ -169,9 +169,9 @@
 								color: ${tile.textColor || 'auto'};
 								opacity: ${tile.invisible ? 0 : 1};
 								opacity: ${tile.link && $IsInEditMode ? 0.5 : 'auto'};
-								justify-content: ${tile.image ? 'space-between' : 'center'};
 								height: ${$UserTileSize}px;
 								font-size: ${$UserFontSize}px;
+								justify-content: ${tile.image ? 'space-between' : 'center'};								font-size: ${$UserFontSize}px;
 								overflow: ${tile.navigation ? 'auto' : 'hidden'};`}
 							on:click={handleInteraction}>
 
@@ -214,6 +214,7 @@
 		align-items: center;
 		gap: 10px;
 		font-size: 20px;
+		height: 100%;
 	}
 
 	.link-piece {

@@ -1,4 +1,6 @@
 <script lang="ts">
+	// @ts-nocheck
+
 	// Util
 	import { flip } from 'svelte/animate';
 	import { dndzone } from 'svelte-dnd-action';
@@ -18,7 +20,8 @@
 					InspectedTile,
 					ProjectData,  
 					CurrentPageIndex,
-					IsEditingDragging
+					IsEditingDragging,
+					UserTileSize
 				} from '$lib/stores';
 
 	// API
@@ -32,7 +35,7 @@
 	let items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
 
 	// Considering a Dnd action
-	const handleDndConsider = (e: { detail: any }) => {
+	const handleDndConsider = async (e: { detail: any }) => {
 		items = e.detail.items;
 	};
 	
@@ -63,9 +66,8 @@
 	}
 </script>
 
-<section>
+<section style={"--tile-height: "+$UserTileSize+"px; --num-rows: "+parseInt(`${$ProjectData.pages[$CurrentPageIndex].tiles.length/$ProjectData.pages[$CurrentPageIndex].columns}`)+';'}>
 	<div
-		style={'grid-template-columns: repeat('+$ProjectData.pages[$CurrentPageIndex].columns+', minmax(0, 1fr));'}
 		use:dndzone={{ items, flipDurationMs: 300, dropTargetStyle: { opacity: '.5' }, dragDisabled: !$IsEditingDragging }}
 		on:consider={handleDndConsider}
 		on:finalize={handleDndFinalize}
@@ -94,9 +96,11 @@
 <style>
 	section {
 		background-color: var(--tile-grid-background);
-		min-height: 80vh;
+		flex: 1;
+		overflow-y: scroll;
 	}
 	div {
+		grid-template-columns: repeat(8, calc(100% / 8));
 		display: grid;
 		grid-gap: 10px;
 		padding: 10px;

@@ -40,31 +40,33 @@
   }
 </script>
 
-<section class="sentence-container">
-  <section style={`scrollbar-width: ${$AppSentence.length > 0 ? 'thin' : 'none'}`} class="sentence-section">
-    {#each $AppSentence as sentence_tile, index}
-      <span on:click={() => remove_from_sentence(index)}>
-        <TileComponent dummy={true} tile={sentence_tile} />
-      </span>
-    {/each}
+<main>
+  <section class="sentence-container">
+    <section style={`scrollbar-width: ${$AppSentence.length > 0 ? 'thin' : 'none'}`} class="sentence-section">
+      {#each $AppSentence as sentence_tile, index}
+        <span on:click={() => remove_from_sentence(index)}>
+          <TileComponent dummy={true} tile={sentence_tile} />
+        </span>
+      {/each}
+    </section>
+    <button on:click={speakSentence}>
+      <Icon width="50px" src={SpeakerLoud} />
+    </button>
+    <button on:click={() => {$AppSentence = []; speechSynthesis.cancel();}}>
+      <Icon width="50px" src={Trash} />
+    </button>
   </section>
-  <button on:click={speakSentence}>
-    <Icon width="50px" src={SpeakerLoud} />
-  </button>
-  <button on:click={() => {$AppSentence = []; speechSynthesis.cancel();}}>
-    <Icon width="50px" src={Trash} />
-  </button>
-</section>
 
-<div>
-	<button class="navigation-btn" disabled={!($PageHistory.length > 1 && $PageHistoryIndex < $PageHistory.length-1)} on:click={navigate_backwards}>
-    <Icon src={ArrowLeft} size="50px;" />
-  </button>
-	<h1>{$ProjectData.pages[$CurrentPageIndex].name}</h1>
-	<button class="navigation-btn" disabled={!($PageHistory.length > 1 && $PageHistoryIndex > 0)}  on:click={navigate_forwards}>
-    <Icon src={ArrowRight} size="50px;" />
-  </button>
-</div>
+  <div>
+    <button class="navigation-btn" disabled={!($PageHistory.length > 1 && $PageHistoryIndex < $PageHistory.length-1)} on:click={navigate_backwards}>
+      <Icon src={ArrowLeft} size="50px;" />
+    </button>
+    <h1>{$ProjectData.pages[$CurrentPageIndex].name}</h1>
+    <button class="navigation-btn" disabled={!($PageHistory.length > 1 && $PageHistoryIndex > 0)}  on:click={navigate_forwards}>
+      <Icon src={ArrowRight} size="50px;" />
+    </button>
+  </div>
+</main>
 
 <style>
   .sentence-section {

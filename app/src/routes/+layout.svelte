@@ -23,7 +23,6 @@
 		position: relative;
 		height: 100vh;
 		width: 100vw;
-		
 		color: var(--text);
 		background-color: var(--background);
 		font-family: 'Inter', sans-serif;

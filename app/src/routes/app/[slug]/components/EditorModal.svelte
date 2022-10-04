@@ -1,4 +1,6 @@
 <script lang="ts">
+  // @ts-nocheck
+  
   // API
 	import { create_object } from "$lib/api/aws";
 

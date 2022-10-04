@@ -122,7 +122,8 @@
 <button on:click={() => window.location.assign('/dashboard')} class="dashboard-btn">Back to Dashboard</button>
 
 <h3>Project Vitals</h3>
-<section style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
+<section class="vitals">
+  <p><b>ID:</b> {$ProjectData.id}</p>
   <p><b>Private:</b> {!$ProjectData.public}</p>
   <p><b>Size:</b> {kiloBytes.toFixed(2)}KB</p>
   <p><b>Total Terms:</b> {total_terms}</p>
@@ -130,17 +131,18 @@
 </section>
 
   <h3>Navigations</h3>
-  {#each $ProjectData.pages as page}
-      <span>
-        {page.name}
-        <button class="remove-btn" on:click={() => handle_remove_page(page.name)}>Remove</button>
-      </span>
+  <div class="navigations-wrapper">
+    {#each $ProjectData.pages as page}
+        <span>
+          {page.name}
+          <button class="remove-btn" on:click={() => handle_remove_page(page.name)}>Remove</button>
+        </span>
   {/each}
+  </div>
   <h3>Graph View</h3>
   <div bind:this={cyElement} />
 
 <style>
-
   h1, h3, section { 
     padding: 20px;
     padding-bottom: 0px;
@@ -154,6 +156,14 @@
     border: 1px solid var(--web-view-border);
     border-radius: 10px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+
+  .vitals {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-left: 40px;
   }
   
   span {
@@ -169,6 +179,7 @@
     border: 1px solid var(--settings-view-navigation-border);
     border-radius: 10px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    width: 200px;
   }
 
   .remove-btn {
@@ -182,6 +193,13 @@
     cursor: pointer;
   }
 
+  .navigations-wrapper {
+    all: unset;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
   .dashboard-btn {
     background: var(--success);
     color: var(--success-text);
@@ -193,5 +211,7 @@
     cursor: pointer;
     margin-left: 20px;
     margin-top: 10px;
+    width: fit-content;
+    margin-left: 40px;
   }
 </style>

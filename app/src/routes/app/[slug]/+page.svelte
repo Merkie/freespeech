@@ -55,7 +55,7 @@
 	}
 </script>
 
-<main>
+<main style={`background-color: ${!$InSettingsMenu ? 'var(--tile-grid-background)' : 'var(--background)'};`}>
 {#if !$InSettingsMenu}
 	<TileGridHeader />
 	<TileGrid />
@@ -67,7 +67,6 @@
 	<SettingsPage />
 {/if}
 </main>
-
 
 <AppNavigation>
 	<AppNavigationButton 
@@ -95,8 +94,11 @@
 
 <style>
 	main {
-    height: max-content;
-    background-color: var(--background);
-    padding-bottom: 100px;
+    height: calc(100% - 71px);
+		max-height: 100%;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		transition-duration: 0s;
   }
 </style>
