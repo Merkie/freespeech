@@ -52,9 +52,9 @@
 <style>
 	button {
 		width: 100%;
-		background-color: var(--background);
-		border: 1px dashed var(--text);
-		color: var(--text);
+		background-color: var(--tile-grid-background);
+		border: 1px dashed var(--tile-border);
+		color: var(--tile-text-color);
 		padding: 5px;
 		border-radius: 5px;
 		font-size: 20px;

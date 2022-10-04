@@ -30,9 +30,14 @@ export const EditedTiles: Writable<Tile[]> = writable([]);
 export const IsEditingDragging: Writable<boolean> = writable(false);
 export const IsEditingInspect: Writable<boolean> = writable(true);
 export const IsEditingColor: Writable<boolean> = writable(false);
+export const IsEditingTrash: Writable<boolean> = writable(false);
+export const IsEditingAccent: Writable<boolean> = writable(false);
+export const IsEditingInvisible: Writable<boolean> = writable(false);
+export const IsEditingTemplate: Writable<boolean> = writable(false);
 export const EditingColor: Writable<string> = writable('red');
 export const EditingType: Writable<string> = writable('background'); // background, text, border
 export const InSettingsMenu: Writable<boolean> = writable(false);
+
 // const storedTileSize = parseInt(localStorage.getItem('freespeech-tile-size') + '') || 100;
 // export const UserTileSize: Writable<number> = writable(storedTileSize);
 

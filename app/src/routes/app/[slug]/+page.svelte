@@ -5,6 +5,7 @@
 	import EditorRibbon from './components/EditorRibbon.svelte';
 	import TileGrid from './components/TileGrid.svelte';
 	import SettingsPage from './components/SettingsPage.svelte';
+	import EditorToolbox from './components/EditorToolbox.svelte';
 
 
 	// Session
@@ -23,7 +24,9 @@
 					ProjectData,
 					IsInEditMode,
 					EditedTiles,
-					InSettingsMenu
+					InSettingsMenu,
+					PageHistory,
+					PageHistoryIndex
 					} from '$lib/stores';
 	import { edit_tile } from '$lib/api/app';
 
@@ -71,7 +74,10 @@
 		name={'Home'}
 		iconsrc={Home}
 		callback={() => {
-			$CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === 'HOME'); $InSettingsMenu = false;
+			$CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === 'HOME');
+			$InSettingsMenu = false;
+			$PageHistory = ['HOME'];
+			$PageHistoryIndex = 0;
 		}}
 	/>
 	<AppNavigationButton

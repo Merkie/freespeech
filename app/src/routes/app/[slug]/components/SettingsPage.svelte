@@ -8,7 +8,9 @@
   // Stores
 	import { CurrentPageIndex,
 					ProjectData,
-					InSettingsMenu
+					InSettingsMenu,
+          PageHistory,
+          PageHistoryIndex
 					} from '$lib/stores';
 	import type { Tile, TilePage, Project } from '@prisma/client';
 
@@ -82,8 +84,12 @@
 
     cy.$('node').on('tap', function(e){
       var ele = e.target;
-      $CurrentPageIndex = $ProjectData.pages.findIndex((page) => page.name.toLowerCase() === ele.id());
+      const new_index = $ProjectData.pages.findIndex((page) => page.name.toUpperCase() === ele.id().toUpperCase());
+      if(new_index < 0) return;
+      $CurrentPageIndex = new_index;
       $InSettingsMenu = false;
+			$PageHistory = ['HOME'];
+			$PageHistoryIndex = 0;
     });
 
   });

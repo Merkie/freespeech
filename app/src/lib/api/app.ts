@@ -40,3 +40,7 @@ export const edit_tile = async (tile: Tile, access_token: string) => {
 export const update_tiles = async (updates: Array<Tile>, access_token: string) => {
 	return await post('/api/app/tile/update_batch', { updates }, access_token);
 };
+
+export const remove_tile = async (tile_id: number, access_token: string) => {
+	return await post('/api/app/tile/remove', { tile_id }, access_token);
+};

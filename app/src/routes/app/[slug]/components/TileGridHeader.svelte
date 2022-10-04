@@ -89,6 +89,10 @@
     padding-right: 20px;
   }
 
+  h1 {
+    color: var(--tile-grid-header-text);
+  }
+
   span {
     min-width: 200px !important;
     max-width: 200px !important;

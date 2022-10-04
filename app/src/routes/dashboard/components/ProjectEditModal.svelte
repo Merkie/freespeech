@@ -47,6 +47,7 @@
     padding: 10px;
     background: var(--editor-modal-background);
     border: 1px solid var(--editor-modal-border);
+    color: var(--editor-modal-text);
     border-radius: 10px;
     max-width: 500px;
     display: flex;

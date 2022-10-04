@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { MagicWand, Opacity, Move } from '@steeze-ui/radix-icons';
+	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { CurrentPageIndex,
@@ -12,10 +12,12 @@
 					UserTileSize,
 					UserFontSize,
 					EditingType,
-					EditingColor
+					EditingColor,
+					IsEditingTrash,
+					IsEditingAccent,
+					IsEditingInvisible,
+					IsEditingTemplate
 					} from '$lib/stores';
-
-	console.log($UserTileSize)
 	
 	// API
 	import { edit_page } from '$lib/api/app';
@@ -46,24 +48,58 @@
 			}
 		} catch(e) {}
 	}
+
+	const disable_all_tools_except = (tool: string) => {
+		$IsEditingInspect = false;
+		$IsEditingDragging = false;
+		$IsEditingColor = false;
+		$IsEditingTrash = false;
+		$IsEditingAccent = false;
+		$IsEditingInvisible = false;
+		$IsEditingTemplate = false;
+
+		switch(tool) {
+			case 'inspect':
+				$IsEditingInspect = true;
+				break;
+			case 'drag':
+				$IsEditingDragging = true;
+				break;
+			case 'color':
+				$IsEditingColor = true;
+				break;
+			case 'trash':
+				$IsEditingTrash = true;
+				break;
+			case 'accent':
+				$IsEditingAccent = true;
+				break;
+			case 'invisible':
+				$IsEditingInvisible = true;
+				break;
+			case 'template':
+				$IsEditingTemplate = true;
+				break;
+		}
+	}
 </script>
 
 <section>
 	<div>
 		<span>
-			<button on:click={() => $IsEditingInspect = !$IsEditingInspect} class={$IsEditingInspect ? 'selected' : ''}>
+			<button on:click={() => disable_all_tools_except('inspect')} class={$IsEditingInspect ? 'selected' : ''}>
 				<Icon src={MagicWand} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingInspect ? '1' : '.5')}>Inspect</p>
 		</span>
 		<span>
-			<button on:click={() => $IsEditingDragging = !$IsEditingDragging} class={$IsEditingDragging ? 'selected' : ''}>
+			<button on:click={() => disable_all_tools_except('drag')} class={$IsEditingDragging ? 'selected' : ''}>
 				<Icon src={Move} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingDragging ? '1' : '.5')}>Move</p>
 		</span>
 		<span>
-			<button on:click={() => $IsEditingColor = !$IsEditingColor} class={$IsEditingColor ? 'selected' : ''}>
+			<button on:click={() => disable_all_tools_except('color')} class={$IsEditingColor ? 'selected' : ''}>
 				<Icon src={Opacity} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingColor ? '1' : '.5')}>Color</p>
@@ -72,13 +108,36 @@
 					<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
 					<input type="text" placeholder="color" bind:value={$EditingColor}>
 					<select bind:value={$EditingType}>
-						<option value="background">Background Color</option>
-						<option value="border">Border Color</option>
-						<option value="text">Text Color</option>
-						<option value="accent">Toggle Accent</option>
+						<option value="background">Background</option>
+						<option value="border">Border</option>
+						<option value="text">Text</option>
 					</select>
 				</div>
 			{/if}
+		</span>
+		<span>
+			<button on:click={() => disable_all_tools_except('accent')} class={$IsEditingAccent ? 'selected' : ''}>
+				<Icon src={Bookmark} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingAccent ? '1' : '.5')}>Accent</p>
+		</span>
+		<span>
+			<button on:click={() => disable_all_tools_except('invisible')} class={$IsEditingInvisible ? 'selected' : ''}>
+				<Icon src={BorderNone} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingInvisible ? '1' : '.5')}>Invisible</p>
+		</span>
+		<span>
+			<button on:click={() => disable_all_tools_except('template')} class={$IsEditingTemplate ? 'selected' : ''}>
+				<Icon src={Text} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingTemplate ? '1' : '.5')}>Template</p>
+		</span>
+		<span>
+			<button on:click={() => disable_all_tools_except('trash')} class={$IsEditingTrash ? 'selected' : ''}>
+				<Icon src={Trash} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingTrash ? '1' : '.5')}>Trash</p>
 		</span>
 		<span>
 			<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
@@ -150,9 +209,10 @@
 	span p {
 		font-size: 12px;
 		margin-top: 10px;
+		color: var(--editor-ribbon-button-text);
 	}
 
-	button, input {
+	button, input, select {
 		display: flex;
 		align-items: center;
 		border: none;

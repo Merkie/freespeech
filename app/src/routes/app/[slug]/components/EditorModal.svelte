@@ -12,9 +12,7 @@
   import type { Tile } from '@prisma/client';
 
   // Session
-  import { getSession } from 'lucia-sveltekit/client';
 	import { onMount } from "svelte";
-  const session = getSession();
   
   // Bindings
   let display = $InspectedTile?.display;
@@ -25,9 +23,10 @@
   let borderColor = $InspectedTile?.borderColor;
   let invisible = $InspectedTile?.invisible;
   let silent = $InspectedTile?.silent;
+  let modifier = $InspectedTile?.modifier;
   let files: FileList;
+  let fileInput: HTMLInputElement;
   let modal: HTMLElement;
-
 
   // Handling uploading a file
 	export const handle_upload = async (file: File) => {
@@ -37,8 +36,6 @@
 
   // Update one tile
   const updateItem = async (tile: Tile) => {
-		if(!$session?.access_token) return;
-
 		$ProjectData.pages[$CurrentPageIndex].tiles = $ProjectData.pages[$CurrentPageIndex].tiles.map((item) => {
 			if (item.id === tile.id) {
 				return tile;
@@ -63,7 +60,6 @@
   });
   });
   
-
   $: {
     // Update the item when the display changes
     updateItem({
@@ -76,13 +72,14 @@
         backgroundColor,
         borderColor,
         invisible,
-        silent
+        silent,
+        modifier
       } as Tile
     });
   }
 </script>
 
-<div bind:this={modal}>
+<div class="main" bind:this={modal}>
   <span><h4>Inspector</h4> <button class="close" on:click={() => ($InspectedTile = undefined)}>Close</button></span>
   <span>
   <p>Display text:</p>
@@ -95,43 +92,33 @@
   </span>
 
   <span>
-  <p>Silent:</p>
-  <input type="checkbox" bind:checked={silent}>
-  </span>
-
-  <span>
   <p>Image (optional):</p>
   <input type="text"  bind:value={image}>
   </span>
 
   <span>
-  <input bind:files type="file" />
-  <button class="upload" on:click={() => handle_upload(files[0])}>Upload</button>
+  <input  style="display: none;" bind:this={fileInput} bind:files on:change={() => handle_upload(files[0])} type="file" />
+  <button class="upload" on:click={() => fileInput.click()}>Upload Image</button>
   </span>
 
   <span>
-  <p>Navigation (optional):</p>
-  <input type="text" bind:value={navigation}>
+    <p>Modifier (optional):</p>
+    <input type="text" bind:value={modifier} />
   </span>
 
   <span>
-  <p>Background Color (optional):</p>
-  <input type="text" bind:value={backgroundColor}>
+    <p>Navigation (optional):</p>
+    <input type="text" on:input={(e) => {silent = Boolean(e.data)}} bind:value={navigation} />
   </span>
 
   <span>
-  <p>Border Color (optional):</p>
-  <input type="text" bind:value={borderColor}>
-  </span>
-
-  <span>
-  <p>Invisible:</p>
-  <input type="checkbox" bind:checked={invisible}>
+    <p>Silent:</p>
+    <input type="checkbox" bind:checked={silent} />
   </span>
 </div>
 
 <style>
-  div {
+  .main {
     position: absolute;
     z-index: 999;
     top: 50%;
@@ -140,6 +127,7 @@
     padding: 10px;
     background: var(--editor-modal-background);
     border: 1px solid var(--editor-modal-border);
+    color: var(--editor-modal-text);
     border-radius: 10px;
     max-width: 500px;
     display: flex;
@@ -184,5 +172,6 @@
     border: 1px solid var(--upload-button-border);
     padding: 10px;
     border-radius: 5px;
+    width: 100%;
   }
 </style>

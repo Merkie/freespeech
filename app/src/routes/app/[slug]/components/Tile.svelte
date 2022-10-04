@@ -1,7 +1,11 @@
 <script lang="ts">
 	// Types
-	import type { Tile } from '@prisma/client';
-	
+	import type { Tile, TilePage } from '@prisma/client';
+
+	// Icons
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import { Link1 } from '@steeze-ui/radix-icons';
+
 	// Stores
 	import { InspectedTile,
 					IsInEditMode,
@@ -14,9 +18,14 @@
 					UserFontSize,
 					EditingColor,
 					EditingType,
-					IsEditingColor
+					IsEditingColor,
+					EditedTiles,
+					IsEditingTrash,
+					IsEditingAccent,
+					IsEditingInvisible,
+					IsEditingTemplate
 					} from '$lib/stores';
-	import { create_page } from '$lib/api/app';
+	import { create_page, remove_tile } from '$lib/api/app';
 
 	// Session
 	import { getSession } from 'lucia-sveltekit/client';
@@ -56,67 +65,120 @@
 		}
 	};
 
+	const add_to_edited_tiles = () => {
+		$EditedTiles = $EditedTiles.filter((item) => {
+			return item.id !== tile.id;
+		});
+
+		// Add it to the list
+		$EditedTiles = [...$EditedTiles, tile];
+	}
+
 	// Handle interraction with tile
-	const handleInteraction = () => {
+	const handleInteraction = async () => {
 		if(dummy) return; // If the tile is a dummy tile, do nothing
 		if($IsInEditMode) { // If the user is in edit mode
 			if($IsEditingInspect) {
+				if(tile.link) return;
 				$InspectedTile = tile;
 				return; // return to prevent the tile from being interracted with
 			}
+			if($IsEditingTrash) {
+				$ProjectData.pages[$CurrentPageIndex].tiles = $ProjectData.pages[$CurrentPageIndex].tiles.filter((t) => t.id !== tile.id);
+				await remove_tile(tile.id, $session?.access_token+'');
+				return; // return to prevent the tile from being interracted with
+			}
+			if($IsEditingAccent) {
+				if(tile.link) return;
+				tile.accented = !tile.accented;
+				add_to_edited_tiles();
+				return;
+			}
+			if($IsEditingInvisible) {
+				if(tile.link) return;
+				tile.invisible = !tile.invisible;
+				add_to_edited_tiles();
+				return;
+			}
+			if($IsEditingTemplate) {
+				if(tile.link) {
+					tile.link = null;
+				} else {
+					let parentPage = $ProjectData.pages.find((page) => page.name.toUpperCase() === $PageHistory[1].toUpperCase());
+					if(parentPage) {
+						let parentTile = (parentPage as TilePage & { tiles: Tile[] } ).tiles.find((parentTile) => parentTile.index === tile.index);
+						if(parentTile) {
+							tile.link = parentTile.id;
+							tile.display = parentTile.display;
+							tile.speak = parentTile.speak;
+							tile.image = parentTile.image;
+							tile.backgroundColor = parentTile.backgroundColor;
+							tile.borderColor = parentTile.borderColor;
+							tile.textColor = parentTile.textColor;
+							tile.accented = parentTile.accented;
+							tile.invisible = parentTile.invisible;
+							tile.navigation = parentTile.navigation;
+						}
+					}
+				}
+				add_to_edited_tiles();
+				return;
+			}
 			if($IsEditingColor) {
+				if(tile.link) return;
 				if($EditingType === 'background') {
 					tile.backgroundColor = $EditingColor;
 				} else if($EditingType === 'border') {
 					tile.borderColor = $EditingColor;
-				} else if($EditingType === 'accent') {
-					tile.accented = !tile.accented;
+				} else if($EditingType === 'text') {
+					tile.textColor = $EditingColor;
+				} else if($EditingType === 'invisible') {
+					tile.invisible = !tile.invisible;
 				}
+				add_to_edited_tiles();
 				return;
 			}
 		} else if(tile.navigation) { // If the user is not in edit mode and the tile has a navigation
 			navigate(tile.navigation)
-		} else if(tile.modifier) { // If the user is not in edit mode and the tile has a modifier
-			if(tile.modifier[0] === '+') { // Adding a suffix
-				// Add to the sentence display
-				$AppSentence[$AppSentence.length - 1].display = $AppSentence[$AppSentence.length - 1].display + tile.modifier.split('+')[1];
-				
-				// Add to .speak if there is .speak
-				if($AppSentence[$AppSentence.length - 1].speak) {
-					$AppSentence[$AppSentence.length - 1].speak = $AppSentence[$AppSentence.length - 1].speak + tile.modifier.split('+')[1];
-				}
-			} else if(tile.modifier[tile.modifier.length-1] === '+') { // Adding a prefix
-				// Add to the sentence display
-				$AppSentence[$AppSentence.length - 1].display = tile.modifier.split('+')[0] + $AppSentence[$AppSentence.length - 1].display;
-				
-				// Add to .speak if there is .speak
-				if($AppSentence[$AppSentence.length - 1].speak) {
-					$AppSentence[$AppSentence.length - 1].speak = tile.modifier.split('+')[0] + $AppSentence[$AppSentence.length - 1].speak;
-				}
-			}
 		}
 
 		// get the speak text with tile.speak having first priority
-		const speak_text = tile.speak || tile.display;
+		let speak_text = tile.speak || tile.display;
 
 		// speak the text
 		if(!tile.silent && !tile.invisible) {
 			// Add to sentence
-			$AppSentence = [...$AppSentence, tile]
+			if(tile.modifier) {
+				const last_tile = $AppSentence[$AppSentence.length-1];
+				if(last_tile.modifier?.at(0) === '+') {
+					speak_text = speak_text + last_tile.modifier.replace('+', '');
+				} else if(last_tile.modifier?.at(last_tile.modifier.length-1) === '-') {
+					speak_text = last_tile.modifier.replace('-', '') + speak_text;
+				}
+			}
 			var utterance = new SpeechSynthesisUtterance(speak_text);
 			window.speechSynthesis.speak(utterance);
+			$AppSentence = [...$AppSentence, tile]
 		}
 	};
 </script>
 
 <button style={`background: ${tile.backgroundColor || 'auto'};
 								border-color: ${tile.borderColor || 'auto'};
+								color: ${tile.textColor || 'auto'};
 								opacity: ${tile.invisible ? 0 : 1};
+								opacity: ${tile.link && $IsInEditMode ? 0.5 : 'auto'};
 								justify-content: ${tile.image ? 'space-between' : 'center'};
 								height: ${$UserTileSize}px;
 								font-size: ${$UserFontSize}px;
 								overflow: ${tile.navigation ? 'auto' : 'hidden'};`}
 							on:click={handleInteraction}>
+
+	{#if $IsInEditMode && tile.link}
+		<div class="link-piece">
+			<Icon src={Link1} width="50px" />
+		</div>
+	{/if}
 
 	{#if tile.navigation}
 		<div class="folder-piece" style={`background: ${tile.backgroundColor || 'auto'}; border-color: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
@@ -126,7 +188,7 @@
 		<div class="corner-piece" style={`background: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
 	{/if}
 	
-	<p style={"font-size: "+(!tile.image && tile.display.length < 10 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>{tile.display}</p>
+	<p style={"font-size: "+(!tile.image && tile.display.length < 7 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>{tile.display}</p>
 	{#if tile.image}
 		<img src={tile.image} alt="icon" />
 	{/if}
@@ -151,6 +213,19 @@
 		align-items: center;
 		gap: 10px;
 		font-size: 20px;
+	}
+
+	.link-piece {
+		position: absolute;
+		height: 50px;
+		width: 50px;
+		border-radius: 5px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: var(--tile-background);
+		border: 2px solid var(--tile-border);
+		opacity: .8;
 	}
 
 	.corner-piece {

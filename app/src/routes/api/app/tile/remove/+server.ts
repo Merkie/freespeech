@@ -2,36 +2,36 @@ import { client } from '$lib/resources';
 import { auth } from '$lib/resources';
 
 import type { RequestHandler } from '@sveltejs/kit';
-import type { TilePage } from '@prisma/client';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const session = await auth.validateRequest(request);
-	const body: { page_id: number } = await request.json();
+	const body: {
+		tile_id: number;
+	} = await request.json();
 
 	if (!session.user) {
 		return new Response(JSON.stringify({ message: 'error' }), { status: 200 });
 	}
 
-	// Get the page with the user's id
-	const page = await client.tilePage.findFirst({
+	// Get the tile with the user's id
+	const tile = await client.tile.findFirst({
 		where: {
-			id: body.page_id,
+			id: body.tile_id,
 			user_id: session.user.user_id
 		}
 	});
 
-	// If the page doesn't exist, return an error
-	if (!page) {
+	// If the tile doesn't exist, return an error
+	if (!tile) {
 		return new Response(JSON.stringify({ message: 'error' }), { status: 200 });
 	}
 
-	// Update the page
-	await client.tilePage.delete({
+	await client.tile.delete({
 		where: {
-			id: page.id
+			id: tile.id
 		}
 	});
 
 	// Return a success message
-	return new Response(JSON.stringify({ message: 'ok' }), { status: 200 });
+	return new Response(JSON.stringify({ message: 'success' }), { status: 200 });
 };

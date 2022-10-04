@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { handleSilentRefresh } from 'lucia-sveltekit/client';
-	import { DarkTheme, LightTheme } from '$lib/theme';
+	import { LightTheme } from '$lib/theme';
 	export let data;
 	
 	handleSilentRefresh();

@@ -8,6 +8,7 @@
 
 	// Components
 	import EditorModal from './EditorModal.svelte';
+	import EditorToolbox from './EditorToolbox.svelte';
 	import Tile from './Tile.svelte';
 	import AddTileGhost from './AddTileGhost.svelte';
 	
@@ -58,7 +59,6 @@
 
 	// Set the items to the store
 	$: {
-		
 			items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
 	}
 </script>
@@ -86,15 +86,15 @@
 
 		{#if $InspectedTile}
 	 		<EditorModal />
+			<EditorToolbox />
 		{/if}
 	</div>
 </section>
 
 <style>
 	section {
-		background-color: var(--background);
-		height: 100px;
-		height: calc(100% - 200px);
+		background-color: var(--tile-grid-background);
+		min-height: 60vh;
 	}
 	div {
 		display: grid;
