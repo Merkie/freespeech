@@ -241,7 +241,7 @@
 		</div>
 	{/if}
 
-	{#if $IsEditingSilent && tile.silent}
+	{#if $IsEditingSilent && $IsInEditMode && tile.silent}
 	<div class="silent-piece">
 		<Icon src={SpeakerOff} width="50px" />
 	</div>
