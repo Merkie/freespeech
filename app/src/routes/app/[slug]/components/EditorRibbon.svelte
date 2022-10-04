@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download, SpeakerOff } from '@steeze-ui/radix-icons';
+	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download, SpeakerOff, Image } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { CurrentPageIndex,
@@ -19,6 +19,7 @@
 					IsEditingInvisible,
 					IsEditingTemplate,
 					IsEditingSilent,
+					IsEditingImage,
 					PageHistory,
 					IsEditingText
 					} from '$lib/stores';
@@ -66,6 +67,7 @@
 		$IsEditingTemplate = false;
 		$IsEditingText = false;
 		$IsEditingSilent = false;
+		$IsEditingImage = false;
 		isEditingCalibrate = false;
 
 		switch(tool) {
@@ -99,6 +101,9 @@
 			case 'silent':
 				$IsEditingSilent = true;
 				break;
+			case 'image':
+				$IsEditingImage = true;
+				break;
 		}
 	}
 
@@ -125,6 +130,12 @@
 					<option value="speak">Speak Text</option>
 				</select>
 			</EditorRibbonPopout>
+		</span>
+		<span>
+			<button on:click={() => disable_all_tools_except('image')} class={$IsEditingImage ? 'selected' : ''}>
+				<Icon src={Image} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingImage ? '1' : '.5')}>Image</p>
 		</span>
 		<span>
 			<button on:click={() => disable_all_tools_except('drag')} class={$IsEditingDragging ? 'selected' : ''}>

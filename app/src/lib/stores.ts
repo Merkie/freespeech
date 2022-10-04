@@ -36,6 +36,7 @@ export const IsEditingInvisible: Writable<boolean> = writable(false);
 export const IsEditingTemplate: Writable<boolean> = writable(false);
 export const IsEditingText: Writable<boolean> = writable(false);
 export const IsEditingSilent: Writable<boolean> = writable(false);
+export const IsEditingImage: Writable<boolean> = writable(false);
 export const EditingTextType: Writable<string> = writable('display'); // display, background
 export const EditingTextTile: Writable<number> = writable(-1);
 export const EditingColor: Writable<string> = writable('red');

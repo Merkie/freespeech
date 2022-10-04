@@ -2,10 +2,13 @@
 	// @ts-nocheck
 	// Types
 	import type { Tile, TilePage } from '@prisma/client';
+	import { create_object } from "$lib/api/aws";
 
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { Link1, SpeakerOff } from '@steeze-ui/radix-icons';
+
+	import Spinner from './Spinner.svelte';
 
 	// Stores
 	import { InspectedTile,
@@ -21,6 +24,7 @@
 					EditingColorType,
 					IsEditingColor,
 					IsEditingText,
+					IsEditingImage,
 					EditingTextType,
 					EditingTextTile,
 					EditedTiles,
@@ -40,9 +44,12 @@
 	export let tile: Tile;
 	export let dummy: boolean = false;
 
+	let fileInput: HTMLInputElement;
+	let files: FileList;
+	let fileUploading: boolean = false;
 	// API
 	import { handle_tile_interaction } from '$lib/api/app';
-	
+
 	// Navigate to another page 
 	const navigate = async (navigation: string) => {
 		// get new Index
@@ -82,6 +89,15 @@
 		$EditedTiles = [...$EditedTiles, tile];
 	}
 
+	// Handling uploading a file
+	export const handle_upload = async (file: File) => {
+		fileUploading = true;
+		const response = await create_object(file);
+    tile.image = response.url;
+		add_to_edited_tiles();
+		fileUploading = false;
+	};
+
 	// Handle interraction with tile
 	const handleInteraction = async () => {
 		if(dummy) return; // If the tile is a dummy tile, do nothing
@@ -116,6 +132,12 @@
 			if($IsEditingSilent) {
 				if(tile.link) return;
 				tile.silent = !tile.silent;
+				add_to_edited_tiles();
+				return;
+			}
+			if($IsEditingImage) {
+				if(tile.link) return;
+				fileInput.click();
 				add_to_edited_tiles();
 				return;
 			}
@@ -184,21 +206,29 @@
 	};
 </script>
 
-<button style={`background: ${tile.backgroundColor || 'auto'};
+<button disabled={fileUploading} style={`background: ${tile.backgroundColor || 'auto'};
 								border-color: ${tile.borderColor || 'auto'};
 								color: ${tile.textColor || 'auto'};
 								opacity: ${tile.invisible ? 0 : 1};
 								opacity: ${tile.link && $IsInEditMode ? 0.5 : 'auto'};
 								opacity: ${tile.silent && $IsEditingSilent ? 0.5 : 'auto'};
+								opacity: ${fileUploading ? 0.5 : 'auto'};
 								height: ${$UserTileSize}px;
 								font-size: ${$UserFontSize}px;
 								justify-content: ${tile.image ? 'space-between' : 'center'};								font-size: ${$UserFontSize}px;
 								overflow: ${tile.navigation ? 'auto' : 'hidden'};`}
 							on:click={handleInteraction}>
+	<input  style="display: none;" bind:this={fileInput} bind:files on:change={async () => await handle_upload(files[0])} type="file" />
 
 	{#if $IsInEditMode && tile.link}
 		<div class="link-piece">
 			<Icon src={Link1} width="50px" />
+		</div>
+	{/if}
+
+	{#if fileUploading}
+		<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+			<Spinner />
 		</div>
 	{/if}
 
