@@ -5,7 +5,7 @@
 
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { Link1 } from '@steeze-ui/radix-icons';
+	import { Link1, SpeakerOff } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { InspectedTile,
@@ -27,7 +27,8 @@
 					IsEditingTrash,
 					IsEditingAccent,
 					IsEditingInvisible,
-					IsEditingTemplate
+					IsEditingTemplate,
+					IsEditingSilent
 					} from '$lib/stores';
 	import { create_page, remove_tile } from '$lib/api/app';
 
@@ -112,6 +113,12 @@
 				add_to_edited_tiles();
 				return;
 			}
+			if($IsEditingSilent) {
+				if(tile.link) return;
+				tile.silent = !tile.silent;
+				add_to_edited_tiles();
+				return;
+			}
 			if($IsEditingTemplate) {
 				if(tile.link) {
 					tile.link = null;
@@ -182,6 +189,7 @@
 								color: ${tile.textColor || 'auto'};
 								opacity: ${tile.invisible ? 0 : 1};
 								opacity: ${tile.link && $IsInEditMode ? 0.5 : 'auto'};
+								opacity: ${tile.silent && $IsEditingSilent ? 0.5 : 'auto'};
 								height: ${$UserTileSize}px;
 								font-size: ${$UserFontSize}px;
 								justify-content: ${tile.image ? 'space-between' : 'center'};								font-size: ${$UserFontSize}px;
@@ -192,6 +200,12 @@
 		<div class="link-piece">
 			<Icon src={Link1} width="50px" />
 		</div>
+	{/if}
+
+	{#if $IsEditingSilent && tile.silent}
+	<div class="silent-piece">
+		<Icon src={SpeakerOff} width="50px" />
+	</div>
 	{/if}
 
 	{#if tile.navigation}
@@ -239,7 +253,8 @@
 		height: 100%;
 	}
 
-	.link-piece {
+	.link-piece,
+	.silent-piece {
 		position: absolute;
 		height: 50px;
 		width: 50px;
@@ -250,6 +265,8 @@
 		background: var(--tile-background);
 		border: 2px solid var(--tile-border);
 		opacity: .8;
+		padding: 10px;
+
 	}
 
 	.corner-piece {

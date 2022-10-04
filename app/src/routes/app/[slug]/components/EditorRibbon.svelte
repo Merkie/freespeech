@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download } from '@steeze-ui/radix-icons';
+	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download, SpeakerOff } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { CurrentPageIndex,
@@ -18,6 +18,7 @@
 					IsEditingAccent,
 					IsEditingInvisible,
 					IsEditingTemplate,
+					IsEditingSilent,
 					PageHistory,
 					IsEditingText
 					} from '$lib/stores';
@@ -55,6 +56,7 @@
 
 	// Disable all tools except
 	const disable_all_tools_except = (tool: string) => {
+		// TODO: Maybe one store for all of these?
 		$IsEditingInspect = false;
 		$IsEditingDragging = false;
 		$IsEditingColor = false;
@@ -63,6 +65,7 @@
 		$IsEditingInvisible = false;
 		$IsEditingTemplate = false;
 		$IsEditingText = false;
+		$IsEditingSilent = false;
 		isEditingCalibrate = false;
 
 		switch(tool) {
@@ -92,6 +95,9 @@
 				break;
 			case 'text':
 				$IsEditingText = true;
+				break;
+			case 'silent':
+				$IsEditingSilent = true;
 				break;
 		}
 	}
@@ -152,6 +158,12 @@
 				<Icon src={BorderNone} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingInvisible ? '1' : '.5')}>Invisible</p>
+		</span>
+		<span>
+			<button on:click={() => disable_all_tools_except('silent')} class={$IsEditingSilent ? 'selected' : ''}>
+				<Icon src={SpeakerOff} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingSilent ? '1' : '.5')}>Silent</p>
 		</span>
 		<span>
 			<!-- TODO: Need to try and figure out a way to get the navigation parent including the page history index-->
