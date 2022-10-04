@@ -42,6 +42,7 @@
 		
 		// Update the tile with the new id
 		$ProjectData.pages[$CurrentPageIndex].tiles[response.tile.index].id = response.tile.id;
+		$ProjectData = {...$ProjectData};
 	};
 </script>
 

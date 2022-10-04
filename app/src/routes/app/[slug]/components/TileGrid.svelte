@@ -94,7 +94,7 @@
 <style>
 	section {
 		background-color: var(--tile-grid-background);
-		min-height: 60vh;
+		min-height: 80vh;
 	}
 	div {
 		display: grid;

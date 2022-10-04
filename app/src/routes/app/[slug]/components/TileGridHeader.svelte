@@ -11,7 +11,7 @@
 
   // Speak the entire sentence
   const speakSentence = () => {
-    const utterance = new SpeechSynthesisUtterance($AppSentence.map(tile => tile.speak || tile.display).join(' '));
+    const utterance = new SpeechSynthesisUtterance($AppSentence.map(tile => tile.modifier || tile.speak || tile.display).join(' ').replaceAll('+ ', '').replaceAll(' +', ''));
     speechSynthesis.speak(utterance);
   }
 

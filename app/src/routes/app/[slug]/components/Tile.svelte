@@ -150,10 +150,11 @@
 			// Add to sentence
 			if(tile.modifier) {
 				const last_tile = $AppSentence[$AppSentence.length-1];
-				if(last_tile.modifier?.at(0) === '+') {
-					speak_text = speak_text + last_tile.modifier.replace('+', '');
-				} else if(last_tile.modifier?.at(last_tile.modifier.length-1) === '-') {
-					speak_text = last_tile.modifier.replace('-', '') + speak_text;
+				let last_speak_text = last_tile.speak || last_tile.display;
+				if(tile.modifier[0] === '+') {
+					speak_text = last_speak_text + tile.modifier.replace('+', '');
+				} else if(tile.modifier?.at(tile.modifier.length-1) === '-') {
+					speak_text = tile.modifier.replace('-', '') + last_speak_text;
 				}
 			}
 			var utterance = new SpeechSynthesisUtterance(speak_text);
