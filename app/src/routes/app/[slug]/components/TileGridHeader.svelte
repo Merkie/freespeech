@@ -28,11 +28,11 @@
 <main>
   <div>
     <button class="navigation-btn" disabled={!($PageHistory.length > 1 && $PageHistoryIndex < $PageHistory.length-1)} on:click={navigate_backwards}>
-      <Icon src={ArrowLeft} size="50px;" />
+      <Icon src={ArrowLeft} size="30px;" />
     </button>
     <h1>{$ProjectData.pages[$CurrentPageIndex].name}</h1>
     <button class="navigation-btn" disabled={!($PageHistory.length > 1 && $PageHistoryIndex > 0)}  on:click={navigate_forwards}>
-      <Icon src={ArrowRight} size="50px;" />
+      <Icon src={ArrowRight} size="30px;" />
     </button>
   </div>
 </main>
@@ -40,6 +40,7 @@
 <style>
   h1 {
     color: var(--tile-grid-header-text);
+    font-size: 20px;
   }
 
   div {
