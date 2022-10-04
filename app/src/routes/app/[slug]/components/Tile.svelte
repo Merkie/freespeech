@@ -1,4 +1,5 @@
 <script lang="ts">
+	// @ts-nocheck
 	// Types
 	import type { Tile, TilePage } from '@prisma/client';
 
@@ -17,8 +18,11 @@
 					UserTileSize,
 					UserFontSize,
 					EditingColor,
-					EditingType,
+					EditingColorType,
 					IsEditingColor,
+					IsEditingText,
+					EditingTextType,
+					EditingTextTile,
 					EditedTiles,
 					IsEditingTrash,
 					IsEditingAccent,
@@ -86,6 +90,11 @@
 				$InspectedTile = tile;
 				return; // return to prevent the tile from being interracted with
 			}
+			if($IsEditingText) {
+				$EditingTextTile = tile.id;
+				add_to_edited_tiles();
+				return;
+			}
 			if($IsEditingTrash) {
 				$ProjectData.pages[$CurrentPageIndex].tiles = $ProjectData.pages[$CurrentPageIndex].tiles.filter((t) => t.id !== tile.id);
 				await remove_tile(tile.id, $session?.access_token+'');
@@ -129,13 +138,13 @@
 			}
 			if($IsEditingColor) {
 				if(tile.link) return;
-				if($EditingType === 'background') {
+				if($EditingColorType === 'background') {
 					tile.backgroundColor = $EditingColor;
-				} else if($EditingType === 'border') {
+				} else if($EditingColorType === 'border') {
 					tile.borderColor = $EditingColor;
-				} else if($EditingType === 'text') {
+				} else if($EditingColorType === 'text') {
 					tile.textColor = $EditingColor;
-				} else if($EditingType === 'invisible') {
+				} else if($EditingColorType === 'invisible') {
 					tile.invisible = !tile.invisible;
 				}
 				add_to_edited_tiles();
@@ -192,8 +201,17 @@
 	{#if tile.accented}
 		<div class="corner-piece" style={`background: ${tile.borderColor || 'auto'}; opacity: ${tile.invisible ? 0 : 1}`} />
 	{/if}
-	
-	<p style={"font-size: "+(!tile.image && tile.display.length < 7 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>{tile.display}</p>
+
+	<p on:keyup={(e) => {tile[$EditingTextType] = e.originalTarget.innerText; add_to_edited_tiles();}} contenteditable={$EditingTextTile == tile.id && $EditingTextType === 'display'} style={"font-size: "+(!tile.image && tile.display.length < 7 ? ($UserTileSize/2).toString()+'px' : 'inherit')}>
+		{#if $EditingTextType === 'speak' && $IsEditingText && $IsInEditMode}
+		 	<p contenteditable={$EditingTextTile == tile.id && $EditingTextType === 'speak'} style="all: unset; opacity: 0.5; font-size: small;">
+				{tile.speak || "..."}
+			</p>
+		{:else}
+			{tile.display}
+		{/if}
+	</p>
+
 	{#if tile.image}
 		<img src={tile.image} alt="icon" />
 	{/if}

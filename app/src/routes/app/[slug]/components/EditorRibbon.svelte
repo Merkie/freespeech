@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions } from '@steeze-ui/radix-icons';
+	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download } from '@steeze-ui/radix-icons';
 
 	// Stores
 	import { CurrentPageIndex,
@@ -11,13 +11,15 @@
 					IsEditingColor,
 					UserTileSize,
 					UserFontSize,
-					EditingType,
+					EditingColorType,
+					EditingTextType,
 					EditingColor,
 					IsEditingTrash,
 					IsEditingAccent,
 					IsEditingInvisible,
 					IsEditingTemplate,
-					PageHistory
+					PageHistory,
+					IsEditingText
 					} from '$lib/stores';
 	
 	// API
@@ -60,6 +62,7 @@
 		$IsEditingAccent = false;
 		$IsEditingInvisible = false;
 		$IsEditingTemplate = false;
+		$IsEditingText = false;
 		isEditingCalibrate = false;
 
 		switch(tool) {
@@ -87,6 +90,9 @@
 			case 'calibrate':
 				isEditingCalibrate = true;
 				break;
+			case 'text':
+				$IsEditingText = true;
+				break;
 		}
 	}
 
@@ -103,6 +109,18 @@
 			<p style={'opacity: '+ ($IsEditingInspect ? '1' : '.5')}>Inspect</p>
 		</span>
 		<span>
+			<button on:click={() => disable_all_tools_except('text')} class={$IsEditingText ? 'selected' : ''}>
+				<Icon src={Text} width={'25px'} />
+			</button>
+			<p style={'opacity: '+ ($IsEditingText ? '1' : '.5')}>Text</p>
+			<EditorRibbonPopout top={'-80px'} height={'auto'} visible={$IsEditingText}>
+				<select bind:value={$EditingTextType}>
+					<option value="display">Display Text</option>
+					<option value="speak">Speak Text</option>
+				</select>
+			</EditorRibbonPopout>
+		</span>
+		<span>
 			<button on:click={() => disable_all_tools_except('drag')} class={$IsEditingDragging ? 'selected' : ''}>
 				<Icon src={Move} width={'25px'} />
 			</button>
@@ -116,7 +134,7 @@
 			<EditorRibbonPopout visible={$IsEditingColor}>
 				<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
 				<input type="text" placeholder="color" bind:value={$EditingColor}>
-				<select bind:value={$EditingType}>
+				<select bind:value={$EditingColorType}>
 					<option value="background">Background</option>
 					<option value="border">Border</option>
 					<option value="text">Text</option>
@@ -138,7 +156,7 @@
 		<span>
 			<!-- TODO: Need to try and figure out a way to get the navigation parent including the page history index-->
 			<button disabled={$PageHistory.length < 2} on:click={() => disable_all_tools_except('template')} class={$IsEditingTemplate ? 'selected' : ''}>
-				<Icon src={Text} width={'25px'} />
+				<Icon src={Download} width={'25px'} />
 			</button>
 			<p style={'opacity: '+ ($IsEditingTemplate ? '1' : '.5')}>Template</p>
 			<EditorRibbonPopout top={'-60px'} height={'auto'} visible={$IsEditingTemplate}>
