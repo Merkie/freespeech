@@ -64,5 +64,6 @@
 		align-items: center;
 		gap: 10px;
 		justify-content: center;
+		pointer-events:auto;
 	}
 </style>

@@ -8,6 +8,7 @@
 
 <section style={`left: ${visible ? '20px' : '-20px'};
 								 opacity: ${visible ? '1' : '0'};
+								 pointer-events: ${visible ? 'auto' : 'none'};
 								 ${height ? 'height: '+height+';' : ''}
 								 ${top ? 'top: '+top+';' : ''}`} bind:this={element} class={`${warning ? 'warning' : ''}`}>
 	{#if warning}
@@ -21,10 +22,10 @@
 		position: absolute;
 		top: -110px;
 		height: 70px;
+		display: flex;
 		background: var(--editor-ribbon-background);
 		border: 1px solid var(--editor-ribbon-button-border);
 		border-radius: 5px;
-    display: flex;
 		align-items: center;
 		gap: 20px;
 		padding: 10px;
