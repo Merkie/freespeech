@@ -110,13 +110,13 @@
 	const handleInteraction = async () => {
 		if (dummy) return; // Return the tile if it's a dummy
 		// All conditions in which tils dont behave normally
-		if(!$IsInEditMode && !tile.silent && !tile.invisible) { 
+		if (!$IsInEditMode && !tile.silent && !tile.invisible) {
 			$AppSentence = [...$AppSentence, tile]; // Add the tile to the sentence
-			
+
 			// Handle text to speech
 			var utterance = new SpeechSynthesisUtterance(tile.speak || tile.display);
 			window.speechSynthesis.speak(utterance);
-			
+
 			// Push the tile to the server for interraction
 			await handle_tile_interaction(tile.id, $session?.access_token + '');
 			return;

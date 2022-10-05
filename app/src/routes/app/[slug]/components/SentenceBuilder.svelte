@@ -46,7 +46,7 @@
 			{#each $AppSentence as sentence_tile, index}
 				<span class="tile-dummy" on:click={() => remove_from_sentence(index)}>
 					{#if sentence_tile.image}
-						<img src={sentence_tile.image} alt="tile">
+						<img src={sentence_tile.image} alt="tile" />
 					{/if}
 					<p>{sentence_tile.display}</p>
 				</span>
@@ -73,7 +73,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content:  center;
+		justify-content: center;
 		gap: 10px;
 		color: black;
 		font-weight: bold;

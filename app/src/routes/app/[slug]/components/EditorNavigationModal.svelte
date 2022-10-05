@@ -10,7 +10,6 @@
 	// API
 	import { create_object } from '$lib/api/aws';
 
-
 	// Stores
 	import {
 		IsEditingNavigation,
