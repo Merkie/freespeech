@@ -37,7 +37,8 @@
 		padding: 50px;
 	}
 
-	input, button {
+	input,
+	button {
 		color: var(--portal-input-text) !important;
 		width: 100%;
 		max-width: 300px;

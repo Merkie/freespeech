@@ -12,30 +12,38 @@
 	let isEditing = false;
 
 	const updateProjectCallback = async (newProject: Project) => {
-		await edit_project(project.id, newProject, $session?.access_token+'');
+		await edit_project(project.id, newProject, $session?.access_token + '');
 	};
 </script>
 
 <div>
 	{#if project.image}
-		<img height="80px" src={project.image} alt="">
+		<img height="80px" src={project.image} alt="" />
 	{/if}
-	<span on:click={() => {window.location.assign('/app/' + project.id)}}>
+	<span
+		on:click={() => {
+			window.location.assign('/app/' + project.id);
+		}}
+	>
 		<h3>{project.name}</h3>
 		<p>{project.description}</p>
 		<p>Created {project.created_at}</p>
 	</span>
-	<span  style="flex: 1" />
-	<button  on:click={() => isEditing = true}>
+	<span style="flex: 1" />
+	<button on:click={() => (isEditing = true)}>
 		<Icon size="30px" src={Pencil1} />
 	</button>
 	<button>
-			<Icon size="30px" src={Trash} />
+		<Icon size="30px" src={Trash} />
 	</button>
 </div>
 
 {#if isEditing}
-	 <ProjectEditModal {project} {updateProjectCallback} closeModalCallback={() => isEditing = false} />
+	<ProjectEditModal
+		{project}
+		{updateProjectCallback}
+		closeModalCallback={() => (isEditing = false)}
+	/>
 {/if}
 
 <style>

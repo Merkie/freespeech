@@ -19,7 +19,6 @@
 	<a href="/signup">Need to create an account?</a>
 </div>
 
-
 <style>
 	div {
 		display: flex;
@@ -38,7 +37,8 @@
 		padding: 50px;
 	}
 
-	input, button {
+	input,
+	button {
 		color: var(--portal-input-text) !important;
 		width: 100%;
 		max-width: 300px;
@@ -60,4 +60,3 @@
 		border-color: var(--primary-border);
 	}
 </style>
-

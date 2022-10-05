@@ -2,14 +2,21 @@
 	import { handleSilentRefresh } from 'lucia-sveltekit/client';
 	import { LightTheme } from '$lib/theme';
 	export let data;
-	
+
 	handleSilentRefresh();
 
 	let theme = LightTheme;
 
-	if(data.theme) {
+	if (data.theme) {
 		// add the custom theme to the theme object
-		theme = theme + data.theme.split(';').map((line: string) => { return '--'+line.trim()+';' }).join(' ');
+		theme =
+			theme +
+			data.theme
+				.split(';')
+				.map((line: string) => {
+					return '--' + line.trim() + ';';
+				})
+				.join(' ');
 	}
 </script>
 
@@ -47,6 +54,5 @@
 
 	:global(button:active) {
 		transform: scale(0.99);
-
 	}
 </style>

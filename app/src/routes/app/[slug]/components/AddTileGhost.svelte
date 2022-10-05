@@ -8,41 +8,45 @@
 	let session = getSession();
 
 	// Stores
-	import { ProjectData,  
-					CurrentPageIndex,
-					UserTileSize
-				} from '$lib/stores';
-	
+	import { ProjectData, CurrentPageIndex, UserTileSize } from '$lib/stores';
+
 	// Types
 	import type { Tile } from '@prisma/client';
-	
+
 	// API
 	import { create_tile } from '$lib/api/app';
 
 	// Add a new tile
 	const handle_tile_add = async () => {
 		// If no session, return
-		if(!$session?.access_token) return; 
-		
+		if (!$session?.access_token) return;
+
 		// Create new tile
-		const new_tile = ({
+		const new_tile = {
 			id: parseInt(Math.random().toString().split('.')[1]),
 			index: $ProjectData.pages[$CurrentPageIndex].tiles.length,
 			display: 'An unnamed tile'
-		} as Tile);
-		
+		} as Tile;
+
 		// Add it to the list
-		$ProjectData.pages[$CurrentPageIndex].tiles = [...$ProjectData.pages[$CurrentPageIndex].tiles, new_tile]
-		
+		$ProjectData.pages[$CurrentPageIndex].tiles = [
+			...$ProjectData.pages[$CurrentPageIndex].tiles,
+			new_tile
+		];
+
 		// Create the tile in the database
-		const response = await create_tile($ProjectData.pages[$CurrentPageIndex].id, new_tile, $session.access_token);
-		
+		const response = await create_tile(
+			$ProjectData.pages[$CurrentPageIndex].id,
+			new_tile,
+			$session.access_token
+		);
+
 		// If there was an error, return
 		if (!response.tile) return;
-		
+
 		// Update the tile with the new id
 		$ProjectData.pages[$CurrentPageIndex].tiles[response.tile.index].id = response.tile.id;
-		$ProjectData = {...$ProjectData};
+		$ProjectData = { ...$ProjectData };
 	};
 </script>
 
@@ -64,6 +68,6 @@
 		align-items: center;
 		gap: 10px;
 		justify-content: center;
-		pointer-events:auto;
+		pointer-events: auto;
 	}
 </style>

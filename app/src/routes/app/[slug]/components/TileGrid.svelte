@@ -13,16 +13,16 @@
 	import EditorToolbox from './EditorToolbox.svelte';
 	import Tile from './Tile.svelte';
 	import AddTileGhost from './AddTileGhost.svelte';
-	
 
 	// Stores
-	import { IsInEditMode,
-					InspectedTile,
-					ProjectData,  
-					CurrentPageIndex,
-					IsEditingDragging,
-					UserTileSize
-				} from '$lib/stores';
+	import {
+		IsInEditMode,
+		InspectedTile,
+		ProjectData,
+		CurrentPageIndex,
+		IsEditingDragging,
+		UserTileSize
+	} from '$lib/stores';
 
 	// API
 	import { reorder_page } from '$lib/api/app';
@@ -38,7 +38,7 @@
 	const handleDndConsider = async (e: { detail: any }) => {
 		items = e.detail.items;
 	};
-	
+
 	// Finalizing a Dnd action
 	const handleDndFinalize = async (e: { detail: any }) => {
 		items = e.detail.items.map((item: ITile, index: number) => {
@@ -46,30 +46,35 @@
 			return item;
 		});
 		$ProjectData.pages[$CurrentPageIndex].tiles = items;
-		
+
 		const updates = e.detail.items.map((item: ITile, index: number) => {
-				if(item.index !== index) {
-					return {
-						id: item.id,
-						index: index
-					}
-				}
+			if (item.index !== index) {
+				return {
+					id: item.id,
+					index: index
+				};
+			}
 		});
 
-		if(!$session?.access_token) return;
+		if (!$session?.access_token) return;
 		await reorder_page($ProjectData.pages[$CurrentPageIndex].id, updates, $session.access_token);
 	};
 
 	// Set the items to the store
 	$: {
-			items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
+		items = $ProjectData.pages[$CurrentPageIndex].tiles.sort((a, b) => a.index - b.index);
 	}
 </script>
 
 <section style={`--editor-offset: ${$IsInEditMode ? '110px' : '0px'};`}>
 	<div
-	style={`grid-template-columns: repeat(${$ProjectData.pages[$CurrentPageIndex].columns}, 1fr);`}
-		use:dndzone={{ items, flipDurationMs: 300, dropTargetStyle: { opacity: '.5' }, dragDisabled: !$IsEditingDragging }}
+		style={`grid-template-columns: repeat(${$ProjectData.pages[$CurrentPageIndex].columns}, 1fr);`}
+		use:dndzone={{
+			items,
+			flipDurationMs: 300,
+			dropTargetStyle: { opacity: '.5' },
+			dragDisabled: !$IsEditingDragging
+		}}
 		on:consider={handleDndConsider}
 		on:finalize={handleDndFinalize}
 	>
@@ -88,7 +93,7 @@
 		{/if}
 
 		{#if $InspectedTile}
-	 		<EditorModal />
+			<EditorModal />
 			<EditorToolbox />
 		{/if}
 	</div>

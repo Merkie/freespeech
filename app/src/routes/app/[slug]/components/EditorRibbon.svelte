@@ -1,31 +1,45 @@
 <script lang="ts">
 	// Icons
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { MagicWand, Opacity, Move, Trash, Bookmark, BorderNone, Text, Dimensions, Download, SpeakerOff, Image, Rocket } from '@steeze-ui/radix-icons';
+	import {
+		MagicWand,
+		Opacity,
+		Move,
+		Trash,
+		Bookmark,
+		BorderNone,
+		Text,
+		Dimensions,
+		Download,
+		SpeakerOff,
+		Image,
+		Rocket
+	} from '@steeze-ui/radix-icons';
 
 	// Stores
-	import { CurrentPageIndex,
-					ProjectData,
-					IsEditingInspect,
-					IsEditingDragging,
-					IsEditingColor,
-					IsInEditMode,
-					UserTileSize,
-					UserFontSize,
-					EditingColorType,
-					EditingTextType,
-					EditingColor,
-					IsEditingTrash,
-					IsEditingAccent,
-					IsEditingInvisible,
-					IsEditingTemplate,
-					IsEditingSilent,
-					IsEditingNavigation,
-					IsEditingImage,
-					PageHistory,
-					IsEditingText
-					} from '$lib/stores';
-	
+	import {
+		CurrentPageIndex,
+		ProjectData,
+		IsEditingInspect,
+		IsEditingDragging,
+		IsEditingColor,
+		IsInEditMode,
+		UserTileSize,
+		UserFontSize,
+		EditingColorType,
+		EditingTextType,
+		EditingColor,
+		IsEditingTrash,
+		IsEditingAccent,
+		IsEditingInvisible,
+		IsEditingTemplate,
+		IsEditingSilent,
+		IsEditingNavigation,
+		IsEditingImage,
+		PageHistory,
+		IsEditingText
+	} from '$lib/stores';
+
 	// API
 	import { edit_page } from '$lib/api/app';
 
@@ -39,23 +53,23 @@
 
 	// Edit the columns of the page
 	const edit_page_columns = async (columns: number) => {
-			$ProjectData.pages[$CurrentPageIndex].columns = columns;
+		$ProjectData.pages[$CurrentPageIndex].columns = columns;
 
-			if(!$session?.access_token) return;
-			let page = $ProjectData.pages[$CurrentPageIndex];
-			// delete page.tiles;
-			await edit_page(page, $session.access_token);
+		if (!$session?.access_token) return;
+		let page = $ProjectData.pages[$CurrentPageIndex];
+		// delete page.tiles;
+		await edit_page(page, $session.access_token);
 	};
 
 	// Handle the input of editing the column amount
 	const handle_columns_edit = () => {
 		// Try and catch used here for empty strings and other weird non-int inputs
-		try{
-			if(parseInt(pageColumnsInput.value) > 0) {
+		try {
+			if (parseInt(pageColumnsInput.value) > 0) {
 				edit_page_columns(parseInt(pageColumnsInput.value));
 			}
-		} catch(e) {}
-	}
+		} catch (e) {}
+	};
 
 	// Disable all tools except
 	const disable_all_tools_except = (tool: string) => {
@@ -73,7 +87,7 @@
 		$IsEditingNavigation = false;
 		isEditingCalibrate = false;
 
-		switch(tool) {
+		switch (tool) {
 			case 'inspect':
 				$IsEditingInspect = true;
 				break;
@@ -111,13 +125,15 @@
 				$IsEditingNavigation = true;
 				break;
 		}
-	}
+	};
 
 	// State
-	let isEditingCalibrate = false; 
+	let isEditingCalibrate = false;
 </script>
 
-<section style={`bottom: ${$IsInEditMode ? '71px' : '-10px'}; opacity: ${$IsInEditMode ? '1' : '0'};`}>
+<section
+	style={`bottom: ${$IsInEditMode ? '71px' : '-10px'}; opacity: ${$IsInEditMode ? '1' : '0'};`}
+>
 	<div>
 		<!-- <span>
 			<button on:click={() => disable_all_tools_except('inspect')} class={$IsEditingInspect ? 'selected' : ''}>
@@ -126,78 +142,112 @@
 			<p style={'opacity: '+ ($IsEditingInspect ? '1' : '.5')}>Inspect</p>
 		</span> -->
 		<span>
-			<button on:click={() => disable_all_tools_except('text')} class={$IsEditingText ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('text')}
+				class={$IsEditingText ? 'selected' : ''}
+			>
 				<Icon src={Text} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingText ? '1' : '.5')}>Text</p>
+			<p style={'opacity: ' + ($IsEditingText ? '1' : '.5')}>Text</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('image')} class={$IsEditingImage ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('image')}
+				class={$IsEditingImage ? 'selected' : ''}
+			>
 				<Icon src={Image} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingImage ? '1' : '.5')}>Image</p>
+			<p style={'opacity: ' + ($IsEditingImage ? '1' : '.5')}>Image</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('drag')} class={$IsEditingDragging ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('drag')}
+				class={$IsEditingDragging ? 'selected' : ''}
+			>
 				<Icon src={Move} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingDragging ? '1' : '.5')}>Move</p>
+			<p style={'opacity: ' + ($IsEditingDragging ? '1' : '.5')}>Move</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('color')} class={$IsEditingColor ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('color')}
+				class={$IsEditingColor ? 'selected' : ''}
+			>
 				<Icon src={Opacity} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingColor ? '1' : '.5')}>Color</p>
+			<p style={'opacity: ' + ($IsEditingColor ? '1' : '.5')}>Color</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('accent')} class={$IsEditingAccent ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('accent')}
+				class={$IsEditingAccent ? 'selected' : ''}
+			>
 				<Icon src={Bookmark} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingAccent ? '1' : '.5')}>Accent</p>
+			<p style={'opacity: ' + ($IsEditingAccent ? '1' : '.5')}>Accent</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('invisible')} class={$IsEditingInvisible ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('invisible')}
+				class={$IsEditingInvisible ? 'selected' : ''}
+			>
 				<Icon src={BorderNone} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingInvisible ? '1' : '.5')}>Invisible</p>
+			<p style={'opacity: ' + ($IsEditingInvisible ? '1' : '.5')}>Invisible</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('silent')} class={$IsEditingSilent ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('silent')}
+				class={$IsEditingSilent ? 'selected' : ''}
+			>
 				<Icon src={SpeakerOff} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingSilent ? '1' : '.5')}>Silent</p>
+			<p style={'opacity: ' + ($IsEditingSilent ? '1' : '.5')}>Silent</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('navigation')} class={$IsEditingNavigation ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('navigation')}
+				class={$IsEditingNavigation ? 'selected' : ''}
+			>
 				<Icon src={Rocket} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingNavigation ? '1' : '.5')}>Navigation</p>
+			<p style={'opacity: ' + ($IsEditingNavigation ? '1' : '.5')}>Navigation</p>
 		</span>
 		<span>
 			<!-- TODO: Need to try and figure out a way to get the navigation parent including the page history index-->
-			<button disabled={$PageHistory.length < 2} on:click={() => disable_all_tools_except('template')} class={$IsEditingTemplate ? 'selected' : ''}>
+			<button
+				disabled={$PageHistory.length < 2}
+				on:click={() => disable_all_tools_except('template')}
+				class={$IsEditingTemplate ? 'selected' : ''}
+			>
 				<Icon src={Download} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingTemplate ? '1' : '.5')}>Template</p>
+			<p style={'opacity: ' + ($IsEditingTemplate ? '1' : '.5')}>Template</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('calibrate')} class={isEditingCalibrate ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('calibrate')}
+				class={isEditingCalibrate ? 'selected' : ''}
+			>
 				<Icon src={Dimensions} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ (isEditingCalibrate ? '1' : '.5')}>Calibrate</p>
+			<p style={'opacity: ' + (isEditingCalibrate ? '1' : '.5')}>Calibrate</p>
 		</span>
 		<span>
-			<button on:click={() => disable_all_tools_except('trash')} class={$IsEditingTrash ? 'selected' : ''}>
+			<button
+				on:click={() => disable_all_tools_except('trash')}
+				class={$IsEditingTrash ? 'selected' : ''}
+			>
 				<Icon src={Trash} width={'25px'} />
 			</button>
-			<p style={'opacity: '+ ($IsEditingTrash ? '1' : '.5')}>Trash</p>
+			<p style={'opacity: ' + ($IsEditingTrash ? '1' : '.5')}>Trash</p>
 		</span>
 	</div>
 </section>
 
 <EditorRibbonPopout visible={$IsEditingColor}>
-	<span style={"background-color: "+$EditingColor+";"} class="editing-color" />
-	<input type="text" placeholder="color" bind:value={$EditingColor}>
+	<span style={'background-color: ' + $EditingColor + ';'} class="editing-color" />
+	<input type="text" placeholder="color" bind:value={$EditingColor} />
 	<select bind:value={$EditingColorType}>
 		<option value="background">Background</option>
 		<option value="border">Border</option>
@@ -209,15 +259,21 @@
 </EditorRibbonPopout>
 <EditorRibbonPopout visible={isEditingCalibrate}>
 	<span>
-		<input type="text" style="width: 20px; height: 25px;" bind:this={pageColumnsInput} value={$ProjectData.pages[$CurrentPageIndex].columns} on:input={handle_columns_edit} />
+		<input
+			type="text"
+			style="width: 20px; height: 25px;"
+			bind:this={pageColumnsInput}
+			value={$ProjectData.pages[$CurrentPageIndex].columns}
+			on:input={handle_columns_edit}
+		/>
 		<p style="opacity: 0.5; display: block;">Columns</p>
 	</span>
 	<span>
-		<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserTileSize}  />
+		<input type="text" style="width: 20px; height: 25px;" bind:value={$UserTileSize} />
 		<p style="opacity: 0.5; display: block;">Tile Height</p>
 	</span>
 	<span>
-		<input type="text" style="width: 20px; height: 25px;"  bind:value={$UserFontSize} />
+		<input type="text" style="width: 20px; height: 25px;" bind:value={$UserFontSize} />
 		<p style="opacity: 0.5; display: block;">Font size</p>
 	</span>
 </EditorRibbonPopout>
@@ -246,7 +302,7 @@
 
 	b {
 		filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.35));
-		opacity: .8;
+		opacity: 0.8;
 	}
 
 	.selected {
@@ -279,7 +335,9 @@
 		color: var(--editor-ribbon-button-text);
 	}
 
-	button, input, select {
+	button,
+	input,
+	select {
 		display: flex;
 		align-items: center;
 		border: none;
@@ -304,12 +362,12 @@
 		margin: 5px;
 	}
 
-	input { 
+	input {
 		width: 70px !important;
 	}
 
 	button:disabled {
-		opacity: .5;
+		opacity: 0.5;
 	}
 
 	@media (min-width: 1200px) {

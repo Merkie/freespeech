@@ -1454,12 +1454,12 @@
     "picocolors" "^1.0.0"
     "source-map-js" "^1.0.2"
 
-"prettier-plugin-svelte@^2.7.0":
-  "integrity" "sha512-fQhhZICprZot2IqEyoiUYLTRdumULGRvw0o4dzl5jt0jfzVWdGqeYW27QTWAeXhoupEZJULmNoH3ueJwUWFLIA=="
-  "resolved" "https://registry.npmjs.org/prettier-plugin-svelte/-/prettier-plugin-svelte-2.7.0.tgz"
-  "version" "2.7.0"
+"prettier-plugin-svelte@^2.7.1":
+  "integrity" "sha512-H33qjhCBZyd9Zr1A5hUAYDh7j0Mf97uvy7XcA7CP4nNSYrNcPvBUf7wI8K9NptWTIs0S41QtgTWmJIUiGlEBtw=="
+  "resolved" "https://registry.npmjs.org/prettier-plugin-svelte/-/prettier-plugin-svelte-2.7.1.tgz"
+  "version" "2.7.1"
 
-"prettier@^1.16.4 || ^2.0.0", "prettier@^2.6.2":
+"prettier@^1.16.4 || ^2.0.0", "prettier@^2.7.1":
   "integrity" "sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g=="
   "resolved" "https://registry.npmjs.org/prettier/-/prettier-2.7.1.tgz"
   "version" "2.7.1"

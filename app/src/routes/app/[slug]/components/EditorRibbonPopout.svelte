@@ -8,20 +8,24 @@
 	import { IsInEditMode } from '$lib/stores';
 </script>
 
-<section style={`};
+<section
+	style={`};
 								 opacity: ${visible && $IsInEditMode ? '1' : '0'};
 								 pointer-events: ${visible ? 'auto' : 'none'};
-								 ${height ? 'height: '+height+';' : ''}
+								 ${height ? 'height: ' + height + ';' : ''}
 								 left: ${visible && $IsInEditMode ? '10px' : '-100px'};
-								 `} bind:this={element} class={`${warning ? 'warning' : ''}`}>
+								 `}
+	bind:this={element}
+	class={`${warning ? 'warning' : ''}`}
+>
 	{#if warning}
 		<div class="warning-bg" />
 	{/if}
-  <slot />
+	<slot />
 </section>
 
 <style>
-  section {
+	section {
 		position: fixed;
 		bottom: 80px !important;
 		height: 70px;

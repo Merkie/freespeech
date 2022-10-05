@@ -8,7 +8,10 @@
 	export let callback: Function; // onclick
 </script>
 
-<button style={`background-color: ${background}; border-color: ${border}`} on:click={() => callback()}>
+<button
+	style={`background-color: ${background}; border-color: ${border}`}
+	on:click={() => callback()}
+>
 	<span>
 		<Icon size="18px" src={iconsrc} theme="solid" />
 	</span>
