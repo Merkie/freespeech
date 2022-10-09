@@ -21,14 +21,14 @@
 			<i class="bx bxs-image-add" />
 			<p>Image</p>
 		</button>
-		<button
+		<!-- <button
 			disabled={true}
 			class={$EditorTool === EditorTools.move ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.move)}
 		>
 			<i class="bx bx-move" />
 			<p>Move</p>
-		</button>
+		</button> -->
 		<button
 			disabled={true}
 			class={$EditorTool === EditorTools.color ? 'selected' : ''}
