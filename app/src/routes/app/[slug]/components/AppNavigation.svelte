@@ -1,6 +1,13 @@
 <script lang="ts">
 	// Stores
-	import { InEditMode, CurrentPageId, InSettingsPage, AppProject } from '$lib/client/stores';
+	import {
+		InEditMode,
+		CurrentPageId,
+		InSettingsPage,
+		AppProject,
+		EditorTool,
+		EditorTools
+	} from '$lib/client/stores';
 
 	// Resets the state of the app back to the home page
 	const reset_state = () => {
@@ -15,7 +22,10 @@
 	<button
 		disabled={$InSettingsPage}
 		class={`${$InEditMode ? 'selected-edit' : 'edit'}`}
-		on:click={() => ($InEditMode = !$InEditMode)}
+		on:click={() => {
+			$InEditMode = !$InEditMode;
+			if (!$InEditMode) $EditorTool = EditorTools.Text;
+		}}
 		><i class={$InEditMode ? 'bx bx-check' : 'bx bxs-pencil'} />
 		<span>{$InEditMode ? 'Save Changes' : 'Edit'}</span>
 	</button>
@@ -24,7 +34,7 @@
 		on:click={() => {
 			$InSettingsPage = true;
 			$InEditMode = false;
-		}}><i class="bx bxs-cog" /> Settings</button
+		}}><i class="bx bxs-cog" /> <span>Settings</span></button
 	>
 </section>
 

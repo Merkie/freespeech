@@ -3,7 +3,7 @@
 	import { EditorTool, EditorTools, InEditMode } from '$lib/client/stores';
 </script>
 
-<section style={`bottom: ${$InEditMode ? '62px' : '-60px'}`}>
+<section style={`--open-height: 62px; bottom: ${$InEditMode ? 'var(--open-height)' : '-60px'}`}>
 	<div>
 		<button
 			class={$EditorTool === EditorTools.text ? 'selected' : ''}
@@ -109,5 +109,19 @@
 	.selected p {
 		display: block;
 		opacity: 1;
+	}
+
+	@media (max-width: 750px) {
+		section {
+			--open-height: 57px !important;
+		}
+
+		div {
+			padding: 0 10px;
+		}
+
+		button {
+			width: 40px !important;
+		}
 	}
 </style>

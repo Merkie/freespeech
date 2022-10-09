@@ -9,6 +9,7 @@
 	import EditModeRibbon from './components/EditModeRibbon.svelte';
 	import SettingsPage from './components/SettingsPage.svelte';
 	import NavigateModal from './components/NavigateModal.svelte';
+	import EditorModeColorPicker from './components/EditorModeColorPicker.svelte';
 	$AppProject = data;
 </script>
 
@@ -19,6 +20,7 @@
 		<TileGrid />
 		<EditModeRibbon />
 		<NavigateModal />
+		<EditorModeColorPicker />
 	{:else}
 		<SettingsPage />
 	{/if}
