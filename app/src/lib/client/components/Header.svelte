@@ -4,7 +4,7 @@
 </script>
 
 <section>
-	<h1>
+	<h1 on:click={() => window.location.assign('/')}>
 		<i class="bx bxs-message-square-detail" /> FreeSpeech AAC
 	</h1>
 	<button on:click={() => window.location.assign('/'+uri)}
@@ -26,6 +26,7 @@
 		align-items: center;
 		gap: 5px;
 		font-weight: 500;
+		cursor: pointer;
 	}
 
 	button {
