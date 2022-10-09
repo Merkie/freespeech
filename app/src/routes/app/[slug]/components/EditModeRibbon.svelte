@@ -1,6 +1,10 @@
 <script lang="ts">
-	import { EditorTool, EditorTools } from '$lib/client/stores';
-	import { InEditMode } from '$lib/client/stores';
+	// Stores
+	import {
+		EditorTool,
+		EditorTools,
+		InEditMode
+	} from '$lib/client/stores';
 </script>
 
 <section style={`bottom: ${$InEditMode ? '62px' : '-60px'}`}>

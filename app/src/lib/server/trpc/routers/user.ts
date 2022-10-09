@@ -1,6 +1,11 @@
+// Trpc
 import { router } from '@trpc/server';
 import { z } from 'zod';
+
+// Prisma
 import prismaClient from '$lib/server/prismaClient';
+
+// Types
 import type { User } from '@prisma/client';
 
 export default router()

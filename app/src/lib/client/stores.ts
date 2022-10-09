@@ -26,9 +26,8 @@ export const Me: Writable<
 > = writable();
 // The active project
 export const AppProject = writable<Project & { pages: (TilePage & { tiles: Tile[] })[] }>();
+// Id of the current page
 export const CurrentPageId = writable<number>();
-// The name of the current page
-// export const CurrentPageName = writable<string>('Home');
 // What page the user in on in the dashboard
 export const DashboardPage: Writable<DashboardPages> = writable(DashboardPages.account);
 // the tool that the user has selected

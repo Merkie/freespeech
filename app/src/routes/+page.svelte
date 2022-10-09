@@ -9,8 +9,6 @@
 			description: 'test',
 			index: 0
 		});
-
-		console.log(response);
 	};
 </script>
 

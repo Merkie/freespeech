@@ -1,9 +1,14 @@
+<script lang="ts">
+	export let uri: string;
+	export let button_text: string;
+</script>
+
 <section>
 	<h1>
 		<i class="bx bxs-message-square-detail" /> FreeSpeech AAC
 	</h1>
-	<button on:click={() => window.location.assign('/dashboard')}
-		>Dashboard<i class="bx bx-right-arrow-alt" /></button
+	<button on:click={() => window.location.assign('/'+uri)}
+		>{button_text}<i class="bx bx-right-arrow-alt" /></button
 	>
 </section>
 
@@ -21,12 +26,6 @@
 		align-items: center;
 		gap: 5px;
 		font-weight: 500;
-	}
-
-	h1 span {
-		font-size: 16px;
-		font-weight: 200;
-		margin-top: 5px;
 	}
 
 	button {

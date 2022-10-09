@@ -1,10 +1,12 @@
-import prismaClient from '$lib/server/prismaClient';
+// Trpc
 import { router } from '@trpc/server';
 import { z } from 'zod';
-import bcrypt from 'bcrypt';
+
+// Prisma
+import prismaClient from '$lib/server/prismaClient';
 
 // Types
-import type { Project, Tile, TilePage, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 
 export default router()
 	.mutation('create', {

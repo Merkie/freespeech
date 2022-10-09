@@ -1,6 +1,5 @@
 <script>
 	import { Me } from '$lib/client/stores';
-	console.log($Me);
 </script>
 
 <h1>Projects</h1>

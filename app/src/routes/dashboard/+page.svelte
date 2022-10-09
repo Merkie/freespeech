@@ -2,7 +2,7 @@
 	import trpc from '$lib/client/trpc';
 	import { onMount } from 'svelte';
 	import DashboardContent from './components/DashboardContent.svelte';
-	import Header from './components/Header.svelte';
+	import Header from '$lib/client/components/Header.svelte';
 	import SideBar from './components/SideBar.svelte';
 	import { Me } from '$lib/client/stores';
 
@@ -13,7 +13,7 @@
 	});
 </script>
 
-<Header />
+<Header uri="app" button_text="Application" />
 <main>
 	<SideBar />
 	<DashboardContent />

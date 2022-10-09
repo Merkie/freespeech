@@ -1,12 +1,17 @@
-import type { inferAsyncReturnType, ResponseMeta, CreateContextFn } from '@trpc/server';
+// Trpc
+import type { inferAsyncReturnType } from '@trpc/server';
 import * as trpc from '@trpc/server';
 import trpcTransformer from 'trpc-transformer';
-import prismaClient from '../prismaClient';
+
+// Routers
 import auth from './routers/auth';
 import user from './routers/user';
 import project from './routers/project';
 import page from './routers/page';
 import tile from './routers/tile';
+
+// Prisma
+import prismaClient from '$lib/server/prismaClient';
 
 // @ts-ignore
 export const createContext = async ({ cookies }) => {

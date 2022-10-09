@@ -1,6 +1,11 @@
+// Trpc
 import { router } from '@trpc/server';
-import { string, z } from 'zod';
+import { z } from 'zod';
+
+// Prisma
 import prismaClient from '$lib/server/prismaClient';
+
+// Types
 import type { Tile, User } from '@prisma/client';
 
 export default router()
@@ -30,6 +35,7 @@ export default router()
 				}
 			});
 
+			// 4) Return the tile
 			return tile;
 		}
 	})
@@ -56,8 +62,6 @@ export default router()
 			const user = ctx as User;
 			if (!user) return null;
 
-			console.log('edit', input);
-
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({
 				where: {
@@ -75,54 +79,12 @@ export default router()
 					id: input.id
 				},
 				data: {
-					...tile,
-					...input
-				}
+					...tile, // Adding the original tile data to the update
+					...input // Adding the new data to the update in case its missing old data
+				} as Tile
 			});
 
+			// 4) Return the tile
 			return tile;
-		}
-	})
-	.mutation('reorder', {
-		input: z.object({
-			indexes: z.array(
-				z.object({
-					index: z.number(),
-					id: z.string()
-				})
-			),
-			page_id: z.number()
-		}),
-		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
-
-			// 1) Get the tiles
-			const tiles = await prismaClient.tile.findMany({
-				where: {
-					tilePageId: input.page_id
-				}
-			});
-			if (!tiles) return null;
-
-			// 2) Check if the user can edit the tile
-			if (tiles[0].userId !== user.id) return null;
-
-			// 3) Edit the tile
-			input.indexes.forEach(async (id, index) => {
-				try {
-					await prismaClient.tile.update({
-						where: {
-							id,
-							tilePageId: input.page_id
-						},
-						data: {
-							tile_index: index
-						}
-					});
-				} catch (e) {}
-			});
-
-			return tiles;
 		}
 	});

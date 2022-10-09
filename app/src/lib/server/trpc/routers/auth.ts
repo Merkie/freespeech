@@ -1,10 +1,15 @@
-import prismaClient from '$lib/server/prismaClient';
+// Trpc
 import { router } from '@trpc/server';
 import { z } from 'zod';
-import bcrypt from 'bcrypt';
+
+// Prisma
+import prismaClient from '$lib/server/prismaClient';
 
 // Types
 import type { User } from '@prisma/client';
+
+// bcrypt
+import bcrypt from 'bcrypt';
 
 // Creates an access token for a user
 const create_access_token = async (user: User) => {

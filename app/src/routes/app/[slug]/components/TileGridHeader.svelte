@@ -1,6 +1,8 @@
 <script>
+	// Stores
 	import { AppProject, CurrentPageId } from '$lib/client/stores';
 
+	// State
 	let name = 'Home';
 
 	$: {

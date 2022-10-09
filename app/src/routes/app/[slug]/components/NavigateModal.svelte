@@ -1,9 +1,17 @@
 <script lang="ts">
 	// @ts-nocheck
+	// Trpc
 	import trpc from '$lib/client/trpc';
-	import { AppProject } from '$lib/client/stores';
+
+	// Stores
+	import {
+		AppProject,
+		NavigationTile,
+		CurrentPageId
+	} from '$lib/client/stores';
+
+	// Click outside
 	import { clickOutside } from '$lib/client/clickOutside';
-	import { NavigationTile, CurrentPageId } from '$lib/client/stores';
 
 	const create_new_page = async () => {
 		const current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);

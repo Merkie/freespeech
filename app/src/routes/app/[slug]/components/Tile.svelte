@@ -1,4 +1,5 @@
 <script lang="ts">
+	// Trpc
 	import trpc from '$lib/client/trpc';
 
 	// Stores
@@ -93,7 +94,6 @@
 	{#if tile.navigation_page_id}
 		<div class="folder-bit" />
 	{/if}
-	<p>{tile.tile_index}</p>
 
 	<p
 		bind:this={tileTextElement}

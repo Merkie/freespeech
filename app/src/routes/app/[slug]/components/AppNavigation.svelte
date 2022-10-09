@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { InEditMode, CurrentPageId, InSettingsPage, AppProject } from '$lib/client/stores';
+	// Stores
+	import {
+		InEditMode,
+		CurrentPageId,
+		InSettingsPage,
+		AppProject
+	} from '$lib/client/stores';
+	
+	// Resets the state of the app back to the home page
 	const reset_state = () => {
 		$InEditMode = false;
 		$CurrentPageId = $AppProject.pages[0].id;

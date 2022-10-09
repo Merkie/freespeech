@@ -1,6 +1,9 @@
 <script lang="ts">
+	// Fuse (fuzzy search)
 	import Fuse from 'fuse.js';
-	import Header from './Header.svelte';
+
+	// Components
+	import Header from '$lib/client/components/Header.svelte';
 
 	// Bindings
 	let search_text: string;
@@ -49,15 +52,10 @@
 		}
 	];
 
-	const fuse_options = {
-		includeScore: true,
-		// Search in `author` and in `tags` array
-		keys: ['name']
-	};
-	const fuse = new Fuse(settings, fuse_options);
+	const fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
 </script>
 
-<Header />
+<Header uri="dashboard" button_text="Dashboard" />
 <main>
 	<h1>Application Settings</h1>
 	<label for="search">Search Settings</label>

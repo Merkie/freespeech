@@ -1,11 +1,23 @@
 <script lang="ts">
 	//@ts-nocheck
-	import { AppProject, CurrentPageId, InEditMode } from '$lib/client/stores';
+	// Stores
+	import {
+		AppProject,
+		CurrentPageId,
+		InEditMode
+	} from '$lib/client/stores';
+	
+	// Components
 	import Tile from './Tile.svelte';
+
+	// Types
 	import type { Tile as ITile } from '@prisma/client';
+	
+	// Trpc
 	import trpc from '$lib/client/trpc';
 
-	const min_row_count = 5;
+	// config
+	const min_row_count = 5; // minimum number of rows
 
 	// If no current page id, assume home
 	if (!$CurrentPageId) {
@@ -44,9 +56,12 @@
 
 	$: {
 		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-		rows = Math.max(min_row_count, ($AppProject.pages[current_page_index].tiles.length /
-			$AppProject.pages[current_page_index].columns +
-		1));
+		let most_rows = 0;
+		$AppProject.pages.forEach((page) => {
+			let row_count = Math.floor(1 + (page.tiles.length / page.columns));
+			if(row_count > most_rows) most_rows = row_count;
+		});
+		rows = Math.max(min_row_count, most_rows, Math.floor(2 + (($AppProject.pages[current_page_index].tiles.length - 1) / $AppProject.pages[current_page_index].columns)));
 	}
 </script>
 
