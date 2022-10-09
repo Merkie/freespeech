@@ -11,7 +11,6 @@ export default router()
 		input: z.object({
 			name: z.string(),
 			description: z.string(),
-			image_src: z.string(),
 			index: z.number()
 		}),
 		resolve: async ({ input, ctx }) => {
@@ -24,7 +23,6 @@ export default router()
 				data: {
 					name: input.name,
 					description: input.description,
-					image: input.image_src,
 					author: {
 						connect: {
 							id: user.id
@@ -42,6 +40,7 @@ export default router()
 							tiles: {
 								create: {
 									tile_index: 0,
+									display_text: 'First tile!',
 									author: {
 										connect: {
 											id: user.id

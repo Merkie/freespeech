@@ -41,11 +41,7 @@
 				);
 				$AppProject.pages[current_page_index].tiles[tile_index].is_accented =
 					!$AppProject.pages[current_page_index].tiles[tile_index].is_accented;
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[tile_index]
-				);
+				await trpc(fetch).mutation('tile:edit', $AppProject.pages[current_page_index].tiles[tile_index]);
 			} else if ($EditorTool === EditorTools.invisible) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
@@ -96,6 +92,7 @@
 	{#if tile.navigation_page_id}
 		<div class="folder-bit" />
 	{/if}
+	<p>{tile.tile_index}</p>
 
 	<p
 		bind:this={tileTextElement}

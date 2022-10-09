@@ -1,5 +1,5 @@
 import { router } from '@trpc/server';
-import { z } from 'zod';
+import { string, z } from 'zod';
 import prismaClient from '$lib/server/prismaClient';
 import type { Tile, User } from '@prisma/client';
 
@@ -36,14 +36,27 @@ export default router()
 	.mutation('edit', {
 		input: z.object({
 			id: z.string(),
-			display_text: z.string(),
-			is_invisible: z.boolean(),
-			is_accented: z.boolean(),
-			navigation_page_id: z.number().optional()
+			tile_index: z.number().optional(),
+			tap_count: z.number().optional(),
+			link_id: z.string().nullable().optional(),
+			display_text: z.string().optional(),
+			speak_text: z.string().nullable().optional(),
+			image: z.string().nullable().optional(),
+			navigation_page_id: z.number().nullable().optional(),
+			modifier: z.string().nullable().optional(),
+			background_color: z.string().nullable().optional(),
+			border_color: z.string().nullable().optional(),
+			text_color: z.string().nullable().optional(),
+			is_silent: z.boolean().optional(),
+			is_invisible: z.boolean().optional(),
+			is_public: z.boolean().optional(),
+			is_accented: z.boolean().optional()
 		}),
 		resolve: async ({ ctx, input }) => {
 			const user = ctx as User;
 			if (!user) return null;
+
+			console.log('edit', input);
 
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({
@@ -72,7 +85,12 @@ export default router()
 	})
 	.mutation('reorder', {
 		input: z.object({
-			indexes: z.array(z.number()),
+			indexes: z.array(
+				z.object({
+					index: z.number(),
+					id: z.string()
+				})
+			),
 			page_id: z.number()
 		}),
 		resolve: async ({ ctx, input }) => {
@@ -91,14 +109,15 @@ export default router()
 			if (tiles[0].userId !== user.id) return null;
 
 			// 3) Edit the tile
-			tiles.forEach(async (tile, index) => {
+			input.indexes.forEach(async (id, index) => {
 				try {
 					await prismaClient.tile.update({
 						where: {
-							id: tile.id
+							id,
+							tilePageId: input.page_id
 						},
 						data: {
-							tile_index: input.indexes[index]
+							tile_index: index
 						}
 					});
 				} catch (e) {}

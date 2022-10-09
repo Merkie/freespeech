@@ -7,7 +7,6 @@
 		const response = await trpc(fetch).mutation(`project:create`, {
 			name: 'test',
 			description: 'test',
-			image_src: '',
 			index: 0
 		});
 

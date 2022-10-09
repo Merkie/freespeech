@@ -4,15 +4,17 @@
 	import Tile from './Tile.svelte';
 	import type { Tile as ITile } from '@prisma/client';
 	import trpc from '$lib/client/trpc';
-	import { onMount } from 'svelte';
 
+	const min_row_count = 5;
+
+	// If no current page id, assume home
 	if (!$CurrentPageId) {
 		$CurrentPageId = $AppProject.pages[0].id;
-		console.log($CurrentPageId);
 	}
 
-	// Current page index
-	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+	// State
+	let current_page_index;
+	let rows;
 
 	// Adds a tile to the current page
 	const add_tile = async () => {
@@ -40,51 +42,11 @@
 		$AppProject.pages[current_page_index].tiles[new_tile_index] = response_tile;
 	};
 
-	// This will fix the indexes whenever the page loads
-	const fix_tile_indexes = async () => {
-		// 1) sort the tiles by their index
-		$AppProject.pages[current_page_index].tiles = $AppProject.pages[current_page_index].tiles.sort(
-			(a, b) => a.tile_index - b.tile_index
-		);
-
-		// 2) fix the indexes
-		$AppProject.pages[current_page_index].tiles.forEach((tile, index) => {
-			tile.tile_index = index;
-		});
-
-		// 3) Get a list of the indexes
-		const indexes = $AppProject.pages[current_page_index].tiles.map((tile) => tile.tile_index);
-
-		await trpc(fetch).mutation('tile:reorder', {
-			page_id: $AppProject.pages[current_page_index].id,
-			indexes
-		});
-	};
-
-	let rows =
-		$AppProject.pages[current_page_index].tiles.length /
-			$AppProject.pages[current_page_index].columns +
-		1;
-
-	onMount(async () => {
-		await fix_tile_indexes();
-	});
-
-	let items = $AppProject.pages[current_page_index].tiles;
-
-	import { flip } from 'svelte/animate';
-	import { dndzone } from 'svelte-dnd-action';
-	const flipDurationMs = 300;
-	function handleDndConsider(e: { detail: any }) {
-		items = e.detail.items;
-	}
-	function handleDndFinalize(e: { detail: any }) {
-		items = e.detail.items;
-	}
-
 	$: {
 		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-		items = $AppProject.pages[current_page_index].tiles;
+		rows = Math.max(min_row_count, ($AppProject.pages[current_page_index].tiles.length /
+			$AppProject.pages[current_page_index].columns +
+		1));
 	}
 </script>
 
@@ -93,15 +55,9 @@
 	--rows: ${$InEditMode ? rows + 2 : rows};
 	--columns: ${$AppProject.pages[current_page_index].columns};
 `}
-	use:dndzone={{
-		items,
-		flipDurationMs
-	}}
-	on:consider={handleDndConsider}
-	on:finalize={handleDndFinalize}
 >
-	{#each items as tile (tile.id)}
-		<span animate:flip={{ duration: flipDurationMs }}> <Tile {tile} /></span>
+	{#each $AppProject.pages[current_page_index].tiles as tile (tile.id)}
+		<Tile {tile} />
 	{/each}
 
 	<button
