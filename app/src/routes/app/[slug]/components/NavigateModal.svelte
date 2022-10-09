@@ -4,11 +4,7 @@
 	import trpc from '$lib/client/trpc';
 
 	// Stores
-	import {
-		AppProject,
-		NavigationTile,
-		CurrentPageId
-	} from '$lib/client/stores';
+	import { AppProject, NavigationTile, CurrentPageId } from '$lib/client/stores';
 
 	// Click outside
 	import { clickOutside } from '$lib/client/clickOutside';

@@ -1,10 +1,6 @@
 <script lang="ts">
 	// Stores
-	import {
-		EditorTool,
-		EditorTools,
-		InEditMode
-	} from '$lib/client/stores';
+	import { EditorTool, EditorTools, InEditMode } from '$lib/client/stores';
 </script>
 
 <section style={`bottom: ${$InEditMode ? '62px' : '-60px'}`}>
@@ -17,7 +13,6 @@
 			<p>Text</p>
 		</button>
 		<button
-			
 			class={$EditorTool === EditorTools.image ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.image)}
 		>
@@ -25,7 +20,6 @@
 			<p>Image</p>
 		</button>
 		<button
-			
 			class={$EditorTool === EditorTools.color ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.color)}
 		>
@@ -106,7 +100,7 @@
 	}
 	button p {
 		font-size: 12px;
-		opacity:0;
+		opacity: 0;
 	}
 
 	.selected {

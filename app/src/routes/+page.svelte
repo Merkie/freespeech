@@ -1,7 +1,7 @@
 <script lang="ts">
 	// components
 	import Header from '$lib/client/components/Header.svelte';
-	
+
 	// trpc
 	import trpc from '$lib/client/trpc';
 

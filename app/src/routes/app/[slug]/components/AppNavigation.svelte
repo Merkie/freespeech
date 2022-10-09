@@ -1,12 +1,7 @@
 <script lang="ts">
 	// Stores
-	import {
-		InEditMode,
-		CurrentPageId,
-		InSettingsPage,
-		AppProject
-	} from '$lib/client/stores';
-	
+	import { InEditMode, CurrentPageId, InSettingsPage, AppProject } from '$lib/client/stores';
+
 	// Resets the state of the app back to the home page
 	const reset_state = () => {
 		$InEditMode = false;
@@ -16,14 +11,14 @@
 </script>
 
 <section style={`border-color: ${$InEditMode ? 'transparent' : 'auto'};`}>
-	<button on:click={reset_state}><i class="bx bxs-home-alt-2" /> Home</button>
+	<button on:click={reset_state}><i class="bx bxs-home-alt-2" /> <span>Home</span></button>
 	<button
 		disabled={$InSettingsPage}
 		class={`${$InEditMode ? 'selected-edit' : 'edit'}`}
 		on:click={() => ($InEditMode = !$InEditMode)}
 		><i class={$InEditMode ? 'bx bx-check' : 'bx bxs-pencil'} />
-		{$InEditMode ? 'Save Changes' : 'Edit'}</button
-	>
+		<span>{$InEditMode ? 'Save Changes' : 'Edit'}</span>
+	</button>
 	<button
 		class={`${$InSettingsPage ? 'selected' : ''}`}
 		on:click={() => {
@@ -71,5 +66,11 @@
 	.edit:active {
 		background: var(--base-200) !important;
 		border-color: var(--base-400) !important;
+	}
+
+	@media (max-width: 750px) {
+		button span {
+			display: none;
+		}
 	}
 </style>

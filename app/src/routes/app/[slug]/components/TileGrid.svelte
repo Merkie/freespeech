@@ -1,18 +1,14 @@
 <script lang="ts">
 	//@ts-nocheck
 	// Stores
-	import {
-		AppProject,
-		CurrentPageId,
-		InEditMode
-	} from '$lib/client/stores';
-	
+	import { AppProject, CurrentPageId, InEditMode } from '$lib/client/stores';
+
 	// Components
 	import Tile from './Tile.svelte';
 
 	// Types
 	import type { Tile as ITile } from '@prisma/client';
-	
+
 	// Trpc
 	import trpc from '$lib/client/trpc';
 
@@ -58,10 +54,18 @@
 		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
 		let most_rows = 0;
 		$AppProject.pages.forEach((page) => {
-			let row_count = Math.floor(1 + (page.tiles.length / page.columns));
-			if(row_count > most_rows) most_rows = row_count;
+			let row_count = Math.floor(1 + page.tiles.length / page.columns);
+			if (row_count > most_rows) most_rows = row_count;
 		});
-		rows = Math.max(min_row_count, most_rows, Math.floor(2 + (($AppProject.pages[current_page_index].tiles.length - 1) / $AppProject.pages[current_page_index].columns)));
+		rows = Math.max(
+			min_row_count,
+			most_rows,
+			Math.floor(
+				2 +
+					($AppProject.pages[current_page_index].tiles.length - 1) /
+						$AppProject.pages[current_page_index].columns
+			)
+		);
 	}
 </script>
 

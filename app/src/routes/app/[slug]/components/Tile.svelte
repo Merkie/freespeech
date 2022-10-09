@@ -43,7 +43,10 @@
 				$AppProject.pages[current_page_index].tiles[tile_index].is_accented =
 					!$AppProject.pages[current_page_index].tiles[tile_index].is_accented;
 				//@ts-ignore
-				await trpc(fetch).mutation('tile:edit', $AppProject.pages[current_page_index].tiles[tile_index]);
+				await trpc(fetch).mutation(
+					'tile:edit',
+					$AppProject.pages[current_page_index].tiles[tile_index]
+				);
 			} else if ($EditorTool === EditorTools.invisible) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id

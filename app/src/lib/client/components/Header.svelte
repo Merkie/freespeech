@@ -7,7 +7,7 @@
 	<h1 on:click={() => window.location.assign('/')}>
 		<i class="bx bxs-message-square-detail" /> FreeSpeech AAC
 	</h1>
-	<button on:click={() => window.location.assign('/'+uri)}
+	<button on:click={() => window.location.assign('/' + uri)}
 		>{button_text}<i class="bx bx-right-arrow-alt" /></button
 	>
 </section>
