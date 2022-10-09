@@ -8,7 +8,6 @@
 </script>
 
 <section style={`bottom: ${$InEditMode ? '62px' : '-60px'}`}>
-	<b>Tools</b>
 	<div>
 		<button
 			class={$EditorTool === EditorTools.text ? 'selected' : ''}
@@ -18,23 +17,15 @@
 			<p>Text</p>
 		</button>
 		<button
-			disabled={true}
+			
 			class={$EditorTool === EditorTools.image ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.image)}
 		>
 			<i class="bx bxs-image-add" />
 			<p>Image</p>
 		</button>
-		<!-- <button
-			disabled={true}
-			class={$EditorTool === EditorTools.move ? 'selected' : ''}
-			on:click={() => ($EditorTool = EditorTools.move)}
-		>
-			<i class="bx bx-move" />
-			<p>Move</p>
-		</button> -->
 		<button
-			disabled={true}
+			
 			class={$EditorTool === EditorTools.color ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.color)}
 		>
@@ -63,7 +54,6 @@
 			<p>Navigate</p>
 		</button>
 		<button
-			disabled={true}
 			class={$EditorTool === EditorTools.template ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.template)}
 		>
@@ -85,7 +75,7 @@
 		position: fixed;
 		left: 50%;
 		transform: translateX(-50%);
-		height: 93px;
+		height: 53px;
 		border-top-left-radius: 10px;
 		border-top-right-radius: 10px;
 		border: 1px solid var(--base-400);
@@ -95,23 +85,35 @@
 		text-align: center;
 	}
 	div {
-		margin-top: 10px;
 		display: flex;
 		gap: 10px;
+		background: var(--base-200);
+		border-radius: 10px;
 	}
 	button {
 		background: var(--base-200);
 		border: 1px solid var(--base-400);
-		min-width: 100px;
+		background: none;
+		border: none;
+		width: 50px !important;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		opacity: 0.5;
 	}
 	button i {
-		font-size: 20px;
+		font-size: 30px;
 	}
 	button p {
-		font-size: 15px;
+		font-size: 12px;
+		opacity:0;
 	}
+
 	.selected {
-		background: var(--primary-300);
-		border: 1px solid var(--primary-400);
+		opacity: 1;
+	}
+	.selected p {
+		display: block;
+		opacity: 1;
 	}
 </style>
