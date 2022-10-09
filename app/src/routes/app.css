@@ -1,0 +1,145 @@
+:root {
+	/* This theme applies to WCAG 2.0
+     accessability standards. */
+	--background: #111418;
+	--base-100: #1c2127;
+	--base-200: #252a31;
+	--base-300: #2f333d;
+	--base-400: #383e47;
+	--base-500: #404854;
+	--base-text: #ffffff;
+	--shadow: drop-shadow(0 0 0.25rem var(--background));
+	/* App UI */
+	--tile-background: #ffffff;
+	--tiles-background: #e5e8eb;
+	--tiles-text: var(--background);
+	--tiles-border: var(--background);
+	/* Core colors */
+	--primary-100: #184a90;
+	--primary-200: #215db0;
+	--primary-300: #2d72d2;
+	--primary-400: #4c90f0;
+	--primary-500: #8abbff;
+	--success-100: #165a36;
+	--success-200: #1c6e42;
+	--success-300: #238551;
+	--success-400: #32a467;
+	--success-500: #72ca9b;
+	--warning-100: #77450d;
+	--warning-200: #935610;
+	--warning-300: #c87619;
+	--warning-400: #ec9a3c;
+	--warning-500: #fbb360;
+	--danger-100: #8e292c;
+	--danger-200: #ac2f33;
+	--danger-300: #cd4246;
+	--danger-400: #e76a6e;
+	--danger-500: #fa999c;
+	/* Extended Colors */
+	--vermilion-100: #96290d;
+	--vermilion-200: #b83211;
+	--vermilion-300: #d33d17;
+	--vermilion-400: #eb6847;
+	--vermilion-500: #ff9980;
+	--rose-100: #a82255;
+	--rose-200: #c22762;
+	--rose-300: #db2c6f;
+	--rose-400: #f5498b;
+	--rose-500: #ff66a1;
+	--violet-100: #5c255c;
+	--violet-200: #7c327c;
+	--violet-300: #9d3f9d;
+	--violet-400: #bd6bbd;
+	--violet-500: #d69fd6;
+	--indigo-100: #5642a6;
+	--indigo-200: #634dbf;
+	--indigo-300: #7961db;
+	--indigo-400: #9881f3;
+	--indigo-500: #bdadff;
+	--cerulean-100: #0c5174;
+	--cerulean-200: #0f6894;
+	--cerulean-300: #147eb3;
+	--cerulean-400: #3fa6da;
+	--cerulean-500: #68c1ee;
+	--turquoise-100: #004d46;
+	--turquoise-200: #007067;
+	--turquoise-300: #00a396;
+	--turquoise-400: #13c9ba;
+	--turquoise-500: #7ae1d8;
+	--forest-100: #1d7324;
+	--forest-200: #238c2c;
+	--forest-300: #29a634;
+	--forest-400: #43bf4d;
+	--forest-500: #62d96b;
+	--lime-100: #43501b;
+	--lime-200: #5a701a;
+	--lime-300: #8eb125;
+	--lime-400: #b6d94c;
+	--lime-500: #d4f17e;
+	--gold-100: #5c4405;
+	--gold-200: #866103;
+	--gold-300: #d1980b;
+	--gold-400: #f0b726;
+	--gold-500: #fbd065;
+	--sepia-100: #5e4123;
+	--sepia-200: #7a542e;
+	--sepia-300: #946638;
+	--sepia-400: #af855a;
+	--sepia-500: #d0b090;
+}
+
+/* Misc base css */
+
+* {
+	margin: 0;
+	transition-duration: 0.2s;
+}
+
+body {
+	background: var(--background);
+	font-family: 'Roboto', sans-serif;
+	color: var(--base-text);
+	font-size: 16px;
+}
+
+a {
+	color: var(--primary-400);
+}
+
+a:hover {
+	color: var(--primary-500);
+}
+
+button {
+	background: var(--primary-300);
+	border: 1px solid var(--primary-400);
+	color: var(--base-text);
+	border-radius: 4px;
+	padding: 8px 16px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+button:hover {
+	filter: brightness(1.1);
+	transform: translateY(-1px);
+}
+
+button:active {
+	transform: translateY(1px);
+}
+
+button:disabled {
+	opacity: 0.5;
+}
+
+input,
+select {
+	background: var(--base-200);
+	border: 1px solid var(--base-500);
+	filter: var(--shadow);
+	color: var(--base-text);
+	border-radius: 4px;
+	padding: 8px 16px;
+	font-size: 16px;
+}

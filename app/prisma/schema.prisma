@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db" //env("DATABASE_URL")
+}
+
+model User {
+  id               String        @id @unique @default(cuid())
+  identifier_token String        @unique
+  email            String        @unique
+  username         String?
+  image            String?
+  hashed_password  String?
+  theme            String?
+  projects         Project[]
+  access_tokens    AccessToken[]
+  tiles            Tile[]
+  tile_pages       TilePage[]
+  s3_resources     S3Resource[]
+
+  @@map("user")
+}
+
+model AccessToken {
+  id           String @id @unique @default(cuid())
+  access_token String @unique @default(uuid())
+  user         User   @relation(fields: [userId], references: [id])
+
+  userId String
+}
+
+model Tile {
+  id                 String      @id @unique @default(cuid())
+  tile_index         Int // Index of the tile on the page
+  tap_count          Int         @default(0) // Number of times the tile has been tapped by the author
+  link_id            String? // The ID of the link that the tile is pointing to
+  display_text       String? // The text that is displayed on the tile
+  speak_text         String? // The text that is spoken when the tile is tapped
+  image              S3Resource? @relation(fields: [s3ResourceId], references: [id])
+  navigation_page_id Int? // The ID of the page that the tile is pointing to
+  modifier           String? // The modifier that the tile is using
+  background_color   String?
+  border_color       String?
+  text_color         String?
+  is_silent          Boolean     @default(false)
+  is_invisible       Boolean     @default(false)
+  is_public          Boolean     @default(false)
+  is_accented        Boolean     @default(false)
+  parent_page        TilePage?   @relation(fields: [tilePageId], references: [id])
+  author             User        @relation(fields: [userId], references: [id])
+  created_at         DateTime    @default(now())
+  updated_at         DateTime    @updatedAt
+  tilePageId         Int?
+  userId             String
+  s3ResourceId       Int?
+
+  @@map("tile")
+}
+
+model TilePage {
+  id         Int      @id @unique @default(autoincrement())
+  name       String
+  public     Boolean  @default(false)
+  columns    Int      @default(8)
+  user_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  projectId  String?
+  Project    Project? @relation(fields: [projectId], references: [id])
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  tiles      Tile[]
+
+  @@index([user_id])
+  @@map("tile_page")
+}
+
+model Project {
+  id           String      @id @unique @default(cuid())
+  name         String
+  description  String?
+  image        S3Resource? @relation(fields: [s3ResourceId], references: [id])
+  index        Int
+  public       Boolean     @default(false)
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+  author       User        @relation(fields: [userId], references: [id])
+  pages        TilePage[]
+  userId       String
+  s3ResourceId Int?
+
+  @@map("project")
+}
+
+model S3Resource {
+  id         Int       @id @unique @default(autoincrement())
+  url        String
+  author     User      @relation(fields: [userId], references: [id])
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  userId     String
+  Tile       Tile[]
+  Project    Project[]
+}
