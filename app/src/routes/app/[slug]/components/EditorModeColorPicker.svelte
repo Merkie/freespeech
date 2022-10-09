@@ -1,11 +1,15 @@
 <script lang="ts">
 	//@ts-nocheck
-	import { EditorTool, EditorTools, InEditMode } from '$lib/client/stores';
+	import {
+		EditorTool,
+		EditorTools,
+		InEditMode,
+		SelectedColor,
+		SelectedColorMode
+	} from '$lib/client/stores';
 
 	let section: HTMLElement;
 	let shades_section: HTMLElement;
-
-	let selected_option = 'border';
 
 	const close_color_picker = () => {
 		if (!section) return;
@@ -14,7 +18,7 @@
 				// change opacity to 0 after 10 ms
 				setTimeout(() => {
 					child.style.transform = 'scale(0.00)';
-				}, 10 * index);
+				}, 40 * index);
 			}
 		});
 	};
@@ -26,7 +30,7 @@
 				// change opacity to 0 after 10 ms
 				setTimeout(() => {
 					child.style.transform = 'scale(1.00)';
-				}, 10 * index);
+				}, 40 * index);
 			}
 		});
 	};
@@ -34,6 +38,7 @@
 	let selected_color = 'vermilion';
 	let selected_shade = '300';
 	const colors = [
+		'grayscale',
 		'vermilion',
 		'rose',
 		'violet',
@@ -52,6 +57,7 @@
 		} else if ($EditorTool == EditorTools.color) {
 			open_color_picker();
 		}
+		$SelectedColor = `var(--${selected_color}-${selected_shade})`;
 	}
 </script>
 
@@ -88,24 +94,29 @@
 			style={`--color: var(--${selected_color}-500)`}
 		/>
 	</span>
-	<span class="options" style={`right: 0; transform: scale(${$EditorTool === EditorTools.color ? '1.0' : '0.0'});`}>
+	<span
+		class="options"
+		style={`color: ${
+			$SelectedColor === 'var(--grayscale-500)' ? 'black' : 'auto'
+		}; right: 0; transform: scale(${$EditorTool === EditorTools.color ? '1.0' : '0.0'});`}
+	>
 		<div
-			on:click={() => (selected_option = 'border')}
-			class={selected_option === 'border' ? 'selected-option' : ''}
+			on:click={() => ($SelectedColorMode = 'border')}
+			class={$SelectedColorMode === 'border' ? 'selected-option' : ''}
 			style={`--color: var(--${selected_color}-${selected_shade});`}
 		>
 			<i class="bx bx-border-all" />
 		</div>
 		<div
-			on:click={() => (selected_option = 'background')}
-			class={selected_option === 'background' ? 'selected-option' : ''}
+			on:click={() => ($SelectedColorMode = 'background')}
+			class={$SelectedColorMode === 'background' ? 'selected-option' : ''}
 			style={`--color: var(--${selected_color}-${selected_shade});`}
 		>
 			<i class="bx bxs-brush" />
 		</div>
 		<div
-			on:click={() => (selected_option = 'text')}
-			class={selected_option === 'text' ? 'selected-option' : ''}
+			on:click={() => ($SelectedColorMode = 'text')}
+			class={$SelectedColorMode === 'text' ? 'selected-option' : ''}
 			style={`--color: var(--${selected_color}-${selected_shade});`}
 		>
 			<i class="bx bx-text" />

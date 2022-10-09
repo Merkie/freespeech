@@ -86,6 +86,11 @@
 	--sepia-300: #946638;
 	--sepia-400: #af855a;
 	--sepia-500: #d0b090;
+	--grayscale-100: black;
+	--grayscale-200: #333333;
+	--grayscale-300: #666666;
+	--grayscale-400: #999999;
+	--grayscale-500: white;
 }
 
 /* Misc base css */

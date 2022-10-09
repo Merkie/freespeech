@@ -38,3 +38,7 @@ export const InEditMode = writable<boolean>(false);
 export const InSettingsPage = writable<boolean>(false);
 // the tile that is currently being edited in the navigation menu
 export const NavigationTile = writable<Tile | null>(null);
+// selected color
+export const SelectedColor = writable<string | null>();
+// selected color mode
+export const SelectedColorMode = writable<'border' | 'background' | 'text'>('border');

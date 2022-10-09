@@ -9,7 +9,9 @@
 		InEditMode,
 		AppProject,
 		CurrentPageId,
-		NavigationTile
+		NavigationTile,
+		SelectedColor,
+		SelectedColorMode
 	} from '$lib/client/stores';
 
 	// Types
@@ -36,15 +38,25 @@
 			} else if ($EditorTool === EditorTools.image) {
 			} else if ($EditorTool === EditorTools.move) {
 			} else if ($EditorTool === EditorTools.color) {
+				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+					(t) => t.id === tile.id
+				);
+				$AppProject.pages[current_page_index].tiles[tile_index][`${$SelectedColorMode}_color`] =
+					$SelectedColor;
+				await trpc(fetch).mutation(
+					'tile:edit',
+					//@ts-ignore
+					$AppProject.pages[current_page_index].tiles[tile_index]
+				);
 			} else if ($EditorTool === EditorTools.accent) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
 				);
 				$AppProject.pages[current_page_index].tiles[tile_index].is_accented =
 					!$AppProject.pages[current_page_index].tiles[tile_index].is_accented;
-				//@ts-ignore
 				await trpc(fetch).mutation(
 					'tile:edit',
+					//@ts-ignore
 					$AppProject.pages[current_page_index].tiles[tile_index]
 				);
 			} else if ($EditorTool === EditorTools.invisible) {
@@ -91,6 +103,9 @@
 	opacity: ${tile.is_invisible ? 0 : 1};
 	opacity: ${$InEditMode && tile.is_invisible ? 0.25 : 'auto'};
 	overflow: ${tile.navigation_page_id ? 'visible' : 'hidden'};
+	border-color: ${tile.border_color || 'auto'};
+	background-color: ${tile.background_color || 'auto'};
+	color: ${tile.text_color || 'auto'};
 	`}
 	on:click={handle_interaction}
 >
@@ -112,7 +127,8 @@
 				tile.is_accented
 					? 'rotate(45deg) translate(0%, -90%)'
 					: 'rotate(45deg) translate(0%, -120%)'
-			}`}
+			};
+			background-color: ${tile.border_color || 'auto'};`}
 			class="accent"
 		/>
 	{/if}
