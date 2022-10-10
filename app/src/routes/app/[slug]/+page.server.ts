@@ -20,6 +20,7 @@ export const load: Load = async ({ params, fetch }) => {
 		for await (let tile of page.tiles) {
 			if (tile.link_id) {
 				const new_tile: any = await trpc(fetch).query('tile:fetch', { id: tile.link_id });
+				let new_tile_id = new_tile.id;
 				if (!new_tile) return;
 				delete new_tile.id;
 				delete new_tile.tap_count;
@@ -28,7 +29,7 @@ export const load: Load = async ({ params, fetch }) => {
 				delete new_tile.tile_index;
 				new_project.pages[new_project.pages.indexOf(page)].tiles[
 					new_project.pages[new_project.pages.indexOf(page)].tiles.indexOf(tile)
-				] = { ...tile, ...new_tile, tile_index: index };
+				] = { ...tile, ...new_tile, tile_index: index, link_id: new_tile_id };
 			}
 			// temp: force sensable tile order
 			try {

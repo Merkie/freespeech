@@ -66,7 +66,7 @@
 	}
 
 	img {
-		width: 100%;
+		width: 50%;
 		object-fit: contain;
 	}
 

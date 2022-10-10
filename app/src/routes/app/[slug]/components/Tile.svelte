@@ -234,6 +234,7 @@
 			class="accent"
 		/>
 	{/if}
+	<i style={`opacity: ${($InEditMode && tile.link_id) ? '1' : '0'};`} class='bx bx-link'></i>
 </button>
 
 <style>
@@ -257,7 +258,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		top: 10px;
-		height: 60%;
+		height: 50%;
 		width: auto;
 		object-fit: contain;
 	}
@@ -288,5 +289,13 @@
 		border-right: none;
 		border-radius: 5px 5px 0px 0px;
 		background: var(--tile-background);
+	}
+
+	.bx-link {
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+		font-size: 1.5rem;
+		color: var(--tiles-text);
 	}
 </style>
