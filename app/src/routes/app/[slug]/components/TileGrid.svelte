@@ -35,7 +35,7 @@
 			...$AppProject.pages[current_page_index].tiles,
 			{
 				id: temp_id,
-				display_text: 'New Tile'
+				display_text: 'New tile'
 			} as ITile
 		];
 

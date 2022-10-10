@@ -10,13 +10,23 @@
 	import { clickOutside } from '$lib/client/clickOutside';
 
 	const create_new_page = async () => {
+		// Get the current page index
 		const current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+		// Get the current tile index
+		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+			(t) => $NavigationTile?.id === t.id
+		);
+		// Create the page
 		const page = await trpc(fetch).mutation('page:create', $AppProject.id);
-		$AppProject.pages[current_page_index].tiles[$NavigationTile?.tile_index].navigation_page_id =
-			page;
-		const updated_tile = $AppProject.pages[current_page_index].tiles[$NavigationTile?.tile_index];
+		// Set the navigation page id to the new page id
+		$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id =
+			page.id;
+		// Add the page to the project
+		$AppProject.pages = [...$AppProject.pages, page];
+		// Get the updated tile
+		const updated_tile = $AppProject.pages[current_page_index].tiles[tile_index];
+		// Update it on the server
 		await trpc(fetch).mutation('tile:edit', updated_tile);
-		//@ts-ignore
 	};
 </script>
 

@@ -103,8 +103,8 @@
 	opacity: ${tile.is_invisible ? 0 : 1};
 	opacity: ${$InEditMode && tile.is_invisible ? 0.25 : 'auto'};
 	overflow: ${tile.navigation_page_id ? 'visible' : 'hidden'};
-	border-color: ${tile.border_color || 'auto'};
-	background-color: ${tile.background_color || 'auto'};
+	${tile.border_color ? '--tiles-border: '+tile.border_color : ''};
+	--tile-background: ${tile.background_color || 'auto'};
 	color: ${tile.text_color || 'auto'};
 	`}
 	on:click={handle_interaction}
@@ -166,9 +166,10 @@
 		top: -5px;
 		left: -1px;
 		width: 50%;
-		height: 5px;
+		height: 15px;
 		border: 1px solid var(--tiles-border);
 		border-bottom: none;
+		border-right: none;
 		border-radius: 5px 5px 0px 0px;
 		background: var(--tile-background);
 	}

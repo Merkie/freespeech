@@ -98,10 +98,16 @@ export default router()
 					}
 				},
 				include: {
-					pages: true
+					pages: {
+						include: {
+							tiles: true
+						}
+					}
 				}
 			});
 
-			return updated.pages.at(-1)?.id;
+			const updated_page = updated.pages[updated.pages.length - 1];
+
+			return updated_page;
 		}
 	});

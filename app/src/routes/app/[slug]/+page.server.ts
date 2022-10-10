@@ -7,7 +7,6 @@ export const load: Load = async ({ params, fetch }) => {
 
 	// 2) Get the project from trpc
 	const project = await trpc(fetch).query('project:fetch', slug + '');
-	console.log(project);
 	if (!project) return { error: 404 };
 
 	// 3) Sort the tiles by their tile_index property
