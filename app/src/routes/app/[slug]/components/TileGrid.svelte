@@ -1,7 +1,7 @@
 <script lang="ts">
 	//@ts-nocheck
 	// Stores
-	import { AppProject, CurrentPageId, InEditMode } from '$lib/client/stores';
+	import { AppProject, CurrentPageId, InEditMode, PageHistory } from '$lib/client/stores';
 
 	// Components
 	import Tile from './Tile.svelte';
@@ -11,6 +11,7 @@
 
 	// Trpc
 	import trpc from '$lib/client/trpc';
+	import { onMount } from 'svelte';
 
 	// config
 	const min_row_count = 5; // minimum number of rows
@@ -18,6 +19,7 @@
 	// If no current page id, assume home
 	if (!$CurrentPageId) {
 		$CurrentPageId = $AppProject.pages[0].id;
+		$PageHistory = [$CurrentPageId];
 	}
 
 	// State

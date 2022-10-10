@@ -42,3 +42,7 @@ export const NavigationTile = writable<Tile | null>(null);
 export const SelectedColor = writable<string | null>();
 // selected color mode
 export const SelectedColorMode = writable<'border' | 'background' | 'text'>('border');
+// page history
+export const PageHistory = writable<number[]>([]);
+// page history index
+export const PageHistoryIndex = writable<number>(0);

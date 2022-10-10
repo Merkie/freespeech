@@ -1,9 +1,25 @@
 <script>
 	// Stores
-	import { AppProject, CurrentPageId } from '$lib/client/stores';
+	import { AppProject, CurrentPageId, PageHistory, PageHistoryIndex } from '$lib/client/stores';
 
 	// State
 	let name = 'Home';
+
+	// Navigate backwards
+	const navigate_backwards = () => {
+		if($PageHistoryIndex < $PageHistory.length - 1) {
+			$PageHistoryIndex += 1;
+			$CurrentPageId = $PageHistory[$PageHistoryIndex];
+		}
+	};
+
+	// Navigate forwards
+	const navigate_forwards = () => {
+		if($PageHistoryIndex > 0) {
+			$PageHistoryIndex += -1;
+			$CurrentPageId = $PageHistory[$PageHistoryIndex];
+		}
+	};
 
 	$: {
 		let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
@@ -14,11 +30,11 @@
 </script>
 
 <section>
-	<button>
+	<button disabled={!($PageHistoryIndex < $PageHistory.length - 1)} on:click={navigate_backwards}>
 		<i class="bx bx-left-arrow-alt" />
 	</button>
 	<p>{name}</p>
-	<button disabled={true}>
+	<button disabled={!($PageHistoryIndex > 0)} on:click={navigate_forwards}>
 		<i class="bx bx-right-arrow-alt" />
 	</button>
 </section>
@@ -37,9 +53,14 @@
 		font-size: 25px;
 	}
 	button {
-		font-size: 25px;
+		font-size: 40px;
 		padding: 0px;
 		background: transparent;
 		border: none;
+	}
+
+	p {
+		min-width: 200px;
+		text-align: center;
 	}
 </style>

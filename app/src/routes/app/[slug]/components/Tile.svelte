@@ -11,7 +11,8 @@
 		CurrentPageId,
 		NavigationTile,
 		SelectedColor,
-		SelectedColorMode
+		SelectedColorMode,
+		PageHistory
 	} from '$lib/client/stores';
 
 	// Types
@@ -82,6 +83,7 @@
 		} else {
 			if (tile.navigation_page_id) {
 				$CurrentPageId = tile.navigation_page_id;
+				$PageHistory = [$CurrentPageId, ...$PageHistory];
 			}
 		}
 	};
