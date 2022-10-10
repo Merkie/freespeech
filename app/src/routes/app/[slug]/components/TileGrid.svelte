@@ -99,6 +99,7 @@
 		grid-template-rows: repeat(var(--rows), 1fr);
 		gap: 10px;
 		padding: 10px;
+		overflow-x: hidden;
 	}
 	.add-tile {
 		background-color: transparent;

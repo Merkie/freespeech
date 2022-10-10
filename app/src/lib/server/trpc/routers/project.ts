@@ -83,7 +83,7 @@ export default router()
 			// 3) Check if user is authorized to view project
 			// Checking to see if the user is the author of the project
 			// or if the project is public.
-			if (project.userId !== user.id || project.public) return project;
+			if (project.userId === user.id || project.public) return project;
 			return null;
 		}
 	});

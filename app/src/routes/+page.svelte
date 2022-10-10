@@ -6,14 +6,6 @@
 	import trpc from '$lib/client/trpc';
 
 	export let data;
-
-	const make_project = async () => {
-		const response = await trpc(fetch).mutation(`project:create`, {
-			name: 'test',
-			description: 'test',
-			index: 0
-		});
-	};
 </script>
 
 <Header uri="app" button_text="Application" />

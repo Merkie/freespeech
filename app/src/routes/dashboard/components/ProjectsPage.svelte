@@ -1,8 +1,21 @@
 <script>
 	import { Me } from '$lib/client/stores';
+	import trpc from '$lib/client/trpc';
+
+	const make_project = async () => {
+		const response = await trpc(fetch).mutation(`project:create`, {
+			name: 'test',
+			description: 'test',
+			index: 0
+		});
+		console.log(response);
+	};
 </script>
 
-<h1>Projects</h1>
+<span class="header"
+	><h1>Project</h1>
+	<button on:click={make_project}>Create new project</button></span
+>
 {#each $Me.projects as project}
 	<div>
 		<b>{project.name}</b>
@@ -11,7 +24,10 @@
 {/each}
 
 <style>
-	h1 {
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		margin-bottom: 20px;
 	}
 
