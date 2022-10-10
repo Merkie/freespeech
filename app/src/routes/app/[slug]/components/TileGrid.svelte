@@ -1,7 +1,13 @@
 <script lang="ts">
 	//@ts-nocheck
 	// Stores
-	import { AppProject, PageHistoryIndex, CurrentPageId, InEditMode, PageHistory } from '$lib/client/stores';
+	import {
+		AppProject,
+		PageHistoryIndex,
+		CurrentPageId,
+		InEditMode,
+		PageHistory
+	} from '$lib/client/stores';
 
 	// Components
 	import Tile from './Tile.svelte';

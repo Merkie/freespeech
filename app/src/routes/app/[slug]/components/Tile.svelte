@@ -73,7 +73,7 @@
 			$AppProject.pages[current_page_index].tiles[tile_index]
 		);
 		loading = false;
-	}
+	};
 
 	const handle_interaction = async () => {
 		if ($InEditMode) {
@@ -124,24 +124,29 @@
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
 				);
-				
-				if($AppProject.pages[current_page_index].tiles[tile_index].link_id) {
+
+				if ($AppProject.pages[current_page_index].tiles[tile_index].link_id) {
 					$AppProject.pages[current_page_index].tiles[tile_index].link_id = null;
 				} else {
 					const last_page_index = $AppProject.pages.findIndex(
 						(t) => t.id === $PageHistory[$PageHistoryIndex + 1]
 					);
-	
+
 					let last_tile = $AppProject.pages[last_page_index].tiles[tile_index];
 					let last_tile_id = last_tile.id;
-					
+
 					// @ts-ignore
 					delete last_tile.id;
 					// @ts-ignore
 					delete last_tile.link_id;
 
 					// Update tile
-					$AppProject.pages[current_page_index].tiles[tile_index] = {...$AppProject.pages[current_page_index].tiles[tile_index], ...last_tile, link_id: last_tile_id, tile_index: tile.tile_index};
+					$AppProject.pages[current_page_index].tiles[tile_index] = {
+						...$AppProject.pages[current_page_index].tiles[tile_index],
+						...last_tile,
+						link_id: last_tile_id,
+						tile_index: tile.tile_index
+					};
 				}
 
 				await trpc(fetch).mutation(
@@ -192,19 +197,27 @@
 	{#if tile.navigation_page_id}
 		<div class="folder-bit" />
 	{/if}
-	
+
 	{#if tile.image}
-		 <img src={tile.image} alt="tile icon" />
+		<img src={tile.image} alt="tile icon" />
 	{/if}
 
-	<input type="file" bind:this={file_input} bind:files on:change={() => handle_upload(files[0])} style="display: none;" />
+	<input
+		type="file"
+		bind:this={file_input}
+		bind:files
+		on:change={() => handle_upload(files[0])}
+		style="display: none;"
+	/>
 	<p
 		bind:this={tileTextElement}
 		on:input={save_tile}
 		spellcheck="false"
 		contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
-		style={`bottom: ${tile.image ? 'auto' : '50%'}; transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};`}
-		>
+		style={`bottom: ${tile.image ? 'auto' : '50%'}; transform: ${
+			tile.image ? 'auto' : 'translate(-50%, 50%)'
+		};`}
+	>
 		{tile.display_text}
 	</p>
 	{#if !tile.navigation_page_id}

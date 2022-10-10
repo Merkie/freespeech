@@ -9,32 +9,67 @@
 	// Click outside
 	import { clickOutside } from '$lib/client/clickOutside';
 
+	let select_value;
+	let creating_page = false;
+
+	let current_page_index;
+	let tile_index;
+
 	const create_new_page = async () => {
-		// Get the current page index
-		const current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-		// Get the current tile index
-		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-			(t) => $NavigationTile?.id === t.id
-		);
+		if(creating_page) return;
+		creating_page = true;
 		// Create the page
 		const page = await trpc(fetch).mutation('page:create', $AppProject.id);
 		// Set the navigation page id to the new page id
 		$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id = page.id;
 		// Add the page to the project
 		$AppProject.pages = [...$AppProject.pages, page];
-		// Get the updated tile
-		const updated_tile = $AppProject.pages[current_page_index].tiles[tile_index];
 		// Update it on the server
-		await trpc(fetch).mutation('tile:edit', updated_tile);
+		await trpc(fetch).mutation('tile:edit', $AppProject.pages[current_page_index].tiles[tile_index]);
 	};
+
+	const close_modal = () => {
+		if(creating_page) {
+			creating_page = false;
+			$NavigationTile = null;
+			select_value = 'none';
+			return;
+		}
+		if (select_value === 'none' && $NavigationTile.navigation_page_id) {
+			$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id = null;
+			// Get the updated tile
+			const updated_tile = $AppProject.pages[current_page_index].tiles[tile_index];
+			// Update it on the server
+			trpc(fetch).mutation('tile:edit', updated_tile);
+		} else if (select_value != $NavigationTile.navigation_page_id) {
+			$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id =
+				$AppProject.pages.find((page) => page.name === select_value)?.id;
+			// Get the updated tile
+			const updated_tile = $AppProject.pages[current_page_index].tiles[tile_index];
+			// Update it on the server
+			trpc(fetch).mutation('tile:edit', updated_tile);
+		}
+		$NavigationTile = null;
+		select_value = 'none';
+	};
+
+	$: {
+		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+		tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+			(t) => $NavigationTile?.id === t.id
+		);
+	}
 </script>
 
 {#if $NavigationTile}
-	<main use:clickOutside on:click_outside={() => ($NavigationTile = null)}>
+	<main use:clickOutside on:click_outside={close_modal}>
 		<h3>Navigation</h3>
-		<select name="" id="">
+		<select disabled={creating_page} bind:value={select_value}>
+			<option value="none">No Navigation</option>
 			{#each $AppProject.pages as page}
-				<option value={page.name}>{page.name}</option>
+				{#if page.name.toLowerCase() !== 'home'}
+					<option value={page.name}>{page.name}</option>
+				{/if}
 			{/each}
 		</select>
 		<button on:click={create_new_page}>Create new page</button>
@@ -61,5 +96,9 @@
 	button {
 		background-color: var(--success-300);
 		border: 1px solid var(--success-400);
+	}
+
+	select:disabled {
+		opacity: .5;
 	}
 </style>

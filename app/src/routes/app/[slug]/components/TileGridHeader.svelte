@@ -36,11 +36,11 @@
 			id: $CurrentPageId,
 			name: e.target.innerText
 		});
-		if(!updated_page) return;
+		if (!updated_page) return;
 
 		$AppProject.pages = $AppProject.pages.map((page) => {
 			if (page.id === updated_page.id) {
-				return {...page, name: updated_page.name};
+				return { ...page, name: updated_page.name };
 			}
 			return page;
 		});
@@ -60,7 +60,9 @@
 	<button disabled={!($PageHistoryIndex < $PageHistory.length - 1)} on:click={navigate_backwards}>
 		<i class="bx bx-left-arrow-alt" />
 	</button>
-	<p on:input={handle_rename_page} contenteditable={$EditorTool == EditorTools.text && $InEditMode}>{name}</p>
+	<p on:input={handle_rename_page} contenteditable={$EditorTool == EditorTools.text && $InEditMode}>
+		{name}
+	</p>
 	<button disabled={!($PageHistoryIndex > 0)} on:click={navigate_forwards}>
 		<i class="bx bx-right-arrow-alt" />
 	</button>
