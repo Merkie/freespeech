@@ -4,7 +4,6 @@ import trpc from '$lib/client/trpc';
 export const load: Load = async ({ params, fetch }) => {
 	// 1) Get slug
 	const { slug } = params;
-
 	// 2) Get the project from trpc
 	const project = await trpc(fetch).query('project:fetch', slug + '');
 	if (!project) return { error: 404 };
@@ -15,25 +14,28 @@ export const load: Load = async ({ params, fetch }) => {
 	});
 
 	const new_project = await project.pages.map(async (page) => await page);
-	console.log(new_project);
 
-	// project.pages.forEach((page, index) => {
-	// 	project.pages[index].tiles.forEach(async (tile, tileIndex) => {
-	// 		if (tile.link_id) {
-	// 			const new_tile = await trpc(fetch).query('tile:fetch', { id: tile.link_id });
-	// 			delete new_tile.id;
-	// 			delete new_tile.tap_count;
-	// 			delete new_tile.userId;
-	// 			delete new_tile.tilePageId;
-	// 			new_project.pages[index].tiles[tileIndex] = {
-	// 				...project.pages[index].tiles[tileIndex],
-	// 				...new_tile
-	// 			};
-	// 			console.log(index, tileIndex, project.pages[index].tiles[tileIndex]);
-	// 		}
-	// 	});
-	// });
+	for await (const page of project.pages){
+		// console.log(page);
+		for await (let tile of page.tiles){
+			if (tile.link_id) {
+			console.log(page)
+				const new_tile = await trpc(fetch).query('tile:fetch', { id: tile.link_id });
+				delete new_tile.id;
+				delete new_tile.tap_count;
+				delete new_tile.userId;
+				delete new_tile.tilePageId;
+				tile = {
+					...tile,
+					...new_tile
+				}
 
+				console.log("Race 1st");
+			}
+		}
+	}
+
+	console.log("Race 2nd");
 	// wait 3 seconds
 	// await new Promise((resolve) => setTimeout(resolve, 500));
 
