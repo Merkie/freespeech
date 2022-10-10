@@ -10,6 +10,8 @@
 	import SettingsPage from './components/SettingsPage.svelte';
 	import NavigateModal from './components/NavigateModal.svelte';
 	import EditorModeColorPicker from './components/EditorModeColorPicker.svelte';
+	import TrashWarning from './components/TrashWarning.svelte';
+	import TemplateModeInfo from './components/TemplateModeInfo.svelte';
 	$AppProject = data;
 </script>
 
@@ -21,6 +23,8 @@
 		<EditModeRibbon />
 		<NavigateModal />
 		<EditorModeColorPicker />
+		<TrashWarning />
+		<TemplateModeInfo />
 	{:else}
 		<SettingsPage />
 	{/if}

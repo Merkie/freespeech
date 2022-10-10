@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Stores
-	import { EditorTool, EditorTools, InEditMode } from '$lib/client/stores';
+	import { EditorTool, EditorTools, InEditMode, PageHistory, PageHistoryIndex } from '$lib/client/stores';
 </script>
 
 <section style={`--open-height: 62px; bottom: ${$InEditMode ? 'var(--open-height)' : '-60px'}`}>
@@ -48,6 +48,7 @@
 			<p>Navigate</p>
 		</button>
 		<button
+			disabled={(!($PageHistory.length > 1) && !($PageHistoryIndex > 0)) || ($PageHistoryIndex === $PageHistory.length - 1)}
 			class={$EditorTool === EditorTools.template ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.template)}
 		>

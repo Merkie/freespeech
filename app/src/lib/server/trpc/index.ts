@@ -9,6 +9,7 @@ import user from './routers/user';
 import project from './routers/project';
 import page from './routers/page';
 import tile from './routers/tile';
+import s3 from './routers/s3';
 
 // Prisma
 import prismaClient from '$lib/server/prismaClient';
@@ -41,6 +42,7 @@ export const router = trpc
 	.merge('user:', user)
 	.merge('project:', project)
 	.merge('page:', page)
-	.merge('tile:', tile);
+	.merge('tile:', tile)
+	.merge('s3:', s3);
 
 export type Router = typeof router;

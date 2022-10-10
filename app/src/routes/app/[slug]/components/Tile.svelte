@@ -26,8 +26,50 @@
 
 	// bindings
 	let tileTextElement: HTMLParagraphElement;
+	let file_input: HTMLInputElement;
+	let files: FileList;
 
 	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+
+	const blobToBase64 = (blob: Blob) => {
+		return new Promise((resolve) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(blob);
+			reader.onloadend = function () {
+				resolve(reader.result);
+			};
+		});
+	};
+
+	const handle_upload = async (file: File) => {
+		var reader = new FileReader(); // Make reader
+		reader.readAsArrayBuffer(file); // Read file as array buffer
+
+		// wait for reader to be done
+		await new Promise<void>((resolve) => {
+			reader.onload = () => {
+				resolve();
+			};
+		});
+
+		const blob = new Blob([reader.result || '']); // Convert to blob
+		const base64 = await blobToBase64(blob); // Convert to base64
+
+		const url = await trpc(fetch).mutation('s3:upload', {
+			file: JSON.stringify({ blob: base64 }),
+			filename: file.name
+		});
+
+		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+			(t) => t.id === tile.id
+		);
+		$AppProject.pages[current_page_index].tiles[tile_index].image = url;
+		await trpc(fetch).mutation(
+			'tile:edit',
+			//@ts-ignore
+			$AppProject.pages[current_page_index].tiles[tile_index]
+		);
+	}
 
 	const handle_interaction = async () => {
 		if ($InEditMode) {
@@ -37,6 +79,7 @@
 				await new Promise((resolve) => setTimeout(resolve, 10));
 				tileTextElement.focus();
 			} else if ($EditorTool === EditorTools.image) {
+				file_input.click();
 			} else if ($EditorTool === EditorTools.move) {
 			} else if ($EditorTool === EditorTools.color) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
@@ -106,7 +149,7 @@
 	opacity: ${$InEditMode && tile.is_invisible ? 0.25 : 'auto'};
 	overflow: ${tile.navigation_page_id ? 'visible' : 'hidden'};
 	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
-	--tile-background: ${tile.background_color || 'auto'};
+	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
 	color: ${tile.text_color || 'auto'};
 	`}
 	on:click={handle_interaction}
@@ -114,13 +157,19 @@
 	{#if tile.navigation_page_id}
 		<div class="folder-bit" />
 	{/if}
+	
+	{#if tile.image}
+		 <img src={tile.image} alt="tile icon" />
+	{/if}
 
+	<input type="file" bind:this={file_input} bind:files on:change={() => handle_upload(files[0])} style="display: none;" />
 	<p
 		bind:this={tileTextElement}
 		on:input={save_tile}
 		spellcheck="false"
 		contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
-	>
+		style={`bottom: ${tile.image ? 'auto' : '50%'}; transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};`}
+		>
 		{tile.display_text}
 	</p>
 	{#if !tile.navigation_page_id}
@@ -145,14 +194,28 @@
 		font-size: 2rem;
 		white-space: pre;
 		min-width: 0; /* NEW; needed for Firefox */
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
 		width: 100%;
 		height: 100%;
 	}
+
+	button * {
+		position: absolute;
+	}
+
+	img {
+		left: 50%;
+		transform: translateX(-50%);
+		top: 10px;
+		height: 60%;
+		width: auto;
+		object-fit: contain;
+	}
+
 	p {
 		font-size: 18px;
+		left: 50%;
+		transform: translateX(-50%);
+		bottom: 5px;
 	}
 	.accent {
 		position: absolute;
@@ -168,7 +231,7 @@
 		top: -5px;
 		left: -1px;
 		width: 50%;
-		height: 15px;
+		height: 10px;
 		border: 1px solid var(--tiles-border);
 		border-bottom: none;
 		border-right: none;
