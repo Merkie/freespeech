@@ -68,7 +68,6 @@
 						$AppProject.pages[current_page_index].columns
 			)
 		);
-		console.log($PageHistory, $PageHistoryIndex);
 	}
 </script>
 

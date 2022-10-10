@@ -12,7 +12,8 @@
 		NavigationTile,
 		SelectedColor,
 		SelectedColorMode,
-		PageHistory
+		PageHistory,
+		PageHistoryIndex
 	} from '$lib/client/stores';
 
 	// Types
@@ -28,6 +29,7 @@
 	let tileTextElement: HTMLParagraphElement;
 	let file_input: HTMLInputElement;
 	let files: FileList;
+	let loading = false;
 
 	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
 
@@ -42,6 +44,7 @@
 	};
 
 	const handle_upload = async (file: File) => {
+		loading = true;
 		var reader = new FileReader(); // Make reader
 		reader.readAsArrayBuffer(file); // Read file as array buffer
 
@@ -69,10 +72,12 @@
 			//@ts-ignore
 			$AppProject.pages[current_page_index].tiles[tile_index]
 		);
+		loading = false;
 	}
 
 	const handle_interaction = async () => {
 		if ($InEditMode) {
+			loading = true;
 			if ($EditorTool === EditorTools.text) {
 				editingTileText = true;
 				// Wait 10 miliseconds for the element to be rendered
@@ -80,7 +85,6 @@
 				tileTextElement.focus();
 			} else if ($EditorTool === EditorTools.image) {
 				file_input.click();
-			} else if ($EditorTool === EditorTools.move) {
 			} else if ($EditorTool === EditorTools.color) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
@@ -117,12 +121,41 @@
 			} else if ($EditorTool === EditorTools.navigate) {
 				$NavigationTile = tile;
 			} else if ($EditorTool === EditorTools.template) {
+				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+					(t) => t.id === tile.id
+				);
+				
+				if($AppProject.pages[current_page_index].tiles[tile_index].link_id) {
+					$AppProject.pages[current_page_index].tiles[tile_index].link_id = null;
+				} else {
+					const last_page_index = $AppProject.pages.findIndex(
+						(t) => t.id === $PageHistory[$PageHistoryIndex + 1]
+					);
+	
+					let last_tile = $AppProject.pages[last_page_index].tiles[tile_index];
+					let last_tile_id = last_tile.id;
+					
+					// @ts-ignore
+					delete last_tile.id;
+					// @ts-ignore
+					delete last_tile.link_id;
+
+					// Update tile
+					$AppProject.pages[current_page_index].tiles[tile_index] = {...$AppProject.pages[current_page_index].tiles[tile_index], ...last_tile, link_id: last_tile_id, tile_index: tile.tile_index};
+				}
+
+				await trpc(fetch).mutation(
+					'tile:edit',
+					//@ts-ignore
+					$AppProject.pages[current_page_index].tiles[tile_index]
+				);
 			} else if ($EditorTool === EditorTools.trash) {
 				$AppProject.pages[current_page_index].tiles = $AppProject.pages[
 					current_page_index
 				].tiles.filter((t) => t.id !== tile.id);
 				await trpc(fetch).mutation('tile:remove', { id: tile.id });
 			}
+			loading = false;
 		} else {
 			if (tile.navigation_page_id) {
 				$CurrentPageId = tile.navigation_page_id;
@@ -147,11 +180,13 @@
 	style={`
 	opacity: ${tile.is_invisible ? 0 : 1};
 	opacity: ${$InEditMode && tile.is_invisible ? 0.25 : 'auto'};
+	opacity: ${$InEditMode && tile.link_id ? 0.5 : 'auto'};
 	overflow: ${tile.navigation_page_id ? 'visible' : 'hidden'};
 	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
 	color: ${tile.text_color || 'auto'};
 	`}
+	disabled={loading}
 	on:click={handle_interaction}
 >
 	{#if tile.navigation_page_id}
