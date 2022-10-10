@@ -22,11 +22,8 @@
 	// config
 	const min_row_count = 5; // minimum number of rows
 
-	// If no current page id, assume home
-	if (!$CurrentPageId) {
-		$CurrentPageId = $AppProject.pages.find((page) => page.name.toLowerCase() === 'home')?.id;
-		$PageHistory = [$CurrentPageId];
-	}
+	$CurrentPageId = $AppProject.pages.find((page) => page.name.toLowerCase() === 'home')?.id;
+	$PageHistory = [$CurrentPageId];
 
 	// State
 	let current_page_index;

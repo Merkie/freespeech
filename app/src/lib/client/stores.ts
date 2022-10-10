@@ -46,3 +46,5 @@ export const SelectedColorMode = writable<'border' | 'background' | 'text'>('bor
 export const PageHistory = writable<number[]>([]);
 // page history index
 export const PageHistoryIndex = writable<number>(0);
+// sentence
+export const Sentence = writable<Tile[]>([]);

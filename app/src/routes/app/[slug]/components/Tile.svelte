@@ -13,7 +13,8 @@
 		SelectedColor,
 		SelectedColorMode,
 		PageHistory,
-		PageHistoryIndex
+		PageHistoryIndex,
+		Sentence
 	} from '$lib/client/stores';
 
 	// Types
@@ -165,6 +166,8 @@
 			if (tile.navigation_page_id) {
 				$CurrentPageId = tile.navigation_page_id;
 				$PageHistory = [$CurrentPageId, ...$PageHistory];
+			} else {
+				$Sentence = [...$Sentence, tile];
 			}
 		}
 	};

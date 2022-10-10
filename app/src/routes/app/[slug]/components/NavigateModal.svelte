@@ -16,7 +16,7 @@
 	let tile_index;
 
 	const create_new_page = async () => {
-		if(creating_page) return;
+		if (creating_page) return;
 		creating_page = true;
 		// Create the page
 		const page = await trpc(fetch).mutation('page:create', $AppProject.id);
@@ -25,11 +25,14 @@
 		// Add the page to the project
 		$AppProject.pages = [...$AppProject.pages, page];
 		// Update it on the server
-		await trpc(fetch).mutation('tile:edit', $AppProject.pages[current_page_index].tiles[tile_index]);
+		await trpc(fetch).mutation(
+			'tile:edit',
+			$AppProject.pages[current_page_index].tiles[tile_index]
+		);
 	};
 
 	const close_modal = () => {
-		if(creating_page) {
+		if (creating_page) {
 			creating_page = false;
 			$NavigationTile = null;
 			select_value = 'none';
@@ -67,7 +70,7 @@
 		<select disabled={creating_page} bind:value={select_value}>
 			<option value="none">No Navigation</option>
 			{#each $AppProject.pages as page}
-				{#if page.name.toLowerCase() !== 'home'}
+				{#if page.name.toLowerCase() !== $AppProject.pages[current_page_index].name.toLowerCase()}
 					<option value={page.name}>{page.name}</option>
 				{/if}
 			{/each}
@@ -99,6 +102,6 @@
 	}
 
 	select:disabled {
-		opacity: .5;
+		opacity: 0.5;
 	}
 </style>
