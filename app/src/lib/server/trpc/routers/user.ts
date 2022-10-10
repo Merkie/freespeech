@@ -28,23 +28,24 @@ export default router()
 	})
 	.query('me_whole', {
 		resolve: async ({ ctx }) => {
-			const user = await prismaClient.user.findUnique({
+			return await prismaClient.user.findUnique({
 				where: {
 					id: (ctx as User).id
 				},
-				include: {
-					projects: {
-						include: {
-							pages: {
-								include: {
-									tiles: true
-								}
-							}
-						}
-					}
+				select: {
+					hashed_password: false,
+					id: true,
+					identifier_token: true,
+					email: true,
+					username: true,
+					image: true,
+					theme: true,
+					projects: true,
+					access_tokens: true,
+					tiles: true,
+					tile_pages: true,
+					s3_resources: true
 				}
 			});
-
-			return user;
 		}
 	});

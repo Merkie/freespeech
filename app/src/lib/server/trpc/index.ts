@@ -25,8 +25,23 @@ export const createContext = async ({ cookies }) => {
 		where: {
 			access_token
 		},
-		include: {
-			user: true
+		select: {
+			user: {
+				select: {
+					hashed_password: false,
+					id: true,
+					identifier_token: true,
+					email: true,
+					username: true,
+					image: true,
+					theme: true,
+					projects: true,
+					access_tokens: true,
+					tiles: true,
+					tile_pages: true,
+					s3_resources: true
+				}
+			}
 		}
 	});
 	if (!response) return {};
