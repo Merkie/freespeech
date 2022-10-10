@@ -87,4 +87,27 @@ export default router()
 			// 4) Return the tile
 			return tile;
 		}
+	})
+	.query('fetch', {
+		input: z.object({
+			id: z.string()
+		}),
+		resolve: async ({ ctx, input }) => {
+			const user = ctx as User;
+			if (!user) return null;
+
+			// 1) Get the tile
+			const tile = await prismaClient.tile.findUnique({
+				where: {
+					id: input.id
+				}
+			});
+			if (!tile) return null;
+
+			// 2) Check if the user can fetch the tile
+			if (tile.userId !== user.id) return null;
+
+			// 3) Return the tile
+			return tile;
+		}
 	});
