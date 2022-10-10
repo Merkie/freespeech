@@ -18,7 +18,7 @@
 
 	// If no current page id, assume home
 	if (!$CurrentPageId) {
-		$CurrentPageId = $AppProject.pages[0].id;
+		$CurrentPageId = $AppProject.pages.find((page) => page.name.toLowerCase() === 'home')?.id;
 		$PageHistory = [$CurrentPageId];
 	}
 

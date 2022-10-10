@@ -19,7 +19,6 @@ export const load: Load = async ({ params, fetch }) => {
 		let index = 0;
 		for await (let tile of page.tiles) {
 			if (tile.link_id) {
-				console.log(page);
 				const new_tile: any = await trpc(fetch).query('tile:fetch', { id: tile.link_id });
 				if (!new_tile) return;
 				delete new_tile.id;

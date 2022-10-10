@@ -205,7 +205,7 @@
 		contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
 		style={`bottom: ${tile.image ? 'auto' : '50%'}; transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};`}
 		>
-		{tile.tile_index}
+		{tile.display_text}
 	</p>
 	{#if !tile.navigation_page_id}
 		<div
