@@ -110,4 +110,33 @@ export default router()
 
 			return updated_page;
 		}
+	})
+	.mutation('rename', {
+		input: z.object({
+			id: z.number(),
+			name: z.string()
+		}),
+		resolve: async ({ ctx, input }) => {
+			const user = ctx as User;
+			if (!user) return null;
+
+			const page = await prismaClient.tilePage.findUnique({
+				where: {
+					id: input.id
+				}
+			});
+			if (!page) return null;
+			if (page.user_id !== user.id) return null;
+
+			const updated = await prismaClient.tilePage.update({
+				where: {
+					id: input.id
+				},
+				data: {
+					name: input.name
+				}
+			});
+
+			return updated;
+		}
 	});

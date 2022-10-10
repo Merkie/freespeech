@@ -19,8 +19,7 @@
 		// Create the page
 		const page = await trpc(fetch).mutation('page:create', $AppProject.id);
 		// Set the navigation page id to the new page id
-		$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id =
-			page.id;
+		$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id = page.id;
 		// Add the page to the project
 		$AppProject.pages = [...$AppProject.pages, page];
 		// Get the updated tile

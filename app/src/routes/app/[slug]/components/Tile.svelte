@@ -105,7 +105,7 @@
 	opacity: ${tile.is_invisible ? 0 : 1};
 	opacity: ${$InEditMode && tile.is_invisible ? 0.25 : 'auto'};
 	overflow: ${tile.navigation_page_id ? 'visible' : 'hidden'};
-	${tile.border_color ? '--tiles-border: '+tile.border_color : ''};
+	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
 	--tile-background: ${tile.background_color || 'auto'};
 	color: ${tile.text_color || 'auto'};
 	`}
