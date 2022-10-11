@@ -7,15 +7,19 @@ import prismaClient from '$lib/server/prismaClient';
 
 // Types
 import type { Tile, User } from '@prisma/client';
+import type { Context } from '../context';
+import type { IMeta } from '../IMeta';
 
-export default router()
+export default router<Context, IMeta>()
 	.mutation('remove', {
 		input: z.object({
 			id: z.string()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({
@@ -59,8 +63,10 @@ export default router()
 			is_accented: z.boolean().optional()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({
@@ -93,8 +99,10 @@ export default router()
 			id: z.string()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({
