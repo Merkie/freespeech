@@ -20,25 +20,36 @@
 
 	// On mount, take a pic of the page for the thumbnail
 	onMount(async () => {
+		// Wait 2 seconds
 		await new Promise((resolve) => setTimeout(resolve, 2000));
-		if ($AppProject.image) {
+		// Get the old image thumbnail (null if there is none)
+		const old_image_url = $AppProject.image;
+
+		//Take a screenshot of the page
+		const canvas = await html2canvas(document.body, { scale: 0.5 });
+
+		// Convert the canvas to an image url
+		const image = canvas.toDataURL('image/png');
+		
+		// Upload the image to the server
+		const response = await trpc(fetch).mutation('s3:upload', {
+			file: JSON.stringify({ blob: image }),
+			filename: `${Date.now()}.png`
+		});
+		if (!response) return;
+
+		// Update the project's thumbnail with the new image
+		await trpc(fetch).mutation('project:set_thumbnail', {
+			id: $AppProject.id,
+			thumbnail: response
+		});
+
+		// If there was an old thumbnail, send a request to have it deleted
+		if (old_image_url) {
 			await trpc(fetch).mutation('s3:remove', {
-				url: $AppProject.image
+				url: old_image_url
 			});
 		}
-		const screenshotTarget = document.body;
-		html2canvas(screenshotTarget, { scale: 0.5 }).then(async (canvas) => {
-			const image = canvas.toDataURL('image/png');
-			const response = await trpc(fetch).mutation('s3:upload', {
-				file: JSON.stringify({ blob: image }),
-				filename: `${Date.now()}.png`
-			});
-			if (!response) return;
-			await trpc(fetch).mutation('project:set_thumbnail', {
-				id: $AppProject.id,
-				thumbnail: response
-			});
-		});
 	});
 </script>
 

@@ -3,9 +3,13 @@
 	import type { Project } from '@prisma/client';
 	export let project: Project;
 	const result = formatDistance(project.updated_at, Date.now(), { addSuffix: true });
+
+	const navigate_to_app = () => {
+		window.location.assign(`/app/${project.id}`);
+	};
 </script>
 
-<button on:click={() => window.location.assign('/app/' + project.id)}>
+<button on:click={navigate_to_app}>
 	{#if project.image}
 		<img src={project.image} class="img" alt="project" />
 	{/if}
@@ -14,9 +18,6 @@
 		<p><i class="bx bxs-grid-alt" /> 698 Tiles</p>
 		<p><i class="bx bxs-time-five" /> Viewed {result}</p>
 	</div>
-	<span class="more">
-		<i class="bx bx-dots-horizontal-rounded" />
-	</span>
 </button>
 
 <style>
@@ -51,11 +52,5 @@
 		height: 100px;
 		border-radius: 10px;
 		border: 1px solid var(--base-400);
-	}
-	.more {
-		position: absolute;
-		right: 10px;
-		top: 5px;
-		font-size: 20px;
 	}
 </style>

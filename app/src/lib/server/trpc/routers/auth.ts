@@ -30,6 +30,9 @@ const create_access_token = async (user: User) => {
 
 export default router<Context, IMeta>()
 	.mutation('create_account', {
+		meta: {
+			doesNotNeedAuthentication: true
+		},
 		input: z.object({
 			email: z.string(),
 			password: z.string()
@@ -56,6 +59,9 @@ export default router<Context, IMeta>()
 		}
 	})
 	.mutation('login', {
+		meta: {
+			doesNotNeedAuthentication: true
+		},
 		input: z.object({
 			email: z.string(),
 			password: z.string()
