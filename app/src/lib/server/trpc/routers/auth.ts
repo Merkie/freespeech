@@ -9,7 +9,7 @@ import prismaClient from '$lib/server/prismaClient';
 import type { User } from '@prisma/client';
 
 // bcrypt
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import type { IMeta } from '../IMeta';
 import type { Context } from '../context';
 
