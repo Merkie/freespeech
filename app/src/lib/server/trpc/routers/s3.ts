@@ -10,6 +10,8 @@ import type { Tile, User } from '@prisma/client';
 
 import aws from 'aws-sdk';
 import dotenv from 'dotenv';
+import type { Context } from '../context';
+import type { IMeta } from '../IMeta';
 dotenv.config();
 
 const s3 = new aws.S3({
@@ -17,7 +19,7 @@ const s3 = new aws.S3({
 	secretAccessKey: process.env.FS_AWS_SECRET_ACCESS_KEY
 });
 
-export default router().mutation('upload', {
+export default router<Context, IMeta>().mutation('upload', {
 	input: z.object({
 		file: z.string(),
 		filename: z.string()

@@ -7,8 +7,10 @@ import prismaClient from '$lib/server/prismaClient';
 
 // Types
 import type { User } from '@prisma/client';
+import type { Context } from '../context';
+import type { IMeta } from '../IMeta';
 
-export default router()
+export default router<Context, IMeta>()
 	.mutation('create', {
 		input: z.object({
 			name: z.string(),

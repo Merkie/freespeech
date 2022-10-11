@@ -10,6 +10,8 @@ import type { User } from '@prisma/client';
 
 // bcrypt
 import bcrypt from 'bcrypt';
+import type { IMeta } from '../IMeta';
+import type { Context } from '../context';
 
 // Creates an access token for a user
 const create_access_token = async (user: User) => {
@@ -26,7 +28,7 @@ const create_access_token = async (user: User) => {
 	).access_token;
 };
 
-export default router()
+export default router<Context, IMeta>()
 	.mutation('create_account', {
 		input: z.object({
 			email: z.string(),

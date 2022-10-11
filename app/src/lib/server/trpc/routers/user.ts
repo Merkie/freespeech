@@ -7,12 +7,14 @@ import prismaClient from '$lib/server/prismaClient';
 
 // Types
 import type { User } from '@prisma/client';
+import type { IMeta } from '../IMeta';
+import type { Context } from '../context';
 
-export default router()
-	.query('me', {
-		resolve: async ({ ctx }) => ctx
-	})
+export default router<Context, IMeta>()
 	.query('validate_email', {
+		meta: {
+			doesNotNeedAuthentication: true
+		},
 		input: z.string(),
 		resolve: async ({ input }) => {
 			// 1) Check if the email is already in use
@@ -26,11 +28,18 @@ export default router()
 			return !!user;
 		}
 	})
+	.query('me', {
+		resolve: async ({ ctx }) => ctx
+	})
 	.query('me_whole', {
 		resolve: async ({ ctx }) => {
+			const user = ctx.user;
+			if (!user) {
+				return {};
+			}
 			return await prismaClient.user.findUnique({
 				where: {
-					id: (ctx as User).id
+					id: user.id
 				},
 				select: {
 					hashed_password: false,

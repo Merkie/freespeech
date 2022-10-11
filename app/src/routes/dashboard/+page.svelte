@@ -6,10 +6,11 @@
 	import SideBar from './components/SideBar.svelte';
 	import { Me } from '$lib/client/stores';
 
+	/** @type {import('./$types').PageData} */
+	export let data;
+
 	onMount(async () => {
-		const me = await trpc(fetch).query(`user:me_whole`);
-		if (!me) return;
-		$Me = me;
+		$Me = data.user;
 	});
 </script>
 
