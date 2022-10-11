@@ -19,8 +19,10 @@ export default router<Context, IMeta>()
 		}),
 		resolve: async ({ input, ctx }) => {
 			// 1) Check if user is logged in
-			const user = ctx as User;
-			if (!user.identifier_token) return null;
+			const user = ctx.user;
+			if (!user) {
+				return {};
+			}
 
 			// 2) Create project
 			const project = await prismaClient.project.create({
@@ -65,7 +67,10 @@ export default router<Context, IMeta>()
 		input: z.string(),
 		resolve: async ({ input, ctx }) => {
 			// 1) Get user from context
-			const user = ctx as User;
+			const user = ctx.user;
+			if (!user) {
+				return {};
+			}
 
 			// 2) Get project
 			const project = await prismaClient.project.findUnique({

@@ -16,8 +16,10 @@ export default router<Context, IMeta>()
 			id: z.string()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({
@@ -61,8 +63,10 @@ export default router<Context, IMeta>()
 			is_accented: z.boolean().optional()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({
@@ -95,8 +99,10 @@ export default router<Context, IMeta>()
 			id: z.string()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the tile
 			const tile = await prismaClient.tile.findUnique({

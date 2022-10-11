@@ -25,8 +25,10 @@ export default router<Context, IMeta>().mutation('upload', {
 		filename: z.string()
 	}),
 	resolve: async ({ ctx, input }) => {
-		const user = ctx as User;
-		if (!user) return null;
+		const user = ctx.user;
+		if (!user) {
+			return null;
+		}
 
 		const parsed = JSON.parse(input.file);
 

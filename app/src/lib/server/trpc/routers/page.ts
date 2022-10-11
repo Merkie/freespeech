@@ -17,8 +17,10 @@ export default router<Context, IMeta>()
 			index: z.number()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the page
 			const page = await prismaClient.tilePage.findUnique({
@@ -72,8 +74,10 @@ export default router<Context, IMeta>()
 	.mutation('create', {
 		input: z.string(),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			const project = await prismaClient.project.findFirst({
 				where: {
@@ -119,8 +123,10 @@ export default router<Context, IMeta>()
 			name: z.string()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			const page = await prismaClient.tilePage.findUnique({
 				where: {
