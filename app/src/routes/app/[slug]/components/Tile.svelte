@@ -234,7 +234,7 @@
 			class="accent"
 		/>
 	{/if}
-	<i style={`opacity: ${($InEditMode && tile.link_id) ? '1' : '0'};`} class='bx bx-link'></i>
+	<i style={`opacity: ${$InEditMode && tile.link_id ? '1' : '0'};`} class="bx bx-link" />
 </button>
 
 <style>

@@ -7,8 +7,10 @@ import prismaClient from '$lib/server/prismaClient';
 
 // Types
 import type { User } from '@prisma/client';
+import type { Context } from '../context';
+import type { IMeta } from '../IMeta';
 
-export default router()
+export default router<Context, IMeta>()
 	.mutation('create', {
 		input: z.object({
 			name: z.string(),
@@ -17,8 +19,10 @@ export default router()
 		}),
 		resolve: async ({ input, ctx }) => {
 			// 1) Check if user is logged in
-			const user = ctx as User;
-			if (!user.identifier_token) return null;
+			const user = ctx.user;
+			if (!user) {
+				return {};
+			}
 
 			// 2) Create project
 			const project = await prismaClient.project.create({
@@ -63,7 +67,10 @@ export default router()
 		input: z.string(),
 		resolve: async ({ input, ctx }) => {
 			// 1) Get user from context
-			const user = ctx as User;
+			const user = ctx.user;
+			if (!user) {
+				return {};
+			}
 
 			// 2) Get project
 			const project = await prismaClient.project.findUnique({

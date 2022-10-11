@@ -7,16 +7,20 @@ import prismaClient from '$lib/server/prismaClient';
 
 // Types
 import type { Tile, User } from '@prisma/client';
+import type { Context } from '../context';
+import type { IMeta } from '../IMeta';
 
-export default router()
+export default router<Context, IMeta>()
 	.mutation('add_tile', {
 		input: z.object({
 			page_id: z.number(),
 			index: z.number()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			// 1) Get the page
 			const page = await prismaClient.tilePage.findUnique({
@@ -70,8 +74,10 @@ export default router()
 	.mutation('create', {
 		input: z.string(),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			const project = await prismaClient.project.findFirst({
 				where: {
@@ -117,8 +123,10 @@ export default router()
 			name: z.string()
 		}),
 		resolve: async ({ ctx, input }) => {
-			const user = ctx as User;
-			if (!user) return null;
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
 
 			const page = await prismaClient.tilePage.findUnique({
 				where: {
