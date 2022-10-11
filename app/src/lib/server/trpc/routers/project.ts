@@ -93,4 +93,31 @@ export default router<Context, IMeta>()
 			if (project.userId === user.id || project.public) return project;
 			return null;
 		}
+	})
+	.mutation('set_thumbnail', {
+		input: z.object({
+			id: z.string(),
+			thumbnail: z.string()
+		}),
+		resolve: async ({ input, ctx }) => {
+			const user = ctx.user;
+			if (!user) return null;
+
+			const project = await prismaClient.project.findFirst({
+				where: {
+					id: input.id,
+					userId: user.id
+				}
+			});
+			if (!project) return null;
+
+			await prismaClient.project.update({
+				where: {
+					id: input.id
+				},
+				data: {
+					image: input.thumbnail
+				}
+			});
+		}
 	});

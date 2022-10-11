@@ -4,7 +4,10 @@
 	import CreateProjectModal from './CreateProjectModal.svelte';
 	import ProjectCard from './ProjectCard.svelte';
 
-	let projects = $Me.projects;
+	// Sort the projects by last updated
+	let projects = $Me.projects.sort((a, b) => {
+		return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+	});
 
 	const open_project_creation_modal = () => {
 		$IsProjectCreationModalOpen = true;

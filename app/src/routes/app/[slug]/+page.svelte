@@ -18,17 +18,26 @@
 
 	$AppProject = data;
 
+	// On mount, take a pic of the page for the thumbnail
 	onMount(async () => {
-		// wait 2 seconds
-		// 	await new Promise((resolve) => setTimeout(resolve, 2000));
+		await new Promise((resolve) => setTimeout(resolve, 2000));
+		if ($AppProject.image) {
+			await trpc(fetch).mutation('s3:remove', {
+				url: $AppProject.image
+			});
+		}
 		const screenshotTarget = document.body;
-		html2canvas(screenshotTarget).then(async (canvas) => {
+		html2canvas(screenshotTarget, { scale: 0.5 }).then(async (canvas) => {
 			const image = canvas.toDataURL('image/png');
-			// const response = await trpc(fetch).mutation('s3:upload', {
-			// 	file: canvas.toDataURL('image/png'),
-			// 	filename: `${Date.now()}.png`
-			// });
-			// console.log(response);
+			const response = await trpc(fetch).mutation('s3:upload', {
+				file: JSON.stringify({ blob: image }),
+				filename: `${Date.now()}.png`
+			});
+			if (!response) return;
+			await trpc(fetch).mutation('project:set_thumbnail', {
+				id: $AppProject.id,
+				thumbnail: response
+			});
 		});
 	});
 </script>

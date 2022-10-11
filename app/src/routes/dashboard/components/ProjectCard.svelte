@@ -1,14 +1,18 @@
 <script lang="ts">
+	import { formatDistance } from 'date-fns';
 	import type { Project } from '@prisma/client';
 	export let project: Project;
+	const result = formatDistance(project.updated_at, Date.now(), { addSuffix: true });
 </script>
 
 <button on:click={() => window.location.assign('/app/' + project.id)}>
-	<span class="img" />
+	{#if project.image}
+		<img src={project.image} class="img" alt="project" />
+	{/if}
 	<div>
 		<h1>{project.name}</h1>
 		<p><i class="bx bxs-grid-alt" /> 698 Tiles</p>
-		<p><i class="bx bxs-time-five" /> Recently opened</p>
+		<p><i class="bx bxs-time-five" /> Viewed {result}</p>
 	</div>
 	<span class="more">
 		<i class="bx bx-dots-horizontal-rounded" />
@@ -39,6 +43,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 5px;
+		width: max-content;
 	}
 	.img {
 		background: var(--base-500);

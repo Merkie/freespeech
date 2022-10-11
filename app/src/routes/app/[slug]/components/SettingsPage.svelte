@@ -101,6 +101,7 @@
 		margin-bottom: 20px;
 	}
 	main {
+		margin-top: 50px;
 		padding: 20px;
 		flex: 1;
 		display: flex;

@@ -49,7 +49,11 @@ export default router<Context, IMeta>()
 					username: true,
 					image: true,
 					theme: true,
-					projects: true,
+					projects: {
+						orderBy: {
+							updated_at: 'desc'
+						}
+					},
 					access_tokens: true,
 					tiles: true,
 					tile_pages: true,
