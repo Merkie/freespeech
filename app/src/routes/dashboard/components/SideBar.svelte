@@ -36,6 +36,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 5px;
+		position: fixed;
 	}
 	button {
 		width: 100%;

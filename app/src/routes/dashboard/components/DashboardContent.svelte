@@ -24,8 +24,14 @@
 <style>
 	main {
 		position: relative;
-		width: 100px;
+		margin-left: 220px;
 		margin-top: 20px;
 		flex: 1;
+	}
+
+	@media (max-width: 750px) {
+		main {
+			margin-left: 80px;
+		}
 	}
 </style>

@@ -12,7 +12,25 @@
 	import EditorModeColorPicker from './components/EditorModeColorPicker.svelte';
 	import TrashWarning from './components/TrashWarning.svelte';
 	import TemplateModeInfo from './components/TemplateModeInfo.svelte';
+	import { onMount } from 'svelte';
+	import html2canvas from 'html2canvas';
+	import trpc from '$lib/client/trpc';
+
 	$AppProject = data;
+
+	onMount(async () => {
+		// wait 2 seconds
+		// 	await new Promise((resolve) => setTimeout(resolve, 2000));
+		const screenshotTarget = document.body;
+		html2canvas(screenshotTarget).then(async (canvas) => {
+			const image = canvas.toDataURL('image/png');
+			// const response = await trpc(fetch).mutation('s3:upload', {
+			// 	file: canvas.toDataURL('image/png'),
+			// 	filename: `${Date.now()}.png`
+			// });
+			// console.log(response);
+		});
+	});
 </script>
 
 <main>

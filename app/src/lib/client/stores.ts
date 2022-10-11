@@ -48,3 +48,5 @@ export const PageHistory = writable<number[]>([]);
 export const PageHistoryIndex = writable<number>(0);
 // sentence
 export const Sentence = writable<Tile[]>([]);
+// if in project creation modal
+export const IsProjectCreationModalOpen = writable<boolean>(false);
