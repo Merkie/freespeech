@@ -4,6 +4,8 @@
 	import ProjectsPage from './ProjectsPage.svelte';
 	import UploadsPage from './UploadsPage.svelte';
 	import AdvancedPage from './AdvancedPage.svelte';
+	import { page } from '$app/stores';
+	$DashboardPage = $page.params.slug;
 </script>
 
 <main>

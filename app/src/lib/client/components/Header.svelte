@@ -5,7 +5,7 @@
 
 <section>
 	<h1 on:click={() => window.location.assign('/')}>
-		<i class="bx bxs-message-square-detail" /> FreeSpeech AAC
+		<img src={'/logo-white.png'} alt="logo" /> FreeSpeech
 	</h1>
 	<button on:click={() => window.location.assign('/' + uri)}
 		>{button_text}<i class="bx bx-right-arrow-alt" /></button
@@ -25,10 +25,14 @@
 		z-index: 999;
 	}
 
+	img {
+		height: 35px;
+	}
+
 	h1 {
 		display: flex;
 		align-items: center;
-		gap: 5px;
+		gap: 10px;
 		font-weight: 500;
 		cursor: pointer;
 	}
@@ -49,8 +53,12 @@
 		}
 
 		section {
-			padding: 5px;
-			width: calc(100% - 10px);
+			padding: 10px 20px;
+			width: calc(100% - 40px);
+		}
+
+		img {
+			height: 30px;
 		}
 	}
 </style>

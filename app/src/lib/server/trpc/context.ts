@@ -31,14 +31,15 @@ export async function createContextInner(_opts: CreateContextOptions) {
 					id: true,
 					identifier_token: true,
 					email: true,
-					username: true,
+					name: true,
 					image: true,
 					theme: true,
 					projects: true,
 					access_tokens: true,
 					tiles: true,
 					tile_pages: true,
-					s3_resources: true
+					s3_resources: true,
+					organization: true
 				}
 			}
 		}

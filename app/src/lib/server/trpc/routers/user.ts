@@ -46,18 +46,44 @@ export default router<Context, IMeta>()
 					id: true,
 					identifier_token: true,
 					email: true,
-					username: true,
+					name: true,
 					image: true,
 					theme: true,
-					projects: {
-						orderBy: {
-							updated_at: 'desc'
-						}
-					},
+					projects: true,
 					access_tokens: true,
 					tiles: true,
 					tile_pages: true,
-					s3_resources: true
+					s3_resources: true,
+					organization: true
+				}
+			});
+		}
+	})
+	.mutation('edit', {
+		input: z.object({
+			image: z.string().optional(),
+			name: z.string().optional(),
+			email: z.string().optional()
+		}),
+		resolve: async ({ ctx, input }) => {
+			const user = ctx.user;
+			if (!user) return null;
+
+			const fetched_user = await prismaClient.user.findUnique({
+				where: {
+					id: user.id
+				}
+			});
+			if (!fetched_user) return null;
+
+			return await prismaClient.user.update({
+				where: {
+					id: user.id
+				},
+				data: {
+					image: input.image || fetched_user.image,
+					name: input.name || fetched_user.name,
+					email: input.email || fetched_user.email
 				}
 			});
 		}

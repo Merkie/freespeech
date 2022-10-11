@@ -53,4 +53,19 @@
 		border-radius: 10px;
 		border: 1px solid var(--base-400);
 	}
+
+	@media (max-width: 750px) {
+		h1 {
+			font-size: 20px !important;
+		}
+
+		.img {
+			width: 100px;
+			height: 70px;
+		}
+
+		button {
+			padding-right: 0;
+		}
+	}
 </style>

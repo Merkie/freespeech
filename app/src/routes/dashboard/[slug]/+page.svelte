@@ -1,4 +1,5 @@
 <script lang="ts">
+	//@ts-nocheck
 	import trpc from '$lib/client/trpc';
 	import { onMount } from 'svelte';
 	import DashboardContent from './components/DashboardContent.svelte';
@@ -6,12 +7,8 @@
 	import SideBar from './components/SideBar.svelte';
 	import { Me } from '$lib/client/stores';
 
-	/** @type {import('./$types').PageData} */
 	export let data;
-
-	onMount(async () => {
-		$Me = data.user;
-	});
+	$Me = data.user;
 </script>
 
 <Header uri="app" button_text="Application" />

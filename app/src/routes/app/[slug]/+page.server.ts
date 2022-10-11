@@ -4,6 +4,7 @@ import trpc from '$lib/client/trpc';
 export const load: Load = async ({ params, fetch }) => {
 	// 1) Get slug
 	const { slug } = params;
+
 	// 2) Get the project from trpc
 	const project = await trpc(fetch).query('project:fetch', slug + '');
 	if (!project) return { error: 404 };

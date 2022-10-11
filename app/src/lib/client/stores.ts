@@ -1,4 +1,4 @@
-import type { Project, Tile, TilePage, User } from '@prisma/client';
+import type { Project, Tile, TilePage, User, Organization } from '@prisma/client';
 import { writable, type Writable } from 'svelte/store';
 
 export enum DashboardPages {
@@ -22,14 +22,17 @@ export enum EditorTools {
 
 // Object that stores the entire user object
 export const Me: Writable<
-	User & { projects: (Project & { pages: (TilePage & { tiles: Tile[] })[] })[] }
+	User & {
+		organization: Organization;
+		projects: (Project & { pages: (TilePage & { tiles: Tile[] })[] })[];
+	}
 > = writable();
 // The active project
 export const AppProject = writable<Project & { pages: (TilePage & { tiles: Tile[] })[] }>();
 // Id of the current page
 export const CurrentPageId = writable<number>();
 // What page the user in on in the dashboard
-export const DashboardPage: Writable<DashboardPages> = writable(DashboardPages.account);
+export const DashboardPage: Writable<DashboardPages | string> = writable(DashboardPages.account);
 // the tool that the user has selected
 export const EditorTool: Writable<EditorTools> = writable(EditorTools.text);
 // if the user is in edit mode

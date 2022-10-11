@@ -42,19 +42,6 @@
 		margin-bottom: 20px;
 	}
 
-	div {
-		display: flex;
-		align-items: center;
-		gap: 20px;
-		background-color: var(--base-100);
-		padding: 20px;
-		border-radius: 10px;
-		border: 1px solid var(--base-400);
-		filter: var(--shadow);
-		margin-bottom: 20px;
-		width: auto;
-	}
-
 	main {
 		display: flex;
 		gap: 20px;

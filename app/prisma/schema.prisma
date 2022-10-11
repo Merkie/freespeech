@@ -11,17 +11,27 @@ model User {
   id               String        @id @unique @default(cuid())
   identifier_token String        @unique
   email            String        @unique
-  username         String?
+  name             String?
   image            String?
   hashed_password  String?
   theme            String?
+  organization     Organization? @relation(fields: [organizationId], references: [id])
   projects         Project[]
   access_tokens    AccessToken[]
   tiles            Tile[]
   tile_pages       TilePage[]
   s3_resources     S3Resource[]
+  organizationId   String?
 
   @@map("user")
+}
+
+model Organization {
+  id    String @id @unique @default(cuid())
+  name  String
+  Users User[]
+
+  @@map("organization")
 }
 
 model AccessToken {

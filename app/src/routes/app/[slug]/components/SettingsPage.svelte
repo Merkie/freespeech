@@ -5,9 +5,13 @@
 	// Components
 	import Header from '$lib/client/components/Header.svelte';
 
+	import { AppProject } from '$lib/client/stores';
+
 	// Bindings
 	let search_text: string;
 	let voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
+
+	let delete_button_pressed = false;
 
 	// In case new voices are added asynchronously
 	window.speechSynthesis.onvoiceschanged = function (e) {
@@ -53,10 +57,44 @@
 	];
 
 	const fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
+
+	const handle_delete_btn_press = () => {
+		if (!delete_button_pressed) {
+			delete_button_pressed = true;
+		} else {
+		}
+	};
 </script>
 
 <Header uri="dashboard" button_text="Dashboard" />
 <main>
+	<h1>Project Settings</h1>
+	<span style="margin-top: 0;">
+		<label for="project_name">Project name:</label>
+		<input
+			type="text"
+			name="project_name"
+			value={$AppProject.name}
+			placeholder="My awesome project"
+		/>
+	</span>
+	<span>
+		<label for="project_description">Project description:</label>
+		<input
+			type="text"
+			name="project_description"
+			value={$AppProject.description}
+			placeholder="My awesome project description"
+		/>
+	</span>
+	<span style="margin-bottom: 20px;">
+		<button>Save changes</button>
+		<button
+			class="danger"
+			on:click={handle_delete_btn_press}
+			style={`opacity: ${delete_button_pressed ? '1' : '0.5'}`}>Delete this project</button
+		>
+	</span>
 	<h1>Application Settings</h1>
 	<label for="search">Search Settings</label>
 	<input bind:value={search_text} type="text" name="search" placeholder="..." />
@@ -124,6 +162,12 @@
 	span input,
 	span select {
 		flex: 1;
+	}
+
+	.danger {
+		background-color: var(--danger-300);
+		color: var(--danger-text);
+		border-color: var(--danger-400);
 	}
 
 	@media (max-width: 750px) {

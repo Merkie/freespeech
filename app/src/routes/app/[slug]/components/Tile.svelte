@@ -17,6 +17,9 @@
 		Sentence
 	} from '$lib/client/stores';
 
+	// Helpers
+	import { blobToBase64 } from '$lib/client/blob2base64';
+
 	// Types
 	import type { Tile } from '@prisma/client';
 
@@ -33,16 +36,6 @@
 	let loading = false;
 
 	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-
-	const blobToBase64 = (blob: Blob) => {
-		return new Promise((resolve) => {
-			const reader = new FileReader();
-			reader.readAsDataURL(blob);
-			reader.onloadend = function () {
-				resolve(reader.result);
-			};
-		});
-	};
 
 	const handle_upload = async (file: File) => {
 		loading = true;

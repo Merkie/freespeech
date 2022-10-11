@@ -32,7 +32,7 @@
 		background: var(--base-100);
 		border-right: 1px solid var(--base-400);
 		width: 200px;
-		height: calc(100vh - 98px);
+		height: calc(100vh - 90px);
 		display: flex;
 		flex-direction: column;
 		gap: 5px;

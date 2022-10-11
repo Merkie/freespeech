@@ -30,7 +30,7 @@
 
 		// Convert the canvas to an image url
 		const image = canvas.toDataURL('image/png');
-		
+
 		// Upload the image to the server
 		const response = await trpc(fetch).mutation('s3:upload', {
 			file: JSON.stringify({ blob: image }),
