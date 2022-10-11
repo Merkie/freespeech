@@ -19,6 +19,10 @@
 		border-bottom: 1px solid var(--primary-400);
 		display: flex;
 		justify-content: space-between;
+		position: fixed;
+		top: 0;
+		width: calc(100% - 40px);
+		z-index: 999;
 	}
 
 	h1 {
@@ -46,6 +50,7 @@
 
 		section {
 			padding: 5px;
+			width: calc(100% - 10px);
 		}
 	}
 </style>
