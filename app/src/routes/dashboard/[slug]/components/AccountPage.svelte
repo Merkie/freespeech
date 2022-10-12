@@ -42,6 +42,7 @@
 	};
 
 	const handle_user_edit = async () => {
+		$Me.name = name;
 		await trpc(fetch).mutation('user:edit', {
 			name
 		});
