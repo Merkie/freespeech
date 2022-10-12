@@ -1,7 +1,7 @@
 import type { Load } from '@sveltejs/kit';
 import trpc from '$lib/client/trpc';
 
-const noAuthNeededPages = ['/portal', '/portal', '/'];
+const noAuthNeededPages = ['/portal', '/favicon.ico', '/', '/app'];
 
 // @ts-ignore
 export const load: Load = async ({ fetch, cookies, url }) => {
