@@ -5,14 +5,19 @@
 	// Components
 	import Header from '$lib/client/components/Header.svelte';
 
-	import { AppProject } from '$lib/client/stores';
+	import { AppProject, Me } from '$lib/client/stores';
+	import trpc from '$lib/client/trpc';
 
 	// Bindings
 	let search_text: string;
 	let voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
+	let project_name: string = $AppProject.name;
+	let project_description: string = $AppProject.description+'';
+	let project_visibility: string = $AppProject.public ? 'public' : 'private';
 
 	let delete_button_pressed = false;
-
+	let changes_made = false;
+	
 	// In case new voices are added asynchronously
 	window.speechSynthesis.onvoiceschanged = function (e) {
 		voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
@@ -64,37 +69,64 @@
 		} else {
 		}
 	};
+
+	const save_changes = async () => {
+		// Update locally
+		$AppProject.name = project_name;
+		$AppProject.description = project_description;
+		$AppProject.public = project_visibility === 'public';
+		// Push updates to server
+		await trpc(fetch).mutation('project:edit', {
+			id: $AppProject.id,
+			name: project_name,
+			description: project_description,
+			public: project_visibility === 'public'
+		});
+		// Reset changes_made
+		changes_made = false;
+	}
 </script>
 
 <Header uri="dashboard" button_text="Dashboard" />
 <main>
-	<h1>Project Settings</h1>
-	<span style="margin-top: 0;">
-		<label for="project_name">Project name:</label>
-		<input
-			type="text"
-			name="project_name"
-			value={$AppProject.name}
-			placeholder="My awesome project"
-		/>
-	</span>
-	<span>
-		<label for="project_description">Project description:</label>
-		<input
-			type="text"
-			name="project_description"
-			value={$AppProject.description}
-			placeholder="My awesome project description"
-		/>
-	</span>
-	<span style="margin-bottom: 20px;">
-		<button>Save changes</button>
-		<button
-			class="danger"
-			on:click={handle_delete_btn_press}
-			style={`opacity: ${delete_button_pressed ? '1' : '0.5'}`}>Delete this project</button
-		>
-	</span>
+	{#if $AppProject.userId === $Me.id}
+		<h1>Project Settings</h1>
+		<span style="margin-top: 0;">
+			<label for="project_name">Project name:</label>
+			<input
+				type="text"
+				name="project_name"
+				bind:value={project_name}
+				on:input={() => changes_made = true}
+				placeholder="My awesome project"
+			/>
+		</span>
+		<span>
+			<label for="project_description">Project description:</label>
+			<input
+				type="text"
+				name="project_description"
+				bind:value={project_description}
+				on:input={() => changes_made = true}
+				placeholder="My awesome project description"
+			/>
+		</span>
+		<span>
+			<label for="project_description">Project visibility:</label>
+			<select on:input={() => changes_made = true} bind:value={project_visibility}>
+				<option value="private">Private</option>
+				<option value="public">Public</option>
+			</select>
+		</span>
+		<span style="margin-bottom: 20px;">
+			<button disabled={!changes_made} on:click={save_changes}>Save changes</button>
+			<button
+				class="danger"
+				on:click={handle_delete_btn_press}
+				style={`opacity: ${delete_button_pressed ? '1' : '0.5'}`}>Delete this project</button
+			>
+		</span>
+	{/if}
 	<h1>Application Settings</h1>
 	<label for="search">Search Settings</label>
 	<input bind:value={search_text} type="text" name="search" placeholder="..." />

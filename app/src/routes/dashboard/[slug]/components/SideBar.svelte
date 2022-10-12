@@ -15,11 +15,18 @@
 		><i class="bx bx-grid-alt" /> <span>Projects</span></button
 	>
 	<button
+		class={$DashboardPage === DashboardPages.explore ? 'selected' : ''}
+		on:click={() => ($DashboardPage = DashboardPages.explore)}
+		><i class='bx bx-compass' ></i> <span>Explore</span></button
+	>
+	<button
+		disabled={true}
 		class={$DashboardPage === DashboardPages.uploads ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.uploads)}
 		><i class="bx bx-cloud-upload" /> <span>Uploads</span></button
 	>
 	<button
+		disabled={true}
 		class={$DashboardPage === DashboardPages.advanced ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.advanced)}
 		><i class="bx bx-cog" /> <span>Advanced</span></button

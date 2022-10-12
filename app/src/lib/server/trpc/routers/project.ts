@@ -94,30 +94,62 @@ export default router<Context, IMeta>()
 			return null;
 		}
 	})
-	.mutation('set_thumbnail', {
+	.query('explore', {
+		resolve: async ({ ctx }) => {
+			// return all public projects
+			const projects = await prismaClient.project.findMany({
+				where: {
+					public: true
+				},
+				include: {
+					author: true
+				}
+			});
+			return projects;
+		}
+	})
+	.mutation('edit', {
 		input: z.object({
 			id: z.string(),
-			thumbnail: z.string()
+			name: z.string().optional(),
+			description: z.string().optional(),
+			image: z.string().optional(),
+			public: z.boolean().optional(),
+			favorite: z.boolean().optional()
 		}),
 		resolve: async ({ input, ctx }) => {
+			// 1) Get user from context
 			const user = ctx.user;
-			if (!user) return null;
+			if (!user) {
+				return {};
+			}
 
-			const project = await prismaClient.project.findFirst({
+			// 2) Get project
+			const project = await prismaClient.project.findUnique({
 				where: {
-					id: input.id,
-					userId: user.id
+					id: input.id
 				}
 			});
 			if (!project) return null;
 
-			await prismaClient.project.update({
+			// 3) Check if user is authorized to edit project
+			if (project.userId !== user.id) return null;
+
+			// 4) Edit project
+			const editedProject = await prismaClient.project.update({
 				where: {
 					id: input.id
 				},
 				data: {
-					image: input.thumbnail
+					name: input.name || project.name,
+					description: input.description || project.description,
+					image: input.image || project.image,
+					public: input.public || project.public
+					// favorite: input.favorite || project.favorite
 				}
 			});
+
+			// 5) Return project
+			return editedProject;
 		}
 	});

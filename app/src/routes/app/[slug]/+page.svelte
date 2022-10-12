@@ -2,7 +2,7 @@
 	import type { Project, Tile, TilePage, User } from '@prisma/client';
 	import TileGrid from './components/TileGrid.svelte';
 	export let data: Project & { pages: (TilePage & { tiles: Tile[] })[] };
-	import { AppProject, InSettingsPage } from '$lib/client/stores';
+	import { AppProject, InSettingsPage, Me } from '$lib/client/stores';
 	import SentenceBuilder from './components/SentenceBuilder.svelte';
 	import TileGridHeader from './components/TileGridHeader.svelte';
 	import AppNavigation from './components/AppNavigation.svelte';
@@ -20,6 +20,7 @@
 
 	// On mount, take a pic of the page for the thumbnail
 	onMount(async () => {
+		if($AppProject.userId != $Me.id) return;
 		// Wait 2 seconds
 		await new Promise((resolve) => setTimeout(resolve, 2000));
 		// Get the old image thumbnail (null if there is none)
@@ -39,9 +40,9 @@
 		if (!response) return;
 
 		// Update the project's thumbnail with the new image
-		await trpc(fetch).mutation('project:set_thumbnail', {
+		await trpc(fetch).mutation('project:edit', {
 			id: $AppProject.id,
-			thumbnail: response
+			image: response
 		});
 
 		// If there was an old thumbnail, send a request to have it deleted

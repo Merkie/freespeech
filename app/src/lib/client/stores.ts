@@ -5,7 +5,8 @@ export enum DashboardPages {
 	account = 'account',
 	projects = 'projects',
 	uploads = 'uploads',
-	advanced = 'advanced'
+	advanced = 'advanced',
+	explore = 'explore'
 }
 
 export enum EditorTools {

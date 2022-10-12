@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { formatDistance } from 'date-fns';
-	import type { Project } from '@prisma/client';
-	export let project: Project;
+	import type { Project, User } from '@prisma/client';
+	export let project: Project & { author: User };
 	const result = formatDistance(project.updated_at, Date.now(), { addSuffix: true });
+
+	export let explore = false;
 
 	const navigate_to_app = () => {
 		window.location.assign(`/app/${project.id}`);
@@ -15,8 +17,17 @@
 	{/if}
 	<div>
 		<h1>{project.name}</h1>
-		<p><i class="bx bxs-grid-alt" /> 698 Tiles</p>
-		<p><i class="bx bxs-time-five" /> Viewed {result}</p>
+		{#if project.description}
+			 <p>{project.description}</p>
+		{:else}
+			<p><i class="bx bxs-grid-alt" /> 698 Tiles</p>
+		{/if}
+		{#if explore}
+			<p><i class="bx bxs-time-five" /> Updated {result}</p>
+			<p><img style="border-radius: 50%" width="30px" src={project.author.image || '/profile.png'} alt=""> {project.author.name}</p>
+		{:else}
+			<p><i class="bx bxs-time-five" /> Viewed {result}</p>
+		{/if}
 	</div>
 </button>
 

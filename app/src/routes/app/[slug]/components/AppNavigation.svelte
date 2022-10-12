@@ -6,7 +6,8 @@
 		InSettingsPage,
 		AppProject,
 		EditorTool,
-		EditorTools
+		EditorTools,
+		Me
 	} from '$lib/client/stores';
 
 	// Resets the state of the app back to the home page
@@ -20,11 +21,11 @@
 <section style={`border-color: ${$InEditMode ? 'transparent' : 'auto'};`}>
 	<button on:click={reset_state}><i class="bx bxs-home-alt-2" /> <span>Home</span></button>
 	<button
-		disabled={$InSettingsPage}
+		disabled={$InSettingsPage || $AppProject.userId != $Me.id}
 		class={`${$InEditMode ? 'selected-edit' : 'edit'}`}
 		on:click={() => {
 			$InEditMode = !$InEditMode;
-			if (!$InEditMode) $EditorTool = EditorTools.Text;
+			if (!$InEditMode) $EditorTool = EditorTools.text;
 		}}
 		><i class={$InEditMode ? 'bx bx-check' : 'bx bxs-pencil'} />
 		<span>{$InEditMode ? 'Save Changes' : 'Edit'}</span>
