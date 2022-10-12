@@ -24,7 +24,7 @@
 		{/if}
 		{#if explore}
 			<p><i class="bx bxs-time-five" /> Updated {result}</p>
-			<p><img style="border-radius: 50%" width="30px" src={project.author.image || '/profile.png'} alt=""> {project.author.name}</p>
+			<p><img style="border-radius: 50%" width="30px" src={project.author.image || '/images/profile.png'} alt=""> {project.author.name}</p>
 		{:else}
 			<p><i class="bx bxs-time-five" /> Viewed {result}</p>
 		{/if}

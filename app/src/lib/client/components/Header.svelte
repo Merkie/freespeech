@@ -6,7 +6,7 @@
 
 <section>
 	<h1 on:click={() => window.location.assign('/')}>
-		<img src={'/logo-white.png'} alt="logo" /> FreeSpeech
+		<img src={'/images/logo-white.png'} alt="logo" /> FreeSpeech
 	</h1>
 	{#if $Me}
 		<button on:click={() => window.location.assign('/' + uri)}
