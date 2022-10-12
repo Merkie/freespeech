@@ -3,6 +3,7 @@
 	import trpc from '$lib/client/trpc';
 	import type { Project } from '@prisma/client';
 	import ProjectCard from './ProjectCard.svelte';
+	import { onMount } from 'svelte';
 
   let projects: Project[] = [];
   onMount(async () => {
