@@ -14,8 +14,8 @@
 		>
 	{:else}
 		<span class="btn-group">
-			<button on:click={() => window.location.assign('/portal')}>Login</button>
-			<button on:click={() => window.location.assign('/portal')}>Create Account</button>
+			<button on:click={() => window.location.assign('/portal?login=true')}>Login</button>
+			<button on:click={() => window.location.assign('/portal?login=false')}>Create Account</button>
 		</span>
 	{/if}
 </section>
