@@ -14,7 +14,11 @@
 </main>
 
 <style>
+	:global(body) {
+		background: white;
+	}
 	main {
+		color: black;
 		margin-top: 50px;
 		padding: 20px;
 	}

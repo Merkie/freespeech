@@ -57,7 +57,7 @@ model Tile {
   text_color         String?
   is_silent          Boolean   @default(false)
   is_invisible       Boolean   @default(false)
-  is_public          Boolean   @default(false)
+  // is_public          Boolean   @default(false)
   is_accented        Boolean   @default(false)
   parent_page        TilePage? @relation(fields: [tilePageId], references: [id])
   author             User      @relation(fields: [userId], references: [id])
@@ -72,8 +72,8 @@ model Tile {
 model TilePage {
   id         Int      @id @unique @default(autoincrement())
   name       String
-  public     Boolean  @default(false)
-  columns    Int      @default(8)
+  // public     Boolean  @default(false)
+  // columns    Int      @default(8)
   user_id    String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -91,6 +91,7 @@ model Project {
   name        String
   description String?
   image       String?
+  columns     Int        @default(8)
   index       Int
   public      Boolean    @default(false)
   created_at  DateTime   @default(now())

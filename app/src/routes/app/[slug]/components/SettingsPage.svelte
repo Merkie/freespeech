@@ -14,6 +14,7 @@
 	let project_name: string = $AppProject.name;
 	let project_description: string = $AppProject.description+'';
 	let project_visibility: string = $AppProject.public ? 'public' : 'private';
+	let project_columns: number = $AppProject.columns;
 
 	let delete_button_pressed = false;
 	let changes_made = false;
@@ -75,12 +76,14 @@
 		$AppProject.name = project_name;
 		$AppProject.description = project_description;
 		$AppProject.public = project_visibility === 'public';
+		$AppProject.columns = project_columns;
 		// Push updates to server
 		await trpc(fetch).mutation('project:edit', {
 			id: $AppProject.id,
 			name: project_name,
 			description: project_description,
-			public: project_visibility === 'public'
+			public: project_visibility === 'public',
+			columns: project_columns
 		});
 		// Reset changes_made
 		changes_made = false;
@@ -109,6 +112,16 @@
 				bind:value={project_description}
 				on:input={() => changes_made = true}
 				placeholder="My awesome project description"
+			/>
+		</span>
+		<span>
+			<label for="project_columns">Project columns:</label>
+			<input
+				type="number"
+				name="project_columns"
+				bind:value={project_columns}
+				on:input={() => changes_made = true}
+				placeholder="8"
 			/>
 		</span>
 		<span>

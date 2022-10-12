@@ -7,7 +7,6 @@
 
 	let name: string;
 	let columns: number;
-	let rows: number;
 
 	export let add_project: Function;
 
@@ -15,7 +14,8 @@
 		const response = await trpc(fetch).mutation(`project:create`, {
 			name: name || 'My awesome project',
 			description: '',
-			index: 0
+			index: 0,
+			columns: columns || 8
 		});
 		if (!response) return;
 
@@ -38,8 +38,6 @@
 		<input bind:value={name} type="text" placeholder="My awesome project" />
 		<p>Default columns</p>
 		<input bind:value={columns} type="number" placeholder="8" />
-		<p>Default rows</p>
-		<input bind:value={rows} type="number" placeholder="6" />
 		<button on:click={make_project}>Create Project</button>
 	</main>
 {/if}

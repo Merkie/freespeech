@@ -59,7 +59,6 @@ export default router<Context, IMeta>()
 			text_color: z.string().nullable().optional(),
 			is_silent: z.boolean().optional(),
 			is_invisible: z.boolean().optional(),
-			is_public: z.boolean().optional(),
 			is_accented: z.boolean().optional()
 		}),
 		resolve: async ({ ctx, input }) => {
@@ -113,7 +112,7 @@ export default router<Context, IMeta>()
 			if (!tile) return null;
 
 			// 2) Check if the user can fetch the tile
-			if (tile.userId !== user.id) return null;
+			// if (tile.userId !== user.id) return null;
 
 			// 3) Return the tile
 			return tile;

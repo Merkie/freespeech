@@ -68,7 +68,7 @@
 			Math.floor(
 				2 +
 					($AppProject.pages[current_page_index].tiles.length - 1) /
-						$AppProject.pages[current_page_index].columns
+						$AppProject.columns
 			)
 		);
 	}
@@ -77,7 +77,7 @@
 <div
 	style={`
 	--rows: ${$InEditMode ? rows + 2 : rows};
-	--columns: ${$AppProject.pages[current_page_index].columns};
+	--columns: ${$AppProject.columns};
 `}
 >
 	{#each $AppProject.pages[current_page_index].tiles as tile (tile.id)}

@@ -3,7 +3,7 @@
 	import PortalModal from './components/PortalModal.svelte';
 	import { page } from '$app/stores';
 
-	const is_login = $page.url.searchParams.get('login') === 'true';
+	let is_login = $page.url.searchParams.get('login') === 'true';
 
 	const authenticate = async (email: string, password: string) => {
 		// 1) Call a tRPC mutation request to login

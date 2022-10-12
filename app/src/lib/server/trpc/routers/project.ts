@@ -15,7 +15,8 @@ export default router<Context, IMeta>()
 		input: z.object({
 			name: z.string(),
 			description: z.string(),
-			index: z.number()
+			index: z.number(),
+			columns: z.number()
 		}),
 		resolve: async ({ input, ctx }) => {
 			// 1) Check if user is logged in
@@ -29,6 +30,7 @@ export default router<Context, IMeta>()
 				data: {
 					name: input.name,
 					description: input.description,
+					columns: input.columns,
 					author: {
 						connect: {
 							id: user.id
@@ -115,7 +117,8 @@ export default router<Context, IMeta>()
 			description: z.string().optional(),
 			image: z.string().optional(),
 			public: z.boolean().optional(),
-			favorite: z.boolean().optional()
+			favorite: z.boolean().optional(),
+			columns: z.number().optional()
 		}),
 		resolve: async ({ input, ctx }) => {
 			// 1) Get user from context
@@ -144,7 +147,8 @@ export default router<Context, IMeta>()
 					name: input.name || project.name,
 					description: input.description || project.description,
 					image: input.image || project.image,
-					public: input.public || project.public
+					public: input.public || project.public,
+					columns: input.columns || project.columns
 					// favorite: input.favorite || project.favorite
 				}
 			});
