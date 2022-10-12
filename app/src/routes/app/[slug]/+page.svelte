@@ -53,6 +53,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>App - FreeSpeech</title>
+</svelte:head>
+
 <main>
 	{#if !$InSettingsPage}
 		<SentenceBuilder />

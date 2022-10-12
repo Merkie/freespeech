@@ -1,7 +1,8 @@
 <script lang="ts">
 	import trpc from '$lib/client/trpc';
 	import PortalModal from './components/PortalModal.svelte';
-	let is_login: boolean = true;
+
+	let is_login: boolean = false;
 
 	const authenticate = async (email: string, password: string) => {
 		// 1) Call a tRPC mutation request to login
@@ -15,12 +16,16 @@
 		if (!validate_response) return alert('Invalid credentials');
 
 		// 2) If successful, save the token to cookies
-		document.cookie = `freespeech-token=${validate_response};`;
+		document.cookie = 'freespeech-token=' + validate_response + ';';
 
 		// 3) Redirect to the dashboard
 		window.location.href = '/dashboard';
 	};
 </script>
+
+<svelte:head>
+	<title>Portal - FreeSpeech</title>
+</svelte:head>
 
 <main>
 	<h1 class="brand"><i class="bx bxs-message-square-detail" />FreeSpeech AAC</h1>

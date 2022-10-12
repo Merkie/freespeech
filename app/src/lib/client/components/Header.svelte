@@ -1,15 +1,23 @@
 <script lang="ts">
 	export let uri: string;
 	export let button_text: string;
+	import { Me } from '$lib/client/stores';
 </script>
 
 <section>
 	<h1 on:click={() => window.location.assign('/')}>
 		<img src={'/logo-white.png'} alt="logo" /> FreeSpeech
 	</h1>
-	<button on:click={() => window.location.assign('/' + uri)}
-		>{button_text}<i class="bx bx-right-arrow-alt" /></button
-	>
+	{#if $Me}
+		<button on:click={() => window.location.assign('/' + uri)}
+			>{button_text}<i class="bx bx-right-arrow-alt" /></button
+		>
+	{:else}
+		<span class="btn-group">
+			<button on:click={() => window.location.assign('/portal')}>Login</button>
+			<button on:click={() => window.location.assign('/portal')}>Create Account</button>
+		</span>
+	{/if}
 </section>
 
 <style>
@@ -40,6 +48,11 @@
 	button {
 		display: flex;
 		align-items: center;
+		gap: 10px;
+	}
+
+	.btn-group {
+		display: flex;
 		gap: 10px;
 	}
 

@@ -8,6 +8,11 @@
 	let name = ($Me.name || '') + '';
 	let is_edited = false;
 
+	const logout = () => {
+		document.cookie = 'freespeech-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+		window.location.href = '/';
+	};
+
 	const handle_file_input = async () => {
 		//@ts-ignore
 		const file = file_input.files[0];
@@ -71,6 +76,7 @@
 
 <button disabled={!is_edited} on:click={handle_user_edit}>Save changes</button>
 <button>Change my password</button>
+<button on:click={logout}>Logout</button>
 
 <style>
 	h1 {

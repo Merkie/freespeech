@@ -1,15 +1,13 @@
 <script lang="ts">
 	//@ts-nocheck
-	import trpc from '$lib/client/trpc';
-	import { onMount } from 'svelte';
 	import DashboardContent from './components/DashboardContent.svelte';
 	import Header from '$lib/client/components/Header.svelte';
 	import SideBar from './components/SideBar.svelte';
-	import { Me } from '$lib/client/stores';
-
-	export let data;
-	$Me = data.user;
 </script>
+
+<svelte:head>
+	<title>Dashboard - FreeSpeech</title>
+</svelte:head>
 
 <Header uri="app" button_text="Application" />
 <main>
