@@ -3,13 +3,14 @@
 	"name": "FreeSpeech AAC",
 	"short_name": "FreeSpeech",
 	"start_url": "/",
+	"scope": "/",
 	"display": "standalone",
 	"background_color": "#e5e8eb",
 	"theme_color": "#111418",
 	"description": "Free and open-source communication, forever.",
 	"icons": [
 		{
-			"src": "images/icons/icon-72x72.png",
+			"src": "images/icons/icon-72.png",
 			"sizes": "72x72",
 			"type": "image/png",
 			"purpose": "maskable any"
