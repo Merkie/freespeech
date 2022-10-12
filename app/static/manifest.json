@@ -1,10 +1,11 @@
 {
 	"$schema": "https://json.schemastore.org/web-manifest-combined.json",
-	"name": "FreeSpeech",
-	"short_name": "FreeSpeech AAC",
+	"name": "FreeSpeech AAC",
+	"short_name": "FreeSpeech",
 	"start_url": "/",
 	"display": "standalone",
-	"background_color": "#fff",
+	"background_color": "#e5e8eb",
+	"theme_color": "#4C90F0",
 	"description": "Free and open-source communication, forever.",
 	"icons": [
 		{
