@@ -5,7 +5,7 @@
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#e5e8eb",
-	"theme_color": "#4C90F0",
+	"theme_color": "#111418",
 	"description": "Free and open-source communication, forever.",
 	"icons": [
 		{
