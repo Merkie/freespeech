@@ -29,7 +29,7 @@
 </svelte:head>
 
 <main>
-	<h1 class="brand"><i class="bx bxs-message-square-detail" />FreeSpeech AAC</h1>
+	<h1 class="brand"><img src="/images/icons/icon-120.png" width="30px" height="30px" alt="logo" />FreeSpeech AAC</h1>
 	<h1>{is_login ? 'Sign in to your account' : 'Create an account'}</h1>
 	<p class="subtext">
 		Or <span class="link" on:click={() => (is_login = !is_login)}
