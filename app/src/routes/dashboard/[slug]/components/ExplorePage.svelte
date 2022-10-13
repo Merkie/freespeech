@@ -8,29 +8,31 @@
 	import { init } from 'svelte/internal';
 
 	let loading = true;
-  let projects: Project[] = [];
+	let projects: Project[] = [];
 	let inital_projects;
-  
+
 	onMount(async () => {
-    projects = await trpc(fetch).query('project:explore');
+		projects = await trpc(fetch).query('project:explore');
 		inital_projects = projects;
 		loading = false;
-  });
+	});
 
-	const handle_search = async (e) => { 
+	const handle_search = async (e) => {
 		loading = true;
-		if(e.target.value.trim().length == 0) {
+		if (e.target.value.trim().length == 0) {
 			projects = inital_projects;
 			loading = false;
 			return;
 		}
 		projects = await trpc(fetch).query('project:search', e.target.value);
 		loading = false;
-	}
+	};
 </script>
 
 <span class="header"
-	><h1>Explore</h1> <input on:input={handle_search} type="text" placeholder="Search..."/></span>
+	><h1>Explore</h1>
+	<input on:input={handle_search} type="text" placeholder="Search..." /></span
+>
 <main>
 	{#if loading}
 		<div class="spinner"><Spinner /></div>
@@ -60,7 +62,7 @@
 	}
 
 	.spinner {
-		position: absolute; 
+		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
 		top: 200px;

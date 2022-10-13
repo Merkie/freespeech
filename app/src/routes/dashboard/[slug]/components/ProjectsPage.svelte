@@ -26,10 +26,6 @@
 <CreateProjectModal {add_project} />
 <main>
 	{#each projects as project}
-		<!-- <div>
-		<b>{project.name}</b>
-		<button on:click={() => window.location.assign(`/app/${project.id}`)}>Visit</button>
-	</div> -->
 		<ProjectCard {project} />
 	{/each}
 </main>

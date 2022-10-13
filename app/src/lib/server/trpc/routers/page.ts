@@ -72,7 +72,10 @@ export default router<Context, IMeta>()
 		}
 	})
 	.mutation('create', {
-		input: z.string(),
+		input: z.object({
+			id: z.string(),
+			name: z.string()
+		}),
 		resolve: async ({ ctx, input }) => {
 			const user = ctx.user;
 			if (!user) {
@@ -81,7 +84,7 @@ export default router<Context, IMeta>()
 
 			const project = await prismaClient.project.findFirst({
 				where: {
-					id: input,
+					id: input.id,
 					userId: user.id
 				}
 			});
@@ -89,12 +92,12 @@ export default router<Context, IMeta>()
 
 			const updated = await prismaClient.project.update({
 				where: {
-					id: input
+					id: input.id
 				},
 				data: {
 					pages: {
 						create: {
-							name: 'My new page',
+							name: input.name,
 							user: {
 								connect: {
 									id: user.id

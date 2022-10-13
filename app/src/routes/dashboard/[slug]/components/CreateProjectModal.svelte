@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { clickOutside } from '$lib/client/clickOutside';
+	import Spinner from '$lib/client/components/Spinner.svelte';
 	import { IsProjectCreationModalOpen } from '$lib/client/stores';
 	//@ts-nocheck
 
@@ -7,10 +8,29 @@
 
 	let name: string;
 	let columns: number;
+	let clone_project_id: string;
 
 	export let add_project: Function;
+	let loading = false;
+	let using_template = false;
+
+	const clone_project = async () => {
+		loading = true;
+		const response = await trpc(fetch).mutation(`project:clone`, {
+			id: clone_project_id,
+			index: 0
+		});
+		if(!response) return;
+		loading = false;
+
+		//@ts-ignore
+		add_project(response);
+
+		$IsProjectCreationModalOpen = false;
+	};
 
 	const make_project = async () => {
+		loading = true;
 		const response = await trpc(fetch).mutation(`project:create`, {
 			name: name || 'My awesome project',
 			description: '',
@@ -18,6 +38,7 @@
 			columns: columns || 8
 		});
 		if (!response) return;
+		loading = false;
 
 		//@ts-ignore
 		add_project(response);
@@ -26,6 +47,7 @@
 	};
 
 	const close_modal = () => {
+		if (loading) return;
 		$IsProjectCreationModalOpen = false;
 	};
 </script>
@@ -33,12 +55,28 @@
 {#if $IsProjectCreationModalOpen}
 	<main use:clickOutside on:click_outside={close_modal}>
 		<h1>Create project</h1>
-		<div><span class="selected">Start from scratch</span> <span>Start from a template</span></div>
-		<p>Project name</p>
-		<input bind:value={name} type="text" placeholder="My awesome project" />
-		<p>Default columns</p>
-		<input bind:value={columns} type="number" placeholder="8" />
-		<button on:click={make_project}>Create Project</button>
+		<div>
+			<span class={using_template ? '' : 'selected'} on:click={() => (using_template = false)}
+				>Start from scratch</span
+			>
+			<span class={!using_template ? '' : 'selected'} on:click={() => (using_template = true)}
+				>Start from a template</span
+			>
+		</div>
+		{#if using_template}
+			<p>Project ID:</p>
+			<input bind:value={clone_project_id} type="string" placeholder="..." />
+			<button disabled={loading} on:click={clone_project}>Clone Project</button>
+		{:else}
+			<p>Project name</p>
+			<input bind:value={name} type="text" placeholder="My awesome project" />
+			<p>Default columns</p>
+			<input bind:value={columns} type="number" placeholder="8" />
+			<button disabled={loading} on:click={make_project}>Create Project</button>
+		{/if}
+		<div style={`opacity: ${loading ? '1' : '0'}`} class="spinner">
+			<Spinner />
+		</div>
 	</main>
 {/if}
 
@@ -91,5 +129,15 @@
 
 	button {
 		width: 100%;
+		cursor: pointer;
+	}
+
+	.spinner {
+		all: unset;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		pointer-events: none;
 	}
 </style>

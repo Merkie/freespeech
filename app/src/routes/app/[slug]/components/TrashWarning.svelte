@@ -5,7 +5,8 @@
 <section
 	style={`transform: translateX(-50%) ${
 		$InEditMode && $EditorTool === EditorTools.trash ? 'scale(1.0)' : 'scale(0.0)'
-	};`}
+	};
+	pointer-events: ${$EditorTool === EditorTools.trash ? 'all' : 'none'};`}
 >
 	<b>Warning: You're currently in trash mode!</b>
 </section>

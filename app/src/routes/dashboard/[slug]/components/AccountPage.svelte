@@ -75,11 +75,14 @@
 <label for="">Name:</label>
 <input type="text" placeholder="Linus Torvalds" bind:value={name} />
 
-	<span style="display: flex; gap: 10px; margin-bottom: 10px;">
-		<button disabled={!is_edited} on:click={handle_user_edit}>Save changes</button>
-		<button disabled={true}>Change my password</button>
-	</span>
-	<button style="background-color: var(--danger-300); border-color: var(--danger-400);" on:click={logout}>Logout</button>
+<span style="display: flex; gap: 10px; margin-bottom: 10px;">
+	<button disabled={!is_edited} on:click={handle_user_edit}>Save changes</button>
+	<button disabled={true}>Change my password</button>
+</span>
+<button
+	style="background-color: var(--danger-300); border-color: var(--danger-400);"
+	on:click={logout}>Logout</button
+>
 
 <style>
 	h1 {

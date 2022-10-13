@@ -17,7 +17,7 @@
 	<button
 		class={$DashboardPage === DashboardPages.explore ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.explore)}
-		><i class='bx bx-compass' ></i> <span>Explore</span></button
+		><i class="bx bx-compass" /> <span>Explore</span></button
 	>
 	<button
 		disabled={true}

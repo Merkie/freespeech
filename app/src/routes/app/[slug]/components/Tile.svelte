@@ -234,7 +234,7 @@
 	button {
 		position: relative;
 		background: var(--tile-background);
-		border: 1px solid var(--tiles-border);
+		border: 2px solid var(--tiles-border);
 		color: var(--tiles-text);
 		font-size: 2rem;
 		white-space: pre;
@@ -251,7 +251,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		top: 10px;
-		height: 50%;
+		height: 60%;
 		width: auto;
 		object-fit: contain;
 	}
@@ -274,10 +274,10 @@
 	.folder-bit {
 		position: absolute;
 		top: -5px;
-		left: -1px;
+		left: -2px;
 		width: 50%;
 		height: 10px;
-		border: 1px solid var(--tiles-border);
+		border: 2px solid var(--tiles-border);
 		border-bottom: none;
 		border-right: none;
 		border-radius: 5px 5px 0px 0px;

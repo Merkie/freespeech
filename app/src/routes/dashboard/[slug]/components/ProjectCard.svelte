@@ -18,13 +18,21 @@
 	<div>
 		<h1>{project.name}</h1>
 		{#if project.description}
-			 <p>{project.description}</p>
+			<p>{project.description}</p>
 		{:else}
 			<p><i class="bx bxs-grid-alt" /> 698 Tiles</p>
 		{/if}
 		{#if explore}
 			<p><i class="bx bxs-time-five" /> Updated {result}</p>
-			<p><img style="border-radius: 50%" width="30px" src={project.author.image || '/images/profile.png'} alt=""> {project.author.name}</p>
+			<p>
+				<img
+					style="border-radius: 50%"
+					width="30px"
+					src={project.author.image || '/images/profile.png'}
+					alt=""
+				/>
+				{project.author.name}
+			</p>
 		{:else}
 			<p><i class="bx bxs-time-five" /> Viewed {result}</p>
 		{/if}

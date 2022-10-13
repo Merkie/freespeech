@@ -12,13 +12,13 @@
 	let search_text: string;
 	let voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
 	let project_name: string = $AppProject.name;
-	let project_description: string = $AppProject.description+'';
+	let project_description: string = $AppProject.description + '';
 	let project_visibility: string = $AppProject.public ? 'public' : 'private';
 	let project_columns: number = $AppProject.columns;
 
 	let delete_button_pressed = false;
 	let changes_made = false;
-	
+
 	// In case new voices are added asynchronously
 	window.speechSynthesis.onvoiceschanged = function (e) {
 		voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
@@ -87,7 +87,7 @@
 		});
 		// Reset changes_made
 		changes_made = false;
-	}
+	};
 </script>
 
 <Header uri="dashboard" button_text="Dashboard" />
@@ -100,7 +100,7 @@
 				type="text"
 				name="project_name"
 				bind:value={project_name}
-				on:input={() => changes_made = true}
+				on:input={() => (changes_made = true)}
 				placeholder="My awesome project"
 			/>
 		</span>
@@ -110,7 +110,7 @@
 				type="text"
 				name="project_description"
 				bind:value={project_description}
-				on:input={() => changes_made = true}
+				on:input={() => (changes_made = true)}
 				placeholder="My awesome project description"
 			/>
 		</span>
@@ -120,13 +120,13 @@
 				type="number"
 				name="project_columns"
 				bind:value={project_columns}
-				on:input={() => changes_made = true}
+				on:input={() => (changes_made = true)}
 				placeholder="8"
 			/>
 		</span>
 		<span>
 			<label for="project_description">Project visibility:</label>
-			<select on:input={() => changes_made = true} bind:value={project_visibility}>
+			<select on:input={() => (changes_made = true)} bind:value={project_visibility}>
 				<option value="private">Private</option>
 				<option value="public">Public</option>
 			</select>

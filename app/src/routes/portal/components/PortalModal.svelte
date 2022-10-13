@@ -60,8 +60,10 @@
 	{#if is_login}
 		<a href="/forgotpassword">Forgot your password?</a>
 	{/if}
-	<button on:click={() => authenticate(email, passwordElement.value)}
-		>{is_login ? 'Sign in' : 'Create account'}</button
+	<button
+		on:click={() => {
+			if (is_email_valid) authenticate(email, passwordElement.value);
+		}}>{is_login ? 'Sign in' : 'Create account'}</button
 	>
 </div>
 

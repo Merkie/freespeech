@@ -20,7 +20,7 @@
 
 	// On mount, take a pic of the page for the thumbnail
 	onMount(async () => {
-		if($AppProject.userId != $Me.id) return;
+		if ($AppProject.userId != $Me.id) return;
 		// Wait 2 seconds
 		await new Promise((resolve) => setTimeout(resolve, 2000));
 		// Get the old image thumbnail (null if there is none)

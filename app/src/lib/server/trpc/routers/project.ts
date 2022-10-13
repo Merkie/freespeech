@@ -6,7 +6,7 @@ import { z } from 'zod';
 import prismaClient from '$lib/server/prismaClient';
 
 // Types
-import type { User } from '@prisma/client';
+import type { User, Tile, TilePage, Project } from '@prisma/client';
 import type { Context } from '../context';
 import type { IMeta } from '../IMeta';
 
@@ -26,7 +26,7 @@ export default router<Context, IMeta>()
 			}
 
 			// 2) Create project
-			const project = await prismaClient.project.create({
+			const project: Project = await prismaClient.project.create({
 				data: {
 					name: input.name,
 					description: input.description,
@@ -63,6 +63,97 @@ export default router<Context, IMeta>()
 
 			// 3) Return project
 			return project;
+		}
+	})
+	.mutation('clone', {
+		input: z.object({
+			id: z.string(),
+			index: z.number()
+		}),
+		resolve: async ({ input, ctx }) => {
+			// 1) Check if user is logged in
+			const user = ctx.user;
+			if (!user) {
+				return {};
+			}
+
+			// 2) Get project
+			const project = await prismaClient.project.findUnique({
+				where: {
+					id: input.id
+				},
+				include: {
+					pages: {
+						include: {
+							tiles: true
+						}
+					}
+				}
+			});
+			if (!project) return {};
+			if (!project.public || project.userId !== user.id) return {};
+
+			const newProject: Project = await prismaClient.project.create({
+				data: {
+					name: project.name + ' clone',
+					description: project.description || '',
+					columns: project.columns,
+					image: project.image || '',
+					index: 0,
+					author: {
+						connect: {
+							id: user.id
+						}
+					}
+				}
+			});
+
+			for (const page of project.pages) {
+				const newPage: TilePage = await prismaClient.tilePage.create({
+					data: {
+						name: page.name,
+						Project: {
+							connect: {
+								id: newProject.id
+							}
+						},
+						user: {
+							connect: {
+								id: user.id
+							}
+						},
+						tiles: {
+							create: page.tiles.map((tile) => {
+								return {
+									tile_index: tile.tile_index,
+									display_text: tile.display_text + '',
+									speak_text: tile.speak_text || '',
+									// links will need to be reworked for this
+									image: tile.image || '',
+									// so will navs
+									navigation_page_id: tile.navigation_page_id || null,
+									modifier: tile.modifier || '',
+									background_color: tile.background_color || '',
+									border_color: tile.border_color || '',
+									text_color: tile.text_color || '',
+									is_silent: tile.is_silent || false,
+									is_invisible: tile.is_invisible || false,
+									is_accented: tile.is_accented || false,
+									author: {
+										connect: {
+											id: user.id
+										}
+									}
+								};
+							})
+						}
+					}
+				});
+			}
+
+			if (!newProject) return {};
+
+			return newProject;
 		}
 	})
 	.query('fetch', {

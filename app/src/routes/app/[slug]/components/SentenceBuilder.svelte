@@ -56,7 +56,7 @@
 
 	span {
 		height: 100%;
-		width: 70px;
+		width: 50px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

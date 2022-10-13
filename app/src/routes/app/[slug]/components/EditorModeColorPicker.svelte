@@ -100,7 +100,9 @@
 <main
 	style={`transform: translateX(-50%) ${
 		$EditorTool === EditorTools.color ? 'scale(1.0)' : 'scale(0.8)'
-	};`}
+	};
+		pointer-events: ${$EditorTool === EditorTools.color ? 'all' : 'none'};
+	}`}
 >
 	<section style={`opacity: ${$EditorTool === EditorTools.color ? '1' : '0'};`} bind:this={section}>
 		{#each colors as color}

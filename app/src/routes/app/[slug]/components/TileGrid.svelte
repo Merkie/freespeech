@@ -65,11 +65,7 @@
 		rows = Math.max(
 			min_row_count,
 			most_rows,
-			Math.floor(
-				2 +
-					($AppProject.pages[current_page_index].tiles.length - 1) /
-						$AppProject.columns
-			)
+			Math.floor(2 + ($AppProject.pages[current_page_index].tiles.length - 1) / $AppProject.columns)
 		);
 	}
 </script>
