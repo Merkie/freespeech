@@ -1,5 +1,6 @@
 import type { Load } from '@sveltejs/kit';
 import trpc from '$lib/client/trpc';
+import type { TilePage, Project, Tile } from '@prisma/client';
 
 export const load: Load = async ({ params, fetch }) => {
 	// 1) Get slug
@@ -31,12 +32,26 @@ export const load: Load = async ({ params, fetch }) => {
 				new_project.pages[new_project.pages.indexOf(page)].tiles[
 					new_project.pages[new_project.pages.indexOf(page)].tiles.indexOf(tile)
 				] = { ...tile, ...new_tile, tile_index: index, link_id: new_tile_id };
+				// update with trpc
+				await trpc(fetch).mutation('tile:edit', {
+					id: tile.id,
+					...tile,
+					...new_tile,
+					tile_index: index,
+					link_id: new_tile_id
+				});
 			}
 			// temp: force sensable tile order
 			try {
 				new_project.pages[new_project.pages.indexOf(page)].tiles[
 					new_project.pages[new_project.pages.indexOf(page)].tiles.indexOf(tile)
 				].tile_index = index;
+				// update with trpc
+				await trpc(fetch).mutation('tile:edit', {
+					id: tile.id,
+					...tile,
+					tile_index: index
+				});
 				index++;
 			} catch (e) {}
 		}
