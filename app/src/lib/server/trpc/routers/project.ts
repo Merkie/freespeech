@@ -156,4 +156,24 @@ export default router<Context, IMeta>()
 			// 5) Return project
 			return editedProject;
 		}
+	})
+	.query('search', {
+		input: z.string(),
+		resolve: async ({ input, ctx }) => {
+			const projects = await prismaClient.project.findMany({
+				where: {
+					name: {
+						search: input
+					},
+					description: {
+						search: input
+					},
+					public: true
+				},
+				include: {
+					author: true
+				}
+			});
+			return projects;
+		}
 	});

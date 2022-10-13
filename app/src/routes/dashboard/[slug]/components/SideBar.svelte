@@ -44,6 +44,7 @@
 		flex-direction: column;
 		gap: 5px;
 		position: fixed;
+		z-index: 9;
 	}
 	button {
 		width: 100%;
