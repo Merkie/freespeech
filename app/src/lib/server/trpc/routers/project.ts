@@ -91,7 +91,7 @@ export default router<Context, IMeta>()
 				}
 			});
 			if (!project) return {};
-			if (!project.public || project.userId !== user.id) return {};
+			if (!project.public && project.userId !== user.id) return {};
 
 			const newProject: Project = await prismaClient.project.create({
 				data: {
@@ -152,7 +152,6 @@ export default router<Context, IMeta>()
 			}
 
 			if (!newProject) return {};
-
 			return newProject;
 		}
 	})
@@ -266,5 +265,36 @@ export default router<Context, IMeta>()
 				}
 			});
 			return projects;
+		}
+	})
+	.mutation('delete', {
+		input: z.string(),
+		resolve: async ({ input, ctx }) => {
+			// 1) Get user from context
+			const user = ctx.user;
+			if (!user) {
+				return {};
+			}
+
+			// 2) Get project
+			const project = await prismaClient.project.findUnique({
+				where: {
+					id: input
+				}
+			});
+			if (!project) return null;
+
+			// 3) Check if user is authorized to delete project
+			if (project.userId !== user.id) return null;
+
+			// 4) Delete project
+			const deletedProject = await prismaClient.project.delete({
+				where: {
+					id: input
+				}
+			});
+
+			// 5) Return project
+			return deletedProject;
 		}
 	});

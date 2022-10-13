@@ -64,10 +64,14 @@
 
 	const fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
 
-	const handle_delete_btn_press = () => {
+	const handle_delete_btn_press = async () => {
 		if (!delete_button_pressed) {
 			delete_button_pressed = true;
 		} else {
+			const deletedProject = await trpc(fetch).mutation('project:delete', 
+				$AppProject.id
+			);
+			window.location.assign('/dashboard/projects');
 		}
 	};
 
