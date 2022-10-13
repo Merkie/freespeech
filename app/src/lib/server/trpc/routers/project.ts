@@ -151,6 +151,56 @@ export default router<Context, IMeta>()
 				});
 			}
 
+			const whole_new_project = await prismaClient.project.findUnique({
+				where: {
+					id: newProject.id
+				},
+				include: {
+					pages: {
+						include: {
+							tiles: true
+						}
+					}
+				}
+			});
+			if (!whole_new_project) return {};
+
+			// fix all the links and navigation refrences
+			for (const page of whole_new_project.pages) {
+				for (const tile of page.tiles) {
+					if (tile.navigation_page_id) {
+						const page_name = project.pages.find((p) => p.id === tile.navigation_page_id)?.name;
+						const new_page = whole_new_project?.pages.find((p) => p.name === page_name);
+						if (!new_page) continue;
+
+						await prismaClient.tile.update({
+							where: {
+								id: tile.id
+							},
+							data: {
+								navigation_page_id: new_page.id
+							}
+						});
+					} else if (tile.link_id) {
+						const all_tiles = project.pages.flatMap((p) => p.tiles);
+						const old_link = all_tiles.find((t) => t.id === tile.link_id);
+						const old_page = project.pages.find((p) => p.id === old_link?.navigation_page_id);
+						const old_tile = old_page?.tiles.find((t) => t.tile_index === old_link?.tile_index);
+						const new_page = whole_new_project?.pages.find((p) => p.name === old_page?.name);
+						const new_tile = new_page?.tiles.find((t) => t.tile_index === old_tile?.tile_index);
+						if (!new_tile) continue;
+
+						await prismaClient.tile.update({
+							where: {
+								id: tile.id
+							},
+							data: {
+								link_id: new_tile.id
+							}
+						});
+					}
+				}
+			}
 			if (!newProject) return {};
 			return newProject;
 		}
