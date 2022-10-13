@@ -7,7 +7,8 @@
 		AppProject,
 		EditorTool,
 		EditorTools,
-		Me
+		Me,
+		CloneModalProject
 	} from '$lib/client/stores';
 
 	// Resets the state of the app back to the home page
@@ -16,17 +17,27 @@
 		$CurrentPageId = $AppProject.pages[0].id;
 		$InSettingsPage = false;
 	};
+
+	const handle_edit_toggle = () => {
+		if($AppProject.userId != $Me.id) {
+			$CloneModalProject = $AppProject;
+			return;
+		}
+		$InEditMode = !$InEditMode;
+		if (!$InEditMode) {
+			$EditorTool = EditorTools.text;
+			$CloneModalProject = null;
+		};
+	}
 </script>
 
 <section style={`border-color: ${$InEditMode ? 'transparent' : 'auto'};`}>
 	<button on:click={reset_state}><i class="bx bxs-home-alt-2" /> <span>Home</span></button>
 	<button
-		disabled={$InSettingsPage || $AppProject.userId != $Me.id}
+		disabled={$InSettingsPage}
 		class={`${$InEditMode ? 'selected-edit' : 'edit'}`}
-		on:click={() => {
-			$InEditMode = !$InEditMode;
-			if (!$InEditMode) $EditorTool = EditorTools.text;
-		}}
+		on:click={handle_edit_toggle}
+		style={`opacity: ${$AppProject.userId != $Me.id ? '0.5' : '1'};`}
 		><i class={$InEditMode ? 'bx bx-check' : 'bx bxs-pencil'} />
 		<span>{$InEditMode ? 'Save Changes' : 'Edit'}</span>
 	</button>

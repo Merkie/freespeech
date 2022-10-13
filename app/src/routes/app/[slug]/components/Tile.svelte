@@ -186,6 +186,7 @@
 	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
 	color: ${tile.text_color || 'auto'};
+	pointer-events: ${tile.is_invisible ? 'none' : 'auto'};
 	`}
 	disabled={loading}
 	on:click={handle_interaction}

@@ -20,7 +20,7 @@
 			id: clone_project_id,
 			index: 0
 		});
-		if(!response) return;
+		if (!response) return;
 		loading = false;
 
 		//@ts-ignore

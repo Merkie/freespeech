@@ -54,3 +54,5 @@ export const PageHistoryIndex = writable<number>(0);
 export const Sentence = writable<Tile[]>([]);
 // if in project creation modal
 export const IsProjectCreationModalOpen = writable<boolean>(false);
+// the project in the clone modal
+export const CloneModalProject = writable<Project | null>(null);

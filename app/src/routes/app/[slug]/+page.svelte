@@ -11,6 +11,7 @@
 	import NavigateModal from './components/NavigateModal.svelte';
 	import EditorModeColorPicker from './components/EditorModeColorPicker.svelte';
 	import TrashWarning from './components/TrashWarning.svelte';
+	import CloneProjectModal from './components/CloneProjectModal.svelte';
 	import TemplateModeInfo from './components/TemplateModeInfo.svelte';
 	import { onMount } from 'svelte';
 	import html2canvas from 'html2canvas';
@@ -68,6 +69,7 @@
 		<EditorModeColorPicker />
 		<TrashWarning />
 		<TemplateModeInfo />
+		<CloneProjectModal />
 	{:else}
 		<SettingsPage />
 	{/if}

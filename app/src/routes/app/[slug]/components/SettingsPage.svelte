@@ -68,9 +68,7 @@
 		if (!delete_button_pressed) {
 			delete_button_pressed = true;
 		} else {
-			const deletedProject = await trpc(fetch).mutation('project:delete', 
-				$AppProject.id
-			);
+			const deletedProject = await trpc(fetch).mutation('project:delete', $AppProject.id);
 			window.location.assign('/dashboard/projects');
 		}
 	};
