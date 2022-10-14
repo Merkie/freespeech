@@ -19,7 +19,7 @@
 	};
 
 	const handle_edit_toggle = () => {
-		if($AppProject.userId != $Me.id) {
+		if ($AppProject.userId != $Me.id) {
 			$CloneModalProject = $AppProject;
 			return;
 		}
@@ -27,8 +27,8 @@
 		if (!$InEditMode) {
 			$EditorTool = EditorTools.text;
 			$CloneModalProject = null;
-		};
-	}
+		}
+	};
 </script>
 
 <section style={`border-color: ${$InEditMode ? 'transparent' : 'auto'};`}>

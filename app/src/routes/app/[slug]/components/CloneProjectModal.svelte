@@ -9,7 +9,7 @@
 	let loading = false;
 
 	const close_modal = () => {
-		if(loading) return;
+		if (loading) return;
 		$CloneModalProject = null;
 	};
 
@@ -29,7 +29,10 @@
 {#if $CloneModalProject}
 	<main use:clickOutside on:click_outside={close_modal}>
 		<h3>Clone Project</h3>
-		<p>This is not your project so you can't make any edits to it. Would you like to clone it to your library?</p>
+		<p>
+			This is not your project so you can't make any edits to it. Would you like to clone it to your
+			library?
+		</p>
 		<span>
 			<button on:click={clone_project}>Clone This Project</button>
 			<button class="gray" on:click={close_modal}>Cancel</button>

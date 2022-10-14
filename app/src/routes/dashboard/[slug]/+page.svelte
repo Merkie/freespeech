@@ -21,5 +21,9 @@
 		gap: 20px;
 		margin-right: 20px;
 		margin-top: 50px;
+		background: var(--background);
+	}
+	:global(body) {
+		background: var(--background) !important;
 	}
 </style>
