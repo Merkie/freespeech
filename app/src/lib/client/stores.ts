@@ -65,3 +65,11 @@ export const SelectedVoice = writable(
 SelectedVoice.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-voice'] = val);
 });
+
+// Guided Access persistent storage
+export const GuidedAccessPin = writable<String>(
+	(browser && localStorage.getItem('freespeech-guided-access')) || ''
+);
+GuidedAccessPin.subscribe((val) => {
+	if (browser) return (localStorage['freespeech-guided-access'] = val);
+});

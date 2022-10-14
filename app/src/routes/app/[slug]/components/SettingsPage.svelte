@@ -5,7 +5,7 @@
 	// Components
 	import Header from '$lib/client/components/Header.svelte';
 
-	import { AppProject, Me, SelectedVoice } from '$lib/client/stores';
+	import { AppProject, Me, SelectedVoice, GuidedAccessPin } from '$lib/client/stores';
 	import trpc from '$lib/client/trpc';
 	import { voices as polly_voices } from '$lib/client/polly';
 
@@ -57,20 +57,20 @@
 			reset_to_default: () => {
 				$SelectedVoice = '[AWS] Kimberly (en-US female) Neural';
 			}
+		},
+		{
+			name: 'Guided Access Passcode:',
+			type: 'text',
+			default: '',
+			value: $GuidedAccessPin,
+			placeholder: '1234',
+			onInput: (value: string) => {
+				$GuidedAccessPin = value;
+			},
+			reset_to_default: () => {
+				$GuidedAccessPin = '';
+			}
 		}
-		// {
-		// 	name: 'Guided Access Passcode:',
-		// 	type: 'text',
-		// 	default: '',
-		// 	value: '',
-		// 	placeholder: '1234',
-		// 	onInput: (value: string) => {
-		// 		console.log(value);
-		// 	},
-		// 	reset_to_default: () => {
-		// 		console.log('resetting to default');
-		// 	}
-		// }
 	];
 
 	let fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });

@@ -91,7 +91,7 @@
 		border-radius: 10px;
 		border: 1px solid var(--base-400);
 		width: min(500px, 100%);
-		box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+		box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.8);
 		z-index: 9999;
 	}
 
