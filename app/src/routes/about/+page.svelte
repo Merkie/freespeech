@@ -8,8 +8,7 @@
 </svelte:head>
 
 <Header uri="dashboard" button_text="Dashboard" />
-<main>
-</main>
+<main />
 
 <style>
 	:global(body) {
