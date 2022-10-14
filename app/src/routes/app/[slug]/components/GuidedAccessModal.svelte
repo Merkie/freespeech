@@ -1,4 +1,5 @@
 <script>
+  //@ts-nocheck
 	import { clickOutside } from '$lib/client/clickOutside';
   import { GuidedAccessPin } from '$lib/client/stores';
   export let callback;

@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/web-manifest-combined.json",
 	"name": "FreeSpeech AAC",
 	"short_name": "FreeSpeech",
-	"start_url": "/",
+	"start_url": "/app",
 	"scope": "/",
 	"display": "standalone",
 	"background_color": "#e5e8eb",
