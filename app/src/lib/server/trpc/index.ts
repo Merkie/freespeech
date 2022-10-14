@@ -10,6 +10,7 @@ import project from './routers/project';
 import page from './routers/page';
 import tile from './routers/tile';
 import s3 from './routers/s3';
+import polly from './routers/polly';
 
 // Prisma
 import prismaClient from '$lib/server/prismaClient';
@@ -35,6 +36,7 @@ export const router = createRouter()
 	.merge('project:', project)
 	.merge('page:', page)
 	.merge('tile:', tile)
-	.merge('s3:', s3);
+	.merge('s3:', s3)
+	.merge('polly:', polly);
 
 export type Router = typeof router;

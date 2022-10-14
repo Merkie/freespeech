@@ -5,12 +5,12 @@
 	// Components
 	import Header from '$lib/client/components/Header.svelte';
 
-	import { AppProject, Me } from '$lib/client/stores';
+	import { AppProject, Me, SelectedVoice } from '$lib/client/stores';
 	import trpc from '$lib/client/trpc';
 
 	// Bindings
 	let search_text: string;
-	let voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
+	let voices = ['Kimberly (en-us female) Neural', 'Joey (en-us female) Neural']; //speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
 	let project_name: string = $AppProject.name;
 	let project_description: string = $AppProject.description + '';
 	let project_visibility: string = $AppProject.public ? 'public' : 'private';
@@ -21,45 +21,50 @@
 
 	// In case new voices are added asynchronously
 	window.speechSynthesis.onvoiceschanged = function (e) {
-		voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
+		//voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
+		voices = ['Kimberly (en-us female) Neural', 'Joey (en-us female) Neural'];
 	};
 
 	let settings = [
+		// {
+		// 	name: 'Default page dimensions (rows x columns):',
+		// 	type: 'text',
+		// 	default: '8x6',
+		// 	value: '8x6',
+		// 	placeholder: '8x6',
+		// 	onInput: (value: string) => {
+		// 		console.log(value);
+		// 	},
+		// 	reset_to_default: () => {
+		// 		console.log('resetting to default');
+		// 	}
+		// },
 		{
-			name: 'Default page dimensions (rows x columns):',
-			type: 'text',
-			default: '8x6',
-			value: '8x6',
-			placeholder: '8x6',
-			onInput: (value: string) => {
-				console.log(value);
-			},
-			reset_to_default: () => {
-				console.log('resetting to default');
-			}
-		},
-		{
-			name: 'SpeechSynthesis voice:',
+			name: 'Text-to-speech voice:',
 			type: 'select',
-			default: voices[0],
+			default: 'Kimberly (en-us female) Neural',
 			options: voices,
-			value: voices[0],
-			onInput: (value: string) => {},
-			reset_to_default: () => {}
-		},
-		{
-			name: 'Guided Access Passcode:',
-			type: 'text',
-			default: '',
-			value: '',
-			placeholder: '1234',
+			value: $SelectedVoice,
 			onInput: (value: string) => {
-				console.log(value);
+				$SelectedVoice = value;
 			},
 			reset_to_default: () => {
-				console.log('resetting to default');
+				$SelectedVoice = 'Kimberly (en-us female) Neural';
 			}
 		}
+		// {
+		// 	name: 'Guided Access Passcode:',
+		// 	type: 'text',
+		// 	default: '',
+		// 	value: '',
+		// 	placeholder: '1234',
+		// 	onInput: (value: string) => {
+		// 		console.log(value);
+		// 	},
+		// 	reset_to_default: () => {
+		// 		console.log('resetting to default');
+		// 	}
+		// }
 	];
 
 	const fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
@@ -175,7 +180,7 @@
 				</select>
 			{/if}
 
-			<button disabled={setting.item.value === setting.item.default}>Reset to default</button>
+			<button on:click={setting.item.reset_to_default} disabled={setting.item.value === setting.item.default}>Reset to default</button>
 		</span>
 	{/each}
 </main>

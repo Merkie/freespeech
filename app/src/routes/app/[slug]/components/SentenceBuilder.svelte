@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Sentence } from '$lib/client/stores';
+	import trpc from '$lib/client/trpc';
 
 	const delete_word = () => {
 		Sentence.update((sentence) => {
@@ -8,11 +9,13 @@
 		});
 	};
 
-	const speak_sentence = () => {
-		const utterance = new SpeechSynthesisUtterance(
-			$Sentence.map((tile) => tile.display_text).join(' ')
-		);
-		speechSynthesis.speak(utterance);
+	const speak_sentence = async () => {
+		const url = await trpc(fetch).mutation('polly:synthesise', {
+			text: $Sentence.map((tile) => tile.display_text).join(' '),
+		});
+		if(!url) return;
+		let sound = new Audio(url);
+		sound.play();
 	};
 </script>
 

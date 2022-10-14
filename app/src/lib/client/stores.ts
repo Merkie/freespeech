@@ -56,3 +56,5 @@ export const Sentence = writable<Tile[]>([]);
 export const IsProjectCreationModalOpen = writable<boolean>(false);
 // the project in the clone modal
 export const CloneModalProject = writable<Project | null>(null);
+// the current selected voice
+export const SelectedVoice = writable<string>('Kimberly (en-us female) Neural');
