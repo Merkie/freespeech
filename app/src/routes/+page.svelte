@@ -1,6 +1,7 @@
 <script lang="ts">
 	// components
 	import Header from '$lib/client/components/Header.svelte';
+	let is_install_cover_open = false;
 </script>
 
 <svelte:head>
@@ -21,7 +22,7 @@
 					alt="Unbranded computer and tablet showcasing FreeSpeech AAC."
 					src="/images/icons/icon-512.png"
 				/>
-				<button><i class="bx bx-download" /> Download</button>
+				<button on:click={() => is_install_cover_open = true}><i class="bx bx-download" /> Download</button>
 			</div>
 			<div class="text">
 				<h1>Lorem Ispum Dolor</h1>
@@ -90,6 +91,13 @@
 		>
 	</div>
 </main>
+{#if is_install_cover_open}
+	<div class="install-cover">
+		<button on:click={() => is_install_cover_open = false}><i class='bx bx-x'></i></button>
+		<img class="ios-pwa" src="/images/install-screen.png" alt="Tutorial showing how to install PWA.">
+		<img class="chrome-install" src="/images/install-chrome.png" alt="Install FreeSpeech AAC on Chrome tutorial.">
+	</div>
+{/if}
 
 <style>
 	:global(body) {
@@ -185,10 +193,57 @@
 		color: white;
 	}
 
+	.install-cover {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: var(--primary-300);
+		z-index:999;
+	}
+
+	.ios-pwa {
+		width: 100%;
+		position: absolute;
+		top: 80px;
+		display: none;
+	}
+
+	.chrome-install {
+		width: 75%;
+		max-width: 1000px;
+		left: 50%;
+		transform: translateX(-50%);
+		position: absolute;
+		top: 80px;
+		display: block;
+	}
+
+	.install-cover button {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		font-size: 25px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		background-color: transparent;
+		border: none;
+		font-size: 50px;
+	}
+
 	@media (max-width: 750px) {
 		.site-content {
 			flex-direction: column;
 			gap: 20px;
+		}
+		.ios-pwa {
+			display: block;
+		}
+
+		.chrome-install {
+			display: none;
 		}
 	}
 </style>
