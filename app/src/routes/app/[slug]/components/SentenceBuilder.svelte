@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Sentence } from '$lib/client/stores';
+	//@ts-nocheck
+	import { Sentence, SelectedVoice } from '$lib/client/stores';
+	import { voices } from '$lib/client/polly';
 	import trpc from '$lib/client/trpc';
 
 	const delete_word = () => {
@@ -10,12 +12,28 @@
 	};
 
 	const speak_sentence = async () => {
-		const url = await trpc(fetch).mutation('polly:synthesise', {
-			text: $Sentence.map((tile) => tile.display_text).join(' '),
-		});
-		if(!url) return;
-		let sound = new Audio(url);
-		sound.play();
+		// If we're using an AWS voice, send a trpc request to get the audio
+		if ($SelectedVoice.includes('[AWS]')) {
+			const url = await trpc(fetch).mutation('polly:synthesise', {
+				text: $Sentence.map((tile) => tile.display_text).join(' '),
+				voiceId: voices[$SelectedVoice]?.VoiceId,
+				engine: voices[$SelectedVoice]?.Engine
+			});
+			if (!url) return;
+			// url is base64 encoded
+			let sound = new Audio(url);
+			sound.play();
+		} else if ($SelectedVoice.includes('[SpeechSynthesis]')) {
+			// If we're using a browser voice, use the SpeechSynthesis API
+			const voice = speechSynthesis
+				.getVoices()
+				.find((voice) => `[SpeechSynthesis] ${voice.name} ${voice.lang}` === $SelectedVoice);
+			const utterance = new SpeechSynthesisUtterance(
+				$Sentence.map((tile) => tile.display_text).join(' ')
+			);
+			utterance.voice = voice;
+			speechSynthesis.speak(utterance);
+		}
 	};
 </script>
 

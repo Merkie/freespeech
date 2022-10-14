@@ -1,5 +1,6 @@
 import type { Project, Tile, TilePage, User, Organization } from '@prisma/client';
 import { writable, type Writable } from 'svelte/store';
+import { browser } from '$app/environment';
 
 export enum DashboardPages {
 	account = 'account',
@@ -56,5 +57,11 @@ export const Sentence = writable<Tile[]>([]);
 export const IsProjectCreationModalOpen = writable<boolean>(false);
 // the project in the clone modal
 export const CloneModalProject = writable<Project | null>(null);
-// the current selected voice
-export const SelectedVoice = writable<string>('Kimberly (en-us female) Neural');
+
+// Selected voice persistent storage
+export const SelectedVoice = writable(
+	(browser && localStorage.getItem('freespeech-voice')) || '[AWS] Kimberly (en-US female) Neural'
+);
+SelectedVoice.subscribe((val) => {
+	if (browser) return (localStorage['freespeech-voice'] = val);
+});

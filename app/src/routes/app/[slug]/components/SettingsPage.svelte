@@ -7,10 +7,14 @@
 
 	import { AppProject, Me, SelectedVoice } from '$lib/client/stores';
 	import trpc from '$lib/client/trpc';
+	import { voices as polly_voices } from '$lib/client/polly';
 
 	// Bindings
 	let search_text: string;
-	let voices = ['Kimberly (en-us female) Neural', 'Joey (en-us female) Neural']; //speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
+	let voices = [
+		...Object.keys(polly_voices),
+		...speechSynthesis.getVoices().map((voice) => `[SpeechSynthesis] ${voice.name} ${voice.lang}`)
+	];
 	let project_name: string = $AppProject.name;
 	let project_description: string = $AppProject.description + '';
 	let project_visibility: string = $AppProject.public ? 'public' : 'private';
@@ -21,8 +25,10 @@
 
 	// In case new voices are added asynchronously
 	window.speechSynthesis.onvoiceschanged = function (e) {
-		//voices = speechSynthesis.getVoices().map((voice) => `${voice.name} ${voice.lang}`);
-		voices = ['Kimberly (en-us female) Neural', 'Joey (en-us female) Neural'];
+		voices = [
+			...Object.keys(polly_voices),
+			...speechSynthesis.getVoices().map((voice) => `[SpeechSynthesis] ${voice.name} ${voice.lang}`)
+		];
 	};
 
 	let settings = [
@@ -42,14 +48,14 @@
 		{
 			name: 'Text-to-speech voice:',
 			type: 'select',
-			default: 'Kimberly (en-us female) Neural',
+			default: '[AWS] Kimberly (en-US female) Neural',
 			options: voices,
 			value: $SelectedVoice,
 			onInput: (value: string) => {
 				$SelectedVoice = value;
 			},
 			reset_to_default: () => {
-				$SelectedVoice = 'Kimberly (en-us female) Neural';
+				$SelectedVoice = '[AWS] Kimberly (en-US female) Neural';
 			}
 		}
 		// {
@@ -67,7 +73,7 @@
 		// }
 	];
 
-	const fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
+	let fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
 
 	const handle_delete_btn_press = async () => {
 		if (!delete_button_pressed) {
@@ -180,7 +186,10 @@
 				</select>
 			{/if}
 
-			<button on:click={setting.item.reset_to_default} disabled={setting.item.value === setting.item.default}>Reset to default</button>
+			<button
+				on:click={setting.item.reset_to_default}
+				disabled={setting.item.value === setting.item.default}>Reset to default</button
+			>
 		</span>
 	{/each}
 </main>
