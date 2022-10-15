@@ -105,7 +105,7 @@
 
 	.mobile-dropdown {
 		position: fixed;
-		top: 60px;
+		top: 53px;
 		width: 100vw;
 		z-index: 999;
 		background: linear-gradient(90deg, var(--primary-300) 0%, var(--primary-200) 100%);
