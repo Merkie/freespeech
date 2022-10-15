@@ -3,7 +3,13 @@ import type { Project, User } from '@prisma/client';
 import { redirect, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ fetch, params }) => {
-	const user = await trpc(fetch).query('user:me_whole');
+	let user: (User & { projects: Project[] }) | null = null;
+	try {
+		//@ts-ignore
+		user = await trpc(fetch).query('user:me_whole');
+	} catch (error) {
+		throw redirect(302, '/portal');
+	}
 	if (!user) throw redirect(302, '/portal');
 
 	// sort by most recent
