@@ -13,6 +13,7 @@
 
 	// State
 	let name = 'Home';
+	let refreshing = false;
 
 	// Navigate backwards
 	const navigate_backwards = () => {
@@ -57,6 +58,9 @@
 </script>
 
 <section>
+	<button class={`refresh ${refreshing ? 'refreshing' : ''}`} on:click={() => {refreshing = true; window.location.assign(`/app/${$AppProject.id}`)}}>
+		<i class='bx bx-refresh'></i>
+	</button>
 	<button disabled={!($PageHistoryIndex < $PageHistory.length - 1)} on:click={navigate_backwards}>
 		<i class="bx bx-left-arrow-alt" />
 	</button>
@@ -80,6 +84,7 @@
 		justify-content: center;
 		gap: 20px;
 		font-size: 25px;
+		position: relative;
 	}
 	button {
 		font-size: 40px;
@@ -91,5 +96,24 @@
 	p {
 		min-width: 200px;
 		text-align: center;
+	}
+	
+	.refresh {
+		position: absolute;
+		left: 10px;
+		top: 15px;
+	}
+
+	.refreshing {
+		animation: spin 2s linear infinite;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 </style>
