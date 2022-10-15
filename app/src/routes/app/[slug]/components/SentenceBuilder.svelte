@@ -15,7 +15,7 @@
 		// If we're using an AWS voice, send a trpc request to get the audio
 		if ($SelectedVoice.includes('[AWS]')) {
 			const url = await trpc(fetch).mutation('polly:synthesise', {
-				text: $Sentence.map((tile) => tile.display_text).join(' '),
+				text: $Sentence.map((tile) => (tile.speak_text || tile.display_text)).join(' '),
 				voiceId: voices[$SelectedVoice]?.VoiceId,
 				engine: voices[$SelectedVoice]?.Engine
 			});

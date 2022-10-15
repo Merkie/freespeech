@@ -61,6 +61,8 @@ export const IsProjectCreationModalOpen = writable<boolean>(false);
 export const CloneModalProject = writable<Project | null>(null);
 // the tile that is currently being swapped
 export const SwappedTile = writable<Tile | null>(null);
+// the mode of the text editor
+export const EditTextMode = writable<'display' | 'speak'>('display');
 
 // Selected voice persistent storage
 export const SelectedVoice = writable(

@@ -15,7 +15,8 @@
 		PageHistory,
 		PageHistoryIndex,
 		Sentence,
-		SwappedTile
+		SwappedTile,
+		EditTextMode
 	} from '$lib/client/stores';
 
 	// Helpers
@@ -226,8 +227,13 @@
 		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 			(t) => t.id === tile.id
 		);
-		$AppProject.pages[current_page_index].tiles[tile_index].display_text =
+		if($EditTextMode === 'display') {
+			$AppProject.pages[current_page_index].tiles[tile_index].display_text =
 			tileTextElement.innerText;
+		} else {
+			$AppProject.pages[current_page_index].tiles[tile_index].speak_text =
+			tileTextElement.innerText;
+		}
 		const updated_tile = $AppProject.pages[current_page_index].tiles.find((t) => t.id === tile.id);
 		//@ts-ignore
 		await trpc(fetch).mutation('tile:edit', updated_tile);
@@ -282,7 +288,7 @@
 			tile.image ? 'auto' : 'translate(-50%, 50%)'
 		};`}
 	>
-		{tile.display_text}
+		{$EditTextMode === 'speak' && $InEditMode ? (tile.speak_text || '...') : tile.display_text}
 	</p>
 	{#if !tile.navigation_page_id}
 		<div
@@ -309,6 +315,7 @@
 		min-width: 0; /* NEW; needed for Firefox */
 		width: 100%;
 		height: 100%;
+		text-align: center;
 	}
 
 	button * {
@@ -329,6 +336,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		bottom: 5px;
+		overflow-wrap: anywhere;
 	}
 	.accent {
 		position: absolute;

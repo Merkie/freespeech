@@ -16,6 +16,7 @@
 	import { onMount } from 'svelte';
 	import html2canvas from 'html2canvas';
 	import trpc from '$lib/client/trpc';
+	import TextEditorPopup from './components/TextEditorPopup.svelte';
 
 	$AppProject = data;
 
@@ -70,6 +71,7 @@
 		<TrashWarning />
 		<TemplateModeInfo />
 		<CloneProjectModal />
+		<TextEditorPopup />
 	{:else}
 		<SettingsPage />
 	{/if}

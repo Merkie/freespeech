@@ -9,7 +9,7 @@
 	} from '$lib/client/stores';
 </script>
 
-<section style={`--open-height: 62px; bottom: ${$InEditMode ? 'var(--open-height)' : '-60px'}`}>
+<section style={`--open-height: 60px; bottom: ${$InEditMode ? 'var(--open-height)' : '-60px'}`}>
 	<div>
 		<button
 			class={$EditorTool === EditorTools.text ? 'selected' : ''}
