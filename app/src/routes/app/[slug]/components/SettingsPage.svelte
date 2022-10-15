@@ -203,6 +203,7 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
+		padding-bottom: 100px;
 	}
 	label {
 		margin-bottom: 5px;
