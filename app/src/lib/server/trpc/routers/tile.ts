@@ -144,17 +144,6 @@ export default router<Context, IMeta>()
 				});
 			}
 
-			// 3) Edit the tiles
-			// await prismaClient.tile.updateMany({
-			// 	where: {
-			// 		id: {
-			// 			in: input.map((tile) => tile.id)
-			// 		}
-			// 	},
-			// 	data: input
-			// });
-
-			// 4) Return the tiles
 			return tiles;
 		}
 	})

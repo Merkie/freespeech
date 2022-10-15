@@ -83,7 +83,10 @@ export const load: Load = async ({ params, fetch }) => {
 		}
 	}
 
-	// Send all the mutation requests to trpc
+	// remove duplicates from mutation requests
+	mutation_requests = mutation_requests
+		.reverse()
+		.filter((tile, index, self) => index === self.findIndex((t) => t.id === tile.id));
 	//@ts-ignore
 	await trpc(fetch).mutation('tile:edit_many', mutation_requests);
 
