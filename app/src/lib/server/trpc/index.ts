@@ -24,7 +24,6 @@ const createRouter = () => {
 export const router = createRouter()
 	.middleware(async ({ meta, next, ctx }) => {
 		// only check authorization if enabled
-		// console.log(meta?.doesNotNeedAuthentication);
 		if (meta?.doesNotNeedAuthentication || ctx.user) {
 			return next();
 		}
