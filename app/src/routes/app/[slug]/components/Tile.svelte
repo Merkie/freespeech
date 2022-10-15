@@ -14,7 +14,8 @@
 		SelectedColorMode,
 		PageHistory,
 		PageHistoryIndex,
-		Sentence
+		Sentence,
+		SwappedTile
 	} from '$lib/client/stores';
 
 	// Helpers
@@ -90,6 +91,50 @@
 					//@ts-ignore
 					$AppProject.pages[current_page_index].tiles[tile_index]
 				);
+			} else if ($EditorTool === EditorTools.swap) {
+				if(!$SwappedTile) {
+					$SwappedTile = tile;
+					return;
+				}
+				// swap tiles
+				const current_tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+					(t) => t.id === tile.id
+				);
+				const swap_tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+					(t) => t.id === $SwappedTile?.id
+				);
+
+				// swap
+				$AppProject.pages[current_page_index].tiles[swap_tile_index] = {
+					...$AppProject.pages[current_page_index].tiles[swap_tile_index],
+					...$AppProject.pages[current_page_index].tiles[current_tile_index],
+					id: $AppProject.pages[current_page_index].tiles[swap_tile_index].id,
+					tile_index: $AppProject.pages[current_page_index].tiles[swap_tile_index].tile_index
+				}
+
+				// use saved version to update the current tile
+				$AppProject.pages[current_page_index].tiles[current_tile_index] = {
+					...$AppProject.pages[current_page_index].tiles[current_tile_index],
+					...$SwappedTile,
+					id: $AppProject.pages[current_page_index].tiles[current_tile_index].id,
+					tile_index: $AppProject.pages[current_page_index].tiles[current_tile_index].tile_index
+				}
+				
+				// set swapped tile to null
+				$SwappedTile = null;
+
+				// push both updates to server
+				await trpc(fetch).mutation(
+					'tile:edit',
+					//@ts-ignore
+					$AppProject.pages[current_page_index].tiles[swap_tile_index]
+				);
+
+				await trpc(fetch).mutation(
+					'tile:edit',
+					//@ts-ignore
+					$AppProject.pages[current_page_index].tiles[current_tile_index]
+				);
 			} else if ($EditorTool === EditorTools.accent) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
@@ -107,6 +152,17 @@
 				);
 				$AppProject.pages[current_page_index].tiles[tile_index].is_invisible =
 					!$AppProject.pages[current_page_index].tiles[tile_index].is_invisible;
+				await trpc(fetch).mutation(
+					'tile:edit',
+					//@ts-ignore
+					$AppProject.pages[current_page_index].tiles[tile_index]
+				);
+			} else if ($EditorTool === EditorTools.silent) {
+				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+					(t) => t.id === tile.id
+				);
+				$AppProject.pages[current_page_index].tiles[tile_index].is_silent =
+					!$AppProject.pages[current_page_index].tiles[tile_index].is_silent;
 				await trpc(fetch).mutation(
 					'tile:edit',
 					//@ts-ignore
@@ -160,6 +216,7 @@
 				$CurrentPageId = tile.navigation_page_id;
 				$PageHistory = [$CurrentPageId, ...$PageHistory];
 			} else {
+				if(tile.is_silent) return;
 				$Sentence = [...$Sentence, tile];
 			}
 		}
@@ -182,6 +239,10 @@
 	opacity: ${tile.is_invisible ? 0 : 1};
 	opacity: ${$InEditMode && tile.is_invisible ? 0.25 : 'auto'};
 	opacity: ${$InEditMode && tile.link_id ? 0.5 : 'auto'};
+	opacity: ${$InEditMode && tile.is_silent ? 0.5 : 'auto'};
+	border-color: ${$SwappedTile?.id === tile.id && $InEditMode ? 'var(--primary-300)' : 'auto'};
+	transform: ${$SwappedTile?.id === tile.id && $InEditMode ? 'scale(1.2)' : 'auto'};
+	z-index: ${$SwappedTile?.id === tile.id && $InEditMode ? 999 : 'auto'};
 	overflow: ${tile.navigation_page_id ? 'visible' : 'hidden'};
 	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
@@ -193,6 +254,12 @@
 >
 	{#if tile.navigation_page_id}
 		<div class="folder-bit" />
+	{/if}
+
+	{#if tile.is_silent && $InEditMode}
+		<div class="silent">
+			<i class='bx bxs-volume-mute' ></i>
+		</div>
 	{/if}
 
 	{#if tile.image}
@@ -289,6 +356,14 @@
 		position: absolute;
 		bottom: 5px;
 		right: 5px;
+		font-size: 1.5rem;
+		color: var(--tiles-text);
+	}
+
+	.silent {
+		position: absolute;
+		top: 5px;
+		left: 5px;
 		font-size: 1.5rem;
 		color: var(--tiles-text);
 	}

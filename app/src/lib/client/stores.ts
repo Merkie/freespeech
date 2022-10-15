@@ -15,8 +15,10 @@ export enum EditorTools {
 	image = 'image',
 	move = 'move',
 	color = 'color',
+	swap = 'swap',
 	accent = 'accent',
 	invisible = 'invisible',
+	silent = 'silent',
 	navigate = 'navigate',
 	template = 'template',
 	trash = 'trash'
@@ -57,6 +59,8 @@ export const Sentence = writable<Tile[]>([]);
 export const IsProjectCreationModalOpen = writable<boolean>(false);
 // the project in the clone modal
 export const CloneModalProject = writable<Project | null>(null);
+// the tile that is currently being swapped
+export const SwappedTile = writable<Tile | null>(null);
 
 // Selected voice persistent storage
 export const SelectedVoice = writable(

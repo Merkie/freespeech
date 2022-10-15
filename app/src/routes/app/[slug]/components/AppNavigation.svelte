@@ -10,7 +10,10 @@
 		EditorTools,
 		Me,
 		CloneModalProject,
-		GuidedAccessPin
+		GuidedAccessPin,
+		SwappedTile,
+		PageHistory,
+		PageHistoryIndex
 	} from '$lib/client/stores';
 	import GuidedAccessModal from './GuidedAccessModal.svelte';
 
@@ -24,6 +27,8 @@
 		$InSettingsPage = false;
 		edit_unlocked = false;
 		is_ga_keypad_open = false;
+		$PageHistory = [];
+		$PageHistoryIndex = 0;
 	};
 
 	const handle_edit_toggle = () => {
@@ -35,6 +40,7 @@
 			$CloneModalProject = $AppProject;
 			return;
 		}
+		$SwappedTile = null;
 		$InEditMode = !$InEditMode;
 		if (!$InEditMode) {
 			$EditorTool = EditorTools.text;
