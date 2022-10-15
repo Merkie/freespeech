@@ -125,5 +125,8 @@
 		button span {
 			display: none;
 		}
+		section {
+			padding-bottom: 50px;
+		}
 	}
 </style>
