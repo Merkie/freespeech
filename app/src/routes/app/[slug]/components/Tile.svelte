@@ -290,7 +290,6 @@
 		font-size: ${tile.image ? '1.2rem' : '1.5rem'};
 		`}
 	>
-		{tile.tile_index}
 		{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
 	</p>
 	{#if !tile.navigation_page_id}

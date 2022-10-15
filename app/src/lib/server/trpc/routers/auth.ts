@@ -35,7 +35,8 @@ export default router<Context, IMeta>()
 		},
 		input: z.object({
 			email: z.string(),
-			password: z.string()
+			password: z.string(),
+			name: z.string().nullable()
 		}),
 		resolve: async ({ input }) => {
 			// 1) Generate a hash from the given password
@@ -46,6 +47,7 @@ export default router<Context, IMeta>()
 				data: {
 					identifier_token: input.email,
 					email: input.email,
+					name: input.name,
 					hashed_password: hash
 				}
 			});
@@ -64,7 +66,8 @@ export default router<Context, IMeta>()
 		},
 		input: z.object({
 			email: z.string(),
-			password: z.string()
+			password: z.string(),
+			name: z.string().nullable()
 		}),
 		resolve: async ({ input }) => {
 			// 1) Try to find the user given the email

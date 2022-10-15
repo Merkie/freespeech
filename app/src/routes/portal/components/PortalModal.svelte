@@ -8,6 +8,7 @@
 
 	// Bindings
 	let email: string;
+	let name: string = '';
 	let passwordElement: HTMLInputElement;
 
 	// Booleans
@@ -46,6 +47,10 @@
 	{#if email && is_email_taken && is_email_valid && !is_login}
 		<p class="error">Email is already in use</p>
 	{/if}
+	{#if !is_login}
+	<label for="name">Your name</label>
+	<input type="text" bind:value={name} name="name" />
+	{/if}
 	<label for="password"
 		><span>Password</span><i
 			class={`bx bxs-${is_password_visible ? 'show' : 'hide'}`}
@@ -62,7 +67,7 @@
 	{/if}
 	<button
 		on:click={() => {
-			if (is_email_valid) authenticate(email, passwordElement.value);
+			if (is_email_valid) authenticate(email, passwordElement.value, name);
 		}}>{is_login ? 'Sign in' : 'Create account'}</button
 	>
 </div>
