@@ -23,55 +23,50 @@ export const load: Load = async ({ params, fetch }) => {
 	let new_project = { ...project };
 
 	for await (const page of project.pages) {
+		// For each tile in the page
 		let index = 0;
 		for await (let tile of page.tiles) {
+			// If the tile is a link...
 			if (tile.link_id) {
-				const new_tile: any = await trpc(fetch).query('tile:fetch', { id: tile.link_id });
-				let new_tile_id = new_tile.id;
-				if (!new_tile) return;
-				delete new_tile.id;
-				delete new_tile.tap_count;
-				delete new_tile.userId;
-				delete new_tile.tilePageId;
-				delete new_tile.tile_index;
+				// Fetch the linked tile
+				const linked_tile: any = await trpc(fetch).query('tile:fetch', { id: tile.link_id });
+				if (!linked_tile) return;
 
+				// Replace the tile with the linked tile
 				const corrected_tile: Tile = {
-					//@ts-ignore
 					...tile,
-					...new_tile,
-					tile_index: index,
-					link_id: new_tile_id
+					...linked_tile,
+					id: tile.id,
+					tap_count: tile.tap_count,
+					userId: tile.userId,
+					tilePageId: tile.tilePageId,
+					tile_index: tile.tile_index,
+					link_id: linked_tile.id
 				};
 
+				// Set the tile to the corrected tile
 				new_project.pages[new_project.pages.indexOf(page)].tiles[
 					new_project.pages[new_project.pages.indexOf(page)].tiles.indexOf(tile)
 				] = corrected_tile;
 
 				// update with trpc
 				if (tile !== corrected_tile) {
-					await trpc(fetch).mutation('tile:edit', {
-						...tile,
-						...new_tile,
-						tile_index: index,
-						link_id: new_tile_id,
-						id: tile.id
-					});
+					//@ts-ignore
+					await trpc(fetch).mutation('tile:edit', corrected_tile);
 				}
 			}
-			// temp: force sensable tile order
-			try {
+
+			// If the tile's index is not the same as the index in the array
+			if (tile.tile_index != index) {
+				// Upadte the tile's index
 				new_project.pages[new_project.pages.indexOf(page)].tiles[
 					new_project.pages[new_project.pages.indexOf(page)].tiles.indexOf(tile)
 				].tile_index = index;
-				if (tile.tile_index != index) {
-					await trpc(fetch).mutation('tile:edit', {
-						...tile,
-						tile_index: index,
-						id: tile.id
-					});
-				}
-				index++;
-			} catch (e) {}
+				//@ts-ignore
+				await trpc(fetch).mutation('tile:edit', { ...tile, tile_index: index });
+			}
+
+			index++;
 		}
 	}
 

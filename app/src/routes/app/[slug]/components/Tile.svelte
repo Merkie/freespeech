@@ -288,6 +288,7 @@
 			tile.image ? 'auto' : 'translate(-50%, 50%)'
 		};`}
 	>
+		{tile.tile_index}
 		{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
 	</p>
 	{#if !tile.navigation_page_id}
