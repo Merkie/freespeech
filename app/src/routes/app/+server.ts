@@ -3,13 +3,13 @@ import type { Project, User } from '@prisma/client';
 import { redirect, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ fetch, params }) => {
-	// Get whole user object from server
-	try {
-		const user = await trpc(fetch).query('user:me_whole');
-		// Return a redirect to the first project in the user's list
-		//@ts-ignore
-		throw redirect(302, '/app/' + user?.projects[0].id);
-	} catch (e) {
-		throw redirect(302, '/portal');
-	}
+	const user = await trpc(fetch).query('user:me_whole');
+	if (!user) throw redirect(302, '/portal');
+
+	// sort by most recent
+	let user_projects = user?.projects.sort((a, b) => {
+		return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+	});
+
+	throw redirect(302, '/app/' + user_projects[0].id);
 };
