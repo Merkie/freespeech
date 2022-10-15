@@ -115,7 +115,7 @@
 	}
 	main {
 		color: black;
-		margin-top: 58px;
+		margin-top: 50px;
 	}
 	.site-content {
 		display: flex;
