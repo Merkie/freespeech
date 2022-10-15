@@ -245,5 +245,8 @@
 		i {
 			font-size: 20px;
 		}
+		main {
+			bottom: 195px;
+		}
 	}
 </style>

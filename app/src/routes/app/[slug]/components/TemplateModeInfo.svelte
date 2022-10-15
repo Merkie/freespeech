@@ -35,5 +35,12 @@
 		background-image: linear-gradient(to right, var(--primary-400) 1px, transparent 1px),
 			linear-gradient(to bottom, var(--primary-400) 1px, transparent 1px);
 		background-size: 15px 15px;
+		pointer-events: none;
+	}
+
+	@media (max-width: 750px) {
+		section {
+			bottom: 195px;
+		}
 	}
 </style>

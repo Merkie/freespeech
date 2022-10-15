@@ -128,5 +128,8 @@
 		section {
 			padding-bottom: 50px;
 		}
+		button {
+			font-size: 30px;
+		}
 	}
 </style>

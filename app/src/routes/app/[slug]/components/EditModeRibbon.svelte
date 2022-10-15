@@ -121,7 +121,7 @@
 
 	@media (max-width: 750px) {
 		section {
-			--open-height: 57px !important;
+			--open-height: 107px !important;
 		}
 
 		div {

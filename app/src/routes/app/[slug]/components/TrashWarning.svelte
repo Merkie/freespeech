@@ -22,5 +22,12 @@
 		left: 50%;
 		transform: translateX(-50%);
 		position: fixed;
+		pointer-events: none;
+	}
+
+	@media (max-width: 750px) {
+		section {
+			bottom: 195px;
+		}
 	}
 </style>
