@@ -39,10 +39,8 @@
 		// 	value: '8x6',
 		// 	placeholder: '8x6',
 		// 	onInput: (value: string) => {
-		// 		console.log(value);
 		// 	},
 		// 	reset_to_default: () => {
-		// 		console.log('resetting to default');
 		// 	}
 		// },
 		{
