@@ -5,7 +5,7 @@
 		EditorTools,
 		InEditMode,
 		PageHistory,
-		PageHistoryIndex,
+		PageHistoryIndex
 	} from '$lib/client/stores';
 </script>
 
@@ -33,12 +33,12 @@
 			<p>Color</p>
 		</button>
 		<button
-		class={$EditorTool === EditorTools.swap ? 'selected' : ''}
-		on:click={() => ($EditorTool = EditorTools.swap)}
-	>
-		<i class='bx bx-move-horizontal' />
-		<p>Swap</p>
-	</button>
+			class={$EditorTool === EditorTools.swap ? 'selected' : ''}
+			on:click={() => ($EditorTool = EditorTools.swap)}
+		>
+			<i class="bx bx-move-horizontal" />
+			<p>Swap</p>
+		</button>
 		<button
 			class={$EditorTool === EditorTools.accent ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.accent)}
@@ -53,11 +53,11 @@
 			<i class="bx bxs-hide" />
 			<p>Invisible</p>
 		</button>
-			<button
+		<button
 			class={$EditorTool === EditorTools.silent ? 'selected' : ''}
 			on:click={() => ($EditorTool = EditorTools.silent)}
 		>
-			<i class='bx bxs-volume-mute'></i>
+			<i class="bx bxs-volume-mute" />
 			<p>Silent</p>
 		</button>
 		<button

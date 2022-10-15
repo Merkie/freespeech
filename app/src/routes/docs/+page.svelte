@@ -13,15 +13,14 @@
 	const refresh_page = async () => {
 		//@ts-ignore
 		page_content = converter.makeHtml(docs[active_page]);
-	}
+	};
 
 	(async () => {
 		await refresh_page();
 	})();
-	
 
 	$: {
-		if(active_page) {
+		if (active_page) {
 			refresh_page();
 		}
 	}
@@ -35,8 +34,10 @@
 <main>
 	<div class="sidebar">
 		<b>Introduction</b>
-		<a on:click={() => active_page = 'whatisaac'} href="#what-is-aac">What is AAC?</a>
-		<a on:click={() => active_page = 'whyusefreespeech'} href="#why-use-freespeech">Why use FreeSpeech AAC?</a>
+		<a on:click={() => (active_page = 'whatisaac')} href="#what-is-aac">What is AAC?</a>
+		<a on:click={() => (active_page = 'whyusefreespeech')} href="#why-use-freespeech"
+			>Why use FreeSpeech AAC?</a
+		>
 		<a href="#">Getting started</a>
 		<a href="#">Using the app</a>
 		<b>Editor</b>

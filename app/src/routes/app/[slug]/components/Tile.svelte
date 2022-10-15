@@ -93,7 +93,7 @@
 					$AppProject.pages[current_page_index].tiles[tile_index]
 				);
 			} else if ($EditorTool === EditorTools.swap) {
-				if(!$SwappedTile) {
+				if (!$SwappedTile) {
 					$SwappedTile = tile;
 					return;
 				}
@@ -111,7 +111,7 @@
 					...$AppProject.pages[current_page_index].tiles[current_tile_index],
 					id: $AppProject.pages[current_page_index].tiles[swap_tile_index].id,
 					tile_index: $AppProject.pages[current_page_index].tiles[swap_tile_index].tile_index
-				}
+				};
 
 				// use saved version to update the current tile
 				$AppProject.pages[current_page_index].tiles[current_tile_index] = {
@@ -119,8 +119,8 @@
 					...$SwappedTile,
 					id: $AppProject.pages[current_page_index].tiles[current_tile_index].id,
 					tile_index: $AppProject.pages[current_page_index].tiles[current_tile_index].tile_index
-				}
-				
+				};
+
 				// set swapped tile to null
 				$SwappedTile = null;
 
@@ -217,7 +217,7 @@
 				$CurrentPageId = tile.navigation_page_id;
 				$PageHistory = [$CurrentPageId, ...$PageHistory];
 			} else {
-				if(tile.is_silent) return;
+				if (tile.is_silent) return;
 				$Sentence = [...$Sentence, tile];
 			}
 		}
@@ -227,12 +227,12 @@
 		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 			(t) => t.id === tile.id
 		);
-		if($EditTextMode === 'display') {
+		if ($EditTextMode === 'display') {
 			$AppProject.pages[current_page_index].tiles[tile_index].display_text =
-			tileTextElement.innerText;
+				tileTextElement.innerText;
 		} else {
 			$AppProject.pages[current_page_index].tiles[tile_index].speak_text =
-			tileTextElement.innerText;
+				tileTextElement.innerText;
 		}
 		const updated_tile = $AppProject.pages[current_page_index].tiles.find((t) => t.id === tile.id);
 		//@ts-ignore
@@ -264,7 +264,7 @@
 
 	{#if tile.is_silent && $InEditMode}
 		<div class="silent">
-			<i class='bx bxs-volume-mute' ></i>
+			<i class="bx bxs-volume-mute" />
 		</div>
 	{/if}
 
@@ -288,7 +288,7 @@
 			tile.image ? 'auto' : 'translate(-50%, 50%)'
 		};`}
 	>
-		{$EditTextMode === 'speak' && $InEditMode ? (tile.speak_text || '...') : tile.display_text}
+		{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
 	</p>
 	{#if !tile.navigation_page_id}
 		<div

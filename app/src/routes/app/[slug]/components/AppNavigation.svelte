@@ -32,7 +32,7 @@
 	};
 
 	const handle_edit_toggle = () => {
-		if($GuidedAccessPin.length > 1 && !edit_unlocked) {
+		if ($GuidedAccessPin.length > 1 && !edit_unlocked) {
 			is_ga_keypad_open = true;
 			return;
 		}
@@ -49,23 +49,26 @@
 	};
 
 	const handle_settings_click = () => {
-		if($GuidedAccessPin.length > 1 && !edit_unlocked) {
+		if ($GuidedAccessPin.length > 1 && !edit_unlocked) {
 			is_ga_keypad_open = true;
 			return;
 		}
 		$InSettingsPage = true;
 		$InEditMode = false;
-	}
+	};
 
 	$: {
-		if(edit_unlocked) {
+		if (edit_unlocked) {
 			is_ga_keypad_open = false;
 		}
 	}
 </script>
 
 {#if is_ga_keypad_open}
-	 <GuidedAccessModal close_modal={() => is_ga_keypad_open = false} callback={(value) => edit_unlocked = value} />
+	<GuidedAccessModal
+		close_modal={() => (is_ga_keypad_open = false)}
+		callback={(value) => (edit_unlocked = value)}
+	/>
 {/if}
 
 <section style={`border-color: ${$InEditMode ? 'transparent' : 'auto'};`}>
@@ -75,13 +78,13 @@
 		class={`${$InEditMode ? 'selected-edit' : 'edit'}`}
 		on:click={handle_edit_toggle}
 		style={`opacity: ${$AppProject.userId != $Me.id ? '0.5' : '1'};
-						opacity: ${($GuidedAccessPin.length > 1 && edit_unlocked == false ) ? '0.5' : 'auto'};`}
+						opacity: ${$GuidedAccessPin.length > 1 && edit_unlocked == false ? '0.5' : 'auto'};`}
 		><i class={$InEditMode ? 'bx bx-check' : 'bx bxs-pencil'} />
 		<span>{$InEditMode ? 'Save Changes' : 'Edit'}</span>
 	</button>
 	<button
 		class={`${$InSettingsPage ? 'selected' : ''}`}
-		style={`opacity: ${($GuidedAccessPin.length > 1 && edit_unlocked == false ) ? '0.5' : '1'};`}
+		style={`opacity: ${$GuidedAccessPin.length > 1 && edit_unlocked == false ? '0.5' : '1'};`}
 		on:click={handle_settings_click}><i class="bx bxs-cog" /> <span>Settings</span></button
 	>
 </section>

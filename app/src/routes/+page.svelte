@@ -22,7 +22,9 @@
 					alt="Unbranded computer and tablet showcasing FreeSpeech AAC."
 					src="/images/icons/icon-512.png"
 				/>
-				<button on:click={() => is_install_cover_open = true}><i class="bx bx-download" /> Download</button>
+				<button on:click={() => (is_install_cover_open = true)}
+					><i class="bx bx-download" /> Download</button
+				>
 			</div>
 			<div class="text">
 				<h1>Lorem Ispum Dolor</h1>
@@ -93,9 +95,17 @@
 </main>
 {#if is_install_cover_open}
 	<div class="install-cover">
-		<button on:click={() => is_install_cover_open = false}><i class='bx bx-x'></i></button>
-		<img class="ios-pwa" src="/images/install-screen.png" alt="Tutorial showing how to install PWA.">
-		<img class="chrome-install" src="/images/install-chrome.png" alt="Install FreeSpeech AAC on Chrome tutorial.">
+		<button on:click={() => (is_install_cover_open = false)}><i class="bx bx-x" /></button>
+		<img
+			class="ios-pwa"
+			src="/images/install-screen.png"
+			alt="Tutorial showing how to install PWA."
+		/>
+		<img
+			class="chrome-install"
+			src="/images/install-chrome.png"
+			alt="Install FreeSpeech AAC on Chrome tutorial."
+		/>
 	</div>
 {/if}
 
@@ -200,7 +210,7 @@
 		width: 100vw;
 		height: 100vh;
 		background-color: var(--primary-300);
-		z-index:999;
+		z-index: 999;
 	}
 
 	.ios-pwa {

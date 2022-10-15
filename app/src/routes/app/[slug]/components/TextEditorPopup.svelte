@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		EditorTool,
-		EditorTools,
-		InEditMode,
-		EditTextMode
-	} from '$lib/client/stores';
+	import { EditorTool, EditorTools, InEditMode, EditTextMode } from '$lib/client/stores';
 </script>
 
 <section
@@ -13,10 +8,12 @@
 	};
 		pointer-events: ${$EditorTool === EditorTools.text ? 'all' : 'none'};`}
 >
-	<span><b>Editing: </b><select bind:value={$EditTextMode}>
-		<option value="display">Display Text</option>
-		<option value="speak">Speak Text</option>
-	</select></span>
+	<span
+		><b>Editing: </b><select bind:value={$EditTextMode}>
+			<option value="display">Display Text</option>
+			<option value="speak">Speak Text</option>
+		</select></span
+	>
 </section>
 
 <style>
