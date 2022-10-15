@@ -284,9 +284,11 @@
 		on:input={save_tile}
 		spellcheck="false"
 		contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
-		style={`bottom: ${tile.image ? 'auto' : '50%'}; transform: ${
-			tile.image ? 'auto' : 'translate(-50%, 50%)'
-		};`}
+		style={`
+		bottom: ${tile.image ? '7%' : '50%'};
+		transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};
+		font-size: ${tile.image ? '1.2rem' : '1.5rem'};
+		`}
 	>
 		{tile.tile_index}
 		{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
@@ -336,7 +338,6 @@
 		font-size: 18px;
 		left: 50%;
 		transform: translateX(-50%);
-		bottom: 5px;
 		overflow-wrap: anywhere;
 	}
 	.accent {
