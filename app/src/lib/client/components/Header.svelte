@@ -9,7 +9,7 @@
 
 <section class={`${site_header ? 'site-header' : ''}`}>
 	<h1 on:click={() => window.location.assign('/')}>
-		<img src={'/images/logo-white.png'} alt="logo" /> FreeSpeech
+		<img src={'/images/logo-white.png'} alt="logo" /> <span>FreeSpeech</span>
 	</h1>
 	<span class="links">
 		<a href="/about">About</a>
@@ -30,7 +30,7 @@
 		<i class="bx bx-menu" />
 	</div>
 </section>
-<div style={`display: ${is_dropdown_open ? 'flex' : 'none'};`} class="mobile-dropdown">
+<div style={`display: ${is_dropdown_open ? 'flex' : 'none'};`} class={`mobile-dropdown ${site_header ? 'site-header' : ''}`}>
 	<a href="/about">About</a>
 	<a href="/docs">Documentation</a>
 	{#if $Me}
@@ -59,6 +59,15 @@
 	}
 
 	.site-header {
+		background: linear-gradient(90deg, var(--primary-300) 0%, var(--primary-200) 100%) !important;
+		border-bottom: 1px solid var(--primary-400) !important;
+	}
+
+	.site-header span {
+		opacity: 1 !important;
+	}
+
+	.site-header .mobile-dropdown {
 		background: linear-gradient(90deg, var(--primary-300) 0%, var(--primary-200) 100%) !important;
 		border-bottom: 1px solid var(--primary-400) !important;
 	}
@@ -138,6 +147,10 @@
 	@media (max-width: 750px) {
 		h1 {
 			font-size: 20px;
+		}
+
+		h1 span {
+			opacity: 0;
 		}
 
 		button {
