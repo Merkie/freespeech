@@ -58,8 +58,14 @@
 </script>
 
 <section>
-	<button class={`refresh ${refreshing ? 'refreshing' : ''}`} on:click={() => {refreshing = true; window.location.assign(`/app/${$AppProject.id}`)}}>
-		<i class='bx bx-refresh'></i>
+	<button
+		class={`refresh ${refreshing ? 'refreshing' : ''}`}
+		on:click={() => {
+			refreshing = true;
+			window.location.assign(`/app/${$AppProject.id}`);
+		}}
+	>
+		<i class="bx bx-refresh" />
 	</button>
 	<button disabled={!($PageHistoryIndex < $PageHistory.length - 1)} on:click={navigate_backwards}>
 		<i class="bx bx-left-arrow-alt" />
@@ -97,7 +103,7 @@
 		min-width: 200px;
 		text-align: center;
 	}
-	
+
 	.refresh {
 		position: absolute;
 		left: 10px;

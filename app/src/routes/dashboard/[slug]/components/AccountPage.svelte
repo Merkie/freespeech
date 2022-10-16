@@ -58,7 +58,7 @@
 <div>
 	<span style="position: relative;">
 		<img src={$Me.image || '/images/profile.png'} alt="profile" class="profile" />
-		<span on:click={() => file_input.click()} class="add-image">
+		<span on:keypress={() => null} on:click={() => file_input.click()} class="add-image">
 			<i class="bx bxs-image-add" />
 		</span>
 		<input type="file" style="display: none;" on:input={handle_file_input} bind:this={file_input} />
@@ -79,10 +79,7 @@
 	<button disabled={!is_edited} on:click={handle_user_edit}>Save changes</button>
 	<button disabled={true}>Change my password</button>
 </span>
-<button
-	class="logout"
-	on:click={logout}>Logout</button
->
+<button class="logout" on:click={logout}>Logout</button>
 
 <style>
 	h1 {

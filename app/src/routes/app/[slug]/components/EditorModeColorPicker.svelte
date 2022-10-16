@@ -112,6 +112,7 @@
 					selected_color = color;
 					selected_shade = '300';
 				}}
+				on:keypress={() => null}
 				style={`--color: var(--${color}-300)`}
 			/>
 		{/each}
@@ -122,21 +123,25 @@
 	>
 		<div
 			on:click={() => (selected_shade = '100')}
+			on:keypress={() => null}
 			class={selected_shade === '100' ? 'selected' : ''}
 			style={`transform: scale(1.0); --color: var(--${selected_color}-100)`}
 		/>
 		<div
 			on:click={() => (selected_shade = '200')}
+			on:keypress={() => null}
 			class={selected_shade === '200' ? 'selected' : ''}
 			style={`transform: scale(1.0); --color: var(--${selected_color}-200)`}
 		/>
 		<div
 			on:click={() => (selected_shade = '400')}
+			on:keypress={() => null}
 			class={selected_shade === '400' ? 'selected' : ''}
 			style={`transform: scale(1.0); --color: var(--${selected_color}-400)`}
 		/>
 		<div
 			on:click={() => (selected_shade = '500')}
+			on:keypress={() => null}
 			class={selected_shade === '500' ? 'selected' : ''}
 			style={`transform: scale(1.0); --color: var(--${selected_color}-500)`}
 		/>
@@ -150,6 +155,7 @@
 	>
 		<div
 			on:click={() => ($SelectedColorMode = 'border')}
+			on:keypress={() => null}
 			class={$SelectedColorMode === 'border' ? 'selected-option' : ''}
 			style={`transform: scale(1.0); --color: var(--${selected_color}-${selected_shade});`}
 		>
@@ -157,6 +163,7 @@
 		</div>
 		<div
 			on:click={() => ($SelectedColorMode = 'background')}
+			on:keypress={() => null}
 			class={$SelectedColorMode === 'background' ? 'selected-option' : ''}
 			style={`transform: scale(1.0); --color: var(--${selected_color}-${selected_shade});`}
 		>
@@ -164,6 +171,7 @@
 		</div>
 		<div
 			on:click={() => ($SelectedColorMode = 'text')}
+			on:keypress={() => null}
 			class={$SelectedColorMode === 'text' ? 'selected-option' : ''}
 			style={`transform: scale(1.0); --color: var(--${selected_color}-${selected_shade});`}
 		>

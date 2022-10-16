@@ -7,17 +7,20 @@
 		class={$DashboardPage === DashboardPages.account ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.account)}
 	>
-		<i class={"bx bx"+($DashboardPage === DashboardPages.account ? 's' : '')+"-user-circle"} /> <span>Account</span></button
+		<i class={'bx bx' + ($DashboardPage === DashboardPages.account ? 's' : '') + '-user-circle'} />
+		<span>Account</span></button
 	>
 	<button
 		class={$DashboardPage === DashboardPages.projects ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.projects)}
-		><i class={"bx bx"+($DashboardPage === DashboardPages.projects ? 's' : '')+"-grid-alt"} /> <span>Projects</span></button
+		><i class={'bx bx' + ($DashboardPage === DashboardPages.projects ? 's' : '') + '-grid-alt'} />
+		<span>Projects</span></button
 	>
 	<button
 		class={$DashboardPage === DashboardPages.explore ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.explore)}
-		><i class={"bx bx"+($DashboardPage === DashboardPages.explore ? 's' : '')+"-compass"} /> <span>Explore</span></button
+		><i class={'bx bx' + ($DashboardPage === DashboardPages.explore ? 's' : '') + '-compass'} />
+		<span>Explore</span></button
 	>
 	<!-- <button
 		disabled={true}

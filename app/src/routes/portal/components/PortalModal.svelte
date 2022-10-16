@@ -48,8 +48,8 @@
 		<p class="error">Email is already in use</p>
 	{/if}
 	{#if !is_login}
-	<label for="name">Your name</label>
-	<input type="text" bind:value={name} name="name" />
+		<label for="name">Your name</label>
+		<input type="text" bind:value={name} name="name" />
 	{/if}
 	<label for="password"
 		><span>Password</span><i

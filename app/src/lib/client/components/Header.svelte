@@ -8,7 +8,7 @@
 </script>
 
 <section class={`${site_header ? 'site-header' : ''}`}>
-	<h1 on:click={() => window.location.assign('/')}>
+	<h1 on:click={() => window.location.assign('/')} on:keypress={() => null}>
 		<img src={'/images/logo-white.png'} alt="logo" /> <span>FreeSpeech</span>
 	</h1>
 	<span class="links">
@@ -26,11 +26,18 @@
 			<button on:click={() => window.location.assign('/portal?login=false')}>Create Account</button>
 		</span>
 	{/if}
-	<div class="mobile-menu" on:click={() => (is_dropdown_open = !is_dropdown_open)}>
+	<div
+		class="mobile-menu"
+		on:keypress={() => null}
+		on:click={() => (is_dropdown_open = !is_dropdown_open)}
+	>
 		<i class="bx bx-menu" />
 	</div>
 </section>
-<div style={`display: ${is_dropdown_open ? 'flex' : 'none'};`} class={`mobile-dropdown ${site_header ? 'site-header' : ''}`}>
+<div
+	style={`display: ${is_dropdown_open ? 'flex' : 'none'};`}
+	class={`mobile-dropdown ${site_header ? 'site-header' : ''}`}
+>
 	<a href="/about">About</a>
 	<a href="/docs">Documentation</a>
 	{#if $Me}
@@ -65,11 +72,6 @@
 
 	.site-header span {
 		opacity: 1 !important;
-	}
-
-	.site-header .mobile-dropdown {
-		background: linear-gradient(90deg, var(--primary-300) 0%, var(--primary-200) 100%) !important;
-		border-bottom: 1px solid var(--primary-400) !important;
 	}
 
 	.links {
@@ -166,7 +168,7 @@
 
 		.mobile-dropdown {
 			background: var(--background);
-			box-shadow: 0 0 0 9999px rgba(0, 0, 0, .75);
+			box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.75);
 		}
 
 		img {

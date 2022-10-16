@@ -56,11 +56,15 @@
 	<main use:clickOutside on:click_outside={close_modal}>
 		<h1>Create project</h1>
 		<div>
-			<span class={using_template ? '' : 'selected'} on:click={() => (using_template = false)}
-				>Start from scratch</span
+			<span
+				on:keypress={() => null}
+				class={using_template ? '' : 'selected'}
+				on:click={() => (using_template = false)}>Start from scratch</span
 			>
-			<span class={!using_template ? '' : 'selected'} on:click={() => (using_template = true)}
-				>Start from a template</span
+			<span
+				on:keypress={() => null}
+				class={!using_template ? '' : 'selected'}
+				on:click={() => (using_template = true)}>Start from a template</span
 			>
 		</div>
 		{#if using_template}
