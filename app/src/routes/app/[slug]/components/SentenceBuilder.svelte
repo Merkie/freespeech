@@ -38,7 +38,7 @@
 </script>
 
 <section>
-	<div on:click={speak_sentence}>
+	<div on:click={speak_sentence} on:keypress={() => null}>
 		{#each $Sentence as tile}
 			<span>
 				<p>{tile.display_text}</p>

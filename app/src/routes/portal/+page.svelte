@@ -35,7 +35,7 @@
 	</h1>
 	<h1>{is_login ? 'Sign in to your account' : 'Create an account'}</h1>
 	<p class="subtext">
-		Or <span class="link" on:click={() => (is_login = !is_login)}
+		Or <span class="link" on:keypress={() => null} on:click={() => (is_login = !is_login)}
 			>{!is_login ? 'Sign in to your account' : 'Create an account'}</span
 		>
 	</p>
@@ -58,13 +58,6 @@
 		font-size: 20px;
 		margin-bottom: 20px;
 		font-weight: 500;
-	}
-
-	.brand i {
-		background-color: var(--primary-400);
-		padding: 5px 5px;
-		border-radius: 5px;
-		border: 1px solid var(--primary-500);
 	}
 
 	.subtext {

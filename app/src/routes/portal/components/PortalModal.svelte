@@ -55,7 +55,8 @@
 		><span>Password</span><i
 			class={`bx bxs-${is_password_visible ? 'show' : 'hide'}`}
 			on:click={() => (is_password_visible = !is_password_visible)}
-		/></label
+			on:keypress={() => null}
+			/></label
 	>
 	<input
 		bind:this={passwordElement}
