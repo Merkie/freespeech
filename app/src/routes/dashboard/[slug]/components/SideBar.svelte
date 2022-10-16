@@ -78,7 +78,7 @@
 			display: none;
 		}
 		i {
-			font-size: 30px;
+			font-size: 40px;
 		}
 		.selected {
 			border-left: 0 !important;
@@ -115,14 +115,20 @@
 
 		button:hover {
 			transform: none;
-			background-color: var(--base-100);
+			background-color: var(--base-100) !important;
+			/* filter: brightness(1) !important; */
+		}
+
+		button:active {
+			transform: none;
+			background-color: var(--base-100) !important;
 		}
 
 		button span {
 			display: block;
 			font-size: 14px;
-			margin-top: 5px;
-			margin-bottom: 20px;
+			margin-top: -5px;
+			margin-bottom: 40px;
 			opacity: 0;
 		}
 	}
