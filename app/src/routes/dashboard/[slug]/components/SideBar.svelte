@@ -19,7 +19,7 @@
 		on:click={() => ($DashboardPage = DashboardPages.explore)}
 		><i class="bx bx-compass" /> <span>Explore</span></button
 	>
-	<button
+	<!-- <button
 		disabled={true}
 		class={$DashboardPage === DashboardPages.uploads ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.uploads)}
@@ -30,7 +30,7 @@
 		class={$DashboardPage === DashboardPages.advanced ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.advanced)}
 		><i class="bx bx-cog" /> <span>Advanced</span></button
-	>
+	> -->
 </div>
 
 <style>
