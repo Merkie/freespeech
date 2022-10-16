@@ -30,7 +30,7 @@
 	<title>Docs - FreeSpeech AAC</title>
 </svelte:head>
 
-<Header uri="dashboard" button_text="Dashboard" />
+<Header uri="dashboard" button_text="Dashboard" site_header={true} />
 <main>
 	<div class="sidebar">
 		<b>Introduction</b>
@@ -68,7 +68,7 @@
 
 <style>
 	:global(body) {
-		background: white;
+		background: white !important;
 	}
 	main {
 		color: black;

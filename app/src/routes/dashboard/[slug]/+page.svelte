@@ -24,6 +24,6 @@
 		background: var(--background);
 	}
 	:global(body) {
-		background: var(--background) !important;
+		background: var(--background);
 	}
 </style>
