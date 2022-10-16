@@ -87,5 +87,23 @@
 		button {
 			border-radius: 0;
 		}
+		div {
+			flex-direction: row;
+			width: 100%;
+			height: 90px;
+			position: fixed;
+			bottom: 0;
+			padding-top: 0px;
+			gap: 0;
+		}
+		div button {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0;
+			padding-bottom: 30px;
+		}
 	}
 </style>

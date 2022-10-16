@@ -8,7 +8,7 @@
 	<title>FreeSpeech AAC</title>
 </svelte:head>
 
-<Header uri="dashboard" button_text="Dashboard" />
+<Header site_header={true} uri="dashboard" button_text="Dashboard" />
 <main>
 	<div class="hero-img-container">
 		<img src="/images/hero.png" class="hero-img" alt="hero" />

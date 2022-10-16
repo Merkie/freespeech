@@ -204,6 +204,9 @@
 		display: flex;
 		flex-direction: column;
 		padding-bottom: 100px;
+		overflow: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--base-200) transparent;
 	}
 	label {
 		margin-bottom: 5px;

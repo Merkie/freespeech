@@ -75,12 +75,12 @@
 <label for="">Name:</label>
 <input type="text" placeholder="Linus Torvalds" bind:value={name} />
 
-<span style="display: flex; gap: 10px; margin-bottom: 10px;">
+<span class="btn-group" style="display: flex; gap: 10px; margin-bottom: 10px;">
 	<button disabled={!is_edited} on:click={handle_user_edit}>Save changes</button>
 	<button disabled={true}>Change my password</button>
 </span>
 <button
-	style="background-color: var(--danger-300); border-color: var(--danger-400);"
+	class="logout"
 	on:click={logout}>Logout</button
 >
 
@@ -114,7 +114,7 @@
 		gap: 10px;
 	}
 	input {
-		width: calc(100% - 40px);
+		width: calc(100% - 33px);
 		margin-bottom: 20px;
 	}
 	label {
@@ -137,10 +137,30 @@
 	.add-image:hover {
 		background-color: var(--base-400);
 	}
+
+	.logout {
+		background-color: var(--danger-300);
+		border-color: var(--danger-400);
+	}
 	@media (max-width: 750px) {
 		div {
 			flex-direction: column;
 			gap: 10px;
+			width: calc(100% - 40px);
+			text-align: center;
+			background: none;
+			border: none;
+			padding: 0;
+			padding-left: 20px;
+		}
+
+		.btn-group button {
+			flex: 1;
+		}
+
+		.logout {
+			width: 100%;
+			margin-top: 20px;
 		}
 	}
 </style>

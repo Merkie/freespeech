@@ -38,7 +38,8 @@
 
 	@media (max-width: 750px) {
 		main {
-			margin-left: 80px;
+			margin-left: 20px;
+			width: 100%;
 		}
 	}
 </style>

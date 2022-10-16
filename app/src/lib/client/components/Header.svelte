@@ -1,12 +1,13 @@
 <script lang="ts">
 	export let uri: string;
 	export let button_text: string;
+	export let site_header: boolean = false;
 	import { Me } from '$lib/client/stores';
 
 	let is_dropdown_open = false;
 </script>
 
-<section>
+<section class={`${site_header ? 'site-header' : ''}`}>
 	<h1 on:click={() => window.location.assign('/')}>
 		<img src={'/images/logo-white.png'} alt="logo" /> FreeSpeech
 	</h1>
@@ -54,7 +55,12 @@
 		position: fixed;
 		top: 0;
 		width: calc(100% - 40px);
-		z-index: 999;
+		z-index: 999999;
+	}
+
+	.site-header {
+		background: linear-gradient(90deg, var(--primary-300) 0%, var(--primary-200) 100%) !important;
+		border-bottom: 1px solid var(--primary-400) !important;
 	}
 
 	.links {
@@ -141,6 +147,13 @@
 		section {
 			padding: 10px 20px;
 			width: calc(100% - 40px);
+			background: var(--background);
+			border: none;
+		}
+
+		.mobile-dropdown {
+			background: var(--background);
+			box-shadow: 0 0 0 9999px rgba(0, 0, 0, .75);
 		}
 
 		img {
