@@ -3,6 +3,7 @@
 	import DashboardContent from './components/DashboardContent.svelte';
 	import Header from '$lib/client/components/Header.svelte';
 	import SideBar from './components/SideBar.svelte';
+	import Modal from '$lib/client/components/Modal.svelte';
 </script>
 
 <svelte:head>

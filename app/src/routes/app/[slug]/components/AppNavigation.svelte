@@ -43,6 +43,7 @@
 		$SwappedTile = null;
 		$InEditMode = !$InEditMode;
 		if (!$InEditMode) {
+			window.getSelection()?.removeAllRanges();
 			$EditorTool = EditorTools.text;
 			$CloneModalProject = null;
 		}

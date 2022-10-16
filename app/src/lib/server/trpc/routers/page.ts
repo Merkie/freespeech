@@ -6,7 +6,7 @@ import { z } from 'zod';
 import prismaClient from '$lib/server/prismaClient';
 
 // Types
-import type { Tile, User } from '@prisma/client';
+import type { Tile, TilePage, User } from '@prisma/client';
 import type { Context } from '../context';
 import type { IMeta } from '../IMeta';
 
@@ -115,9 +115,9 @@ export default router<Context, IMeta>()
 				}
 			});
 
-			const updated_page = updated.pages[updated.pages.length - 1];
-
-			return updated_page;
+			return updated.pages.sort((a: TilePage, b: TilePage) => {
+				return a.updated_at > b.updated_at ? -1 : 1;
+			})[0];
 		}
 	})
 	.mutation('rename', {

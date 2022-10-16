@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '$app/environment';
 	// Trpc
 	import trpc from '$lib/client/trpc';
 
@@ -79,6 +80,7 @@
 				// Wait 10 miliseconds for the element to be rendered
 				await new Promise((resolve) => setTimeout(resolve, 10));
 				tileTextElement.focus();
+				window.getSelection()?.selectAllChildren(tileTextElement);
 			} else if ($EditorTool === EditorTools.image) {
 				file_input.click();
 			} else if ($EditorTool === EditorTools.color) {

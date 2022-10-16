@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { clickOutside } from '$lib/client/clickOutside';
-	import Modal from '$lib/client/components/Modal.svelte';
 	import Spinner from '$lib/client/components/Spinner.svelte';
 	import { IsProjectCreationModalOpen } from '$lib/client/stores';
 	//@ts-nocheck
@@ -54,8 +53,9 @@
 </script>
 
 {#if $IsProjectCreationModalOpen}
-  <Modal title={'Create project'} close_modal={() => $IsProjectCreationModalOpen = false} {loading}>
-    <div>
+	<main use:clickOutside on:click_outside={close_modal}>
+		<h1>Create project</h1>
+		<div>
 			<span
 				on:keypress={() => null}
 				class={using_template ? '' : 'selected'}
@@ -78,10 +78,31 @@
 			<input bind:value={columns} type="number" placeholder="8" />
 			<button disabled={loading} on:click={make_project}>Create Project</button>
 		{/if}
-  </Modal>
+		<div style={`opacity: ${loading ? '1' : '0'}`} class="spinner">
+			<Spinner />
+		</div>
+	</main>
 {/if}
 
 <style>
+	main {
+		padding: 20px;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: var(--base-100);
+		border-radius: 10px;
+		border: 1px solid var(--base-400);
+		width: min(500px, 80%);
+		box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.8);
+		z-index: 9999;
+	}
+
+	main * {
+		width: calc(100% - 35px);
+	}
+
 	div {
 		display: flex;
 		justify-content: space-between;
@@ -104,7 +125,6 @@
 
 	input {
 		margin-bottom: 20px;
-    width: calc(100% - 35px);
 	}
 
 	p {
@@ -114,5 +134,14 @@
 	button {
 		width: 100%;
 		cursor: pointer;
+	}
+
+	.spinner {
+		all: unset;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		pointer-events: none;
 	}
 </style>
