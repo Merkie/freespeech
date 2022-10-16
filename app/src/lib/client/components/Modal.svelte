@@ -50,5 +50,9 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		pointer-events: none;
+		background-color: black;
+		border-radius: 10px;
+		padding: 20px;
+		box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
 	}
 </style>
