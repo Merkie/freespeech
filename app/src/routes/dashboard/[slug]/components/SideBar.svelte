@@ -7,17 +7,17 @@
 		class={$DashboardPage === DashboardPages.account ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.account)}
 	>
-		<i class="bx bx-user-circle" /> <span>Account</span></button
+		<i class={"bx bx"+($DashboardPage === DashboardPages.account ? 's' : '')+"-user-circle"} /> <span>Account</span></button
 	>
 	<button
 		class={$DashboardPage === DashboardPages.projects ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.projects)}
-		><i class="bx bx-grid-alt" /> <span>Projects</span></button
+		><i class={"bx bx"+($DashboardPage === DashboardPages.projects ? 's' : '')+"-grid-alt"} /> <span>Projects</span></button
 	>
 	<button
 		class={$DashboardPage === DashboardPages.explore ? 'selected' : ''}
 		on:click={() => ($DashboardPage = DashboardPages.explore)}
-		><i class="bx bx-compass" /> <span>Explore</span></button
+		><i class={"bx bx"+($DashboardPage === DashboardPages.explore ? 's' : '')+"-compass"} /> <span>Explore</span></button
 	>
 	<!-- <button
 		disabled={true}
@@ -57,6 +57,8 @@
 		align-items: center;
 		gap: 10px;
 		border-color: var(--base-300) !important;
+		flex-direction: column;
+		justify-content: center;
 	}
 	button:hover {
 		background: var(--base-200);
@@ -90,11 +92,13 @@
 		div {
 			flex-direction: row;
 			width: 100%;
-			height: 90px;
+			height: 120px;
+			transform: translateY(20px);
 			position: fixed;
 			bottom: 0;
 			padding-top: 0px;
 			gap: 0;
+			border-top: 1px solid var(--base-400);
 		}
 		div button {
 			width: 100%;
@@ -104,6 +108,27 @@
 			justify-content: center;
 			gap: 0;
 			padding-bottom: 30px;
+		}
+
+		.selected {
+			background: var(--base-100) !important;
+			border: none !important;
+		}
+
+		.selected span {
+			opacity: 1;
+		}
+
+		button:hover {
+			transform: none;
+			background-color: var(--base-100);
+		}
+
+		button span {
+			display: block;
+			font-size: 14px;
+			margin-top: 10px;
+			opacity: 0;
 		}
 	}
 </style>
