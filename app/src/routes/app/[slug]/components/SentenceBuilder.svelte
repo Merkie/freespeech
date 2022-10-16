@@ -56,7 +56,7 @@
 <style>
 	section {
 		display: flex;
-		height: 50px;
+		height: 75px;
 		background: var(--tiles-background);
 		padding: 10px;
 	}
@@ -68,6 +68,7 @@
 		cursor: pointer;
 	}
 	button {
+		margin-top: 10px;
 		font-size: 40px;
 		padding: 0;
 		background: transparent;

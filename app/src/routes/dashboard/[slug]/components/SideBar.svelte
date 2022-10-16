@@ -57,7 +57,7 @@
 		align-items: center;
 		gap: 10px;
 		border-color: var(--base-300) !important;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: center;
 	}
 	button:hover {
@@ -101,13 +101,7 @@
 			border-top: 1px solid var(--base-400);
 		}
 		div button {
-			width: 100%;
-			height: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 0;
-			padding-bottom: 30px;
+			flex-direction: column;
 		}
 
 		.selected {
@@ -127,7 +121,8 @@
 		button span {
 			display: block;
 			font-size: 14px;
-			margin-top: 10px;
+			margin-top: 5px;
+			margin-bottom: 20px;
 			opacity: 0;
 		}
 	}
