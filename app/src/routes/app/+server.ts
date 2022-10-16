@@ -8,9 +8,9 @@ export const GET: RequestHandler = async ({ fetch, params }) => {
 		//@ts-ignore
 		user = await trpc(fetch).query('user:me_whole');
 	} catch (error) {
-		throw redirect(302, '/portal');
+		throw redirect(302, '/portal?login=true');
 	}
-	if (!user) throw redirect(302, '/portal');
+	if (!user) throw redirect(302, '/portal?login=true');
 
 	// sort by most recent
 	let user_projects = user?.projects.sort((a, b) => {
