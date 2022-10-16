@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { clickOutside } from '$lib/client/clickOutside';
 	import Modal from '$lib/client/components/Modal.svelte';
-	import Spinner from '$lib/client/components/Spinner.svelte';
 	import { IsProjectCreationModalOpen } from '$lib/client/stores';
 	//@ts-nocheck
 

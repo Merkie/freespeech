@@ -3,8 +3,6 @@
 	// Trpc
 	import trpc from '$lib/client/trpc';
 	import { CloneModalProject } from '$lib/client/stores';
-	import { clickOutside } from '$lib/client/clickOutside';
-	import Spinner from '$lib/client/components/Spinner.svelte';
 	import Modal from '$lib/client/components/Modal.svelte';
 
 	let loading = false;

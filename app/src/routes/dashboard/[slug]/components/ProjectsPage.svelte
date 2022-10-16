@@ -3,6 +3,11 @@
 	import type { Project } from '@prisma/client';
 	import CreateProjectModal from './CreateProjectModal.svelte';
 	import ProjectCard from './ProjectCard.svelte';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+
+	// If the user is being redirected to create a new project
+	const is_creating = $page.url.searchParams.get('create') === 'true';
 
 	// Sort the projects by last updated
 	let projects = $Me.projects.sort((a, b) => {
@@ -17,6 +22,13 @@
 		// @ts-ignore
 		projects = [project, ...projects];
 	};
+
+	// if we're creating a project we need to open the modal
+	onMount(() => {
+		if (is_creating) {
+			open_project_creation_modal();
+		}
+	});
 </script>
 
 <span class="header"

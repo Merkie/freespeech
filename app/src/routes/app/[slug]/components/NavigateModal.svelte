@@ -8,10 +8,6 @@
 	// Stores
 	import { AppProject, NavigationTile, CurrentPageId } from '$lib/client/stores';
 
-	// Click outside
-	import { clickOutside } from '$lib/client/clickOutside';
-
-	let select_value;
 	let creating_page = false;
 	let page_select: HTMLSelectElement;
 
