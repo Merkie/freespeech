@@ -333,17 +333,20 @@
 	img {
 		left: 50%;
 		transform: translateX(-50%);
-		top: 10px;
+		top: 5px;
 		height: 60%;
 		width: auto;
 		object-fit: contain;
 	}
 
 	p {
+		text-align: center;
 		font-size: 18px;
 		left: 50%;
 		transform: translateX(-50%);
 		overflow-wrap: anywhere;
+		white-space: pre-wrap;
+		width: 100%;
 	}
 	.accent {
 		position: absolute;
