@@ -63,7 +63,7 @@
 		bind:this={passwordElement}
 		on:keypress={(e) => {
 			if (e.key === 'Enter') {
-				if (is_email_valid) authenticate(emailElement.value, passwordElement.value, name);
+				authenticate(emailElement.value, passwordElement.value, name);
 			}
 		}}
 		type={is_password_visible ? 'text' : 'password'}
@@ -74,7 +74,7 @@
 	{/if}
 	<button
 		on:click={() => {
-			if (is_email_valid) authenticate(emailElement.value, passwordElement.value, name);
+			authenticate(emailElement.value, passwordElement.value, name);
 		}}>{is_login ? 'Sign in' : 'Create account'}</button
 	>
 </div>
