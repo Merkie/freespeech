@@ -51,7 +51,6 @@ export const load: Load = async ({ params, fetch }) => {
 		for (const tile of page.tiles) {
 			if (tile.link_id) {
 				linked_tiles.push(tile);
-				console.log(tile.link_id);
 				if (!fetch_requests.includes(tile.link_id)) fetch_requests.push(tile.link_id);
 			}
 		}

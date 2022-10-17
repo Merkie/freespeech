@@ -25,6 +25,7 @@
 
 	// Types
 	import type { Tile } from '@prisma/client';
+	import { tick } from 'svelte';
 
 	// Props
 	export let tile: Tile;
@@ -72,6 +73,7 @@
 		loading = false;
 	};
 
+	//@ts-ignore
 	const find_root_navigation = (cursor_tile: Tile) => {
 		if (cursor_tile.link_id) {
 			// for (const page of $AppProject.pages) {
@@ -97,7 +99,9 @@
 		}
 	};
 
-	const handle_interaction = async () => {
+	//@ts-ignore
+	const handle_interaction = async (e) => {
+		if(e.clientX === 0 && e.clientY === 0) return;
 		if ($InEditMode) {
 			loading = true;
 			if ($EditorTool === EditorTools.text) {
@@ -310,7 +314,7 @@
 	/>
 	<p
 		bind:this={tileTextElement}
-		on:input={save_tile}
+		on:change={save_tile}
 		spellcheck="false"
 		contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
 		style={`
