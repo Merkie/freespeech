@@ -12,7 +12,8 @@
 	import trpc from '$lib/client/trpc';
 
 	// State
-	let name = 'Home';
+	let current_page_index: number;
+	let name = 'Home'; // set to home by default
 	let refreshing = false;
 
 	//bindings
@@ -35,36 +36,35 @@
 	};
 
 	// Rename page
-	const handle_rename_page = async (e: { target: any }) => {
-		const updated_page = await trpc(fetch).mutation('page:rename', {
-			id: $CurrentPageId,
-			name: e.target.innerText
-		});
-		if (!updated_page) return;
+	const handle_rename_page = async (new_name: string) => {
+		// Prevent the user from renaming the page to 'home', this is reserved name
+		if(new_name.toLowerCase() === 'home') {
+			alert('Please choose a different name for this page');
+			return;
+		} else {
+			const updated_page = await trpc(fetch).mutation('page:rename', {
+				id: $CurrentPageId,
+				name: new_name
+			});
+			if (!updated_page) return;
 
-		$AppProject.pages = $AppProject.pages.map((page) => {
-			if (page.id === updated_page.id) {
-				return { ...page, name: updated_page.name };
-			}
-			return page;
-		});
+			$AppProject.pages = $AppProject.pages.map((page) => {
+				if (page.id === updated_page.id) {
+					return { ...page, name: updated_page.name };
+				}
+				return page;
+			});
+		}
 	};
 
 	$: {
-		let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+		// update the current page index
+		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+	
+		// wrapped in try/catch because element may not be rendered
 		try {
 			name = $AppProject.pages[current_page_index].name;
-		} catch (e) {
-			name = 'Home222';
-		}
-		// save the page name if edited
-		if (!$InEditMode) {
-			try {
-				if (page_header.innerText !== name) {
-					handle_rename_page({ target: page_header });
-				}
-			} catch (e) {}
-		}
+		} catch(e) {}
 	}
 </script>
 
@@ -81,7 +81,7 @@
 	<button disabled={!($PageHistoryIndex < $PageHistory.length - 1)} on:click={navigate_backwards}>
 		<i class="bx bx-left-arrow-alt" />
 	</button>
-	<p bind:this={page_header} contenteditable={$EditorTool == EditorTools.text && $InEditMode}>
+	<p bind:this={page_header} on:input={() => handle_rename_page(page_header.innerText)} contenteditable={name != 'Home' && $EditorTool == EditorTools.text && $InEditMode}>
 		{name}
 	</p>
 	<button disabled={!($PageHistoryIndex > 0)} on:click={navigate_forwards}>
