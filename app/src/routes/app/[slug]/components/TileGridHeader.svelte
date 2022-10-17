@@ -59,7 +59,9 @@
 
 	$: {
 		// update the current page index
-		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+		try {
+			current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+		} catch(e) {}
 	
 		// wrapped in try/catch because element may not be rendered
 		try {

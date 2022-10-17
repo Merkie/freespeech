@@ -36,7 +36,8 @@
 		$InSettingsPage = false;
 		edit_unlocked = false;
 		is_ga_keypad_open = false;
-		$PageHistory = [];
+		const home_page_id = $AppProject.pages.find((page) => page.name.toLowerCase() === 'home')?.id;
+		$PageHistory = [home_page_id];
 		$PageHistoryIndex = 0;
 	};
 
