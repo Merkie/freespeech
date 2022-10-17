@@ -177,9 +177,14 @@
 					(t) => t.id === tile.id
 				);
 
+				console.log(tile_index);
+				console.log($AppProject.pages[current_page_index].tiles[tile_index]);
+
+				add_to_edited_tiles();
+
 				if ($AppProject.pages[current_page_index].tiles[tile_index].link_id) {
 					$AppProject.pages[current_page_index].tiles[tile_index].link_id = null;
-				} else {
+				} else {0
 					const last_page_index = $AppProject.pages.findIndex(
 						(t) => t.id === $PageHistory[$PageHistoryIndex + 1]
 					);
@@ -202,8 +207,6 @@
 						tile_index: tile.tile_index
 					};
 				}
-
-				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.trash) {
 				$AppProject.pages[current_page_index].tiles = $AppProject.pages[
 					current_page_index
