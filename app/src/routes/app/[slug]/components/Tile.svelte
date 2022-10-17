@@ -24,7 +24,7 @@
 	} from '$lib/client/stores';
 
 	// Helpers
-	import { blobToBase64 } from '$lib/client/blob2base64';
+	import { blobToBase64 } from '$lib/client/ClientLogic';
 
 	// Types
 	import type { Tile } from '@prisma/client';

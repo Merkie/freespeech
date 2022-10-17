@@ -1,5 +1,5 @@
 <script lang="ts">
-	import isEmail from '$lib/client/isEmail';
+	import { isEmail } from '$lib/client/ClientLogic';
 	import trpc from '$lib/client/trpc';
 
 	// Props

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { blobToBase64 } from '$lib/client/blob2base64';
+	import { blobToBase64 } from '$lib/client/ClientLogic';
 	import { Me } from '$lib/client/stores';
 	import trpc from '$lib/client/trpc';
 
