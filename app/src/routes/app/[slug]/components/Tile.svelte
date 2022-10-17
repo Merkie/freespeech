@@ -101,7 +101,7 @@
 
 	//@ts-ignore
 	const handle_interaction = async (e) => {
-		if(e.clientX === 0 && e.clientY === 0) return;
+		if (e.clientX === 0 && e.clientY === 0) return;
 		if ($InEditMode) {
 			loading = true;
 			if ($EditorTool === EditorTools.text) {

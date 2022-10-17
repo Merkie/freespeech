@@ -58,12 +58,12 @@
 			name = 'Home222';
 		}
 		// save the page name if edited
-		if(!$InEditMode) {
+		if (!$InEditMode) {
 			try {
-				if(page_header.innerText !== name) {
-					handle_rename_page({target: page_header});
+				if (page_header.innerText !== name) {
+					handle_rename_page({ target: page_header });
 				}
-			} catch(e) {}
+			} catch (e) {}
 		}
 	}
 </script>
