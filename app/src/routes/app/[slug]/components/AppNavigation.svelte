@@ -16,14 +16,20 @@
 		PageHistoryIndex,
 		EditedTiles
 	} from '$lib/client/stores';
+	
+	// Components
+	import Spinner from '$lib/client/components/Spinner.svelte';
 	import GuidedAccessModal from './GuidedAccessModal.svelte';
 
+	// State
 	let edit_unlocked = false;
 	let is_ga_keypad_open = false;
+	let saving = false;
 
 	import trpc from '$lib/client/trpc';
 
 	// Resets the state of the app back to the home page
+	// triggers when clicking the home page
 	const reset_state = () => {
 		$InEditMode = false;
 		$CurrentPageId = $AppProject.pages[0].id;
@@ -34,6 +40,7 @@
 		$PageHistoryIndex = 0;
 	};
 
+	// Handle's toggling the edit button
 	const handle_edit_toggle = async () => {
 		if ($GuidedAccessPin.length > 1 && !edit_unlocked) {
 			is_ga_keypad_open = true;
@@ -53,6 +60,7 @@
 		}
 	};
 
+	// Handles clicking the settings button in the app navigation
 	const handle_settings_click = () => {
 		if ($GuidedAccessPin.length > 1 && !edit_unlocked) {
 			is_ga_keypad_open = true;
@@ -62,14 +70,13 @@
 		$InEditMode = false;
 	};
 
+	// Updates all the tiles on the server
 	const update_tiles = async () => {
 		const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
-		for await (const id of $EditedTiles) {
-			const tile = all_tiles.find((tile) => tile.id === id);
-			if (tile) {
-				await trpc(fetch).mutation('tile:edit', tile);
-			}
-		}
+		const edited_tiles = $EditedTiles.map((id) => all_tiles.find((tile) => tile.id == id));
+		saving = true;
+		await trpc(fetch).mutation('tile:edit_many', edited_tiles);
+		saving = false;
 		$EditedTiles = [];
 	}
 
@@ -104,6 +111,10 @@
 		on:click={handle_settings_click}><i class="bx bxs-cog" /> <span>Settings</span></button
 	>
 </section>
+
+{#if saving}
+	<Spinner />
+{/if}
 
 <style>
 	section {

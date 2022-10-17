@@ -1,5 +1,7 @@
 <script lang="ts">
+	// Needed to mess with user selection
 	import '$app/environment';
+
 	// Trpc
 	import trpc from '$lib/client/trpc';
 
@@ -26,7 +28,6 @@
 
 	// Types
 	import type { Tile } from '@prisma/client';
-	import { tick } from 'svelte';
 
 	// Props
 	export let tile: Tile;
@@ -38,10 +39,15 @@
 	let tileTextElement: HTMLParagraphElement;
 	let file_input: HTMLInputElement;
 	let files: FileList;
+
+	// This doesnt actually display anything it just disables
+	// the tile while it's being edited or something is uploading etc.
 	let loading = false;
 
+	// The index of the current page
 	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
 
+	// Uploads an image to the server and returns it back to the tile and add the tile to edit pages
 	const handle_upload = async (file: File) => {
 		loading = true;
 		var reader = new FileReader(); // Make reader
@@ -66,21 +72,17 @@
 			(t) => t.id === tile.id
 		);
 		$AppProject.pages[current_page_index].tiles[tile_index].image = url;
-		await trpc(fetch).mutation(
-			'tile:edit',
-			//@ts-ignore
-			$AppProject.pages[current_page_index].tiles[tile_index]
-		);
+		add_to_edited_tiles();
 		loading = false;
 	};
 
+	// Finds the root navigation tile recursively
 	//@ts-ignore
 	const find_root_navigation = (cursor_tile: Tile) => {
 		if (cursor_tile.link_id) {
 			const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
 			const link_tile = all_tiles.find((tile) => tile.id === cursor_tile.link_id);
 			if (link_tile) {
-				console.log(link_tile.display_text);
 				return find_root_navigation(link_tile);
 			} else {
 				return cursor_tile;
@@ -90,6 +92,8 @@
 		}
 	};
 
+	// Handle's interaction with tile in all modes.
+	// Maybe split this up into a few different functions depending on the mode?
 	//@ts-ignore
 	const handle_interaction = async (e) => {
 		if (e.clientX === 0 && e.clientY === 0) return;
@@ -109,11 +113,7 @@
 				);
 				$AppProject.pages[current_page_index].tiles[tile_index][`${$SelectedColorMode}_color`] =
 					$SelectedColor;
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[tile_index]
-				);
+				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.swap) {
 				if (!$SwappedTile) {
 					$SwappedTile = tile;
@@ -147,50 +147,29 @@
 				$SwappedTile = null;
 
 				// push both updates to server
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[swap_tile_index]
-				);
-
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[current_tile_index]
-				);
+				add_to_edited_tiles($AppProject.pages[current_page_index].tiles[swap_tile_index].id);
+				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.accent) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
 				);
 				$AppProject.pages[current_page_index].tiles[tile_index].is_accented =
 					!$AppProject.pages[current_page_index].tiles[tile_index].is_accented;
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[tile_index]
-				);
+				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.invisible) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
 				);
 				$AppProject.pages[current_page_index].tiles[tile_index].is_invisible =
 					!$AppProject.pages[current_page_index].tiles[tile_index].is_invisible;
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[tile_index]
-				);
+				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.silent) {
 				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 					(t) => t.id === tile.id
 				);
 				$AppProject.pages[current_page_index].tiles[tile_index].is_silent =
 					!$AppProject.pages[current_page_index].tiles[tile_index].is_silent;
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[tile_index]
-				);
+				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.navigate) {
 				$NavigationTile = tile;
 			} else if ($EditorTool === EditorTools.template) {
@@ -224,11 +203,7 @@
 					};
 				}
 
-				await trpc(fetch).mutation(
-					'tile:edit',
-					//@ts-ignore
-					$AppProject.pages[current_page_index].tiles[tile_index]
-				);
+				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.trash) {
 				$AppProject.pages[current_page_index].tiles = $AppProject.pages[
 					current_page_index
@@ -247,6 +222,15 @@
 		}
 	};
 
+	// Adds the tile id to the edited tiles array so it can be saved to the server
+	const add_to_edited_tiles = (id: string = tile.id) => {
+		// add to edited tiles
+		if (!$EditedTiles.includes(id)) {
+			$EditedTiles = [...$EditedTiles, id];
+		}
+	}
+
+	// Called on input when the user is editing the tile's text
 	const edit_tile = async () => {
 		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 			(t) => t.id === tile.id
@@ -258,27 +242,8 @@
 			$AppProject.pages[current_page_index].tiles[tile_index].speak_text =
 				tileTextElement.innerText;
 		}
-		// add to edited tiles
-		if (!$EditedTiles.includes(tile.id)) {
-			$EditedTiles = [...$EditedTiles, tile.id];
-		}
+		add_to_edited_tiles();
 	}
-
-	const save_tile = async () => {
-		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-			(t) => t.id === tile.id
-		);
-		if ($EditTextMode === 'display') {
-			$AppProject.pages[current_page_index].tiles[tile_index].display_text =
-				tileTextElement.innerText;
-		} else {
-			$AppProject.pages[current_page_index].tiles[tile_index].speak_text =
-				tileTextElement.innerText;
-		}
-		const updated_tile = $AppProject.pages[current_page_index].tiles.find((t) => t.id === tile.id);
-		//@ts-ignore
-		await trpc(fetch).mutation('tile:edit', updated_tile);
-	};
 </script>
 
 <button

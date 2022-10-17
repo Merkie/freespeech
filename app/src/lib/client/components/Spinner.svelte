@@ -1,19 +1,35 @@
-<div class="lds-spinner">
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-	<div />
-</div>
+<main>
+	<div class="lds-spinner">
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+		<div />
+	</div>
+</main>
 
 <style>
+	main {
+		position: absolute;
+		width: 80px;
+		height: 80px;
+		padding: 20px;
+		background-color: rgba(0, 0, 0, 0.657);
+		box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+		border-radius: 10px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 999;
+		pointer-events: none;
+	}
 	.lds-spinner {
 		color: whitesmoke;
 		display: inline-block;

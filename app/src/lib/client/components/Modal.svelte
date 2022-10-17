@@ -8,7 +8,7 @@
 <div>
 	<h1>{title}</h1>
 	<slot />
-	<div style={`pointer-events: none; opacity: ${loading ? '1' : '0'}`} class="spinner">
+	<div style={`pointer-events: none; opacity: ${loading ? '1' : '0'}`}>
 		<Spinner />
 	</div>
 </div>
@@ -40,19 +40,5 @@
 
 	div * {
 		width: calc(100% - 35px);
-	}
-
-	.spinner {
-		all: unset;
-		width: fit-content !important;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		pointer-events: none;
-		background-color: black;
-		border-radius: 10px;
-		padding: 20px;
-		box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
 	}
 </style>

@@ -134,12 +134,27 @@ export default router<Context, IMeta>()
 
 			// itterate over each tile and update it
 			for (const tile of tiles) {
+				const input_tile = input.find((input_tile) => input_tile.id === tile.id);
+				if (!input_tile) continue;
 				await prismaClient.tile.update({
 					where: {
 						id: tile.id
 					},
 					data: {
-						tile_index: input.find((t) => t.id === tile.id)?.tile_index
+						tile_index: input_tile.tile_index,
+						tap_count: input_tile.tap_count,
+						link_id: input_tile.link_id,
+						display_text: input_tile.display_text,
+						speak_text: input_tile.speak_text,
+						image: input_tile.image,
+						navigation_page_id: input_tile.navigation_page_id,
+						modifier: input_tile.modifier,
+						background_color: input_tile.background_color,
+						border_color: input_tile.border_color,
+						text_color: input_tile.text_color,
+						is_silent: input_tile.is_silent,
+						is_invisible: input_tile.is_invisible,
+						is_accented: input_tile.is_accented
 					}
 				});
 			}

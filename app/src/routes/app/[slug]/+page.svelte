@@ -17,6 +17,7 @@
 	import html2canvas from 'html2canvas';
 	import trpc from '$lib/client/trpc';
 	import TextEditorPopup from './components/TextEditorPopup.svelte';
+	import Spinner from '$lib/client/components/Spinner.svelte';
 
 	$AppProject = data;
 
