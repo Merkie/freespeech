@@ -19,7 +19,8 @@
 		if (!validate_response) return alert('Invalid credentials');
 
 		// 2) If successful, save the token to cookies
-		document.cookie = 'freespeech-token=' + validate_response + ';';
+		// 1 week expiration
+		document.cookie = 'freespeech-token=' + validate_response + ';max-age=' + 60 * 60 * 24 * 7;
 
 		// 3) Redirect to the dashboard
 		window.location.href = '/dashboard';
