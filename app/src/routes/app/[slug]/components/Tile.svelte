@@ -17,7 +17,8 @@
 		PageHistoryIndex,
 		Sentence,
 		SwappedTile,
-		EditTextMode
+		EditTextMode,
+		EditedTiles
 	} from '$lib/client/stores';
 
 	// Helpers
@@ -76,15 +77,6 @@
 	//@ts-ignore
 	const find_root_navigation = (cursor_tile: Tile) => {
 		if (cursor_tile.link_id) {
-			// for (const page of $AppProject.pages) {
-			// 	for (const page_tile of page.tiles) {
-			// 		console.log(page_tile.id, cursor_tile.link_id);
-			// 		if(page_tile.id === cursor_tile.link_id) {
-			// 			console.log(page_tile.display_text, page.name)
-			// 			return find_root_navigation(page_tile);
-			// 		}
-			// 	}
-			// }
 			const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
 			const link_tile = all_tiles.find((tile) => tile.id === cursor_tile.link_id);
 			if (link_tile) {
@@ -94,7 +86,6 @@
 				return cursor_tile;
 			}
 		} else {
-			// console.log(tile.display_text);
 			return cursor_tile;
 		}
 	};
@@ -256,6 +247,23 @@
 		}
 	};
 
+	const edit_tile = async () => {
+		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+			(t) => t.id === tile.id
+		);
+		if ($EditTextMode === 'display') {
+			$AppProject.pages[current_page_index].tiles[tile_index].display_text =
+				tileTextElement.innerText;
+		} else {
+			$AppProject.pages[current_page_index].tiles[tile_index].speak_text =
+				tileTextElement.innerText;
+		}
+		// add to edited tiles
+		if (!$EditedTiles.includes(tile.id)) {
+			$EditedTiles = [...$EditedTiles, tile.id];
+		}
+	}
+
 	const save_tile = async () => {
 		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
 			(t) => t.id === tile.id
@@ -314,7 +322,7 @@
 	/>
 	<p
 		bind:this={tileTextElement}
-		on:change={save_tile}
+		on:input={edit_tile}
 		spellcheck="false"
 		contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
 		style={`

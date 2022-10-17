@@ -63,6 +63,8 @@ export const CloneModalProject = writable<Project | null>(null);
 export const SwappedTile = writable<Tile | null>(null);
 // the mode of the text editor
 export const EditTextMode = writable<'display' | 'speak'>('display');
+// list of edited tiles to update when changes are saved
+export const EditedTiles = writable<string[]>([]);
 
 // Selected voice persistent storage
 export const SelectedVoice = writable(

@@ -6,7 +6,7 @@
 	import Modal from '$lib/client/components/Modal.svelte';
 
 	// Stores
-	import { AppProject, NavigationTile, CurrentPageId } from '$lib/client/stores';
+	import { AppProject, NavigationTile, CurrentPageId, EditedTiles } from '$lib/client/stores';
 
 	let creating_page = false;
 	let page_select: HTMLSelectElement;

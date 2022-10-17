@@ -13,12 +13,15 @@
 		GuidedAccessPin,
 		SwappedTile,
 		PageHistory,
-		PageHistoryIndex
+		PageHistoryIndex,
+		EditedTiles
 	} from '$lib/client/stores';
 	import GuidedAccessModal from './GuidedAccessModal.svelte';
 
 	let edit_unlocked = false;
 	let is_ga_keypad_open = false;
+
+	import trpc from '$lib/client/trpc';
 
 	// Resets the state of the app back to the home page
 	const reset_state = () => {
@@ -31,7 +34,7 @@
 		$PageHistoryIndex = 0;
 	};
 
-	const handle_edit_toggle = () => {
+	const handle_edit_toggle = async () => {
 		if ($GuidedAccessPin.length > 1 && !edit_unlocked) {
 			is_ga_keypad_open = true;
 			return;
@@ -46,6 +49,7 @@
 			window.getSelection()?.removeAllRanges();
 			$EditorTool = EditorTools.text;
 			$CloneModalProject = null;
+			await update_tiles();
 		}
 	};
 
@@ -57,6 +61,17 @@
 		$InSettingsPage = true;
 		$InEditMode = false;
 	};
+
+	const update_tiles = async () => {
+		const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
+		for await (const id of $EditedTiles) {
+			const tile = all_tiles.find((tile) => tile.id === id);
+			if (tile) {
+				await trpc(fetch).mutation('tile:edit', tile);
+			}
+		}
+		$EditedTiles = [];
+	}
 
 	$: {
 		if (edit_unlocked) {
