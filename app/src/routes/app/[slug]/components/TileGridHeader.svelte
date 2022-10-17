@@ -15,6 +15,9 @@
 	let name = 'Home';
 	let refreshing = false;
 
+	//bindings
+	let page_header: HTMLElement;
+
 	// Navigate backwards
 	const navigate_backwards = () => {
 		if ($PageHistoryIndex < $PageHistory.length - 1) {
@@ -52,7 +55,15 @@
 		try {
 			name = $AppProject.pages[current_page_index].name;
 		} catch (e) {
-			name = 'Home';
+			name = 'Home222';
+		}
+		// save the page name if edited
+		if(!$InEditMode) {
+			try {
+				if(page_header.innerText !== name) {
+					handle_rename_page({target: page_header});
+				}
+			} catch(e) {}
 		}
 	}
 </script>
@@ -70,7 +81,7 @@
 	<button disabled={!($PageHistoryIndex < $PageHistory.length - 1)} on:click={navigate_backwards}>
 		<i class="bx bx-left-arrow-alt" />
 	</button>
-	<p on:input={handle_rename_page} contenteditable={$EditorTool == EditorTools.text && $InEditMode}>
+	<p bind:this={page_header} contenteditable={$EditorTool == EditorTools.text && $InEditMode}>
 		{name}
 	</p>
 	<button disabled={!($PageHistoryIndex > 0)} on:click={navigate_forwards}>
