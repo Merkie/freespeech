@@ -18,11 +18,6 @@
 	let is_email_taken = false;
 
 	$: {
-		if(emailElement) {
-			try {
-				email = emailElement.value;
-			} catch(e) {}
-		}
 		// Email validation, first we check if there is an email
 		if (email) {
 			// Then we check if it's a valid email
@@ -46,7 +41,7 @@
 
 <div>
 	<label for="email">Email address</label>
-	<input type="text" bind:this={emailElement} name="email" />
+	<input type="text" on:change={() => email = emailElement.value} bind:this={emailElement} name="email" />
 	{#if email && !is_email_valid}
 		<p class="error">Invalid email address</p>
 	{/if}
@@ -68,7 +63,7 @@
 		bind:this={passwordElement}
 		on:keypress={(e) => {
 			if (e.key === 'Enter') {
-				if (is_email_valid) authenticate(email, passwordElement.value, name);
+				if (is_email_valid) authenticate(emailElement.value, passwordElement.value, name);
 			}
 		}}
 		type={is_password_visible ? 'text' : 'password'}
@@ -79,7 +74,7 @@
 	{/if}
 	<button
 		on:click={() => {
-			if (is_email_valid) authenticate(email, passwordElement.value, name);
+			if (is_email_valid) authenticate(emailElement.value, passwordElement.value, name);
 		}}>{is_login ? 'Sign in' : 'Create account'}</button
 	>
 </div>

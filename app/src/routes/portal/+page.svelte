@@ -6,6 +6,7 @@
 	let is_login = $page.url.searchParams.get('login') === 'true';
 
 	const authenticate = async (email: string, password: string, name: string | null) => {
+		console.log(email, password, name);
 		// 1) Call a tRPC mutation request to login
 		const validate_response = await trpc(fetch).mutation(
 			`auth:${is_login ? 'login' : 'create_account'}`,
