@@ -72,6 +72,32 @@
 		loading = false;
 	};
 
+	const find_root_navigation = (cursor_tile: Tile) => {
+		if (cursor_tile.link_id) {
+			// for (const page of $AppProject.pages) {
+			// 	for (const page_tile of page.tiles) {
+			// 		console.log(page_tile.id, cursor_tile.link_id);
+			// 		if(page_tile.id === cursor_tile.link_id) {
+			// 			console.log(page_tile.display_text, page.name)
+			// 			return find_root_navigation(page_tile);
+			// 		}
+			// 	}
+			// }
+			const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
+			const link_tile = all_tiles.find((tile) => tile.id === cursor_tile.link_id);
+			if (link_tile) {
+				console.log(link_tile.display_text);
+				return find_root_navigation(link_tile);
+			} else {
+				return cursor_tile;
+			}
+		} else {
+			// console.log(tile.display_text);
+			return cursor_tile;
+		}
+	};
+
+
 	const handle_interaction = async () => {
 		if ($InEditMode) {
 			loading = true;
@@ -186,18 +212,20 @@
 					);
 
 					let last_tile = $AppProject.pages[last_page_index].tiles[tile_index];
-					let last_tile_id = last_tile.id;
+					let root_navigation = find_root_navigation(last_tile);
+					let root_navigation_id = root_navigation.id;
 
 					// @ts-ignore
-					delete last_tile.id;
+					delete root_navigation.id;
 					// @ts-ignore
-					delete last_tile.link_id;
+					delete root_navigation.link_id;
 
 					// Update tile
 					$AppProject.pages[current_page_index].tiles[tile_index] = {
 						...$AppProject.pages[current_page_index].tiles[tile_index],
-						...last_tile,
-						link_id: last_tile_id,
+						...root_navigation,
+						tilePageId: tile.tilePageId,
+						link_id: root_navigation_id,
 						tile_index: tile.tile_index
 					};
 				}

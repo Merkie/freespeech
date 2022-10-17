@@ -171,4 +171,29 @@ export default router<Context, IMeta>()
 			// 3) Return the tile
 			return tile;
 		}
+	})
+	.query('fetch_many', {
+		input: z.array(z.string()),
+		resolve: async ({ ctx, input }) => {
+			const user = ctx.user;
+			if (!user) {
+				return null;
+			}
+
+			// 1) Get the tiles
+			const tiles = await prismaClient.tile.findMany({
+				where: {
+					id: {
+						in: input
+					}
+				}
+			});
+			if (!tiles) return null;
+
+			// 2) Check if the user can fetch the tiles
+			// if (tiles.some((tile: Tile) => tile.userId !== user.id)) return null;
+
+			// 3) Return the tiles
+			return tiles;
+		}
 	});
