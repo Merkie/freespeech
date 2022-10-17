@@ -7,9 +7,10 @@
 	export let authenticate: Function;
 
 	// Bindings
-	let email: string;
-	let name: string = '';
+	let name = '';
+	let email = '';
 	let passwordElement: HTMLInputElement;
+	let emailElement: HTMLInputElement;
 
 	// Booleans
 	let is_password_visible = false;
@@ -17,6 +18,11 @@
 	let is_email_taken = false;
 
 	$: {
+		if(emailElement) {
+			try {
+				email = emailElement.value;
+			} catch(e) {}
+		}
 		// Email validation, first we check if there is an email
 		if (email) {
 			// Then we check if it's a valid email
@@ -40,7 +46,7 @@
 
 <div>
 	<label for="email">Email address</label>
-	<input type="text" bind:value={email} name="email" />
+	<input type="text" bind:this={emailElement} name="email" />
 	{#if email && !is_email_valid}
 		<p class="error">Invalid email address</p>
 	{/if}
@@ -60,6 +66,11 @@
 	>
 	<input
 		bind:this={passwordElement}
+		on:keypress={(e) => {
+			if (e.key === 'Enter') {
+				if (is_email_valid) authenticate(email, passwordElement.value, name);
+			}
+		}}
 		type={is_password_visible ? 'text' : 'password'}
 		name="password"
 	/>
