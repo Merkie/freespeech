@@ -52,8 +52,12 @@
 </script>
 
 {#if $IsProjectCreationModalOpen}
-  <Modal title={'Create project'} close_modal={() => $IsProjectCreationModalOpen = false} {loading}>
-    <div>
+	<Modal
+		title={'Create project'}
+		close_modal={() => ($IsProjectCreationModalOpen = false)}
+		{loading}
+	>
+		<div>
 			<span
 				on:keypress={() => null}
 				class={using_template ? '' : 'selected'}
@@ -76,7 +80,7 @@
 			<input bind:value={columns} type="number" placeholder="8" />
 			<button disabled={loading} on:click={make_project}>Create Project</button>
 		{/if}
-  </Modal>
+	</Modal>
 {/if}
 
 <style>
@@ -102,7 +106,7 @@
 
 	input {
 		margin-bottom: 20px;
-    width: calc(100% - 35px);
+		width: calc(100% - 35px);
 	}
 
 	p {

@@ -20,7 +20,7 @@
 		// Create the page
 		const page = await trpc(fetch).mutation('page:create', {
 			id: $AppProject.id,
-			name: $AppProject.pages[current_page_index].tiles[tile_index].display_text || 'New Page',
+			name: $AppProject.pages[current_page_index].tiles[tile_index].display_text || 'New Page'
 		});
 		// Set the navigation page id to the new page id
 		$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id = page.id;
@@ -38,8 +38,11 @@
 	const handle_page_change = async (e) => {
 		$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id =
 			$AppProject.pages.find((page) => page.name === e.target.value)?.id;
-		await trpc(fetch).mutation('tile:edit', $AppProject.pages[current_page_index].tiles[tile_index]);
-	}
+		await trpc(fetch).mutation(
+			'tile:edit',
+			$AppProject.pages[current_page_index].tiles[tile_index]
+		);
+	};
 
 	$: {
 		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
@@ -50,9 +53,15 @@
 </script>
 
 {#if $NavigationTile}
-	<Modal close_modal={() => $NavigationTile = null} title="Navigation">
+	<Modal close_modal={() => ($NavigationTile = null)} title="Navigation">
 		<span>
-			<select bind:this={page_select} disabled={creating_page} on:change={handle_page_change} value={$AppProject.pages.find((page) => page.id === $NavigationTile?.navigation_page_id)?.name || 'none'}>
+			<select
+				bind:this={page_select}
+				disabled={creating_page}
+				on:change={handle_page_change}
+				value={$AppProject.pages.find((page) => page.id === $NavigationTile?.navigation_page_id)
+					?.name || 'none'}
+			>
 				<option value="none">No Navigation</option>
 				{#each $AppProject.pages as page}
 					{#if page.name.toLowerCase() !== $AppProject.pages[current_page_index].name.toLowerCase()}

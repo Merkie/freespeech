@@ -10,7 +10,10 @@
 	<title>Dashboard - FreeSpeech</title>
 </svelte:head>
 
-<Header uri={$Me.projects.length > 0 ? "app" : "dashboard/projects?create=true"} button_text="Application" />
+<Header
+	uri={$Me.projects.length > 0 ? 'app' : 'dashboard/projects?create=true'}
+	button_text="Application"
+/>
 <main>
 	<SideBar />
 	<DashboardContent />

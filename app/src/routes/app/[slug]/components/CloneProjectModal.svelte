@@ -29,8 +29,8 @@
 	<Modal {loading} title={'Clone project'} {close_modal}>
 		<div>
 			<p>
-				This is not your project so you can't make any edits to it. Would you like to clone it to your
-				library?
+				This is not your project so you can't make any edits to it. Would you like to clone it to
+				your library?
 			</p>
 			<span>
 				<button on:click={clone_project}>Clone This Project</button>

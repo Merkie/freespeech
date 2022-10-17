@@ -97,7 +97,6 @@
 		}
 	};
 
-
 	const handle_interaction = async () => {
 		if ($InEditMode) {
 			loading = true;
