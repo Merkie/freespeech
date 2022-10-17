@@ -50,10 +50,10 @@ export default router<Context, IMeta>()
 					image: true,
 					theme: true,
 					projects: true,
-					access_tokens: true,
-					tiles: true,
-					tile_pages: true,
-					s3_resources: true,
+					access_tokens: false,
+					tiles: false,
+					tile_pages: false,
+					s3_resources: false,
 					organization: true
 				}
 			});
