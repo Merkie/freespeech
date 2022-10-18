@@ -136,6 +136,7 @@ export default router<Context, IMeta>()
 			for (const tile of tiles) {
 				const input_tile = input.find((input_tile) => input_tile.id === tile.id);
 				if (!input_tile) continue;
+				console.log(input_tile.link_id);
 				await prismaClient.tile.update({
 					where: {
 						id: tile.id

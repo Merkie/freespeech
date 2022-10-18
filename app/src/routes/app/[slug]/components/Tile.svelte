@@ -47,6 +47,13 @@
 	// The index of the current page
 	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
 
+	const add_to_edited_tiles = (id: string = tile.id) => {
+		// add to edited tiles
+		if (!$EditedTiles.includes(id)) {
+			$EditedTiles = [...$EditedTiles, id];
+		}
+	}
+
 	// Uploads an image to the server and returns it back to the tile and add the tile to edit pages
 	const handle_upload = async (file: File) => {
 		loading = true;
@@ -177,21 +184,16 @@
 					(t) => t.id === tile.id
 				);
 
-				console.log(tile_index);
-				console.log($AppProject.pages[current_page_index].tiles[tile_index]);
-
-				add_to_edited_tiles();
-
-				if ($AppProject.pages[current_page_index].tiles[tile_index].link_id) {
+				if($AppProject.pages[current_page_index].tiles[tile_index].link_id) {
 					$AppProject.pages[current_page_index].tiles[tile_index].link_id = null;
-				} else {0
+				} else {
 					const last_page_index = $AppProject.pages.findIndex(
 						(t) => t.id === $PageHistory[$PageHistoryIndex + 1]
 					);
 
 					let last_tile = $AppProject.pages[last_page_index].tiles[tile_index];
 					let root_navigation = find_root_navigation(last_tile);
-					let root_navigation_id = root_navigation.id;
+					let root_navigation_id = ''+root_navigation.id; // need to make it a string
 
 					// @ts-ignore
 					delete root_navigation.id;
@@ -203,10 +205,12 @@
 						...$AppProject.pages[current_page_index].tiles[tile_index],
 						...root_navigation,
 						tilePageId: tile.tilePageId,
-						link_id: root_navigation_id,
+						link_id: root_navigation_id || null,
 						tile_index: tile.tile_index
 					};
 				}
+
+				add_to_edited_tiles();
 			} else if ($EditorTool === EditorTools.trash) {
 				$AppProject.pages[current_page_index].tiles = $AppProject.pages[
 					current_page_index
@@ -226,12 +230,7 @@
 	};
 
 	// Adds the tile id to the edited tiles array so it can be saved to the server
-	const add_to_edited_tiles = (id: string = tile.id) => {
-		// add to edited tiles
-		if (!$EditedTiles.includes(id)) {
-			$EditedTiles = [...$EditedTiles, id];
-		}
-	}
+
 
 	// Called on input when the user is editing the tile's text
 	const edit_tile = async () => {

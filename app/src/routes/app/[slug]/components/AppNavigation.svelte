@@ -57,7 +57,9 @@
 			window.getSelection()?.removeAllRanges();
 			$EditorTool = EditorTools.text;
 			$CloneModalProject = null;
-			await update_tiles();
+			if($EditedTiles.length > 0) {
+				await update_tiles();
+			}
 		}
 	};
 

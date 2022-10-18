@@ -17,7 +17,6 @@ interface CreateContextOptions {
 export async function createContextInner(_opts: CreateContextOptions) {
 	// 1) Get the token from the user's cookies
 	const access_token = _opts.cookies.get('freespeech-token');
-	console.log(access_token, 'access_token');
 	if (!access_token) return { user: null };
 
 	const response = await prismaClient.accessToken.findUnique({
