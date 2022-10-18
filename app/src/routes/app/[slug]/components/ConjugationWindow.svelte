@@ -15,6 +15,7 @@
   let loading = false;
 
   const get_conjugations = async () => {
+    conjugations = [];
     loading = true;
     // Fetch conjugations
     conjugations = await trpc(fetch).mutation('openaiconjugate', ($ConjugatingTile?.speak_text || $ConjugatingTile?.display_text)+'') || [];
@@ -26,7 +27,9 @@
     conjugations = conjugations.filter((conjugation) => conjugation.match(/^[a-zA-Z]+$/));
     // filter dupelicates
     conjugations = conjugations.filter((conjugation, index) => conjugations.indexOf(conjugation) === index);
-    
+    // only take first 5
+    conjugations = conjugations.slice(0, 5);
+
     // save them to the tile
     //@ts-ignore
     $AppProject.pages.find((page) => page.id === $CurrentPageId).tiles.find((tile) => tile.id === $ConjugatingTile?.id).conjugations = conjugations;
@@ -39,7 +42,6 @@
       ...$ConjugatingTile,
       conjugations 
     })
-  
   }
 
   const close_modal = () => {
@@ -56,12 +58,14 @@
       }
     }
   }
-
 </script>
 
 {#if $ConjugatingTile && conjugations.length > 0}
 <Modal title="" {close_modal}>
-  <span on:click={close_modal} on:keypress={() => null} style={`--rows: ${Math.floor((conjugations.length + 1) / 3)};`}>
+  <span on:keypress={() => null} style={`--rows: ${Math.floor((conjugations.length + 2) / 3)};`}>
+    {#if loading}
+      <Spinner />
+    {/if}
     <Tile tile={$ConjugatingTile} />
     {#each conjugations as word}
       <Tile tile={{...$ConjugatingTile, display_text: word, image: ''}} />
@@ -73,8 +77,8 @@
 </Modal>
 {/if}
 
-{#if loading}
-   <Spinner />
+{#if loading && conjugations.length === 0}
+  <Spinner />
 {/if}
 
 <style>
