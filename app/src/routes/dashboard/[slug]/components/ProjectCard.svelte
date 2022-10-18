@@ -19,8 +19,8 @@
 		<h1>{project.name}</h1>
 		{#if project.description}
 			<p>{project.description}</p>
-		{:else}
-			<p><i class="bx bxs-grid-alt" /> 698 Tiles</p>
+		<!-- {:else}
+			<p><i class="bx bxs-grid-alt" /> 698 Tiles</p> -->
 		{/if}
 		{#if explore}
 			<p><i class="bx bxs-time-five" /> Updated {result}</p>
