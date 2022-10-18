@@ -32,6 +32,7 @@
 
 	// Props
 	export let tile: Tile;
+	export let dummy: boolean;
 
 	// State
 	let editingTileText = false;
@@ -268,6 +269,7 @@
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
 	color: ${tile.text_color || 'auto'};
 	pointer-events: ${tile.is_invisible && !$InEditMode ? 'none' : 'auto'};
+	min-height: ${dummy ? '100px' : 'auto'};
 	`}
 	disabled={loading}
 	on:click={handle_interaction}
@@ -330,7 +332,6 @@
 		font-size: 2rem;
 		white-space: pre;
 		min-width: 0; /* NEW; needed for Firefox */
-		min-height: 80px;
 		width: 100%;
 		height: 100%;
 		text-align: center;

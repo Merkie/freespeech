@@ -66,9 +66,9 @@
     {#if loading}
       <Spinner />
     {/if}
-    <Tile tile={$ConjugatingTile} />
+    <Tile tile={$ConjugatingTile} dummy={false} />
     {#each conjugations as word}
-      <Tile tile={{...$ConjugatingTile, display_text: word, image: ''}} />
+      <Tile dummy={true} tile={{...$ConjugatingTile, display_text: word, image: ''}} />
     {/each}
     <button on:click={get_conjugations} class="refresh">
       <i class='bx bx-refresh' ></i>
