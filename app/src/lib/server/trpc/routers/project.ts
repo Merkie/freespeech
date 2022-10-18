@@ -133,6 +133,7 @@ export default router<Context, IMeta>()
 									// so will navs
 									navigation_page_id: tile.navigation_page_id || null,
 									modifier: tile.modifier || '',
+									conjugations: tile.conjugations || '',
 									background_color: tile.background_color || '',
 									border_color: tile.border_color || '',
 									text_color: tile.text_color || '',

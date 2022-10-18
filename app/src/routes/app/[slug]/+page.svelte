@@ -13,6 +13,7 @@
 	import TrashWarning from './components/TrashWarning.svelte';
 	import CloneProjectModal from './components/CloneProjectModal.svelte';
 	import TemplateModeInfo from './components/TemplateModeInfo.svelte';
+	import ConjugationWindow from './components/ConjugationWindow.svelte';
 	import { onMount } from 'svelte';
 	import html2canvas from 'html2canvas';
 	import trpc from '$lib/client/trpc';
@@ -73,6 +74,7 @@
 		<TemplateModeInfo />
 		<CloneProjectModal />
 		<TextEditorPopup />
+		<ConjugationWindow />
 	{:else}
 		<SettingsPage />
 	{/if}

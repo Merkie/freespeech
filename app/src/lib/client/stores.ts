@@ -65,6 +65,8 @@ export const SwappedTile = writable<Tile | null>(null);
 export const EditTextMode = writable<'display' | 'speak'>('display');
 // list of edited tiles to update when changes are saved
 export const EditedTiles = writable<string[]>([]);
+// Tile that is currently being conjugated
+export const ConjugatingTile = writable<Tile | null>(null);
 
 // Selected voice persistent storage
 export const SelectedVoice = writable(

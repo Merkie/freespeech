@@ -20,11 +20,12 @@
 		Sentence,
 		SwappedTile,
 		EditTextMode,
-		EditedTiles
+		EditedTiles,
+		ConjugatingTile
 	} from '$lib/client/stores';
 
 	// Helpers
-	import { blobToBase64 } from '$lib/client/ClientLogic';
+	import { blobToBase64, longpress } from '$lib/client/ClientLogic';
 
 	// Types
 	import type { Tile } from '@prisma/client';
@@ -43,6 +44,7 @@
 	// This doesnt actually display anything it just disables
 	// the tile while it's being edited or something is uploading etc.
 	let loading = false;
+	let is_conjugation_window_open = false;
 
 	// The index of the current page
 	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
@@ -229,6 +231,11 @@
 		}
 	};
 
+	const handle_conjugation = () => {
+		$Sentence = $Sentence.slice(0, -2);
+		$ConjugatingTile = tile;
+	}
+
 	// Adds the tile id to the edited tiles array so it can be saved to the server
 
 
@@ -257,7 +264,6 @@
 	border-color: ${$SwappedTile?.id === tile.id && $InEditMode ? 'var(--primary-300)' : 'auto'};
 	transform: ${$SwappedTile?.id === tile.id && $InEditMode ? 'scale(1.2)' : 'auto'};
 	z-index: ${$SwappedTile?.id === tile.id && $InEditMode ? 999 : 'auto'};
-	overflow: ${tile.navigation_page_id ? 'visible' : 'hidden'};
 	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
 	color: ${tile.text_color || 'auto'};
@@ -265,42 +271,43 @@
 	`}
 	disabled={loading}
 	on:click={handle_interaction}
+	use:longpress
+	on:dblclick={handle_conjugation}
 >
 	{#if tile.navigation_page_id}
 		<div class="folder-bit" />
 	{/if}
+	<div class="overflow-wrapper">
+		{#if tile.is_silent && $InEditMode}
+			<div class="silent">
+				<i class="bx bxs-volume-mute" />
+			</div>
+		{/if}
 
-	{#if tile.is_silent && $InEditMode}
-		<div class="silent">
-			<i class="bx bxs-volume-mute" />
-		</div>
-	{/if}
+		{#if tile.image}
+			<img src={tile.image} alt="tile icon" />
+		{/if}
 
-	{#if tile.image}
-		<img src={tile.image} alt="tile icon" />
-	{/if}
-
-	<input
-		type="file"
-		bind:this={file_input}
-		bind:files
-		on:change={() => handle_upload(files[0])}
-		style="display: none;"
-	/>
-	<p
-		bind:this={tileTextElement}
-		on:input={edit_tile}
-		spellcheck="false"
-		contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
-		style={`
-		bottom: ${tile.image ? '7%' : '50%'};
-		transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};
-		font-size: ${tile.image ? '1.2rem' : '1.5rem'};
-		`}
-	>
-		{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
-	</p>
-	{#if !tile.navigation_page_id}
+		<input
+			type="file"
+			bind:this={file_input}
+			bind:files
+			on:change={() => handle_upload(files[0])}
+			style="display: none;"
+		/>
+		<p
+			bind:this={tileTextElement}
+			on:input={edit_tile}
+			spellcheck="false"
+			contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
+			style={`
+			bottom: ${tile.image ? '7%' : '50%'};
+			transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};
+			font-size: ${tile.image ? '1.2rem' : '1.5rem'};
+			`}
+		>
+			{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
+		</p>
 		<div
 			style={`transform: ${
 				tile.is_accented
@@ -310,8 +317,8 @@
 			background-color: ${tile.border_color || 'auto'};`}
 			class="accent"
 		/>
-	{/if}
-	<i style={`opacity: ${$InEditMode && tile.link_id ? '1' : '0'};`} class="bx bx-link" />
+		<i style={`opacity: ${$InEditMode && tile.link_id ? '1' : '0'};`} class="bx bx-link" />
+	</div>
 </button>
 
 <style>
@@ -323,9 +330,19 @@
 		font-size: 2rem;
 		white-space: pre;
 		min-width: 0; /* NEW; needed for Firefox */
+		min-height: 80px;
 		width: 100%;
 		height: 100%;
 		text-align: center;
+	}
+
+	.overflow-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		width: 100%;
+		height: 100%;
 	}
 
 	button * {

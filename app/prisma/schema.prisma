@@ -53,6 +53,7 @@ model Tile {
   image              String? // The image that is displayed on the tile
   navigation_page_id Int? // The ID of the page that the tile is pointing to
   modifier           String? // The modifier that the tile is using
+  conjugations       String[]  @default([]) // The conjugations that the tile is using
   background_color   String?
   border_color       String?
   text_color         String?
