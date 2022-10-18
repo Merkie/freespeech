@@ -35,7 +35,6 @@ export const longpress = (node) => {
 	function handleMouseDown(e) {
 		window.addEventListener('mousemove', handleMoveBeforeLong);
 		timeoutPtr = window.setTimeout(() => {
-			console.log('looooong press!');
 			window.removeEventListener('mousemove', handleMoveBeforeLong);
 			node.dispatchEvent(new CustomEvent('long'));
 			// TODO - ideally make this not trigger long press again

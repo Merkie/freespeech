@@ -7,7 +7,6 @@ export const GET: RequestHandler = async ({ fetch, params }) => {
 	try {
 		//@ts-ignore
 		user = await trpc(fetch).query('user:me_whole');
-		console.log(user);
 	} catch (error) {
 		throw redirect(302, '/portal?login=true');
 	}

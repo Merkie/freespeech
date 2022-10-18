@@ -34,8 +34,6 @@ export default router<Context, IMeta>().mutation('conjugate', {
 		//@ts-ignore
 		const conjugated = response.data.choices[0].text.split(',').map((word) => word.trim());
 
-		console.log(conjugated);
-
 		return conjugated;
 	}
 });

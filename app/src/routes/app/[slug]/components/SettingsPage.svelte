@@ -99,6 +99,19 @@
 		// Reset changes_made
 		changes_made = false;
 	};
+
+	const download_project = () => {
+		const data_obj = {...$AppProject};
+		//@ts-ignore
+		delete data_obj.user;
+		const data = JSON.stringify(data_obj);
+		const blob = new Blob([data], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.download = `${$AppProject.name}.json`;
+		a.href = url;
+		a.click();
+	}
 </script>
 
 <Header uri="dashboard" button_text="Dashboard" />
@@ -149,6 +162,7 @@
 				on:click={handle_delete_btn_press}
 				style={`opacity: ${delete_button_pressed ? '1' : '0.5'}`}>Delete this project</button
 			>
+			<button on:click={download_project}><i class='bx bx-download'></i> Download project</button>
 		</span>
 	{/if}
 	<h1>Application Settings</h1>
@@ -225,6 +239,12 @@
 	span input,
 	span select {
 		flex: 1;
+	}
+
+	button {
+		display: flex;
+		align-items: center;
+		gap: 5px;
 	}
 
 	.danger {
