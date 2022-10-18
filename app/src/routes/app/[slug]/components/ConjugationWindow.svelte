@@ -66,6 +66,9 @@
     {#each conjugations as word}
       <Tile tile={{...$ConjugatingTile, display_text: word, image: ''}} />
     {/each}
+    <button on:click={get_conjugations} class="refresh">
+      <i class='bx bx-refresh' ></i>
+    </button>
   </span>
 </Modal>
 {/if}
@@ -90,7 +93,7 @@
     border-radius: 5px;
     border: 2px solid var(--tiles-border);
   }
-  .close {
+  .refresh {
     background-color: var(--tile-background);
     border: 2px var(--tiles-border) solid;
     color: var(--tiles-text);
