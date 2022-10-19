@@ -243,6 +243,7 @@
 	// Handles opening the conjugation window
 	const handle_conjugation = () => {
 		if ($InEditMode) return;
+		if(tile.speak_text?.includes('+')) return;
 		$Sentence = $Sentence.slice(0, -2);
 		$ConjugatingTile = tile;
 	};
