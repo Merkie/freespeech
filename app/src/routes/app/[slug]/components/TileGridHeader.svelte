@@ -38,7 +38,7 @@
 	// Rename page
 	const handle_rename_page = async (new_name: string) => {
 		// Prevent the user from renaming the page to 'home', this is reserved name
-		if(new_name.toLowerCase() === 'home') {
+		if (new_name.toLowerCase() === 'home') {
 			alert('Please choose a different name for this page');
 			return;
 		} else {
@@ -61,12 +61,12 @@
 		// update the current page index
 		try {
 			current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-		} catch(e) {}
-	
+		} catch (e) {}
+
 		// wrapped in try/catch because element may not be rendered
 		try {
 			name = $AppProject.pages[current_page_index].name;
-		} catch(e) {}
+		} catch (e) {}
 	}
 </script>
 
@@ -83,7 +83,11 @@
 	<button disabled={!($PageHistoryIndex < $PageHistory.length - 1)} on:click={navigate_backwards}>
 		<i class="bx bx-left-arrow-alt" />
 	</button>
-	<p bind:this={page_header} on:input={() => handle_rename_page(page_header.innerText)} contenteditable={name != 'Home' && $EditorTool == EditorTools.text && $InEditMode}>
+	<p
+		bind:this={page_header}
+		on:input={() => handle_rename_page(page_header.innerText)}
+		contenteditable={name != 'Home' && $EditorTool == EditorTools.text && $InEditMode}
+	>
 		{name}
 	</p>
 	<button disabled={!($PageHistoryIndex > 0)} on:click={navigate_forwards}>

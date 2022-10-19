@@ -16,48 +16,64 @@
 		SelectedColor,
 		SelectedColorMode,
 		PageHistory,
-		PageHistoryIndex,
 		Sentence,
 		SwappedTile,
 		EditTextMode,
 		EditedTiles,
-		ConjugatingTile
+		ConjugatingTile,
+		TemplatingPageId
 	} from '$lib/client/stores';
 
 	// Helpers
-	import { blobToBase64, longpress } from '$lib/client/ClientLogic';
+	import { blobToBase64 } from '$lib/client/ClientLogic';
 
 	// Types
 	import type { Tile } from '@prisma/client';
 
 	// Props
-	export let tile: Tile;
-	export let dummy: boolean;
+	export let tile: Tile; // the tile to be rendered
+	export let dummy: boolean = false; // if the tile is a "dummy" or non-interactable tile
 
 	// State
-	let editingTileText = false;
+	let editing_tile_text = false; // if the user is editing the tile text, controls contenteditable property
+	let loading = false; // loading state
 
 	// bindings
-	let tileTextElement: HTMLParagraphElement;
+	let tile_text_element: HTMLParagraphElement;
 	let file_input: HTMLInputElement;
-	let files: FileList;
 
-	// This doesnt actually display anything it just disables
-	// the tile while it's being edited or something is uploading etc.
-	let loading = false;
-	let is_conjugation_window_open = false;
+	// tile constants used for logic
+	const current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+	const tile_index = $AppProject.pages[current_page_index].tiles.findIndex((t) => t.id === tile.id);
+	const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
 
-	// The index of the current page
-	let current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+	// Handles all tile modifications from edit mode
+	const modify_tile = (edited_tile: any) => {
+		let edited_tile_index;
 
-	const add_to_edited_tiles = (id: string = tile.id) => {
-		// add to edited tiles
-		if (!$EditedTiles.includes(id)) {
-			$EditedTiles = [...$EditedTiles, id];
+		// if we specify an id, we have to find the index of that tile
+		if (edited_tile.id) {
+			edited_tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+				(t) => t.id === edited_tile.id
+			);
+		} else {
+			edited_tile_index = tile_index;
 		}
-	}
 
-	// Uploads an image to the server and returns it back to the tile and add the tile to edit pages
+		// change tile locally
+		$AppProject.pages[current_page_index].tiles[edited_tile_index] = {
+			...$AppProject.pages[current_page_index].tiles[tile_index],
+			...edited_tile
+		};
+		// add to edited tiles to queue for server
+		if (!$EditedTiles.includes($AppProject.pages[current_page_index].tiles[edited_tile_index].id)) {
+			$EditedTiles = [
+				...$EditedTiles,
+				$AppProject.pages[current_page_index].tiles[edited_tile_index].id
+			];
+		}
+	};
+	// Handles uploading a tile image to the server, updates the tile as well
 	const handle_upload = async (file: File) => {
 		loading = true;
 		var reader = new FileReader(); // Make reader
@@ -73,24 +89,21 @@
 		const blob = new Blob([reader.result || '']); // Convert to blob
 		const base64 = await blobToBase64(blob); // Convert to base64
 
+		// get the url back from the server
 		const url = await trpc(fetch).mutation('s3:upload', {
 			file: JSON.stringify({ blob: base64 }),
 			filename: file.name
 		});
-
-		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-			(t) => t.id === tile.id
-		);
-		$AppProject.pages[current_page_index].tiles[tile_index].image = url;
-		add_to_edited_tiles();
+		// modify tile
+		if (url) {
+			modify_tile({ image: url });
+		}
+		// bring the user out of loading state
 		loading = false;
 	};
-
-	// Finds the root navigation tile recursively
-	//@ts-ignore
-	const find_root_navigation = (cursor_tile: Tile) => {
+	// Finds the root navigation of a linked tile
+	const find_root_navigation = (cursor_tile: Tile): Tile => {
 		if (cursor_tile.link_id) {
-			const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
 			const link_tile = all_tiles.find((tile) => tile.id === cursor_tile.link_id);
 			if (link_tile) {
 				return find_root_navigation(link_tile);
@@ -101,159 +114,150 @@
 			return cursor_tile;
 		}
 	};
-
-	// Handle's interaction with tile in all modes.
-	// Maybe split this up into a few different functions depending on the mode?
-	//@ts-ignore
-	const handle_interaction = async (e) => {
+	// Handles the interraction of a tile
+	const handle_interaction = async (e: MouseEvent) => {
+		// This prevents a few glitches that can occur with random interractions
 		if (e.clientX === 0 && e.clientY === 0) return;
+
+		// If the user is in edit mode
 		if ($InEditMode) {
 			loading = true;
-			if ($EditorTool === EditorTools.text) {
-				editingTileText = true;
-				// Wait 10 miliseconds for the element to be rendered
-				await new Promise((resolve) => setTimeout(resolve, 10));
-				tileTextElement.focus();
-				window.getSelection()?.selectAllChildren(tileTextElement);
-			} else if ($EditorTool === EditorTools.image) {
-				file_input.click();
-			} else if ($EditorTool === EditorTools.color) {
-				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-					(t) => t.id === tile.id
-				);
-				$AppProject.pages[current_page_index].tiles[tile_index][`${$SelectedColorMode}_color`] =
-					$SelectedColor;
-				add_to_edited_tiles();
-			} else if ($EditorTool === EditorTools.swap) {
-				if (!$SwappedTile) {
-					$SwappedTile = tile;
-					return;
+			switch ($EditorTool) {
+				case EditorTools.text: {
+					editing_tile_text = true;
+					// Wait 10 miliseconds for the element to be rendered
+					await new Promise((resolve) => setTimeout(resolve, 10));
+					tile_text_element.focus();
+					window.getSelection()?.selectAllChildren(tile_text_element);
+					break;
 				}
-				// swap tiles
-				const current_tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-					(t) => t.id === tile.id
-				);
-				const swap_tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-					(t) => t.id === $SwappedTile?.id
-				);
-
-				// swap
-				$AppProject.pages[current_page_index].tiles[swap_tile_index] = {
-					...$AppProject.pages[current_page_index].tiles[swap_tile_index],
-					...$AppProject.pages[current_page_index].tiles[current_tile_index],
-					id: $AppProject.pages[current_page_index].tiles[swap_tile_index].id,
-					tile_index: $AppProject.pages[current_page_index].tiles[swap_tile_index].tile_index
-				};
-
-				// use saved version to update the current tile
-				$AppProject.pages[current_page_index].tiles[current_tile_index] = {
-					...$AppProject.pages[current_page_index].tiles[current_tile_index],
-					...$SwappedTile,
-					id: $AppProject.pages[current_page_index].tiles[current_tile_index].id,
-					tile_index: $AppProject.pages[current_page_index].tiles[current_tile_index].tile_index
-				};
-
-				// set swapped tile to null
-				$SwappedTile = null;
-
-				// push both updates to server
-				add_to_edited_tiles($AppProject.pages[current_page_index].tiles[swap_tile_index].id);
-				add_to_edited_tiles();
-			} else if ($EditorTool === EditorTools.accent) {
-				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-					(t) => t.id === tile.id
-				);
-				$AppProject.pages[current_page_index].tiles[tile_index].is_accented =
-					!$AppProject.pages[current_page_index].tiles[tile_index].is_accented;
-				add_to_edited_tiles();
-			} else if ($EditorTool === EditorTools.invisible) {
-				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-					(t) => t.id === tile.id
-				);
-				$AppProject.pages[current_page_index].tiles[tile_index].is_invisible =
-					!$AppProject.pages[current_page_index].tiles[tile_index].is_invisible;
-				add_to_edited_tiles();
-			} else if ($EditorTool === EditorTools.silent) {
-				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-					(t) => t.id === tile.id
-				);
-				$AppProject.pages[current_page_index].tiles[tile_index].is_silent =
-					!$AppProject.pages[current_page_index].tiles[tile_index].is_silent;
-				add_to_edited_tiles();
-			} else if ($EditorTool === EditorTools.navigate) {
-				$NavigationTile = tile;
-			} else if ($EditorTool === EditorTools.template) {
-				const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-					(t) => t.id === tile.id
-				);
-
-				if($AppProject.pages[current_page_index].tiles[tile_index].link_id) {
-					$AppProject.pages[current_page_index].tiles[tile_index].link_id = null;
-				} else {
-					const last_page_index = $AppProject.pages.findIndex(
-						(t) => t.id === $PageHistory[$PageHistoryIndex + 1]
+				case EditorTools.image: {
+					if (tile.image) {
+						modify_tile({ image: '' });
+					} else {
+						file_input.click();
+					}
+					break;
+				}
+				case EditorTools.color: {
+					var opts: any = {};
+					opts[`${$SelectedColorMode}_color`] = $SelectedColor;
+					modify_tile(opts);
+					break;
+				}
+				case EditorTools.swap: {
+					// If we haven't selected a tile to swap with, select this one
+					if (!$SwappedTile) {
+						$SwappedTile = tile;
+						return;
+					}
+					// Get the index of the tile we are wanting to swap with
+					const swap_tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+						(t) => t.id === $SwappedTile?.id
 					);
 
-					let last_tile = $AppProject.pages[last_page_index].tiles[tile_index];
-					let root_navigation = find_root_navigation(last_tile);
-					let root_navigation_id = ''+root_navigation.id; // need to make it a string
-
-					// @ts-ignore
-					delete root_navigation.id;
-					// @ts-ignore
-					delete root_navigation.link_id;
-
-					// Update tile
-					$AppProject.pages[current_page_index].tiles[tile_index] = {
+					// modify first tile
+					modify_tile({
+						...$AppProject.pages[current_page_index].tiles[swap_tile_index],
 						...$AppProject.pages[current_page_index].tiles[tile_index],
-						...root_navigation,
-						tilePageId: tile.tilePageId,
-						link_id: root_navigation_id || null,
-						tile_index: tile.tile_index
-					};
-				}
+						id: $AppProject.pages[current_page_index].tiles[swap_tile_index].id,
+						tile_index: $AppProject.pages[current_page_index].tiles[swap_tile_index].tile_index
+					});
 
-				add_to_edited_tiles();
-			} else if ($EditorTool === EditorTools.trash) {
-				$AppProject.pages[current_page_index].tiles = $AppProject.pages[
-					current_page_index
-				].tiles.filter((t) => t.id !== tile.id);
-				await trpc(fetch).mutation('tile:remove', { id: tile.id });
+					// modify the second tile
+					modify_tile({
+						...$AppProject.pages[current_page_index].tiles[tile_index],
+						...$SwappedTile,
+						id: $AppProject.pages[current_page_index].tiles[tile_index].id,
+						tile_index: $AppProject.pages[current_page_index].tiles[tile_index].tile_index
+					});
+
+					// set swapped tile to null
+					$SwappedTile = null;
+					break;
+				}
+				case EditorTools.accent:
+					modify_tile({ is_accented: !tile.is_accented });
+					break;
+				case EditorTools.invisible:
+					modify_tile({ is_invisible: !tile.is_invisible });
+					break;
+				case EditorTools.silent:
+					modify_tile({ is_silent: !tile.is_silent });
+					break;
+				case EditorTools.navigate:
+					$NavigationTile = tile;
+					break;
+				case EditorTools.template: {
+					// remove the link if the user has one already
+					if (tile.link_id) {
+						modify_tile({ link_id: '' });
+						return;
+					}
+
+					// get the index of the page we're templating from
+					const templating_page_index = $AppProject.pages.findIndex(
+						(t) => t.id === $TemplatingPageId
+					);
+
+					// find the tile
+					const templating_tile = $AppProject.pages[templating_page_index].tiles[tile_index];
+					if (!templating_tile) return null;
+
+					// root tile
+					const templating_root_tile = find_root_navigation(templating_tile);
+
+					// Modify the tile to have the updated link
+					modify_tile({
+						...$AppProject.pages[current_page_index].tiles[tile_index],
+						...templating_root_tile,
+						tilePageId: $AppProject.pages[current_page_index].tiles[tile_index].tilePageId,
+						link_id: templating_root_tile.id,
+						tile_index: $AppProject.pages[current_page_index].tiles[tile_index].tile_index,
+						id: $AppProject.pages[current_page_index].tiles[tile_index].id
+					});
+					break;
+				}
+				case EditorTools.trash: {
+					$AppProject.pages[current_page_index].tiles = $AppProject.pages[
+						current_page_index
+					].tiles.filter((t) => t.id !== tile.id);
+					await trpc(fetch).mutation('tile:remove', { id: tile.id });
+					break;
+				}
 			}
 			loading = false;
 		} else {
 			if (tile.navigation_page_id) {
-				$CurrentPageId = tile.navigation_page_id;
+				// Trigger a navigation
+				$CurrentPageId = tile.navigation_page_id as number;
 				$PageHistory = [$CurrentPageId, ...$PageHistory];
 			} else {
+				// if the tile is silent, just return
 				if (tile.is_silent) return;
+				// add the tile to the sentence
 				$Sentence = [...$Sentence, tile];
 			}
 		}
 	};
-
+	// Handles opening the conjugation window
 	const handle_conjugation = () => {
+		if ($InEditMode) return;
 		$Sentence = $Sentence.slice(0, -2);
 		$ConjugatingTile = tile;
-	}
-
-	// Adds the tile id to the edited tiles array so it can be saved to the server
-
-
+	};
 	// Called on input when the user is editing the tile's text
 	const edit_tile = async () => {
-		const tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-			(t) => t.id === tile.id
-		);
 		if ($EditTextMode === 'display') {
-			$AppProject.pages[current_page_index].tiles[tile_index].display_text =
-				tileTextElement.innerText;
+			modify_tile({
+				display_text: tile_text_element.innerText
+			});
 		} else {
-			$AppProject.pages[current_page_index].tiles[tile_index].speak_text =
-				tileTextElement.innerText;
+			modify_tile({
+				speak_text: tile_text_element.innerText
+			});
 		}
-		add_to_edited_tiles();
-	}
+	};
 </script>
 
 <button
@@ -273,7 +277,6 @@
 	`}
 	disabled={loading}
 	on:click={handle_interaction}
-	use:longpress
 	on:dblclick={handle_conjugation}
 >
 	{#if tile.navigation_page_id}
@@ -293,15 +296,16 @@
 		<input
 			type="file"
 			bind:this={file_input}
-			bind:files
-			on:change={() => handle_upload(files[0])}
+			on:change={() => {
+				if (file_input.files) handle_upload(file_input.files[0]);
+			}}
 			style="display: none;"
 		/>
 		<p
-			bind:this={tileTextElement}
+			bind:this={tile_text_element}
 			on:input={edit_tile}
 			spellcheck="false"
-			contenteditable={editingTileText && $InEditMode && $EditorTool === EditorTools.text}
+			contenteditable={editing_tile_text && $InEditMode && $EditorTool === EditorTools.text}
 			style={`
 			bottom: ${tile.image ? '7%' : '50%'};
 			transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};

@@ -67,6 +67,8 @@ export const EditTextMode = writable<'display' | 'speak'>('display');
 export const EditedTiles = writable<string[]>([]);
 // Tile that is currently being conjugated
 export const ConjugatingTile = writable<Tile | null>(null);
+// Page that is being templated from
+export const TemplatingPageId = writable<number | null>(null);
 
 // Selected voice persistent storage
 export const SelectedVoice = writable(

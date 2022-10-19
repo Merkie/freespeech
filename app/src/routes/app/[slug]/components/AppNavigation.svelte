@@ -16,7 +16,7 @@
 		PageHistoryIndex,
 		EditedTiles
 	} from '$lib/client/stores';
-	
+
 	// Components
 	import Spinner from '$lib/client/components/Spinner.svelte';
 	import GuidedAccessModal from './GuidedAccessModal.svelte';
@@ -57,7 +57,7 @@
 			window.getSelection()?.removeAllRanges();
 			$EditorTool = EditorTools.text;
 			$CloneModalProject = null;
-			if($EditedTiles.length > 0) {
+			if ($EditedTiles.length > 0) {
 				await update_tiles();
 			}
 		}
@@ -81,7 +81,7 @@
 		await trpc(fetch).mutation('tile:edit_many', edited_tiles);
 		saving = false;
 		$EditedTiles = [];
-	}
+	};
 
 	$: {
 		if (edit_unlocked) {

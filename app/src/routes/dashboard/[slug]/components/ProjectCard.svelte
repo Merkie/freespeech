@@ -19,7 +19,7 @@
 		<h1>{project.name}</h1>
 		{#if project.description}
 			<p>{project.description}</p>
-		<!-- {:else}
+			<!-- {:else}
 			<p><i class="bx bxs-grid-alt" /> 698 Tiles</p> -->
 		{/if}
 		{#if explore}

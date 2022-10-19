@@ -41,7 +41,12 @@
 
 <div>
 	<label for="email">Email address</label>
-	<input type="text" on:change={() => email = emailElement.value} bind:this={emailElement} name="email" />
+	<input
+		type="text"
+		on:change={() => (email = emailElement.value)}
+		bind:this={emailElement}
+		name="email"
+	/>
 	{#if email && !is_email_valid}
 		<p class="error">Invalid email address</p>
 	{/if}

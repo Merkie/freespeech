@@ -32,11 +32,8 @@ export const load: Load = async ({ params, fetch }) => {
 		for await (let tile of page.tiles) {
 			// If the tile's index is not the same as the index in the array
 			if (tile.tile_index != index) {
-				const page_index = new_project.pages.findIndex((p) => p.id === page.id);
-				const tile_index = new_project.pages[page_index].tiles.findIndex((t) => t.id === tile.id);
-
 				// Upadte the tile's index
-				new_project.pages[page_index].tiles[tile_index].tile_index = index;
+				tile.tile_index = index;
 				// push to trpc
 				mutation_requests.push({ ...tile, tile_index: index });
 			}
@@ -65,15 +62,16 @@ export const load: Load = async ({ params, fetch }) => {
 	for (const tile of linked_tiles) {
 		const response_tile = response_tiles.find((t) => t.id === tile.link_id);
 		if (response_tile) {
+			// get the page and tile index so we can update it in the new project
 			const page_index = new_project.pages.findIndex((p) => p.id === tile.tilePageId);
 			const tile_index = new_project.pages[page_index].tiles.findIndex((t) => t.id === tile.id);
-			// refrence to the current tile
-			const temp_tile = { ...new_project.pages[page_index].tiles[tile_index] };
+			// update the tile
 			new_project.pages[page_index].tiles[tile_index] = {
 				...response_tile,
-				tile_index: temp_tile.tile_index,
-				tilePageId: temp_tile.tilePageId,
-				link_id: response_tile.id
+				tile_index: tile.tile_index,
+				tilePageId: tile.tilePageId,
+				link_id: response_tile.id,
+				id: tile.id
 			};
 		}
 	}

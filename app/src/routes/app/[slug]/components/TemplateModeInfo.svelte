@@ -5,19 +5,30 @@
 		EditorTools,
 		InEditMode,
 		PageHistory,
-		PageHistoryIndex
+		PageHistoryIndex,
+		TemplatingPageId
 	} from '$lib/client/stores';
-	let page_name: string;
-	$: page_name =
-		$AppProject.pages.find((page) => page.id === $PageHistory[$PageHistoryIndex + 1])?.name + '';
+	$: $TemplatingPageId =
+		$AppProject.pages.find((page) => page.id === $PageHistory[$PageHistoryIndex + 1])?.id || null;
 </script>
 
 <section
 	style={`transform: translateX(-50%) ${
 		$InEditMode && $EditorTool === EditorTools.template ? 'scale(1.0)' : 'scale(0.0)'
-	};`}
+	};
+					pointer-events: ${$InEditMode && $EditorTool === EditorTools.template ? 'all' : 'none'};`}
 >
-	<b>Templating from: {page_name}</b>
+	<b
+		>Templating from:
+		<select
+			on:change={(e) => ($TemplatingPageId = parseInt(e.target.value + '') || null)}
+			value={$AppProject.pages.find((page) => page.id === $PageHistory[$PageHistoryIndex + 1])?.id}
+		>
+			{#each $AppProject.pages as page}
+				<option value={page.id}>{page.name}</option>
+			{/each}
+		</select>
+	</b>
 </section>
 
 <style>
@@ -34,7 +45,12 @@
 		background-image: linear-gradient(to right, var(--primary-400) 1px, transparent 1px),
 			linear-gradient(to bottom, var(--primary-400) 1px, transparent 1px);
 		background-size: 15px 15px;
-		pointer-events: none;
+	}
+
+	select {
+		filter: none;
+		background: rgba(23, 29, 91, 0.332);
+		border: none;
 	}
 
 	@media (max-width: 750px) {
