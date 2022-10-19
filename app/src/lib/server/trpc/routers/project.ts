@@ -230,6 +230,29 @@ export default router<Context, IMeta>()
 			});
 			if (!project) return null;
 
+			//@ts-ignore
+			const all_tiles = project.pages.flatMap((p) => p.tiles);
+			let nav_page_ids: number[] = [];
+
+			for (const tile of all_tiles) {
+				if (tile.navigation_page_id) {
+					nav_page_ids = [...nav_page_ids, tile.navigation_page_id];
+				}
+			}
+
+			if (project.userId === user.id) {
+				// go through all pages, if unlinked delete it
+				for (const page of project.pages) {
+					if (!nav_page_ids.includes(page.id)) {
+						await prismaClient.tilePage.delete({
+							where: {
+								id: page.id
+							}
+						});
+					}
+				}
+			}
+
 			// 3) Check if user is authorized to view project
 			// Checking to see if the user is the author of the project
 			// or if the project is public.

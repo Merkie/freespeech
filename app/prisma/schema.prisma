@@ -16,13 +16,13 @@ model User {
   image            String?
   hashed_password  String?
   theme            String?
+  organizationId   String?
   organization     Organization? @relation(fields: [organizationId], references: [id])
-  projects         Project[]
   access_tokens    AccessToken[]
+  s3_resources     S3Resource[]
+  projects         Project[]
   tiles            Tile[]
   tile_pages       TilePage[]
-  s3_resources     S3Resource[]
-  organizationId   String?
 
   @@map("user")
 }
@@ -38,35 +38,33 @@ model Organization {
 model AccessToken {
   id           String @id @unique @default(cuid())
   access_token String @unique @default(uuid())
+  userId       String
   user         User   @relation(fields: [userId], references: [id])
-
-  userId String
 }
 
 model Tile {
   id                 String    @id @unique @default(cuid())
-  tile_index         Int // Index of the tile on the page
-  tap_count          Int       @default(0) // Number of times the tile has been tapped by the author
-  link_id            String? // The ID of the link that the tile is pointing to
-  display_text       String? // The text that is displayed on the tile
-  speak_text         String? // The text that is spoken when the tile is tapped
-  image              String? // The image that is displayed on the tile
-  navigation_page_id Int? // The ID of the page that the tile is pointing to
-  modifier           String? // The modifier that the tile is using
-  conjugations       String[]  @default([]) // The conjugations that the tile is using
+  tile_index         Int
+  tap_count          Int       @default(0)
+  link_id            String?
+  display_text       String?
+  speak_text         String?
+  image              String?
+  navigation_page_id Int?
+  modifier           String?
   background_color   String?
   border_color       String?
   text_color         String?
   is_silent          Boolean   @default(false)
   is_invisible       Boolean   @default(false)
-  // is_public          Boolean   @default(false)
   is_accented        Boolean   @default(false)
-  parent_page        TilePage? @relation(fields: [tilePageId], references: [id])
-  author             User      @relation(fields: [userId], references: [id])
   created_at         DateTime  @default(now())
   updated_at         DateTime  @updatedAt
   tilePageId         Int?
   userId             String
+  conjugations       String[]  @default([])
+  parent_page        TilePage? @relation(fields: [tilePageId], references: [id])
+  author             User      @relation(fields: [userId], references: [id])
 
   @@map("tile")
 }
@@ -74,8 +72,6 @@ model Tile {
 model TilePage {
   id         Int      @id @unique @default(autoincrement())
   name       String
-  // public     Boolean  @default(false)
-  // columns    Int      @default(8)
   user_id    String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -98,9 +94,9 @@ model Project {
   public      Boolean    @default(false)
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
+  userId      String
   author      User       @relation(fields: [userId], references: [id])
   pages       TilePage[]
-  userId      String
 
   @@map("project")
 }
@@ -108,8 +104,8 @@ model Project {
 model S3Resource {
   id         Int      @id @unique @default(autoincrement())
   url        String
-  author     User     @relation(fields: [userId], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   userId     String
+  author     User     @relation(fields: [userId], references: [id])
 }
