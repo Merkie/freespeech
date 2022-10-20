@@ -21,7 +21,8 @@
 		EditTextMode,
 		EditedTiles,
 		ConjugatingTile,
-		TemplatingPageId
+		TemplatingPageId,
+		PageHistoryIndex
 	} from '$lib/client/stores';
 
 	// Helpers
@@ -232,6 +233,9 @@
 				// Trigger a navigation
 				$CurrentPageId = tile.navigation_page_id as number;
 				$PageHistory = [$CurrentPageId, ...$PageHistory];
+				// remove the unneeded history
+				$PageHistory = $PageHistory.slice($PageHistoryIndex, $PageHistory.length);
+				$PageHistoryIndex = 0;
 			} else {
 				// if the tile is silent, just return
 				if (tile.is_silent) return;
