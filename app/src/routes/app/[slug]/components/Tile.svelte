@@ -290,10 +290,6 @@
 			</div>
 		{/if}
 
-		{#if tile.image}
-			<img src={tile.image} alt="tile icon" />
-		{/if}
-
 		<input
 			type="file"
 			bind:this={file_input}
@@ -302,19 +298,23 @@
 			}}
 			style="display: none;"
 		/>
-		<p
-			bind:this={tile_text_element}
-			on:input={edit_tile}
-			spellcheck="false"
-			contenteditable={editing_tile_text && $InEditMode && $EditorTool === EditorTools.text}
-			style={`
-			bottom: ${tile.image ? '7%' : '50%'};
-			transform: ${tile.image ? 'auto' : 'translate(-50%, 50%)'};
-			font-size: ${tile.image ? '1.2rem' : '1.5rem'};
-			`}
-		>
-			{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
-		</p>
+		
+		<div class="tile-content">
+			{#if tile.image}
+				<img src={tile.image} alt="tile icon" />
+			{/if}
+			<p
+				bind:this={tile_text_element}
+				on:input={edit_tile}
+				spellcheck="false"
+				style={`${!tile.image && (tile.display_text+'').length < 10 ? 'font-size: 2rem;' : ''}
+								${!tile.image && (tile.display_text+'').length < 4 ? 'font-size: 4rem;' : ''})}`}
+				contenteditable={editing_tile_text && $InEditMode && $EditorTool === EditorTools.text}
+			>
+				{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
+			</p>
+		</div>
+
 		<div
 			style={`transform: ${
 				tile.is_accented
@@ -334,7 +334,6 @@
 		background: var(--tile-background);
 		border: 2px solid var(--tiles-border);
 		color: var(--tiles-text);
-		font-size: 2rem;
 		white-space: pre;
 		min-width: 0; /* NEW; needed for Firefox */
 		width: 100%;
@@ -349,30 +348,30 @@
 		overflow: hidden;
 		width: 100%;
 		height: 100%;
+		display: flex;
 	}
 
-	button * {
-		position: absolute;
-	}
-
-	img {
-		left: 50%;
-		transform: translateX(-50%);
-		top: 5px;
-		height: 60%;
-		width: auto;
-		object-fit: contain;
-	}
-
-	p {
-		text-align: center;
-		font-size: 18px;
-		left: 50%;
-		transform: translateX(-50%);
-		overflow-wrap: anywhere;
-		white-space: pre-wrap;
+	.tile-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 		width: 100%;
+		height: 100%;
 	}
+
+	.tile-content img {
+		max-width: min(50%, 50px);
+	}
+
+	.tile-content p {
+		font-weight: 500;
+		font-size: 1.25rem;
+		max-width: 100%;
+		white-space: normal;
+		overflow-wrap: break-word;
+	}
+
 	.accent {
 		position: absolute;
 		top: 0;
