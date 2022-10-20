@@ -14,6 +14,11 @@
   "resolved" "https://registry.npmjs.org/@cloudflare/workers-types/-/workers-types-3.16.0.tgz"
   "version" "3.16.0"
 
+"@crownframework/svelte-error-boundary@^1.0.3":
+  "integrity" "sha512-ZtfYF9if48Ok8BTx/fn7bERJFKHKO6Ih5d/fkY6/pC3DQEnJq4vy6JOBFcisnpKYcZbjG5F/D4r06kqX7JKyqw=="
+  "resolved" "https://registry.npmjs.org/@crownframework/svelte-error-boundary/-/svelte-error-boundary-1.0.3.tgz"
+  "version" "1.0.3"
+
 "@iarna/toml@^2.2.5":
   "integrity" "sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg=="
   "resolved" "https://registry.npmjs.org/@iarna/toml/-/toml-2.2.5.tgz"
@@ -1753,6 +1758,11 @@
   "integrity" "sha512-AJIkSNZMPOLsv8UehA4T7wjOqfVhnvWIpdbZp5rXraUfE7Feo/pKG9xpi+2Op+7PZp9qywdCx7LXvtCh37OEMA=="
   "resolved" "https://registry.npmjs.org/svelte-dnd-action/-/svelte-dnd-action-0.9.20.tgz"
   "version" "0.9.20"
+
+"svelte-error-boundary@^1.0.2":
+  "integrity" "sha512-ulK2sDUNmg0uHRme779nWoTJkClMPn0Mh8a9qVO6HHHbZZ/OMVSCO/XXUHJO0jYSK874QzgRML5OmrXle7hWvg=="
+  "resolved" "https://registry.npmjs.org/svelte-error-boundary/-/svelte-error-boundary-1.0.2.tgz"
+  "version" "1.0.2"
 
 "svelte-hmr@^0.15.0":
   "integrity" "sha512-Aw21SsyoohyVn4yiKXWPNCSW2DQNH/76kvUnE9kpt4h9hcg9tfyQc6xshx9hzgMfGF0kVx0EGD8oBMWSnATeOg=="

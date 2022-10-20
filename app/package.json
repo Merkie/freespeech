@@ -27,6 +27,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@crownframework/svelte-error-boundary": "^1.0.3",
 		"@prisma/client": "^4.4.0",
 		"@trpc/client": "^9.27.4",
 		"@trpc/server": "^9.27.4",
@@ -46,6 +47,7 @@
 		"prisma": "^4.4.0",
 		"showdown": "^2.1.0",
 		"svelte-dnd-action": "^0.9.20",
+		"svelte-error-boundary": "^1.0.2",
 		"svelte-icons-pack": "^2.0.0",
 		"trpc-sveltekit": "^2.3.6",
 		"trpc-transformer": "^2.1.3",

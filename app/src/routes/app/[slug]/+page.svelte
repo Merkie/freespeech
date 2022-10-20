@@ -26,7 +26,7 @@
 	onMount(async () => {
 		if ($AppProject.userId != $Me.id) return;
 		// Wait 2 seconds
-		await new Promise((resolve) => setTimeout(resolve, 2000));
+		await new Promise((resolve) => setTimeout(resolve, 100));
 		// Get the old image thumbnail (null if there is none)
 		const old_image_url = $AppProject.image;
 

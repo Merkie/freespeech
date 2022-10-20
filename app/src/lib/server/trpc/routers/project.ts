@@ -93,7 +93,7 @@ export default router<Context, IMeta>()
 			if (!project) return {};
 			if (!project.public && project.userId !== user.id) return {};
 
-			const newProject: Project = await prismaClient.project.create({
+			const cloned_project: Project = await prismaClient.project.create({
 				data: {
 					name: project.name + ' clone',
 					description: project.description || '',
@@ -109,12 +109,12 @@ export default router<Context, IMeta>()
 			});
 
 			for (const page of project.pages) {
-				const newPage: TilePage = await prismaClient.tilePage.create({
+				const cloned_page: TilePage = await prismaClient.tilePage.create({
 					data: {
 						name: page.name,
 						Project: {
 							connect: {
-								id: newProject.id
+								id: cloned_project.id
 							}
 						},
 						user: {
@@ -152,9 +152,9 @@ export default router<Context, IMeta>()
 				});
 			}
 
-			const whole_new_project = await prismaClient.project.findUnique({
+			const whole_cloned_project = await prismaClient.project.findUnique({
 				where: {
-					id: newProject.id
+					id: cloned_project.id
 				},
 				include: {
 					pages: {
@@ -164,14 +164,14 @@ export default router<Context, IMeta>()
 					}
 				}
 			});
-			if (!whole_new_project) return {};
+			if (!whole_cloned_project) return {};
 
 			// fix all the links and navigation refrences
-			for (const page of whole_new_project.pages) {
+			for (const page of whole_cloned_project.pages) {
 				for (const tile of page.tiles) {
 					if (tile.navigation_page_id) {
 						const page_name = project.pages.find((p) => p.id === tile.navigation_page_id)?.name;
-						const new_page = whole_new_project?.pages.find((p) => p.name === page_name);
+						const new_page = whole_cloned_project?.pages.find((p) => p.name === page_name);
 						if (!new_page) continue;
 
 						await prismaClient.tile.update({
@@ -187,7 +187,7 @@ export default router<Context, IMeta>()
 						const old_link = all_tiles.find((t) => t.id === tile.link_id);
 						const old_page = project.pages.find((p) => p.id === old_link?.navigation_page_id);
 						const old_tile = old_page?.tiles.find((t) => t.tile_index === old_link?.tile_index);
-						const new_page = whole_new_project?.pages.find((p) => p.name === old_page?.name);
+						const new_page = whole_cloned_project?.pages.find((p) => p.name === old_page?.name);
 						const new_tile = new_page?.tiles.find((t) => t.tile_index === old_tile?.tile_index);
 						if (!new_tile) continue;
 
@@ -202,8 +202,8 @@ export default router<Context, IMeta>()
 					}
 				}
 			}
-			if (!newProject) return {};
-			return newProject;
+			if (!whole_cloned_project) return {};
+			return whole_cloned_project;
 		}
 	})
 	.query('fetch', {

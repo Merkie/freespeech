@@ -15,9 +15,12 @@
 		// If we're using an AWS voice, send a trpc request to get the audio
 		if ($SelectedVoice.includes('[AWS]')) {
 			let raw_sequence = $Sentence.map((tile) => tile.speak_text || tile.display_text).join(' ');
-			let formatted = raw_sequence.replace(/(\r\n|\n|\r|\t)/gm, '').replaceAll('+ +', '').replaceAll(' +', ' ').replaceAll('+ ', ' ').replaceAll('+', '');
-			console.log(raw_sequence);
-			console.log(formatted);
+			let formatted = raw_sequence
+				.replace(/(\r\n|\n|\r|\t)/gm, '')
+				.replaceAll('+ +', '')
+				.replaceAll(' +', ' ')
+				.replaceAll('+ ', ' ')
+				.replaceAll('+', '');
 
 			const url = await trpc(fetch).mutation('polly:synthesise', {
 				text: formatted,
@@ -33,9 +36,7 @@
 			const voice = speechSynthesis
 				.getVoices()
 				.find((voice) => `[SpeechSynthesis] ${voice.name} ${voice.lang}` === $SelectedVoice);
-			const utterance = new SpeechSynthesisUtterance(
-				formatted
-			);
+			const utterance = new SpeechSynthesisUtterance(formatted);
 			utterance.voice = voice;
 			speechSynthesis.speak(utterance);
 		}

@@ -243,7 +243,7 @@
 	// Handles opening the conjugation window
 	const handle_conjugation = () => {
 		if ($InEditMode) return;
-		if(tile.speak_text?.includes('+')) return;
+		if (tile.speak_text?.includes('+')) return;
 		$Sentence = $Sentence.slice(0, -2);
 		$ConjugatingTile = tile;
 	};
@@ -298,7 +298,7 @@
 			}}
 			style="display: none;"
 		/>
-		
+
 		<div class="tile-content">
 			{#if tile.image}
 				<img src={tile.image} alt="tile icon" />
@@ -307,8 +307,8 @@
 				bind:this={tile_text_element}
 				on:input={edit_tile}
 				spellcheck="false"
-				style={`${!tile.image && (tile.display_text+'').length < 10 ? 'font-size: 2rem;' : ''}
-								${!tile.image && (tile.display_text+'').length < 4 ? 'font-size: 4rem;' : ''})}`}
+				style={`${!tile.image && (tile.display_text + '').length < 10 ? 'font-size: 2rem;' : ''}
+								${!tile.image && (tile.display_text + '').length < 4 ? 'font-size: 4rem;' : ''})}`}
 				contenteditable={editing_tile_text && $InEditMode && $EditorTool === EditorTools.text}
 			>
 				{$EditTextMode === 'speak' && $InEditMode ? tile.speak_text || '...' : tile.display_text}
