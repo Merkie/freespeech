@@ -342,6 +342,7 @@
 		min-width: 0; /* NEW; needed for Firefox */
 		width: 100%;
 		height: 100%;
+		min-height: 90px;
 		text-align: center;
 	}
 
