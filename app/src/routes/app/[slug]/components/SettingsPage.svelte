@@ -12,7 +12,8 @@
 		SelectedVoice,
 		GuidedAccessPin,
 		ColumnCountOverride,
-		TileOverflow
+		TileOverflow,
+		AppHeaderBehavior
 	} from '$lib/client/stores';
 
 	// Trpc
@@ -92,6 +93,19 @@
 			},
 			reset_to_default: () => {
 				$TileOverflow = 'ellipses';
+			}
+		},
+		{
+			name: 'App Header Behavior:',
+			type: 'select',
+			default: 'responsive',
+			options: ['responsive', 'always showing'],
+			value: $AppHeaderBehavior,
+			onInput: (value: 'responsive' | 'always showing') => {
+				$AppHeaderBehavior = value;
+			},
+			reset_to_default: () => {
+				$AppHeaderBehavior = 'responsive';
 			}
 		}
 	];

@@ -22,7 +22,7 @@
 	$: name = $AppProject.pages[current_page_index]?.name || 'Home'; // set to home by default
 	//@ts-ignore
 	let StyleList =
-		$AppProject.voices.find((voice) => voice.ShortName === $SelectedVoice)?.StyleList || null;
+		$AppProject.voices.find((voice) => voice.ShortName === $SelectedVoice)?.StyleList.sort() || null;
 	let refreshing = false;
 	let is_styles_menu_open = false;
 
@@ -155,15 +155,15 @@
 		top: 120%;
 		z-index: 999;
 		right: 0;
-		min-width: max-content;
-		max-width: 300px;
+		width: 300px;
 		padding: 20px;
 		display: flex;
+		justify-content: space-evenly;
 		flex-wrap: wrap;
 		gap: 20px;
 		border-radius: 10px;
 		background-color: var(--base-100);
-		box-shadow: 0px 0px 10px 0px black;
+		box-shadow: 0px 0px 5px 0px black;
 		border: 1px solid var(--base-400);
 	}
 	.refreshing {

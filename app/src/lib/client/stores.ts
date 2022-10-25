@@ -110,3 +110,13 @@ export const TileOverflow = writable<'break' | 'ellipses'>(
 GuidedAccessPin.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-tile-overflow'] = val);
 });
+
+// Tile overflow setting persistent storage
+export const AppHeaderBehavior = writable<'always showing' | 'responsive'>(
+	(browser &&
+		(localStorage.getItem('freespeech-app-header-behavior') as 'always showing' | 'responsive')) ||
+		'responsive'
+);
+AppHeaderBehavior.subscribe((val) => {
+	if (browser) return (localStorage['freespeech-app-header-behavior'] = val);
+});

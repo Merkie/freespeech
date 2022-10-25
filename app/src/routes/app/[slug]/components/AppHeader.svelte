@@ -1,4 +1,10 @@
-<nav>
+<script lang="ts">
+	import { AppHeaderBehavior } from '$lib/client/stores';
+</script>
+
+<nav style={`
+		display: ${$AppHeaderBehavior === 'always showing' ? 'flex' : 'auto'};
+	`}>
 	<img height="20px" src="/images/logo-white.png" alt="FreeSpeech AAC Logo" />
 	<p>Layout:</p>
 	<select>
@@ -18,7 +24,7 @@
 	nav {
 		display: flex;
 		background: var(--background);
-		padding: 5px;
+		padding: 10px;
 		gap: 5px;
 		align-items: center;
 	}
@@ -28,5 +34,11 @@
 	img,
 	select {
 		margin-right: 10px;
+	}
+
+	@media (max-width: 750px) {
+		nav {
+			display: none;
+		}
 	}
 </style>
