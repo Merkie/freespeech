@@ -93,3 +93,11 @@ export const GuidedAccessPin = writable<String>(
 GuidedAccessPin.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-guided-access'] = val);
 });
+
+// Columns override persistent storage
+export const ColumnCountOverride = writable<String>(
+	(browser && localStorage.getItem('freespeech-column-override')) || ''
+);
+GuidedAccessPin.subscribe((val) => {
+	if (browser) return (localStorage['freespeech-column-override'] = val);
+});

@@ -342,7 +342,8 @@
 		min-width: 0;
 		width: 100%;
 		height: 100%;
-		min-height: 90px;
+		min-height: 90px !important;
+		scrollbar-width: thin;
 		text-align: center;
 	}
 

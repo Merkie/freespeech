@@ -6,7 +6,7 @@
 	import Header from '$lib/client/components/Header.svelte';
 
 	// Stores
-	import { AppProject, Me, SelectedVoice, GuidedAccessPin } from '$lib/client/stores';
+	import { AppProject, Me, SelectedVoice, GuidedAccessPin, ColumnCountOverride } from '$lib/client/stores';
 	
 	// Trpc
 	import trpc from '$lib/client/trpc';
@@ -35,22 +35,10 @@
 	};
 
 	let settings = [
-		// {
-		// 	name: 'Default page dimensions (rows x columns):',
-		// 	type: 'text',
-		// 	default: '8x6',
-		// 	value: '8x6',
-		// 	placeholder: '8x6',
-		// 	onInput: (value: string) => {
-		// 	},
-		// 	reset_to_default: () => {
-		// 	}
-		// },
 		{
 			name: 'Text-to-speech voice:',
 			type: 'select',
 			default: '[AWS] Kimberly (en-US female) Neural',
-			//@ts-ignore
 			options: voices,
 			value: $SelectedVoice,
 			onInput: (value: string) => {
@@ -71,6 +59,19 @@
 			},
 			reset_to_default: () => {
 				$GuidedAccessPin = '';
+			}
+		},
+		{
+			name: 'Column Count Override:',
+			type: 'number',
+			default: '',
+			value: $ColumnCountOverride,
+			placeholder: '5',
+			onInput: (value: string) => {
+				$ColumnCountOverride = value;
+			},
+			reset_to_default: () => {
+				$ColumnCountOverride = '';
 			}
 		}
 	];

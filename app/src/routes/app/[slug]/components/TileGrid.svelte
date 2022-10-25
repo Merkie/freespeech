@@ -5,7 +5,8 @@
 		AppProject,
 		CurrentPageId,
 		InEditMode,
-		PageHistory
+		PageHistory,
+		ColumnCountOverride
 	} from '$lib/client/stores';
 
 	// Components
@@ -59,7 +60,7 @@
 <div
 	style={`
 	--rows: ${$InEditMode ? rows + 2 : rows};
-	--columns: ${$AppProject.columns};
+	--columns: ${parseInt($ColumnCountOverride+'') || $AppProject.columns};
 `}
 >
 	{#each $AppProject.pages[current_page_index].tiles as tile (tile.id)}
