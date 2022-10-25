@@ -23,7 +23,8 @@
 		ConjugatingTile,
 		TemplatingPageId,
 		PageHistoryIndex,
-		TileOverflow
+		TileOverflow,
+		VocabularySetting
 	} from '$lib/client/stores';
 
 	// Helpers
@@ -48,6 +49,14 @@
 	const current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
 	const tile_index = $AppProject.pages[current_page_index].tiles.findIndex((t) => t.id === tile.id);
 	const all_tiles = $AppProject.pages.flatMap((page) => page.tiles);
+
+	// Contants
+	const vocab_bindings = {
+		'1a': 3,
+		'2a': 7,
+		'3a': 9,
+		'all': 999
+	}
 
 	// Handles all tile modifications from edit mode
 	const modify_tile = (edited_tile: any) => {
@@ -281,6 +290,7 @@
 	pointer-events: ${tile.is_invisible && !$InEditMode ? 'none' : 'auto'};
 	min-height: ${dummy ? '90px' : '0px'};
 	min-height: ${!$InEditMode ? '90px' : '0px'};
+	${vocab_bindings[$VocabularySetting] < tile.display_text.length && !tile.navigation_page_id ? 'opacity: 0' : ''}
 	`}
 	disabled={loading}
 	on:click={handle_interaction}

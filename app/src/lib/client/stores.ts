@@ -120,3 +120,11 @@ export const AppHeaderBehavior = writable<'always showing' | 'responsive'>(
 AppHeaderBehavior.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-app-header-behavior'] = val);
 });
+
+// Vocabulary setting persistent storage
+export const VocabularySetting = writable<string>(
+	(browser && localStorage.getItem('freespeech-vocabulary')) || 'all'
+);
+VocabularySetting.subscribe((val) => {
+	if (browser) return (localStorage['freespeech-vocabulary'] = val);
+});

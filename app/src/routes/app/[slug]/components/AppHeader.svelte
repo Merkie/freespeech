@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { AppHeaderBehavior } from '$lib/client/stores';
+	// Stores
+	import { AppHeaderBehavior, Me, AppProject, VocabularySetting } from '$lib/client/stores';
+
+	// Bindings
+	let project_select_element: HTMLSelectElement;
+	let vocab_select_element: HTMLSelectElement;
 </script>
 
 <nav style={`
@@ -7,16 +12,18 @@
 	`}>
 	<img height="20px" src="/images/logo-white.png" alt="FreeSpeech AAC Logo" />
 	<p>Layout:</p>
-	<select>
-		<option value="English Layout">English Layout</option>
+	<select bind:this={project_select_element} on:change={() => window.location.assign('/app/'+project_select_element.value)} value={$AppProject.id}>
+		{#each $Me.projects as project}
+			<option value={project.id}>{project.name}</option>
+		{/each}
 		<option value="Another Layout">Another Layout</option>
 	</select>
 	<p>Vocabulary:</p>
-	<select>
-		<option value="English Layout">All</option>
-		<option value="Another Layout">1A</option>
-		<option value="Another Layout">2A</option>
-		<option value="Another Layout">3A</option>
+	<select value={$VocabularySetting} bind:this={vocab_select_element} on:change={() => $VocabularySetting = vocab_select_element.value}>
+		<option value="all">All</option>
+		<option value="1a">1A</option>
+		<option value="2a">2A</option>
+		<option value="3a">3A</option>
 	</select>
 </nav>
 
