@@ -14,7 +14,9 @@
 	let current_page_index;
 	$: current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
 	let tile_index;
-	$: tile_index = $AppProject.pages[current_page_index].tiles.findIndex((t) => $NavigationTile?.id === t.id);
+	$: tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
+		(t) => $NavigationTile?.id === t.id
+	);
 
 	// Bindings
 	let page_select: HTMLSelectElement;

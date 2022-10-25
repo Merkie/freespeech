@@ -15,7 +15,7 @@
 		PageHistoryIndex,
 		EditedTiles
 	} from '$lib/client/stores';
-	
+
 	// Trpc
 	import trpc from '$lib/client/trpc';
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Stores
-	import { Sentence, SelectedVoice, SelectedStyle } from '$lib/client/stores';;
-	
+	import { Sentence, SelectedVoice, SelectedStyle } from '$lib/client/stores';
+
 	// Trpc
 	import trpc from '$lib/client/trpc';
 
@@ -24,7 +24,7 @@
 			.replaceAll('+ ', ' ')
 			.replaceAll('+', '');
 
-		if($SelectedVoice.includes('[Offline]')) {
+		if ($SelectedVoice.includes('[Offline]')) {
 			// If we're using a browser voice, use the SpeechSynthesis API
 			const voice = speechSynthesis
 				.getVoices()

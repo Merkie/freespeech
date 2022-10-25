@@ -25,10 +25,16 @@
 	$PageHistory = [$CurrentPageId];
 
 	// State
-	let current_page_index ;
+	let current_page_index;
 	$: current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
 	// 5 is minimum row count
-	let rows = Math.max(5, Math.max($AppProject.pages.map((page) => Math.floor((page.tiles.length + 1) / $AppProject.columns ))));
+	let rows;
+	$: rows = Math.max(
+		5,
+		Math.max(
+			...$AppProject.pages.map((page) => Math.floor((page.tiles.length + 1) / $AppProject.columns))
+		) + 1
+	);
 
 	// Adds a tile to the current page
 	const add_tile = async () => {
@@ -59,8 +65,8 @@
 
 <div
 	style={`
-	--rows: ${$InEditMode ? rows + 2 : rows};
-	--columns: ${parseInt($ColumnCountOverride+'') || $AppProject.columns};
+	--rows: ${$InEditMode ? rows + 1 : rows};
+	--columns: ${parseInt($ColumnCountOverride + '') || $AppProject.columns};
 `}
 >
 	{#each $AppProject.pages[current_page_index].tiles as tile (tile.id)}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Trpc
 	import trpc from '$lib/client/trpc';
-	
+
 	// Stores
 	import {
 		AppProject,
@@ -21,10 +21,11 @@
 	let name: string;
 	$: name = $AppProject.pages[current_page_index]?.name || 'Home'; // set to home by default
 	//@ts-ignore
-	let StyleList = $AppProject.voices.find(voice => voice.ShortName === $SelectedVoice)?.StyleList || null;
+	let StyleList =
+		$AppProject.voices.find((voice) => voice.ShortName === $SelectedVoice)?.StyleList || null;
 	let refreshing = false;
 	let is_styles_menu_open = false;
-	
+
 	//bindings
 	let page_header: HTMLElement;
 
@@ -90,21 +91,26 @@
 	<button disabled={!($PageHistoryIndex > 0)} on:click={navigate_forwards}>
 		<i class="bx bx-right-arrow-alt" />
 	</button>
-{#if StyleList}
-		<button on:click={() => is_styles_menu_open = !is_styles_menu_open} class="style-selector">
+	{#if StyleList}
+		<button on:click={() => (is_styles_menu_open = !is_styles_menu_open)} class="style-selector">
 			<span class="style-name">{$SelectedStyle}</span>
-			<img height="35px" width="35px" src={`/images/styles/${$SelectedStyle}.png`} alt="content face with slight smile">
+			<img
+				height="35px"
+				width="35px"
+				src={`/images/styles/${$SelectedStyle}.png`}
+				alt="content face with slight smile"
+			/>
 			{#if is_styles_menu_open}
 				<div class="style-dropdown">
 					{#each StyleList.filter((item) => item != $SelectedStyle) as style}
-						<button on:click={() => $SelectedStyle = style}>
-							<img height="35px" width="35px" src={`/images/styles/${style}.png`} alt="">
+						<button on:click={() => ($SelectedStyle = style)}>
+							<img height="35px" width="35px" src={`/images/styles/${style}.png`} alt="" />
 						</button>
 					{/each}
 				</div>
 			{/if}
 		</button>
-{/if}
+	{/if}
 </section>
 
 <style>

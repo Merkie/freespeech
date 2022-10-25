@@ -1,17 +1,16 @@
 <script lang="ts">
-	//@ts-nocheck
 	import { page } from '$app/stores';
 	import trpc from '$lib/client/trpc';
 
-	export let error = null;
-	export let onError = null;
+	export let error: string | null = null;
+	export let onError: Function | null = null;
 
 	let error_type: string;
 	let app_project_id: string;
 
 	if ($page.url.pathname.includes('/app/')) {
 		error_type = 'app';
-		app_project_id = $page.url.pathname.split('/').at(-1);
+		app_project_id = $page.url.pathname.split('/').at(-1) + '';
 	}
 
 	let ENV = typeof process !== 'undefined' && process.env && process.env.NODE_ENV;

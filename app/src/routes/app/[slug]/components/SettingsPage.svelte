@@ -6,22 +6,29 @@
 	import Header from '$lib/client/components/Header.svelte';
 
 	// Stores
-	import { AppProject, Me, SelectedVoice, GuidedAccessPin, ColumnCountOverride, TileOverflow } from '$lib/client/stores';
-	
+	import {
+		AppProject,
+		Me,
+		SelectedVoice,
+		GuidedAccessPin,
+		ColumnCountOverride,
+		TileOverflow
+	} from '$lib/client/stores';
+
 	// Trpc
 	import trpc from '$lib/client/trpc';
 
 	// Bindings
 	let search_text: string;
 	let voices = [
-		...$AppProject.voices.map((voice) => voice.ShortName),
+		...($AppProject as unknown as { voices: any[] }).voices.map((voice) => voice.ShortName),
 		...speechSynthesis.getVoices().map((voice) => `[Offline] ${voice.name} ${voice.lang}`)
 	];
 	let project_name: string = $AppProject.name;
 	let project_description: string = $AppProject.description + '';
 	let project_visibility: string = $AppProject.public ? 'public' : 'private';
 	let project_columns: number = $AppProject.columns;
-	
+
 	// State
 	let delete_button_pressed = false;
 	let changes_made = false;
@@ -29,7 +36,7 @@
 	// In case new voices are added asynchronously
 	window.speechSynthesis.onvoiceschanged = function (e) {
 		voices = [
-			...$AppProject.voices.map((voice) => voice.ShortName),
+			...($AppProject as unknown as { voices: any[] }).voices.map((voice) => voice.ShortName),
 			...speechSynthesis.getVoices().map((voice) => `[Offline] ${voice.name} ${voice.lang}`)
 		];
 	};
@@ -86,11 +93,11 @@
 			reset_to_default: () => {
 				$TileOverflow = 'ellipses';
 			}
-		},
+		}
 	];
 
 	let fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
-	
+
 	// Handles pressing the delete button in the settings page
 	const handle_delete_btn_press = async () => {
 		if (!delete_button_pressed) {

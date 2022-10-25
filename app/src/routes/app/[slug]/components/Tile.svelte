@@ -279,7 +279,8 @@
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
 	color: ${tile.text_color || 'auto'};
 	pointer-events: ${tile.is_invisible && !$InEditMode ? 'none' : 'auto'};
-	min-height: ${dummy ? '100px' : 'auto'};
+	min-height: ${dummy ? '90px' : '0px'};
+	min-height: ${!$InEditMode ? '90px' : '0px'};
 	`}
 	disabled={loading}
 	on:click={handle_interaction}
@@ -341,10 +342,9 @@
 		border: 2px solid var(--tiles-border);
 		color: var(--tiles-text);
 		white-space: pre;
-		min-width: 0;
+		min-width: 0px;
 		width: 100%;
 		height: 100%;
-		min-height: 90px !important;
 		scrollbar-width: thin;
 		text-align: center;
 	}
@@ -378,7 +378,7 @@
 		max-width: 100%;
 		white-space: nowrap;
 		/* TODO: Toggle between having it break the word and having ellipses in the app settings */
-  	/* Ellipses: */
+		/* Ellipses: */
 		overflow: hidden;
 		text-overflow: ellipsis;
 		/* Break Word: */
@@ -432,7 +432,7 @@
 
 	@media (max-width: 750px) {
 		.tile-content p {
-			font-size: .8rem;
+			font-size: 0.8rem;
 		}
 	}
 </style>

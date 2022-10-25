@@ -20,7 +20,7 @@
 	import trpc from '$lib/client/trpc';
 	import TextEditorPopup from './components/TextEditorPopup.svelte';
 	import Spinner from '$lib/client/components/Spinner.svelte';
-	
+
 	$AppProject = data;
 
 	// On mount, take a pic of the page for the thumbnail

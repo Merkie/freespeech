@@ -5,7 +5,7 @@
 
 	// Components
 	import Modal from '$lib/client/components/Modal.svelte';
-	
+
 	// Stores
 	import { GuidedAccessPin } from '$lib/client/stores';
 
