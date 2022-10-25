@@ -277,20 +277,17 @@
 
 <button
 	style={`
-	opacity: ${tile.is_invisible ? 0 : 1};
-	opacity: ${$InEditMode && tile.is_invisible ? 0.25 : 'auto'};
-	opacity: ${$InEditMode && tile.link_id ? 0.5 : 'auto'};
-	opacity: ${$InEditMode && tile.is_silent ? 0.5 : 'auto'};
-	border-color: ${$SwappedTile?.id === tile.id && $InEditMode ? 'var(--primary-300)' : 'auto'};
-	transform: ${$SwappedTile?.id === tile.id && $InEditMode ? 'scale(1.2)' : 'auto'};
-	z-index: ${$SwappedTile?.id === tile.id && $InEditMode ? 999 : 'auto'};
+	${tile.is_invisible ? 'opacity: 0' : ''};
+	${$InEditMode && (tile.is_silent || tile.link_id || tile.is_invisible) ? 'opacity: 0.5' : ''};
+	${$SwappedTile?.id === tile.id && $InEditMode ? 'border-color: var(--primary-300)' : ''};
+	${$SwappedTile?.id === tile.id && $InEditMode ? 'transform: scale(1.2)' : ''};
+	${$SwappedTile?.id === tile.id && $InEditMode ? 'z-index: 999' : ''};
 	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
-	color: ${tile.text_color || 'auto'};
-	pointer-events: ${tile.is_invisible && !$InEditMode ? 'none' : 'auto'};
-	min-height: ${dummy ? '90px' : '0px'};
-	min-height: ${!$InEditMode ? '90px' : '0px'};
-	${vocab_bindings[$VocabularySetting] < tile.display_text.length && !tile.navigation_page_id ? 'opacity: 0' : ''}
+	${tile.text_color ? '--tile-text '+tile.text_color : ''};
+	${tile.is_invisible && !$InEditMode ? 'pointer-events: none' : ''};
+	${dummy || !$InEditMode ? 'min-height: 90px' : ''};
+	${vocab_bindings[$VocabularySetting] < tile.display_text.length && !tile.navigation_page_id && !dummy ? 'opacity: 0; pointer-events: none' : ''};
 	`}
 	disabled={loading}
 	on:click={handle_interaction}
