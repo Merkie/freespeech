@@ -1,21 +1,27 @@
 <script lang="ts">
-	// @ts-nocheck
 	// Trpc
 	import trpc from '$lib/client/trpc';
+
+	// Stores
 	import { CloneModalProject } from '$lib/client/stores';
+
+	// Components
 	import Modal from '$lib/client/components/Modal.svelte';
 
+	// State
 	let loading = false;
 
+	// Closes modal
 	const close_modal = () => {
 		if (loading) return;
 		$CloneModalProject = null;
 	};
 
+	// Clones project
 	const clone_project = async () => {
 		loading = true;
 		const response = await trpc(fetch).mutation(`project:clone`, {
-			id: $CloneModalProject.id,
+			id: $CloneModalProject?.id || '',
 			index: 0
 		});
 		if (!response) return;

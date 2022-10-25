@@ -88,5 +88,9 @@ export const load: Load = async ({ params, fetch }) => {
 	const end_time = Date.now();
 	let timeDiffInSeconds = Math.floor((end_time - start_time) / 1000);
 	console.log('Load time: ', timeDiffInSeconds + 's', Date.now());
-	return new_project;
+
+	// Fetch voices
+	const voices = await trpc(fetch).query('tts:azure_voices');
+
+	return { ...new_project, voices };
 };

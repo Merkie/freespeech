@@ -6,10 +6,8 @@ import { Configuration, OpenAIApi } from 'openai';
 // Prisma
 import prismaClient from '$lib/server/prismaClient';
 
-import dotenv from 'dotenv';
 import type { Context } from '../context';
 import type { IMeta } from '../IMeta';
-dotenv.config();
 
 // init openai
 const configuration = new Configuration({

@@ -339,7 +339,7 @@
 		border: 2px solid var(--tiles-border);
 		color: var(--tiles-text);
 		white-space: pre;
-		min-width: 0; /* NEW; needed for Firefox */
+		min-width: 0;
 		width: 100%;
 		height: 100%;
 		min-height: 90px;
@@ -366,15 +366,21 @@
 	}
 
 	.tile-content img {
-		max-width: min(50%, 50px);
+		max-width: min(70%, 50px);
 	}
 
 	.tile-content p {
 		font-weight: 500;
 		font-size: 1.25rem;
 		max-width: 100%;
-		white-space: normal;
-		overflow-wrap: break-word;
+		white-space: nowrap;
+		/* TODO: Toggle between having it break the word and having ellipses in the app settings */
+  	/* Ellipses: */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Break Word: */
+		/* white-space: normal; */
+		/* overflow-wrap: break-word; */
 	}
 
 	.accent {
@@ -413,5 +419,11 @@
 		left: 5px;
 		font-size: 1.5rem;
 		color: var(--tiles-text);
+	}
+
+	@media (max-width: 750px) {
+		.tile-content p {
+			font-size: .8rem;
+		}
 	}
 </style>

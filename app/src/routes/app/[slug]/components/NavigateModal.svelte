@@ -3,17 +3,23 @@
 	// Trpc
 	import trpc from '$lib/client/trpc';
 
+	// Components
 	import Modal from '$lib/client/components/Modal.svelte';
 
 	// Stores
-	import { AppProject, NavigationTile, CurrentPageId, EditedTiles } from '$lib/client/stores';
+	import { AppProject, NavigationTile, CurrentPageId } from '$lib/client/stores';
 
+	// State
 	let creating_page = false;
+	let current_page_index;
+	$: current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+	let tile_index;
+	$: tile_index = $AppProject.pages[current_page_index].tiles.findIndex((t) => $NavigationTile?.id === t.id);
+
+	// Bindings
 	let page_select: HTMLSelectElement;
 
-	let current_page_index;
-	let tile_index;
-
+	// Creates a new page
 	const create_new_page = async () => {
 		if (creating_page) return;
 		creating_page = true;
@@ -35,6 +41,8 @@
 		);
 	};
 
+	// Handles changing the navigation page of a tile
+	// not actually changing the page in the app.
 	const handle_page_change = async (e) => {
 		$AppProject.pages[current_page_index].tiles[tile_index].navigation_page_id =
 			$AppProject.pages.find((page) => page.name === e.target.value)?.id;
@@ -43,13 +51,6 @@
 			$AppProject.pages[current_page_index].tiles[tile_index]
 		);
 	};
-
-	$: {
-		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-		tile_index = $AppProject.pages[current_page_index].tiles.findIndex(
-			(t) => $NavigationTile?.id === t.id
-		);
-	}
 </script>
 
 {#if $NavigationTile}

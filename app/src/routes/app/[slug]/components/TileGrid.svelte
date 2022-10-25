@@ -3,7 +3,6 @@
 	// Stores
 	import {
 		AppProject,
-		PageHistoryIndex,
 		CurrentPageId,
 		InEditMode,
 		PageHistory
@@ -17,7 +16,6 @@
 
 	// Trpc
 	import trpc from '$lib/client/trpc';
-	import { onMount } from 'svelte';
 
 	// config
 	const min_row_count = 5; // minimum number of rows
@@ -26,8 +24,10 @@
 	$PageHistory = [$CurrentPageId];
 
 	// State
-	let current_page_index;
-	let rows;
+	let current_page_index ;
+	$: current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+	// 5 is minimum row count
+	let rows = Math.max(5, Math.max($AppProject.pages.map((page) => Math.floor((page.tiles.length + 1) / $AppProject.columns ))));
 
 	// Adds a tile to the current page
 	const add_tile = async () => {
@@ -54,20 +54,6 @@
 		// 4) Replace the temp tile with the new tile
 		$AppProject.pages[current_page_index].tiles[new_tile_index] = response_tile;
 	};
-
-	$: {
-		current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-		let most_rows = 0;
-		$AppProject.pages.forEach((page) => {
-			let row_count = Math.floor(1 + page.tiles.length / page.columns);
-			if (row_count > most_rows) most_rows = row_count;
-		});
-		rows = Math.max(
-			min_row_count,
-			most_rows,
-			Math.floor(2 + ($AppProject.pages[current_page_index].tiles.length - 1) / $AppProject.columns)
-		);
-	}
 </script>
 
 <div

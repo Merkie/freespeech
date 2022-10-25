@@ -78,6 +78,14 @@ SelectedVoice.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-voice'] = val);
 });
 
+// Selected style persistent storage
+export const SelectedStyle = writable(
+	(browser && localStorage.getItem('freespeech-style')) || 'friendly'
+);
+SelectedStyle.subscribe((val) => {
+	if (browser) return (localStorage['freespeech-style'] = val);
+});
+
 // Guided Access persistent storage
 export const GuidedAccessPin = writable<String>(
 	(browser && localStorage.getItem('freespeech-guided-access')) || ''

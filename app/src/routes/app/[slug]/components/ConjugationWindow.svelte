@@ -7,16 +7,18 @@
 	import trpc from '$lib/client/trpc';
 	import Spinner from '$lib/client/components/Spinner.svelte';
 
+	// State
 	let conjugations: string[] = [];
 	let loading = false;
 
+	// Get conjugations from trpc
 	const get_conjugations = async () => {
 		conjugations = [];
 		loading = true;
 		// Fetch conjugations
 		conjugations =
 			(await trpc(fetch).mutation(
-				'openaiconjugate',
+				'openai:conjugate',
 				($ConjugatingTile?.speak_text || $ConjugatingTile?.display_text) + ''
 			)) || [];
 		// current word
@@ -50,6 +52,7 @@
 		});
 	};
 
+	// Closes modal
 	const close_modal = () => {
 		$ConjugatingTile = null;
 		conjugations = [];

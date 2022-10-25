@@ -1,10 +1,15 @@
-<script>
-	//@ts-nocheck
-	import Modal from '$lib/client/components/Modal.svelte';
-	import { GuidedAccessPin } from '$lib/client/stores';
-	export let callback;
-	export let close_modal;
+<script lang="ts">
+	// Props
+	export let callback: Function;
+	export let close_modal: Function;
 
+	// Components
+	import Modal from '$lib/client/components/Modal.svelte';
+	
+	// Stores
+	import { GuidedAccessPin } from '$lib/client/stores';
+
+	// State
 	let pin = '';
 
 	$: {

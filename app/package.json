@@ -43,6 +43,7 @@
 		"html2canvas": "^1.4.1",
 		"is-email": "^1.0.2",
 		"javascript-time-ago": "^2.5.7",
+		"microsoft-cognitiveservices-speech-sdk": "^1.24.0",
 		"openai": "^3.0.0",
 		"prisma": "^4.4.0",
 		"showdown": "^2.1.0",

@@ -1,5 +1,5 @@
 <script lang="ts">
-	//@ts-nocheck
+	// Stores
 	import {
 		EditorTool,
 		EditorTools,
@@ -8,69 +8,81 @@
 		SelectedColorMode
 	} from '$lib/client/stores';
 
+	// Bindings
 	let section: HTMLElement;
 	let shades_section: HTMLElement;
 	let options_section: HTMLElement;
+
+	// State
 	let is_color_picker_open = false;
-
-	const close_color_picker = () => {
-		if (!section) return;
-		section.childNodes.forEach(async (child, index) => {
-			if (child.style) {
-				// change opacity to 0 after 10 ms
-				setTimeout(() => {
-					child.style.transform = 'scale(0.00)';
-				}, 40 * index);
-			}
-		});
-		shades_section.childNodes.forEach(async (child, index) => {
-			if (child.style) {
-				// change opacity to 0 after 10 ms
-				setTimeout(() => {
-					child.style.transform = 'scale(0.00)';
-				}, 40 * index);
-			}
-		});
-		options_section.childNodes.forEach(async (child, index) => {
-			if (child.style) {
-				// change opacity to 0 after 10 ms
-				setTimeout(() => {
-					child.style.transform = 'scale(0.00)';
-				}, 40 * index);
-			}
-		});
-	};
-
-	const open_color_picker = () => {
-		if (!section) return;
-		section.childNodes.forEach(async (child, index) => {
-			if (child.style) {
-				// change opacity to 0 after 10 ms
-				setTimeout(() => {
-					child.style.transform = 'scale(1.00)';
-				}, 40 * index);
-			}
-		});
-		shades_section.childNodes.forEach(async (child, index) => {
-			if (child.style) {
-				// change opacity to 0 after 10 ms
-				setTimeout(() => {
-					child.style.transform = 'scale(1.00)';
-				}, 40 * index);
-			}
-		});
-		options_section.childNodes.forEach(async (child, index) => {
-			if (child.style) {
-				// change opacity to 0 after 10 ms
-				setTimeout(() => {
-					child.style.transform = 'scale(1.00)';
-				}, 40 * index);
-			}
-		});
-	};
-
 	let selected_color = 'vermilion';
 	let selected_shade = '300';
+
+	// Closes the color picker popup
+	const close_color_picker = () => {
+		if (!section) return;
+		section.childNodes.forEach(async (_child, index) => {
+			const child: HTMLElement = _child as HTMLElement;
+			if (child.style) {
+				// change opacity to 0 after 10 ms
+				setTimeout(() => {
+					child.style.transform = 'scale(0.00)';
+				}, 40 * index);
+			}
+		});
+		shades_section.childNodes.forEach(async (_child, index) => {
+			const child: HTMLElement = _child as HTMLElement;
+			if (child.style) {
+				// change opacity to 0 after 10 ms
+				setTimeout(() => {
+					child.style.transform = 'scale(0.00)';
+				}, 40 * index);
+			}
+		});
+		options_section.childNodes.forEach(async (_child, index) => {
+			const child: HTMLElement = _child as HTMLElement;
+			if (child.style) {
+				// change opacity to 0 after 10 ms
+				setTimeout(() => {
+					child.style.transform = 'scale(0.00)';
+				}, 40 * index);
+			}
+		});
+	};
+
+	// Opens color picker
+	const open_color_picker = () => {
+		if (!section) return;
+		section.childNodes.forEach(async (_child, index) => {
+			const child: HTMLElement = _child as HTMLElement;
+			if (child.style) {
+				// change opacity to 0 after 10 ms
+				setTimeout(() => {
+					child.style.transform = 'scale(1.00)';
+				}, 40 * index);
+			}
+		});
+		shades_section.childNodes.forEach(async (_child, index) => {
+			const child: HTMLElement = _child as HTMLElement;
+			if (child.style) {
+				// change opacity to 0 after 10 ms
+				setTimeout(() => {
+					child.style.transform = 'scale(1.00)';
+				}, 40 * index);
+			}
+		});
+		options_section.childNodes.forEach(async (_child, index) => {
+			const child: HTMLElement = _child as HTMLElement;
+			if (child.style) {
+				// change opacity to 0 after 10 ms
+				setTimeout(() => {
+					child.style.transform = 'scale(1.00)';
+				}, 40 * index);
+			}
+		});
+	};
+
+	// Color list
 	const colors = [
 		'grayscale',
 		'vermilion',

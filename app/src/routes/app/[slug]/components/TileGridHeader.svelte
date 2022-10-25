@@ -1,4 +1,7 @@
 <script lang="ts">
+	// Trpc
+	import trpc from '$lib/client/trpc';
+	
 	// Stores
 	import {
 		AppProject,
@@ -7,15 +10,21 @@
 		PageHistoryIndex,
 		EditorTool,
 		EditorTools,
-		InEditMode
+		InEditMode,
+		SelectedVoice,
+		SelectedStyle
 	} from '$lib/client/stores';
-	import trpc from '$lib/client/trpc';
 
 	// State
 	let current_page_index: number;
-	let name = 'Home'; // set to home by default
+	$: current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
+	let name: string;
+	$: name = $AppProject.pages[current_page_index]?.name || 'Home'; // set to home by default
+	//@ts-ignore
+	let StyleList = $AppProject.voices.find(voice => voice.ShortName === $SelectedVoice)?.StyleList || null;
 	let refreshing = false;
-
+	let is_styles_menu_open = false;
+	
 	//bindings
 	let page_header: HTMLElement;
 
@@ -56,18 +65,6 @@
 			});
 		}
 	};
-
-	$: {
-		// update the current page index
-		try {
-			current_page_index = $AppProject.pages.findIndex((page) => page.id === $CurrentPageId);
-		} catch (e) {}
-
-		// wrapped in try/catch because element may not be rendered
-		try {
-			name = $AppProject.pages[current_page_index].name;
-		} catch (e) {}
-	}
 </script>
 
 <section>
@@ -93,6 +90,21 @@
 	<button disabled={!($PageHistoryIndex > 0)} on:click={navigate_forwards}>
 		<i class="bx bx-right-arrow-alt" />
 	</button>
+{#if StyleList}
+		<button on:click={() => is_styles_menu_open = !is_styles_menu_open} class="style-selector">
+			<span class="style-name">{$SelectedStyle}</span>
+			<img height="35px" width="35px" src={`/images/styles/${$SelectedStyle}.png`} alt="content face with slight smile">
+			{#if is_styles_menu_open}
+				<div class="style-dropdown">
+					{#each StyleList.filter((item) => item != $SelectedStyle) as style}
+						<button on:click={() => $SelectedStyle = style}>
+							<img height="35px" width="35px" src={`/images/styles/${style}.png`} alt="">
+						</button>
+					{/each}
+				</div>
+			{/if}
+		</button>
+{/if}
 </section>
 
 <style>
@@ -114,21 +126,47 @@
 		padding: 0px;
 		background: transparent;
 		border: none;
+		align-items: center;
 	}
 
 	p {
 		min-width: 200px;
 		text-align: center;
 	}
-
+	.style-selector {
+		position: absolute;
+		right: 20px;
+		font-size: 18px;
+		gap: 20px;
+		display: flex;
+	}
+	.style-selector:hover {
+		transform: none !important;
+		filter: none !important;
+	}
+	.style-dropdown {
+		position: absolute;
+		top: 120%;
+		z-index: 999;
+		right: 0;
+		min-width: max-content;
+		max-width: 300px;
+		padding: 20px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+		border-radius: 10px;
+		background-color: var(--base-100);
+		box-shadow: 0px 0px 10px 0px black;
+		border: 1px solid var(--base-400);
+	}
+	.refreshing {
+		animation: spin 2s linear infinite;
+	}
 	.refresh {
 		position: absolute;
 		left: 10px;
-		top: 15px;
-	}
-
-	.refreshing {
-		animation: spin 2s linear infinite;
+		top: 20%;
 	}
 
 	@keyframes spin {
@@ -137,6 +175,18 @@
 		}
 		100% {
 			transform: rotate(360deg);
+		}
+	}
+
+	@media (max-width: 750px) {
+		p {
+			min-width: 100px;
+		}
+	}
+
+	@media (max-width: 500px) {
+		.style-name {
+			display: none;
 		}
 	}
 </style>

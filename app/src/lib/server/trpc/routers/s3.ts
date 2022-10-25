@@ -9,10 +9,8 @@ import prismaClient from '$lib/server/prismaClient';
 import type { Tile, User } from '@prisma/client';
 
 import aws from 'aws-sdk';
-import dotenv from 'dotenv';
 import type { Context } from '../context';
 import type { IMeta } from '../IMeta';
-dotenv.config();
 
 const s3 = new aws.S3({
 	accessKeyId: process.env.FS_AWS_ACCESS_KEY_ID,

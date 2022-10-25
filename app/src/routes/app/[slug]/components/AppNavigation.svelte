@@ -1,5 +1,4 @@
 <script lang="ts">
-	//@ts-nocheck
 	// Stores
 	import {
 		InEditMode,
@@ -16,6 +15,9 @@
 		PageHistoryIndex,
 		EditedTiles
 	} from '$lib/client/stores';
+	
+	// Trpc
+	import trpc from '$lib/client/trpc';
 
 	// Components
 	import Spinner from '$lib/client/components/Spinner.svelte';
@@ -25,8 +27,6 @@
 	let edit_unlocked = false;
 	let is_ga_keypad_open = false;
 	let saving = false;
-
-	import trpc from '$lib/client/trpc';
 
 	// Resets the state of the app back to the home page
 	// triggers when clicking the home page

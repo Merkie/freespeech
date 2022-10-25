@@ -3,6 +3,7 @@
 	import TileGrid from './components/TileGrid.svelte';
 	export let data: Project & { pages: (TilePage & { tiles: Tile[] })[] };
 	import { AppProject, InSettingsPage, Me } from '$lib/client/stores';
+	import AppHeader from './components/AppHeader.svelte';
 	import SentenceBuilder from './components/SentenceBuilder.svelte';
 	import TileGridHeader from './components/TileGridHeader.svelte';
 	import AppNavigation from './components/AppNavigation.svelte';
@@ -19,7 +20,7 @@
 	import trpc from '$lib/client/trpc';
 	import TextEditorPopup from './components/TextEditorPopup.svelte';
 	import Spinner from '$lib/client/components/Spinner.svelte';
-
+	
 	$AppProject = data;
 
 	// On mount, take a pic of the page for the thumbnail
@@ -64,6 +65,7 @@
 
 <main>
 	{#if !$InSettingsPage}
+		<AppHeader />
 		<SentenceBuilder />
 		<TileGridHeader />
 		<TileGrid />

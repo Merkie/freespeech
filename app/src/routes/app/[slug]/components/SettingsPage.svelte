@@ -5,29 +5,32 @@
 	// Components
 	import Header from '$lib/client/components/Header.svelte';
 
+	// Stores
 	import { AppProject, Me, SelectedVoice, GuidedAccessPin } from '$lib/client/stores';
+	
+	// Trpc
 	import trpc from '$lib/client/trpc';
-	import { voices as polly_voices } from '$lib/client/polly';
 
 	// Bindings
 	let search_text: string;
 	let voices = [
-		...Object.keys(polly_voices),
-		...speechSynthesis.getVoices().map((voice) => `[SpeechSynthesis] ${voice.name} ${voice.lang}`)
+		...$AppProject.voices.map((voice) => voice.ShortName),
+		...speechSynthesis.getVoices().map((voice) => `[Offline] ${voice.name} ${voice.lang}`)
 	];
 	let project_name: string = $AppProject.name;
 	let project_description: string = $AppProject.description + '';
 	let project_visibility: string = $AppProject.public ? 'public' : 'private';
 	let project_columns: number = $AppProject.columns;
-
+	
+	// State
 	let delete_button_pressed = false;
 	let changes_made = false;
 
 	// In case new voices are added asynchronously
 	window.speechSynthesis.onvoiceschanged = function (e) {
 		voices = [
-			...Object.keys(polly_voices),
-			...speechSynthesis.getVoices().map((voice) => `[SpeechSynthesis] ${voice.name} ${voice.lang}`)
+			...$AppProject.voices.map((voice) => voice.ShortName),
+			...speechSynthesis.getVoices().map((voice) => `[Offline] ${voice.name} ${voice.lang}`)
 		];
 	};
 
@@ -47,6 +50,7 @@
 			name: 'Text-to-speech voice:',
 			type: 'select',
 			default: '[AWS] Kimberly (en-US female) Neural',
+			//@ts-ignore
 			options: voices,
 			value: $SelectedVoice,
 			onInput: (value: string) => {
@@ -72,7 +76,8 @@
 	];
 
 	let fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });
-
+	
+	// Handles pressing the delete button in the settings page
 	const handle_delete_btn_press = async () => {
 		if (!delete_button_pressed) {
 			delete_button_pressed = true;
@@ -82,6 +87,7 @@
 		}
 	};
 
+	// Handles saving project changes
 	const save_changes = async () => {
 		// Update locally
 		$AppProject.name = project_name;
@@ -100,6 +106,7 @@
 		changes_made = false;
 	};
 
+	// Handles downloading the project to the client in JSON format
 	const download_project = () => {
 		const data_obj = { ...$AppProject };
 		//@ts-ignore
