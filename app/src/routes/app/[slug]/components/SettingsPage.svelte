@@ -6,7 +6,7 @@
 	import Header from '$lib/client/components/Header.svelte';
 
 	// Stores
-	import { AppProject, Me, SelectedVoice, GuidedAccessPin, ColumnCountOverride } from '$lib/client/stores';
+	import { AppProject, Me, SelectedVoice, GuidedAccessPin, ColumnCountOverride, TileOverflow } from '$lib/client/stores';
 	
 	// Trpc
 	import trpc from '$lib/client/trpc';
@@ -73,7 +73,20 @@
 			reset_to_default: () => {
 				$ColumnCountOverride = '';
 			}
-		}
+		},
+		{
+			name: 'Tile Overflow:',
+			type: 'select',
+			default: 'ellipses',
+			options: ['break', 'ellipses'],
+			value: $TileOverflow,
+			onInput: (value: 'break' | 'ellipses') => {
+				$TileOverflow = value;
+			},
+			reset_to_default: () => {
+				$TileOverflow = 'ellipses';
+			}
+		},
 	];
 
 	let fuse = new Fuse(settings, { includeScore: true, keys: ['name'] });

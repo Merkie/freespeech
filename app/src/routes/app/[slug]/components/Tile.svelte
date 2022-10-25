@@ -22,7 +22,8 @@
 		EditedTiles,
 		ConjugatingTile,
 		TemplatingPageId,
-		PageHistoryIndex
+		PageHistoryIndex,
+		TileOverflow
 	} from '$lib/client/stores';
 
 	// Helpers
@@ -310,6 +311,7 @@
 			<p
 				bind:this={tile_text_element}
 				on:input={edit_tile}
+				class={`${$TileOverflow === 'break' ? 'break-overflow' : ''}`}
 				spellcheck="false"
 				style={`${!tile.image && (tile.display_text + '').length < 10 ? 'font-size: 2rem;' : ''}
 								${!tile.image && (tile.display_text + '').length < 4 ? 'font-size: 4rem;' : ''})}`}
@@ -382,6 +384,12 @@
 		/* Break Word: */
 		/* white-space: normal; */
 		/* overflow-wrap: break-word; */
+	}
+
+	.break-overflow {
+		overflow: visible !important;
+		white-space: normal !important;
+		overflow-wrap: break-word !important;
 	}
 
 	.accent {

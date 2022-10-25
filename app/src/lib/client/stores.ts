@@ -101,3 +101,12 @@ export const ColumnCountOverride = writable<String>(
 GuidedAccessPin.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-column-override'] = val);
 });
+
+// Tile overflow setting persistent storage
+export const TileOverflow = writable<'break' | 'ellipses'>(
+	(browser && (localStorage.getItem('freespeech-tile-overflow') as 'break' | 'ellipses')) ||
+		'ellipses'
+);
+GuidedAccessPin.subscribe((val) => {
+	if (browser) return (localStorage['freespeech-tile-overflow'] = val);
+});
