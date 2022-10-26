@@ -22,7 +22,6 @@
 	const min_row_count = 5; // minimum number of rows
 
 	$CurrentPageId = $AppProject.pages.find((page) => page.name.toLowerCase() === 'home')?.id;
-	console.log($AppProject);
 	$PageHistory = [$CurrentPageId];
 
 	// State
