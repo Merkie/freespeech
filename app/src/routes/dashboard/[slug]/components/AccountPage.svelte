@@ -73,10 +73,9 @@
 </div>
 
 <label for="">Name:</label>
-<input type="text" placeholder="Linus Torvalds" bind:value={name} />
+<input on:change={handle_user_edit} type="text" placeholder="Linus Torvalds" bind:value={name} />
 
 <span class="btn-group" style="display: flex; gap: 10px; margin-bottom: 10px;">
-	<button disabled={!is_edited} on:click={handle_user_edit}>Save changes</button>
 	<button disabled={true}>Change my password</button>
 </span>
 <button class="logout" on:click={logout}>Logout</button>
