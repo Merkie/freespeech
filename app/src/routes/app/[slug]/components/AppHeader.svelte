@@ -7,18 +7,28 @@
 	let vocab_select_element: HTMLSelectElement;
 </script>
 
-<nav style={`
+<nav
+	style={`
 		display: ${$AppHeaderBehavior === 'always showing' ? 'flex' : 'auto'};
-	`}>
+	`}
+>
 	<img height="20px" src="/images/logo-white.png" alt="FreeSpeech AAC Logo" />
 	<p>Layout:</p>
-	<select bind:this={project_select_element} on:change={() => window.location.assign('/app/'+project_select_element.value)} value={$AppProject.id}>
+	<select
+		bind:this={project_select_element}
+		on:change={() => window.location.assign('/app/' + project_select_element.value)}
+		value={$AppProject.id}
+	>
 		{#each $Me.projects as project}
 			<option value={project.id}>{project.name}</option>
 		{/each}
 	</select>
 	<p>Vocabulary:</p>
-	<select value={$VocabularySetting} bind:this={vocab_select_element} on:change={() => $VocabularySetting = vocab_select_element.value}>
+	<select
+		value={$VocabularySetting}
+		bind:this={vocab_select_element}
+		on:change={() => ($VocabularySetting = vocab_select_element.value)}
+	>
 		<option value="all">All</option>
 		<option value="1a">1A</option>
 		<option value="2a">2A</option>

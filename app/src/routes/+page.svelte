@@ -11,10 +11,11 @@
 <Header site_header={true} uri="dashboard" button_text="Dashboard" />
 <main>
 	<div class="hero-img-container">
-		<img src="/images/hero.png" class="hero-img" alt="hero" />
+		<img src="/images/homepage/hero.png" class="hero-img" alt="hero" />
 	</div>
 
-	<div class="site-content-wrapper" style="background: white;">
+
+	<!-- <div class="site-content-wrapper" style="background: white;">
 		<div class="site-content">
 			<div class="centered">
 				<img
@@ -35,22 +36,40 @@
 				</p>
 			</div>
 		</div>
+	</div> -->
+
+	<div class="site-content-wrapper" style="background: white;">
+		<div class="site-content">
+			<div class="centered">
+				<img
+					alt="Unbranded computer and tablet showcasing FreeSpeech AAC."
+					src="/images/homepage/family-with-ipad.jpg"
+				/>
+			</div>
+			<div class="text">
+				<h1>Finally, AAC for everyone</h1>
+				<p>
+					FreeSpeech is a free, open-source AAC app that is compatible with just about any device. Whether you want to use it, teach with it, or contribute to it, FreeSpeech is built with you in mind. 
+				</p>
+			</div>
+		</div>
 	</div>
+
 
 	<div class="site-content-wrapper">
 		<div class="site-content reverse">
 			<div>
 				<img
 					alt="Unbranded computer and tablet showcasing FreeSpeech AAC."
-					src="/images/computer-tablet.png"
+					src="/images/homepage/devices.png"
 				/>
 			</div>
 			<div class="text">
-				<h1>Lorem Ispum Dolor</h1>
+				<h1>
+					Taking the stress out of AAC
+					</h1>
 				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed nisi? Nemo
-					beatae incidunt cumque eaque nesciunt pariatur officia, ab vel repudiandae, praesentium
-					nostrum ut eveniet fuga quam recusandae.
+					With FreeSpeech's built-in features like out-of-the-box layouts and vocabulary, you can get started with AAC in no time. FreeSpeech is designed to be as easy to use as possible, so you can focus on what matters most: communication.
 				</p>
 			</div>
 		</div>
@@ -58,19 +77,41 @@
 
 	<div class="site-content-wrapper" style="background: white;">
 		<div class="site-content">
-			<div>
-				<img alt="Screenshot of the application's editor." src="/images/editor.png" />
+			<div class="centered">
+				<img
+					alt="Unbranded computer and tablet showcasing FreeSpeech AAC."
+					src="/images/homepage/editor.png"
+				/>
 			</div>
 			<div class="text">
-				<h1>Lorem Ispum Dolor</h1>
+				<h1>An editor anyone can use</h1>
 				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed nisi? Nemo
-					beatae incidunt cumque eaque nesciunt pariatur officia, ab vel repudiandae, praesentium
-					nostrum ut eveniet fuga quam recusandae.
+					We've spent a lot of time working with AAC, so we understand first-hand how important it is to have a communication tool that is easy to use. FreeSpeech's editor is crafted to fit the needs of both professionals and non-professionals alike. So whether you're a teacher, a parent, or a student, you can use FreeSpeech to communicate. 
 				</p>
 			</div>
 		</div>
 	</div>
+
+
+	<div class="site-content-wrapper">
+		<div class="site-content reverse">
+			<div>
+				<img
+					alt="Unbranded computer and tablet showcasing FreeSpeech AAC."
+					src="/images/homepage/open_source.png"
+				/>
+			</div>
+			<div class="text">
+				<h1>
+					Built with collaboration since day one
+					</h1>
+				<p>
+					FreeSpeech has been developed inside of the open-source ecosystem since its conception. We believe that the best way to make AAC accessible to everyone is to make it open-source. That way, anyone can contribute to the project and expand the vocabulary of the entire community. We make it easy to collaborate either by creating your own layouts or by contributing to existing ones. 
+				</p>
+			</div>
+		</div>
+	</div>
+
 	<div class="footer">
 		<span>
 			<div class="footer-category">
@@ -98,12 +139,12 @@
 		<button on:click={() => (is_install_cover_open = false)}><i class="bx bx-x" /></button>
 		<img
 			class="ios-pwa"
-			src="/images/install-screen.png"
+			src="/images/homepage/install-screen.png"
 			alt="Tutorial showing how to install PWA."
 		/>
 		<img
 			class="chrome-install"
-			src="/images/install-chrome.png"
+			src="/images/homepage/install-chrome.png"
 			alt="Install FreeSpeech AAC on Chrome tutorial."
 		/>
 	</div>
@@ -149,6 +190,9 @@
 
 	.site-content img {
 		width: 100%;
+		border-radius: 20px;
+		max-height: 450px;
+		object-fit: cover;
 	}
 	.site-content .text {
 		display: flex;
@@ -210,7 +254,7 @@
 		width: 100vw;
 		height: 100vh;
 		background-color: var(--primary-300);
-		z-index: 999;
+		z-index: 99999999;
 	}
 
 	.ios-pwa {

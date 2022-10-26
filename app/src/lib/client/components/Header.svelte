@@ -12,8 +12,8 @@
 		<img src={'/images/logo-white.png'} alt="logo" /> <span>FreeSpeech</span>
 	</h1>
 	<span class="links">
-		<a href="/about">About</a>
 		<a href="/docs">Documentation</a>
+		<a href="/blog">Blog</a>
 	</span>
 	<span style="flex: 1;" />
 	{#if $Me}
@@ -38,8 +38,8 @@
 	style={`display: ${is_dropdown_open ? 'flex' : 'none'};`}
 	class={`mobile-dropdown ${site_header ? 'site-header' : ''}`}
 >
-	<a href="/about">About</a>
 	<a href="/docs">Documentation</a>
+	<a href="/blog">Blog</a>
 	{#if $Me}
 		<button on:click={() => window.location.assign('/' + uri)}
 			>{button_text}<i class="bx bx-right-arrow-alt" /></button

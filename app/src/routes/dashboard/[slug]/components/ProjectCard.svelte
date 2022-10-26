@@ -28,7 +28,7 @@
 				<img
 					style="border-radius: 50%"
 					width="30px"
-					src={project.author.image || '/images/profile.png'}
+					src={project.author.image || '/images/app/profile.png'}
 					alt=""
 				/>
 				{project.author.name}

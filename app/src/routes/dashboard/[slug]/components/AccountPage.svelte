@@ -57,7 +57,7 @@
 <h1>Account</h1>
 <div>
 	<span style="position: relative;">
-		<img src={$Me.image || '/images/profile.png'} alt="profile" class="profile" />
+		<img src={$Me.image || '/images/app/profile.png'} alt="profile" class="profile" />
 		<span on:keypress={() => null} on:click={() => file_input.click()} class="add-image">
 			<i class="bx bxs-image-add" />
 		</span>

@@ -55,8 +55,8 @@
 		'1a': 3,
 		'2a': 7,
 		'3a': 9,
-		'all': 999
-	}
+		all: 999
+	};
 
 	// Handles all tile modifications from edit mode
 	const modify_tile = (edited_tile: any) => {
@@ -284,10 +284,16 @@
 	${$SwappedTile?.id === tile.id && $InEditMode ? 'z-index: 999' : ''};
 	${tile.border_color ? '--tiles-border: ' + tile.border_color : ''};
 	${tile.background_color ? '--tile-background: ' + tile.background_color : ''};
-	${tile.text_color ? '--tile-text '+tile.text_color : ''};
+	${tile.text_color ? '--tile-text ' + tile.text_color : ''};
 	${tile.is_invisible && !$InEditMode ? 'pointer-events: none' : ''};
 	${dummy || !$InEditMode ? 'min-height: 90px' : ''};
-	${vocab_bindings[$VocabularySetting] < tile.display_text.length && !tile.navigation_page_id && !dummy ? 'opacity: 0; pointer-events: none' : ''};
+	${
+		vocab_bindings[$VocabularySetting] < tile.display_text.length &&
+		!tile.navigation_page_id &&
+		!dummy
+			? 'opacity: 0; pointer-events: none'
+			: ''
+	};
 	`}
 	disabled={loading}
 	on:click={handle_interaction}

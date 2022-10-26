@@ -22,7 +22,8 @@
 	$: name = $AppProject.pages[current_page_index]?.name || 'Home'; // set to home by default
 	//@ts-ignore
 	let StyleList =
-		$AppProject.voices.find((voice) => voice.ShortName === $SelectedVoice)?.StyleList.sort() || null;
+		$AppProject.voices.find((voice) => voice.ShortName === $SelectedVoice)?.StyleList.sort() ||
+		null;
 	let refreshing = false;
 	let is_styles_menu_open = false;
 
@@ -97,14 +98,14 @@
 			<img
 				height="35px"
 				width="35px"
-				src={`/images/styles/${$SelectedStyle}.png`}
+				src={`/images/app/${$SelectedStyle}.png`}
 				alt="content face with slight smile"
 			/>
 			{#if is_styles_menu_open}
 				<div class="style-dropdown">
 					{#each StyleList.filter((item) => item != $SelectedStyle) as style}
 						<button on:click={() => ($SelectedStyle = style)}>
-							<img height="35px" width="35px" src={`/images/styles/${style}.png`} alt="" />
+							<img height="35px" width="35px" src={`/images/app/${style}.png`} alt="" />
 						</button>
 					{/each}
 				</div>
