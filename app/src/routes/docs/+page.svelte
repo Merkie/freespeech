@@ -73,7 +73,7 @@
 		<a href="#">Using theme and settings files</a>
 		<a href="#">Using AI synthesized voices</a>
 	</div>
-	<div on:click={() => is_sidebar_open = false} class="page-content" bind:innerHTML={page_content} contenteditable="false" />
+	<div on:keypress={() => {}} on:click={() => is_sidebar_open = false} class="page-content" bind:innerHTML={page_content} contenteditable="false" />
 </main>
 
 <button on:click={() => is_sidebar_open = true} style={`opacity: ${is_sidebar_open ? '0' : '.75'}; left: ${is_sidebar_open ? '-75px' : '0px'};`} class="docs-toggle-btn">
