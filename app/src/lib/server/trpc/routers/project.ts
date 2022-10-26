@@ -242,15 +242,16 @@ export default router<Context, IMeta>()
 
 			if (project.userId === user.id) {
 				// go through all pages, if unlinked delete it
-				for (const page of project.pages) {
-					if (!nav_page_ids.includes(page.id)) {
-						await prismaClient.tilePage.delete({
-							where: {
-								id: page.id
-							}
-						});
-					}
-				}
+				// for (const page of project.pages) {
+				// 	if (!nav_page_ids.includes(page.id)) {
+				// 		if (page.name.toLowerCase() !== 'home')
+				// 			await prismaClient.tilePage.delete({
+				// 				where: {
+				// 					id: page.id
+				// 				}
+				// 			});
+				// 	}
+				// }
 			}
 
 			// 3) Check if user is authorized to view project
