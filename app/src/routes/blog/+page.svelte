@@ -59,4 +59,12 @@
     display: flex;
     flex-direction: column;
   }
+
+  @media (max-width: 750px) {
+    .blog-post {
+      padding: 0px;
+      border-radius: 0px;
+      background: transparent;
+    }
+  }
 </style>
