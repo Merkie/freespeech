@@ -16,7 +16,6 @@
 		{#each $Me.projects as project}
 			<option value={project.id}>{project.name}</option>
 		{/each}
-		<option value="Another Layout">Another Layout</option>
 	</select>
 	<p>Vocabulary:</p>
 	<select value={$VocabularySetting} bind:this={vocab_select_element} on:change={() => $VocabularySetting = vocab_select_element.value}>
