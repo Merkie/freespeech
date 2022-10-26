@@ -7,6 +7,7 @@
 
 	let page_content = '';
 	let active_page = 'whatisaac';
+	let is_sidebar_open = false;
 
 	const converter = new showdown.Converter({
 		emoji: true,
@@ -40,8 +41,8 @@
 </svelte:head>
 
 <Header uri="dashboard" button_text="Dashboard" site_header={true} />
-<main>
-	<div class="sidebar">
+<main class={`${is_sidebar_open ? 'open' : ''}`}>
+	<div class={`sidebar`}>
 		<b>Introduction</b>
 		<a on:click={() => (active_page = 'whatisaac')} href="#what-is-aac">What is AAC?</a>
 		<a on:click={() => (active_page = 'whyusefreespeech')} href="#why-use-freespeech"
@@ -72,8 +73,12 @@
 		<a href="#">Using theme and settings files</a>
 		<a href="#">Using AI synthesized voices</a>
 	</div>
-	<div class="page-content" bind:innerHTML={page_content} contenteditable="false" />
+	<div on:click={() => is_sidebar_open = false} class="page-content" bind:innerHTML={page_content} contenteditable="false" />
 </main>
+
+<button on:click={() => is_sidebar_open = true} style={`opacity: ${is_sidebar_open ? '0' : '.75'}; left: ${is_sidebar_open ? '-75px' : '0px'};`} class="docs-toggle-btn">
+	<i class='bx bx-chevrons-right'></i>
+</button>
 
 <style>
 	:global(body) {
@@ -81,9 +86,17 @@
 		overflow-y: hidden;
 	}
 	main {
+		position: absolute;
+		width: 100%;
+		left: 0px;
 		color: black;
 		margin-top: 56px;
 		display: flex;
+	}
+
+	.open {
+		width: 100%;
+		left: 0px;
 	}
 	.sidebar {
 		width: 250px;
@@ -119,5 +132,23 @@
 	}
 	.sidebar b {
 		margin-top: 20px;
+	}
+
+	.docs-toggle-btn {
+		position: fixed;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%);
+		padding: 10px;
+		border-radius: 0 10px 10px 0;
+		font-size: 30px;
+		opacity: .75;
+	}
+
+	@media (max-width: 750px) {
+		main {
+			width: calc(100% + 290px);
+			left: -290px;
+		}
 	}
 </style>
