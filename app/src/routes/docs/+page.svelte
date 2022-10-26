@@ -8,10 +8,19 @@
 	let page_content = '';
 	let active_page = 'whatisaac';
 
-	const converter = new showdown.Converter();
+	const converter = new showdown.Converter({
+		emoji: true,
+		simplifiedAutoLink: true,
+		strikethrough: true,
+		tables: true,
+		tasklists: true
+	});
+	
 
 	const refresh_page = async () => {
 		//@ts-ignore
+		console.log(docs[active_page]);
+		console.log(converter.makeHtml(docs[active_page]));
 		page_content = converter.makeHtml(docs[active_page]);
 	};
 
@@ -69,6 +78,7 @@
 <style>
 	:global(body) {
 		background: white !important;
+		overflow-y: hidden;
 	}
 	main {
 		color: black;
@@ -80,7 +90,7 @@
 		height: calc(100vh - 95px);
 		background: var(--primary-300);
 		color: white;
-		position: fixed;
+		/* position: fixed; */
 		/* top: 55px; */
 		padding: 20px;
 		left: 0;
@@ -93,8 +103,11 @@
 	}
 
 	.page-content {
-		margin-left: 320px;
-		margin-top: 20px;
+		height: calc(100vh - 95px);
+		padding: 20px;
+		overflow: auto;
+		scrollbar-width: thin;
+		flex: 1;
 	}
 	.sidebar a {
 		color: white;
