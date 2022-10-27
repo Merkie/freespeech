@@ -98,7 +98,7 @@ GuidedAccessPin.subscribe((val) => {
 export const ColumnCountOverride = writable<String>(
 	(browser && localStorage.getItem('freespeech-column-override')) || ''
 );
-GuidedAccessPin.subscribe((val) => {
+ColumnCountOverride.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-column-override'] = val);
 });
 
@@ -107,7 +107,7 @@ export const TileOverflow = writable<'break' | 'ellipses'>(
 	(browser && (localStorage.getItem('freespeech-tile-overflow') as 'break' | 'ellipses')) ||
 		'ellipses'
 );
-GuidedAccessPin.subscribe((val) => {
+TileOverflow.subscribe((val) => {
 	if (browser) return (localStorage['freespeech-tile-overflow'] = val);
 });
 
