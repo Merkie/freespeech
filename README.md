@@ -3,6 +3,8 @@
 
 FreeSpeech AAC is a free and open-source assistive communication app written in TypeScript. [Talk with us on Discord!](https://discord.gg/rEzaDqdfet)
 
+![devices](https://user-images.githubusercontent.com/18383101/199581923-7ca35818-8280-49e1-a2e1-66a5602cfff0.png)
+
 FreeSpeech AAC is committed to providing the best AAC experience to users, this is accomplished by packaging FreeSpeech with technologies sourced from AWS, Micorosoft Cognitive Services, and Google Cloud that give users cutting-edge AI generated voices. FreeSpeech is also putting artificial intelligence to use by relying on the OpenAI GPT-3 model to handle complex textual analysis tasks along with phrase and word conjugation. FreeSpeech's client is built on top of Svelte, a blazingly fast front-end UI framework.
 
 I created FreeSpeech initially for my sister who is nonverbal, but since then the project has been actively gaining users as the application also serves as a viable alternative to many other expensive pieces of AAC software. Keep up with the latest FreeSpeech news on the blog portion of the website!
