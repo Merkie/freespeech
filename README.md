@@ -3,16 +3,17 @@
 
 FreeSpeech AAC is a free and open-source assistive communication app written in TypeScript. [Talk with us on Discord!](https://discord.gg/rEzaDqdfet)
 
-### Cloning the project
+FreeSpeech AAC is committed to providing the best AAC experience to users, this is accomplished by packaging FreeSpeech with technologies sourced from AWS, Micorosoft Cognitive Services, and Google Cloud that give users cutting-edge AI generated voices. FreeSpeech is also putting artificial intelligence to use by relying on the OpenAI GPT-3 model to handle complex textual analysis tasks along with phrase and word conjugation. FreeSpeech's client is built on top of Svelte, a blazingly fast front-end UI framework.
+
+I created FreeSpeech initially for my sister who is nonverbal, but since then the project has been actively gaining users as the application also serves as a viable alternative to many other expensive pieces of AAC software. Keep up with the latest FreeSpeech news on the blog portion of the website!
+
+### Hosting
 * Clone and enter into the project directory
 `git clone https://github.com/merkie/freespeech freespeech && cd freespeech/app`
 * Install dependencies
 `yarn` or `npm install` or `pnpm install`
 * Run the start command
 `yarn start`
-
-### Project structure
-The FreeSpeech project follows the basic monorepo structure. There are two packages inside the `packages` folder, the client and the server. The client is running SolidJS for the frontend framework and the server is running Express along with Prisma for the database.
 
 ## Sponsors
 <a href="https://opensource.optum.com/"><img src="https://i.postimg.cc/NGRqXYJs/optum.png" width=200px></a>
