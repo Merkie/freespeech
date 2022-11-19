@@ -11,11 +11,11 @@ I created FreeSpeech initially for my sister who is nonverbal, but since then th
 
 ### Hosting
 * Clone and enter into the project directory
-`git clone https://github.com/merkie/freespeech freespeech && cd freespeech/app`
+`git clone https://github.com/merkie/freespeech freespeech && cd freespeech`
 * Install dependencies
-`yarn` or `npm install` or `pnpm install`
-* Run the start command
-`yarn start`
+`yarn install`
+* Run the dev command
+`yarn dev`
 
 ## Sponsors
 <a href="https://opensource.optum.com/"><img src="https://i.postimg.cc/NGRqXYJs/optum.png" width=200px></a>
