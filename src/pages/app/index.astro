@@ -1,0 +1,43 @@
+---
+import EditModeHeader from "../../components/app/EditModeHeader.svelte";
+import EditModeSideBar from "../../components/app/EditModeSideBar.svelte";
+import Navigation from "../../components/app/Navigation.svelte";
+import SentenceBuilder from "../../components/app/SentenceBuilder.svelte";
+import TileGrid from "../../components/app/TileGrid.svelte";
+import DefaultLayout from "../../layouts/DefaultLayout.astro";
+import pc from "../../lib/prisma";
+const cookie = Astro.request.headers.get("cookie");
+const token = await pc.accessToken.findUnique({
+  where: {
+    token: cookie?.split("=")[1] + "",
+  },
+});
+if (token) {
+  // give this to the client
+  const user = await pc.user.findUnique({
+    where: {
+      id: token.userId,
+    },
+    include: {
+      projects: true,
+    },
+  });
+} else {
+  // redirect to login
+  return Astro.redirect("/portal/login");
+}
+---
+
+<DefaultLayout title={"Hello, World!"}>
+  <main class="h-screen w-screen bg-gray-900 flex flex-col overflow-hidden">
+    <EditModeHeader client:load />
+    <div class="flex-1 w-screen flex">
+      <EditModeSideBar client:load />
+      <main class="flex flex-col flex-1 relative">
+        <SentenceBuilder client:load />
+        <TileGrid client:load />
+      </main>
+    </div>
+    <Navigation client:load />
+  </main>
+</DefaultLayout>
