@@ -11,9 +11,9 @@
   <button class="grid h-full place-items-center p-4">
     <Backspace color={colors.gray[900]} size={"40px"} />
   </button>
-  <button
+  <!-- <button
     class="mr-4 grid place-items-center rounded-md border border-gray-600 bg-gray-800 p-4"
   >
     <ViewDashboard color={colors.gray[50]} size={"40px"} />
-  </button>
+  </button> -->
 </div>

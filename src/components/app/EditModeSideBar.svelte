@@ -17,6 +17,8 @@
   import Link from "svelte-material-icons/Link.svelte";
   import Delete from "svelte-material-icons/Delete.svelte";
   import DeleteOutline from "svelte-material-icons/DeleteOutline.svelte";
+  import Cog from "svelte-material-icons/Cog.svelte";
+  import CogOutline from "svelte-material-icons/CogOutline.svelte";
 
   const EditButtons: { name: string; outlineIcon: any; solidIcon: any }[] = [
     {
@@ -64,6 +66,11 @@
       outlineIcon: DeleteOutline,
       solidIcon: Delete,
     },
+    {
+      name: "settings",
+      outlineIcon: CogOutline,
+      solidIcon: Cog,
+    },
   ];
 </script>
 
@@ -80,7 +87,7 @@
       {#each EditButtons as EditBtn}
         <button
           on:click={() => ($EditModeToolSelection = EditBtn.name)}
-          class={`border ${
+          class={`border shadow-md ${
             $EditModeToolSelection === EditBtn.name
               ? "border-slate-600 bg-gray-700 text-gray-50"
               : "border-slate-700"

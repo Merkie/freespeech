@@ -1,6 +1,26 @@
 ---
 import "../lib/app.css";
+import StoreManager from "../components/StoreManager.svelte";
+import pc from "../lib/prisma";
 const { title } = Astro.props;
+let user = null;
+const cookie = Astro.request.headers.get("cookie");
+const token = await pc.accessToken.findUnique({
+  where: {
+    token: cookie?.split("=")[1] + "",
+  },
+});
+if (token) {
+  // give this to the client
+  user = await pc.user.findUnique({
+    where: {
+      id: token.userId,
+    },
+    include: {
+      projects: true,
+    },
+  });
+}
 ---
 
 <html lang="en">
@@ -9,7 +29,7 @@ const { title } = Astro.props;
     <!-- <meta name="viewport" content="width=device-width, initial-scale=0.85" /> -->
     <meta
       name="viewport"
-      content="width=device-width,initial-scale=0.85,maximum-scale=0.85"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
     />
     <link
       rel="stylesheet"
@@ -20,5 +40,6 @@ const { title } = Astro.props;
   </head>
   <body class="text-slate-50">
     <slot />
+    <StoreManager client:load _Me={user} />
   </body>
 </html>
