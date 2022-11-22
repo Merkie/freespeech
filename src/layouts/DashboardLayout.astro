@@ -4,9 +4,9 @@ const { selected } = Astro.props;
 ---
 
 <DefaultLayout title={"Dashboard"}>
-  <main class="h-screen w-screen bg-slate-900 flex flex-col">
+  <main class="h-full min-h-screen bg-slate-900 flex flex-col">
     <header
-      class="bg-blue-500 border border-x-0 border-t-0 border-blue-600 p-4 flex items-center"
+      class="bg-blue-500 border border-x-0 border-t-0 border-blue-600 p-2 px-4 flex items-center"
     >
       <h1 class="font-bold text-2xl">
         FreeSpeech <span class="font-light text-lg">Dashboard</span>
@@ -27,6 +27,19 @@ const { selected } = Astro.props;
       <section
         class="p-4 h-max flex flex-col items-baseline gap-2 border border-y-0 border-l-0 border-gray-700"
       >
+        <a
+          href="/dashboard/projects"
+          class={`flex justify-center items-center gap-2 text-xl ${
+            selected === "projects" ? "text-gray-50" : "text-gray-400"
+          }`}
+        >
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3"></path>
+          </svg>
+          <p>Projects</p>
+        </a>
         <a
           href="/dashboard/account"
           class={`flex justify-center items-center gap-2 text-xl ${
