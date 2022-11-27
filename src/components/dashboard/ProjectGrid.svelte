@@ -1,10 +1,20 @@
 <script>
-  import { Me, ModalCreateProjectOpen } from "../../lib/client/stores";
+  import {
+    Me,
+    ModalCreateProjectOpen,
+    CurrentProject,
+    CurrentPage,
+  } from "../../lib/client/stores";
 </script>
 
 <div class="flex w-fit flex-wrap justify-center gap-4">
   {#each $Me.projects || [] as project}
     <button
+      on:click={() => {
+        $CurrentProject = project;
+        $CurrentPage = "Home";
+        window.location.assign("/app");
+      }}
       style=""
       class="min-h-[150px] grow rounded-md border border-gray-700 bg-gray-800 p-4 text-left"
     >

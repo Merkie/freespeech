@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ModalCreateProjectOpen } from "../../lib/client/stores";
+  import { ModalCreateProjectOpen, Me } from "../../lib/client/stores";
   import Modal from "../Modal.svelte";
 
   let name: string;
@@ -25,6 +25,12 @@
         rows,
       }),
     });
+    const data = await response.json();
+    if (data.success) {
+      $Me.projects.push(data.project);
+      $Me = $Me;
+      $ModalCreateProjectOpen = false;
+    }
   };
 </script>
 

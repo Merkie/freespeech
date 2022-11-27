@@ -20,6 +20,7 @@ export const post: APIRoute = async ({ request }) => {
     description: string;
     columns: number;
     rows: number;
+    visibility: string;
   };
 
   // Check if user is able to edit project
@@ -39,6 +40,7 @@ export const post: APIRoute = async ({ request }) => {
       description: body.description || "",
       columns: body.columns || 8,
       rows: body.rows || 6,
+      visibility: body.visibility || "private",
     },
   });
 

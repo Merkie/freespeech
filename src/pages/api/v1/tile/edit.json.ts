@@ -19,9 +19,6 @@ export const post: APIRoute = async ({ request }) => {
     tiles: Tile[];
   };
 
-  console.log(body.tiles);
-  // return new Response("asd");
-
   // Update the tiles from body.tiles
   body.tiles.forEach(async (tile) => {
     const _tile = await pc.tile.findUnique({

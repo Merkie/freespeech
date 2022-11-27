@@ -54,7 +54,6 @@
         //@ts-ignore
         [tile.id]: { ...tile, text: e.target.innerText },
       };
-      console.log($TileEditQueue);
     }}
   >
     {tile.text}

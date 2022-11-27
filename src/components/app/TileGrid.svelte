@@ -18,7 +18,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: $Me.projects[0].id,
+        id: $CurrentProject.id || $Me.projects[0].id,
       }),
     });
     $CurrentProject = (await res.json()).project;
