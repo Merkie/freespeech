@@ -1,13 +1,20 @@
 ---
 import EditModeHeader from "../../components/app/EditModeHeader.svelte";
 import EditModeSideBar from "../../components/app/EditModeSideBar.svelte";
+import ModalProjectSettings from "../../components/app/ModalProjectSettings.svelte";
 import Navigation from "../../components/app/Navigation.svelte";
 import SentenceBuilder from "../../components/app/SentenceBuilder.svelte";
 import TileGrid from "../../components/app/TileGrid.svelte";
 import DefaultLayout from "../../layouts/DefaultLayout.astro";
+import Me from "../../lib/server/Me";
+// import pc from "../../lib/prisma";
+const user = await Me(Astro.request.headers.get("cookie") + "");
+if (!user || !user.projects || user.projects.length < 1)
+  return Astro.redirect("/dashboard/projects");
 ---
 
 <DefaultLayout title={"Hello, World!"}>
+  <ModalProjectSettings client:load />
   <main class="h-screen w-screen bg-gray-900 flex flex-col overflow-hidden">
     <EditModeHeader client:load />
     <div class="flex-1 w-screen flex">

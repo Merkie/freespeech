@@ -1,26 +1,9 @@
 ---
-import "../lib/app.css";
+import "../lib/client/app.css";
 import StoreManager from "../components/StoreManager.svelte";
-import pc from "../lib/prisma";
+import Me from "../lib/server/Me";
 const { title } = Astro.props;
-let user = null;
-const cookie = Astro.request.headers.get("cookie");
-const token = await pc.accessToken.findUnique({
-  where: {
-    token: cookie?.split("=")[1] + "",
-  },
-});
-if (token) {
-  // give this to the client
-  user = await pc.user.findUnique({
-    where: {
-      id: token.userId,
-    },
-    include: {
-      projects: true,
-    },
-  });
-}
+let user = await Me(Astro.request.headers.get("cookie") + "");
 ---
 
 <html lang="en">
@@ -38,7 +21,7 @@ if (token) {
 
     <title>{title}</title>
   </head>
-  <body class="text-slate-50">
+  <body class="text-gray-50">
     <slot />
     <StoreManager client:load _Me={user} />
   </body>

@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import pc from "../../../../lib/prisma";
+import pc from "../../../../lib/server/resources/prisma";
 import bcrypt from "bcrypt";
 
 export const post: APIRoute = async ({ request }) => {

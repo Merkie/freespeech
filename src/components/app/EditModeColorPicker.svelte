@@ -1,5 +1,5 @@
 <script>
-  import { EditModeToolSelection } from "../../lib/stores";
+  import { EditModeToolSelection } from "../../lib/client/stores";
   import tailwindColors from "tailwindcss/colors";
 
   let colors = {};
@@ -43,12 +43,12 @@
         on:click={() => (selectedShade = color)}
         style={`background-color: ${colors[color][parseInt(selectedValue)]}`}
         class={`h-[27px] w-[27px] ${
-          selectedShade === color ? "rounded-full ring-2 ring-slate-50" : ""
+          selectedShade === color ? "rounded-full ring-2 ring-gray-50" : ""
         } rounded-md`}
       />
     {/each}
     <select bind:value={selectedValue} class="bg-transparent">
-      <option value="50">50</option>
+      <option value="50">50 (lightest)</option>
       <option value="100">100</option>
       <option value="200">200</option>
       <option value="300">300</option>
@@ -57,7 +57,7 @@
       <option value="600">600</option>
       <option value="700">700</option>
       <option value="800">800</option>
-      <option value="900">900</option>
+      <option value="900">900 (darkest)</option>
     </select>
   </div>
 {/if}

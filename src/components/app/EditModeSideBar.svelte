@@ -1,6 +1,6 @@
 <script lang="ts">
   // Stores
-  import { AppMode, EditModeToolSelection } from "../../lib/stores";
+  import { AppMode, EditModeToolSelection } from "../../lib/client/stores";
   // Icon
   import FormatText from "svelte-material-icons/FormatText.svelte";
   import Image from "svelte-material-icons/Image.svelte";
@@ -89,8 +89,8 @@
           on:click={() => ($EditModeToolSelection = EditBtn.name)}
           class={`border shadow-md ${
             $EditModeToolSelection === EditBtn.name
-              ? "border-slate-600 bg-gray-700 text-gray-50"
-              : "border-slate-700"
+              ? "border-gray-600 bg-gray-700 text-gray-50"
+              : "border-gray-700"
           } flex flex-col items-center justify-center gap-2 rounded-md p-2`}
         >
           <svelte:component

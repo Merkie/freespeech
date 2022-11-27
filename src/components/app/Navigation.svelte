@@ -1,6 +1,6 @@
 <script lang="ts">
   // Stores
-  import { AppMode } from "../../lib/stores";
+  import { AppMode } from "../../lib/client/stores";
   // Icons
   import KeyboardOutline from "svelte-material-icons/KeyboardOutline.svelte";
   import Keyboard from "svelte-material-icons/Keyboard.svelte";

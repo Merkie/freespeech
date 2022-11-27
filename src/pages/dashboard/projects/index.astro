@@ -1,9 +1,11 @@
 ---
+import ModalCreateProject from "../../../components/dashboard/ModalCreateProject.svelte";
 import ProjectGrid from "../../../components/dashboard/ProjectGrid.svelte";
 import DashboardLayout from "../../../layouts/DashboardLayout.astro";
 ---
 
 <DashboardLayout selected={"projects"}>
+  <ModalCreateProject client:load />
   <h1 class="font-medium text-2xl mb-4">Your Projects</h1>
-  <ProjectGrid />
+  <ProjectGrid client:load />
 </DashboardLayout>
