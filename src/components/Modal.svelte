@@ -16,7 +16,7 @@
   }}
   on:keypress={() => null}
   style="background: rgba(0,0,0,0.5)"
-  class="fixed top-0 left-0 z-40 grid h-full min-h-screen w-full place-items-center"
+  class="fixed top-0 left-0 z-20 grid h-full min-h-screen w-full place-items-center"
 >
   <div
     class="flex w-full max-w-[500px] flex-col gap-2 border border-gray-700 bg-gray-800 p-4 sm:rounded-md"

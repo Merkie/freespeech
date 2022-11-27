@@ -1,6 +1,6 @@
 <script lang="ts">
   // Stores
-  import { AppMode } from "../../lib/client/stores";
+  import { AppMode, TileEditQueue } from "../../lib/client/stores";
   // Icons
   import KeyboardOutline from "svelte-material-icons/KeyboardOutline.svelte";
   import Keyboard from "svelte-material-icons/Keyboard.svelte";
@@ -43,7 +43,11 @@
           ? "border-blue-500 bg-blue-600"
           : "border-gray-600 bg-gray-700"
       }`}
-      on:click={() => ($AppMode = NavBtn.name)}
+      on:click={() => {
+        //@ts-ignore
+        $AppMode = NavBtn.name;
+        if (NavBtn.name === "home") saveAllTiles();
+      }}
       disabled={NavBtn.disabled}
     >
       <svelte:component

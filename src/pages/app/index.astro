@@ -1,6 +1,7 @@
 ---
 import EditModeHeader from "../../components/app/EditModeHeader.svelte";
 import EditModeSideBar from "../../components/app/EditModeSideBar.svelte";
+import Loader from "../../components/app/Loader.svelte";
 import ModalProjectSettings from "../../components/app/ModalProjectSettings.svelte";
 import Navigation from "../../components/app/Navigation.svelte";
 import SentenceBuilder from "../../components/app/SentenceBuilder.svelte";
@@ -14,6 +15,7 @@ if (!user || !user.projects || user.projects.length < 1)
 ---
 
 <DefaultLayout title={"Hello, World!"}>
+  <Loader client:load />
   <ModalProjectSettings client:load />
   <main class="h-screen w-screen bg-gray-900 flex flex-col overflow-hidden">
     <EditModeHeader client:load />

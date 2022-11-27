@@ -1,3 +1,4 @@
+import type { Tile } from "@prisma/client";
 import { writable } from "svelte/store";
 import type {
   UserWithProjects,
@@ -14,6 +15,9 @@ export const CurrentProject = writable<ProjectWithPages>(
   {} as ProjectWithPages
 );
 export const CurrentPage = writable<string>("Home");
+export const TextEditTileId = writable<string>("");
+export const TileEditQueue = writable<any>({});
+export const Loading = writable<boolean>(false);
 
 // Modal Logic
 export const ModalCreateProjectOpen = writable(false);

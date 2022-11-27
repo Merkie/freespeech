@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { AppMode, EditModeToolSelection } from "../../lib/client/stores";
+  import {
+    AppMode,
+    EditModeToolSelection,
+    TileEditQueue,
+    Loading,
+  } from "../../lib/client/stores";
   import EditModeColorPicker from "./EditModeColorPicker.svelte";
   const Options: {
     name: string;
@@ -44,6 +49,22 @@
       tip: "Click or tap on a tile to remove it.",
     },
   ];
+
+  const saveAllTiles = async () => {
+    $Loading = true;
+    const response = await fetch("/api/v1/tile/edit.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tiles: Object.values($TileEditQueue),
+      }),
+    });
+    const data = await response.json();
+    if (data.success) $TileEditQueue = {};
+    $Loading = false;
+  };
 </script>
 
 {#if $AppMode === "edit"}
@@ -71,6 +92,14 @@
           {/each}
         </select>
       </p>
+    {/if}
+    {#if Object.keys($TileEditQueue).length > 0}
+      <button
+        on:click={saveAllTiles}
+        class="rounded-md border border-green-500 bg-green-600 p-1"
+      >
+        Save Changes
+      </button>
     {/if}
     {#if $EditModeToolSelection === "color"}
       <p class="flex items-center gap-2 text-gray-300">

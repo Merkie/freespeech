@@ -1,3 +1,4 @@
+import type { Tile } from "@prisma/client";
 import type { APIRoute } from "astro";
 import Me from "../../../../lib/server/Me";
 import pc from "../../../../lib/server/resources/prisma";
@@ -15,42 +16,45 @@ export const post: APIRoute = async ({ request }) => {
 
   // Get the body from the request
   const body = (await request.json()) as {
-    x: number;
-    y: number;
-    pageId: string;
+    tiles: Tile[];
   };
 
-  // Get the page
-  const page = await pc.page.findUnique({
-    where: {
-      id: body.pageId,
-    },
-    include: {
-      project: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  });
-  if (page?.project.user.id !== user.id)
-    return new Response(JSON.stringify({ success: false }), { status: 401 });
+  console.log(body.tiles);
+  // return new Response("asd");
 
-  // Create the tile
-  const tile = await pc.tile.create({
-    data: {
-      x: body.x,
-      y: body.y,
-      page: {
-        connect: {
-          id: body.pageId,
+  // Update the tiles from body.tiles
+  body.tiles.forEach(async (tile) => {
+    const _tile = await pc.tile.findUnique({
+      where: {
+        id: tile.id,
+      },
+      include: {
+        page: {
+          include: {
+            project: {
+              include: {
+                user: true,
+              },
+            },
+          },
         },
       },
-    },
+    });
+
+    if (_tile?.page.project.user.id !== user.id) return;
+
+    await pc.tile.update({
+      where: {
+        id: tile.id,
+      },
+      data: {
+        ...tile,
+      },
+    });
   });
 
   // Return the project
-  return new Response(JSON.stringify({ success: true, tile }), {
+  return new Response(JSON.stringify({ success: true }), {
     status: 200,
   });
 };
