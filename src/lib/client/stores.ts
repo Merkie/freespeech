@@ -18,6 +18,7 @@ export const CurrentPage = writable<string>("Home");
 export const TextEditTileId = writable<string>("");
 export const TileEditQueue = writable<any>({});
 export const Loading = writable<boolean>(false);
+export const EditingSpeakText = writable<boolean>(false);
 
 // Modal Logic
 export const ModalCreateProjectOpen = writable(false);

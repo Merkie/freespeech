@@ -4,6 +4,7 @@
     EditModeToolSelection,
     TextEditTileId,
     TileEditQueue,
+    EditingSpeakText,
   } from "../../lib/client/stores";
   import type { Tile } from "@prisma/client";
   export let tile: Tile;
@@ -49,13 +50,23 @@
       $EditModeToolSelection === "text" &&
       $TextEditTileId === tile.id}
     on:input={(e) => {
-      $TileEditQueue = {
-        ...$TileEditQueue,
-        //@ts-ignore
-        [tile.id]: { ...tile, text: e.target.innerText },
-      };
+      $TileEditQueue = $EditingSpeakText
+        ? {
+            ...$TileEditQueue,
+            //@ts-ignore
+            [tile.id]: { ...tile, speakText: e.target.innerText },
+          }
+        : {
+            ...$TileEditQueue,
+            //@ts-ignore
+            [tile.id]: { ...tile, text: e.target.innerText },
+          };
     }}
   >
-    {tile.text}
+    {$EditingSpeakText &&
+    $EditModeToolSelection === "text" &&
+    $AppMode === "edit"
+      ? tile.speakText || ""
+      : tile.text}
   </p>
 </button>
