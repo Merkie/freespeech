@@ -11,15 +11,35 @@
     EditModeColorSelectedValue,
     EditModeColorSelectedType,
     EditModeSwapTile,
+    CreateFolderTile,
   } from "../../lib/client/stores";
   import type { Tile } from "@prisma/client";
   import Plus from "svelte-material-icons/Plus.svelte";
   import tailwindColors from "tailwindcss/colors";
+  import { onMount } from "svelte";
+  import type { PageWithTiles } from "../../lib/types";
   export let tile: Tile;
 
   let tileTextRef: HTMLParagraphElement;
   let fileInput: HTMLInputElement;
   let dragging = false;
+  let img: string;
+
+  const url2base64 = async (url: string) => {
+    return await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
+      xhr.send();
+    });
+  };
 
   const uploadImage = async (file: File) => {
     tile.image = "Loading...";
@@ -130,6 +150,34 @@
         tile.accented = !tile.accented;
         $TileEditQueue[tile.id] = { ...tile };
       }
+      // Folder
+      if ($EditModeToolSelection === "folder") {
+        const resposne = await fetch("/api/v1/page/create.json", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: tile.text,
+            projectId: $CurrentProject.id,
+          }),
+        });
+        const data = await resposne.json();
+        if (data.success) {
+          $CurrentProject.pages = [
+            ...$CurrentProject.pages,
+            {
+              id: data.page.id,
+              name: data.page.name,
+              projectId: data.page.projectId,
+              tiles: [],
+            } as unknown as PageWithTiles,
+          ];
+          $CurrentProject = $CurrentProject;
+          tile.navigationPageName = data.page.name;
+          $TileEditQueue[tile.id] = { ...tile };
+        }
+      }
       // Delete
       if ($EditModeToolSelection === "delete") {
         // Update locally
@@ -149,8 +197,20 @@
           }),
         });
       }
+    } else if ($AppMode === "home") {
+      if (tile.navigationPageName) {
+        $CurrentPage = tile.navigationPageName;
+      }
     }
   };
+
+  onMount(() => {
+    if (tile.image) {
+      url2base64(tile.image).then((base64) => {
+        img = "data:image/png;base64," + (base64 + "").split(",")[1];
+      });
+    }
+  });
 </script>
 
 <button
@@ -175,12 +235,24 @@
       } ${tile.textColor ? "color: " + tile.textColor + ";" : ""} ${
         tile.borderColor ? "border-color: " + tile.borderColor + ";" : ""
       } ${$EditModeSwapTile?.id === tile.id ? "transform: scale(0.9);" : ""}`}
-  class={`grid h-full min-h-[100px] w-full place-items-center rounded-md border-2 ${
+  class={`relative grid h-full min-h-[100px] w-full place-items-center rounded-md border-2 ${
     dragging
       ? "border-green-400 bg-green-500 text-gray-50"
       : "border-gray-900 bg-gray-50 "
   }`}
 >
+  {#if tile.navigationPageName}
+    <div
+      style={"left: -2px; border-top-right-radius: 10px; border-top-left-radius: 10px;" +
+        `${
+          tile.backgroundColor
+            ? "background: " + tile.backgroundColor + ";"
+            : ""
+        }${tile.borderColor ? "border-color: " + tile.borderColor + ";" : ""}`}
+      class="absolute top-1 h-[10px] w-1/2 -translate-y-full border-2 border-b-0 border-gray-900 bg-gray-50"
+    />
+  {/if}
+
   <div
     class="relative grid h-full w-full place-items-center overflow-hidden rounded-sm"
   >
@@ -206,8 +278,8 @@
     {#if dragging}
       <Plus size={30} />
     {:else}
-      {#if tile.image}
-        <img width="50px" src={tile.image} alt="Loading..." />
+      {#if img}
+        <img width="50px" src={img} alt="Loading..." />
       {/if}
       <p
         bind:this={tileTextRef}

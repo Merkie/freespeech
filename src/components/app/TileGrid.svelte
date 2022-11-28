@@ -7,24 +7,12 @@
   } from "../../lib/client/stores";
   import Tile from "./Tile.svelte";
   import Plus from "svelte-material-icons/Plus.svelte";
-  import colors from "tailwindcss/colors";
   import { onMount } from "svelte";
   import type { Tile as ITile } from "@prisma/client";
-
-  onMount(async () => {
-    const res = await fetch("/api/v1/project/fetch.json", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: $CurrentProject.id || $Me.projects[0].id,
-      }),
-    });
-    $CurrentProject = (await res.json()).project;
-  });
+  import html2canvas from "html2canvas";
 
   let tiles: (ITile | undefined)[] = [];
+  let tgElement: HTMLElement;
 
   const createTile = async ({ x, y }: { x: number; y: number }) => {
     // Get the page ID
@@ -81,6 +69,51 @@
     }
   };
 
+  onMount(async () => {
+    const res = await fetch("/api/v1/project/fetch.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: $CurrentProject.id || $Me.projects[0].id,
+      }),
+    });
+    $CurrentProject = (await res.json()).project;
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const canvas = await html2canvas(tgElement, {
+      allowTaint: true,
+      useCORS: true,
+      logging: true,
+      scale: 1,
+    });
+    const dataUrl = canvas.toDataURL();
+    const uploadResponse = await fetch("/api/v1/file/upload.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        base64: dataUrl,
+        ext: "png",
+      }),
+    });
+    const uploadData = await uploadResponse.json();
+    const editProjectResponse = await fetch("/api/v1/project/edit.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: $CurrentProject.id,
+        thumbnail: uploadData.url,
+      }),
+    });
+    const editProjectData = await editProjectResponse.json();
+  });
+
   $: try {
     tiles = Array.from(
       {
@@ -91,13 +124,14 @@
       let x = (i % ($CurrentProject.columns || 10)) + 1;
       let y = Math.floor(i / ($CurrentProject.columns || 10)) + 1;
       return $CurrentProject.pages
-        .find((p) => p.name === $CurrentPage)!
-        .tiles.find((t) => t.x === x && t.y === y);
+        .find((p) => p.name === $CurrentPage)
+        ?.tiles.find((t) => t.x === x && t.y === y);
     });
   } catch {}
 </script>
 
 <main
+  bind:this={tgElement}
   style={`
     grid-template-columns: repeat(${$CurrentProject.columns || "10"}, 1fr);
     grid-template-rows: repeat(${$CurrentProject.rows || "6"}, 1fr);

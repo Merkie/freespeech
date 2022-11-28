@@ -24,6 +24,7 @@
     "bcrypt": "^5.1.0",
     "device-detector-js": "^3.0.3",
     "dotenv": "^16.0.3",
+    "html2canvas": "^1.4.1",
     "install": "^0.13.0",
     "is-email": "^1.0.2",
     "jsonwebtoken": "^8.5.1",

@@ -13,8 +13,6 @@ export const post: APIRoute = async ({ request }) => {
   if (!user)
     return new Response(JSON.stringify({ success: false }), { status: 401 });
 
-  console.log("User", JSON.stringify(user));
-
   // Get the body from the request
   const body = (await request.json()) as {
     name: string;

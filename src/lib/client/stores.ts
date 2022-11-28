@@ -23,6 +23,7 @@ export const EditModeColorSelectedValue = writable<string>("500");
 export const EditModeColorSelectedShade = writable<string>("gray");
 export const EditModeColorSelectedType = writable<string>("border");
 export const EditModeSwapTile = writable<Tile | null>(null);
+export const CreateFolderTile = writable<Tile | null>(null);
 
 // Modal Logic
 export const ModalCreateProjectOpen = writable(false);

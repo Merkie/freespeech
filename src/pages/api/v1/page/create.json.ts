@@ -39,6 +39,9 @@ export const post: APIRoute = async ({ request }) => {
         },
       },
     },
+    include: {
+      tiles: true,
+    },
   });
 
   // Return the page

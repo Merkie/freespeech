@@ -1,6 +1,6 @@
 <script lang="ts">
   // Stores
-  import { AppMode, TileEditQueue } from "../../lib/client/stores";
+  import { AppMode, TileEditQueue, CurrentPage } from "../../lib/client/stores";
   // Icons
   import KeyboardOutline from "svelte-material-icons/KeyboardOutline.svelte";
   import Keyboard from "svelte-material-icons/Keyboard.svelte";
@@ -14,11 +14,15 @@
     outlineIcon: any;
     solidIcon: any;
     disabled?: boolean;
+    onClick?: () => void;
   }[] = [
     {
       name: "home",
       outlineIcon: HomeOutline,
       solidIcon: Home,
+      onClick: () => {
+        $CurrentPage = "Home";
+      },
     },
     {
       name: "keyboard",
@@ -46,7 +50,9 @@
       on:click={() => {
         //@ts-ignore
         $AppMode = NavBtn.name;
-        if (NavBtn.name === "home") saveAllTiles();
+        if (NavBtn.onClick) {
+          NavBtn.onClick();
+        }
       }}
       disabled={NavBtn.disabled}
     >
