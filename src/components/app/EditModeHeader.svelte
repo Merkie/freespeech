@@ -5,55 +5,10 @@
     TileEditQueue,
     Loading,
     EditingSpeakText,
+    EditModeColorSelectedType,
   } from "../../lib/client/stores";
   import EditModeColorPicker from "./EditModeColorPicker.svelte";
-  const Options: {
-    name: string;
-    modes?: string[];
-    onChange?: (value: any) => void;
-    default?: string;
-    tip?: string;
-  }[] = [
-    {
-      name: "text",
-      modes: ["display", "speak"],
-      onChange: (e) => {
-        console.log(e);
-      },
-      default: "display",
-      tip: "",
-    },
-    {
-      name: "image",
-      modes: ["add", "erase"],
-      default: "add",
-      tip: "Drag and drop an image onto a tile or click on a tile to set its image.",
-    },
-    {
-      name: "color",
-      modes: ["background", "border", "text"],
-      default: "background",
-    },
-    {
-      name: "move",
-      modes: ["drag and drop", "swap"],
-      default: "drag and drop",
-    },
-    {
-      name: "folder",
-      modes: ["add", "erase"],
-      default: "add",
-      tip: "Click or tap on a tile to turn it into a folder.",
-    },
-    {
-      name: "link",
-      tip: "Click or tap on a tile to link it to the same time on the previous page.",
-    },
-    {
-      name: "delete",
-      tip: "Click or tap on a tile to remove it.",
-    },
-  ];
+  import EditHeaderSelect from "./EditHeaderSelect.svelte";
 
   const saveAllTiles = async () => {
     $Loading = true;
@@ -96,6 +51,24 @@
         <option value="speak">Speak</option>
       </select>
       <p>Tip: Click or tap on a tile to edit its text.</p>
+    {/if}
+
+    {#if $EditModeToolSelection === "color"}
+      <p>Mode:</p>
+      <!-- <select
+        class="h-[40px] rounded-md bg-gray-900 p-2 font-medium capitalize text-gray-50 sm:rounded-none"
+        bind:value={$EditModeColorSelectedType}
+      >
+        <option value="background">Background</option>
+        <option value="border">Border</option>
+        <option value="text">Text</option>
+      </select> -->
+      <EditHeaderSelect
+        defaultValue={"border"}
+        values={["border", "background", "text"]}
+        submitValue={(value) => ($EditModeColorSelectedType = value)}
+      />
+      <EditModeColorPicker />
     {/if}
 
     {#if Object.keys($TileEditQueue).length > 0}

@@ -1,10 +1,13 @@
 <script>
-  import { EditModeToolSelection } from "../../lib/client/stores";
+  import {
+    EditModeToolSelection,
+    EditModeColorSelectedValue,
+    EditModeColorSelectedShade,
+  } from "../../lib/client/stores";
   import tailwindColors from "tailwindcss/colors";
+  import EditHeaderSelect from "./EditHeaderSelect.svelte";
 
   let colors = {};
-  let selectedValue = "500";
-  let selectedShade = "";
 
   for (const color in tailwindColors) {
     if (
@@ -40,24 +43,33 @@
   >
     {#each Object.keys(colors) as color}
       <button
-        on:click={() => (selectedShade = color)}
-        style={`background-color: ${colors[color][parseInt(selectedValue)]}`}
+        on:click={() => ($EditModeColorSelectedShade = color)}
+        style={`background-color: ${
+          colors[color][parseInt($EditModeColorSelectedValue)]
+        }`}
         class={`h-[27px] w-[27px] ${
-          selectedShade === color ? "rounded-full ring-2 ring-gray-50" : ""
+          $EditModeColorSelectedShade === color
+            ? "rounded-full ring-2 ring-gray-50"
+            : ""
         } rounded-md`}
       />
     {/each}
-    <select bind:value={selectedValue} class="bg-transparent">
-      <option value="50">50 (lightest)</option>
-      <option value="100">100</option>
-      <option value="200">200</option>
-      <option value="300">300</option>
-      <option value="400">400</option>
-      <option value="500">500</option>
-      <option value="600">600</option>
-      <option value="700">700</option>
-      <option value="800">800</option>
-      <option value="900">900 (darkest)</option>
-    </select>
+    <EditHeaderSelect
+      defaultValue={"500"}
+      values={[
+        "50 (lightest)",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900 (darkest)",
+      ]}
+      submitValue={(value) =>
+        ($EditModeColorSelectedValue = value.split(" ")[0])}
+    />
   </div>
 {/if}

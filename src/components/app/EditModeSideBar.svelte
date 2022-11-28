@@ -46,11 +46,11 @@
       outlineIcon: BookmarkOutline,
       solidIcon: Bookmark,
     },
-    {
-      name: "invisible",
-      outlineIcon: EyeOffOutline,
-      solidIcon: EyeOff,
-    },
+    // {
+    //   name: "invisible",
+    //   outlineIcon: EyeOffOutline,
+    //   solidIcon: EyeOff,
+    // },
     {
       name: "folder",
       outlineIcon: FolderOutline,

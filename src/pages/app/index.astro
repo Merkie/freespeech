@@ -7,6 +7,7 @@ import Navigation from "../../components/app/Navigation.svelte";
 import SentenceBuilder from "../../components/app/SentenceBuilder.svelte";
 import TileGrid from "../../components/app/TileGrid.svelte";
 import DefaultLayout from "../../layouts/DefaultLayout.astro";
+import TileGridNav from "../../components/app/TileGridNav.svelte";
 import Me from "../../lib/server/Me";
 // import pc from "../../lib/prisma";
 const user = await Me(Astro.request.headers.get("cookie") + "");
@@ -17,15 +18,27 @@ if (!user || !user.projects || user.projects.length < 1)
 <DefaultLayout title={"Hello, World!"}>
   <Loader client:load />
   <ModalProjectSettings client:load />
-  <main class="h-screen w-screen bg-gray-900 flex flex-col overflow-hidden">
+  <main class="h-screen w-screen bg-gray-900 flex flex-col">
     <EditModeHeader client:load />
-    <div class="flex-1 w-screen flex">
+    <div style="overflow-y: auto;" class="flex-1 w-screen flex">
       <EditModeSideBar client:load />
-      <main class="flex flex-col flex-1 relative">
+      <main
+        class="flex flex-col flex-1 relative border border-gray-600 border-b-0 border-r-0"
+      >
         <SentenceBuilder client:load />
+        <TileGridNav client:load />
         <TileGrid client:load />
       </main>
     </div>
     <Navigation client:load />
   </main>
 </DefaultLayout>
+<script is:inline>
+  window.addEventListener("drop", () => {
+    event.preventDefault();
+  });
+  window.addEventListener("dragover", () => {
+    // event.dataTransfer.dropEffect = "none"; // dont allow drops
+    event.preventDefault();
+  });
+</script>

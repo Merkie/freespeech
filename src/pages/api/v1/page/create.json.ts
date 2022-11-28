@@ -13,38 +13,36 @@ export const post: APIRoute = async ({ request }) => {
   if (!user)
     return new Response(JSON.stringify({ success: false }), { status: 401 });
 
-  console.log("User", JSON.stringify(user));
-
   // Get the body from the request
   const body = (await request.json()) as {
     name: string;
-    description: string;
-    columns: number;
-    rows: number;
+    projectId: string;
   };
 
-  // Create the project
-  const project = await pc.project.create({
+  // find the project
+  const project = await pc.project.findUnique({
+    where: {
+      id: body.projectId,
+    },
+  });
+
+  if (project?.userId !== user.id)
+    return new Response(JSON.stringify({ success: false }), { status: 401 });
+
+  // Create the page
+  const page = await pc.page.create({
     data: {
       name: body.name,
-      description: body.description || "",
-      columns: body.columns || 8,
-      rows: body.rows || 6,
-      user: {
+      project: {
         connect: {
-          id: user.id,
-        },
-      },
-      pages: {
-        create: {
-          name: "Home",
+          id: body.projectId,
         },
       },
     },
   });
 
-  // Return the project
-  return new Response(JSON.stringify({ success: true, project }), {
+  // Return the page
+  return new Response(JSON.stringify({ success: true, page }), {
     status: 200,
   });
 };

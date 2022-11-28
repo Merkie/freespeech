@@ -13,38 +13,32 @@ export const post: APIRoute = async ({ request }) => {
   if (!user)
     return new Response(JSON.stringify({ success: false }), { status: 401 });
 
-  console.log("User", JSON.stringify(user));
-
   // Get the body from the request
   const body = (await request.json()) as {
-    name: string;
-    description: string;
-    columns: number;
-    rows: number;
+    id: string;
   };
 
-  // Create the project
-  const project = await pc.project.create({
-    data: {
-      name: body.name,
-      description: body.description || "",
-      columns: body.columns || 8,
-      rows: body.rows || 6,
-      user: {
-        connect: {
-          id: user.id,
-        },
-      },
-      pages: {
-        create: {
-          name: "Home",
+  // Check if user is able to delete tile
+  const _tile = await pc.tile.findFirst({
+    where: { id: body.id },
+    include: {
+      page: {
+        include: {
+          project: true,
         },
       },
     },
   });
+  if (_tile?.page.project.userId !== user.id)
+    return new Response(JSON.stringify({ success: false }), { status: 401 });
 
-  // Return the project
-  return new Response(JSON.stringify({ success: true, project }), {
-    status: 200,
+  // Delete the tile
+  await pc.tile.delete({
+    where: {
+      id: body.id,
+    },
   });
+
+  // Return a success response
+  return new Response(JSON.stringify({ success: true }), { status: 200 });
 };

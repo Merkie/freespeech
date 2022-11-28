@@ -19,6 +19,10 @@ export const TextEditTileId = writable<string>("");
 export const TileEditQueue = writable<any>({});
 export const Loading = writable<boolean>(false);
 export const EditingSpeakText = writable<boolean>(false);
+export const EditModeColorSelectedValue = writable<string>("500");
+export const EditModeColorSelectedShade = writable<string>("gray");
+export const EditModeColorSelectedType = writable<string>("border");
+export const EditModeSwapTile = writable<Tile | null>(null);
 
 // Modal Logic
 export const ModalCreateProjectOpen = writable(false);
