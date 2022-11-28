@@ -20,14 +20,28 @@ if (!user || !user.projects || user.projects.length < 1)
   <ModalProjectSettings client:load />
   <main class="h-screen w-screen bg-gray-900 flex flex-col">
     <EditModeHeader client:load />
-    <div style="overflow-y: auto;" class="flex-1 w-screen flex">
+    <div class="flex-1 w-screen flex">
       <EditModeSideBar client:load />
       <main
         class="flex flex-col flex-1 relative border border-gray-600 border-b-0 border-r-0"
       >
         <SentenceBuilder client:load />
         <TileGridNav client:load />
-        <TileGrid client:load />
+        <main
+          style="overflow-y: auto;"
+          class="w-full relative flex-1 bg-gray-200"
+        >
+          <main class="absolute top-0 w-full opacity-50 z-10">
+            <TileGrid lag={1} client:load />
+          </main>
+          <span class="absolute top-0 w-full z-20">
+            <TileGrid client:load />
+          </span>
+        </main>
+
+        <!-- <main class="absolute opacity-50 bottom-0 w-full bg-red-200">
+          
+        </main> -->
       </main>
     </div>
     <Navigation client:load />

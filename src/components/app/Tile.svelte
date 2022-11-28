@@ -205,7 +205,7 @@
         // If the user has already messed around with the page history, reset it to avoid conflicts
         if ($PageIndex !== 0) {
           $PageIndex = 0;
-          $PageHistory = [];
+          $PageHistory = ["Home"];
         }
 
         // If the page is the last page the user visited, don't add it to the history, pop it
@@ -254,7 +254,7 @@
       } ${tile.textColor ? "color: " + tile.textColor + ";" : ""} ${
         tile.borderColor ? "border-color: " + tile.borderColor + ";" : ""
       } ${$EditModeSwapTile?.id === tile.id ? "transform: scale(0.9);" : ""}`}
-  class={`relative grid h-full min-h-[100px] w-full place-items-center rounded-md border-2 ${
+  class={`relative grid h-[130px] w-full place-items-center rounded-md border-2 text-lg ${
     dragging
       ? "border-green-400 bg-green-500 text-gray-50"
       : "border-gray-900 bg-gray-50 "
@@ -273,7 +273,7 @@
   {/if}
 
   <div
-    class="relative grid h-full w-full place-items-center overflow-hidden rounded-sm"
+    class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-sm"
   >
     <div
       style={`${
@@ -298,7 +298,7 @@
       <Plus size={30} />
     {:else}
       {#if tile.image}
-        <img width="50px" src={img} alt="Loading..." />
+        <img width="70px" src={img} alt="Loading..." />
       {/if}
       <p
         bind:this={tileTextRef}

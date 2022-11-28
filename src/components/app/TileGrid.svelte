@@ -1,4 +1,5 @@
 <script lang="ts">
+  export let lag = 0;
   import {
     AppMode,
     CurrentProject,
@@ -61,7 +62,6 @@
             ?.tiles.findIndex((t) => t.id === "temp")!,
           1
         );
-      $CurrentProject = $CurrentProject;
       // add the new tile
       $CurrentProject.pages
         .find((p) => p.name === $CurrentPage)
@@ -127,42 +127,50 @@
       let y = Math.floor(i / ($CurrentProject.columns || 10)) + 1;
       return $CurrentProject.pages
         .find(
-          (p) => p.name === $PageHistory[$PageHistory.length - 1 - $PageIndex]
+          (p) =>
+            p.name === $PageHistory[$PageHistory.length - 1 - $PageIndex - lag]
         )
         ?.tiles.find((t) => t.x === x && t.y === y);
     });
   } catch {}
 </script>
 
-<main
-  bind:this={tgElement}
-  style={`
+{#if $PageIndex >= lag || $PageHistory.length > lag}
+  <main
+    on:click={(e) => {
+      // if(e.target.tagName === "MAIN" && $PageHistory) {
+      // }
+    }}
+    on:keypress={() => null}
+    bind:this={tgElement}
+    style={`
     grid-template-columns: repeat(${$CurrentProject.columns || "10"}, 1fr);
     grid-template-rows: repeat(${$CurrentProject.rows || "6"}, 1fr);
   `}
-  class="grid w-full flex-1 gap-2 bg-gray-200 p-2 text-gray-900"
->
-  {#if tiles.length > 0}
-    {#each tiles as tile, i}
-      {#if tile}
-        <Tile {tile} />
-      {:else if $AppMode === "edit"}
-        <button
-          on:click={() =>
-            createTile({
-              x: (i % ($CurrentProject.columns || 10)) + 1,
-              y: Math.floor(i / ($CurrentProject.columns || 10)) + 1,
-            })}
-          class="grid h-full min-h-[100px] w-full place-items-center rounded-md border-2 border-dashed border-gray-300 text-gray-300"
-        >
-          <Plus size={30} />
-        </button>
-      {:else}
-        <div />
-      {/if}
-    {/each}
-  {/if}
-</main>
+    class="grid gap-2  p-2 text-gray-900"
+  >
+    {#if tiles.length > 0}
+      {#each tiles as tile, i}
+        {#if tile}
+          <Tile {tile} />
+        {:else if $AppMode === "edit"}
+          <button
+            on:click={() =>
+              createTile({
+                x: (i % ($CurrentProject.columns || 10)) + 1,
+                y: Math.floor(i / ($CurrentProject.columns || 10)) + 1,
+              })}
+            class="grid h-[130px] w-full place-items-center rounded-md border-2 border-dashed border-gray-300 text-gray-300"
+          >
+            <Plus size={30} />
+          </button>
+        {:else}
+          <div />
+        {/if}
+      {/each}
+    {/if}
+  </main>
+{/if}
 
 <style>
   @media (max-width: 750px) {

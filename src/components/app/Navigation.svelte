@@ -1,6 +1,11 @@
 <script lang="ts">
   // Stores
-  import { AppMode, PageHistory, CurrentPage } from "../../lib/client/stores";
+  import {
+    AppMode,
+    PageHistory,
+    CurrentPage,
+    PageIndex,
+  } from "../../lib/client/stores";
   // Icons
   import KeyboardOutline from "svelte-material-icons/KeyboardOutline.svelte";
   import Keyboard from "svelte-material-icons/Keyboard.svelte";
@@ -21,7 +26,11 @@
       outlineIcon: HomeOutline,
       solidIcon: Home,
       onClick: () => {
-        if ($AppMode === "home") $CurrentPage = "Home";
+        if ($AppMode === "home") {
+          $CurrentPage = "Home";
+          $PageHistory = ["Home"];
+          $PageIndex = 0;
+        }
       },
     },
     {
