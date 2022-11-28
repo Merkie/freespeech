@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  scrollbar-width: thin;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+select {
+  -webkit-appearance: none;
+  /* -moz-appearance: none; */
+  /* appearance: none; */
+}

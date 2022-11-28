@@ -1,0 +1,8 @@
+---
+import Account from "../../../components/dashboard/Account.svelte";
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+---
+
+<DashboardLayout selected={"account"}>
+  <Account client:load />
+</DashboardLayout>

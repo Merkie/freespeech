@@ -1,0 +1,46 @@
+{
+  "name": "freespeech",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "playwright test",
+    "coverage": "playwright show-report"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^1.0.2",
+    "@astrojs/tailwind": "^2.1.2",
+    "@aws-sdk/client-s3": "^3.216.0",
+    "@prisma/client": "4.6.1",
+    "@types/bcrypt": "^5.0.0",
+    "@types/dotenv": "^8.2.0",
+    "astro": "^1.6.10",
+    "aws-sdk": "^2.1258.0",
+    "bcrypt": "^5.1.0",
+    "device-detector-js": "^3.0.3",
+    "dotenv": "^16.0.3",
+    "html2canvas": "^1.4.1",
+    "install": "^0.13.0",
+    "is-email": "^1.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.2.9",
+    "postcss": "^8.4.19",
+    "prettier": "2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "prisma": "^4.6.1",
+    "svelte": "^3.46.4",
+    "svelte-material-icons": "^2.0.4",
+    "tailwindcss": "^3.0.24",
+    "typescript": "^4.9.3",
+    "vite": "^3.2.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.28.0"
+  }
+}
