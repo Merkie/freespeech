@@ -4,6 +4,8 @@
     CurrentProject,
     Me,
     CurrentPage,
+    PageIndex,
+    PageHistory,
   } from "../../lib/client/stores";
   import Tile from "./Tile.svelte";
   import Plus from "svelte-material-icons/Plus.svelte";
@@ -124,7 +126,9 @@
       let x = (i % ($CurrentProject.columns || 10)) + 1;
       let y = Math.floor(i / ($CurrentProject.columns || 10)) + 1;
       return $CurrentProject.pages
-        .find((p) => p.name === $CurrentPage)
+        .find(
+          (p) => p.name === $PageHistory[$PageHistory.length - 1 - $PageIndex]
+        )
         ?.tiles.find((t) => t.x === x && t.y === y);
     });
   } catch {}

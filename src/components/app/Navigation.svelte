@@ -1,6 +1,6 @@
 <script lang="ts">
   // Stores
-  import { AppMode, TileEditQueue, CurrentPage } from "../../lib/client/stores";
+  import { AppMode, PageHistory, CurrentPage } from "../../lib/client/stores";
   // Icons
   import KeyboardOutline from "svelte-material-icons/KeyboardOutline.svelte";
   import Keyboard from "svelte-material-icons/Keyboard.svelte";
@@ -21,7 +21,7 @@
       outlineIcon: HomeOutline,
       solidIcon: Home,
       onClick: () => {
-        $CurrentPage = "Home";
+        if ($AppMode === "home") $CurrentPage = "Home";
       },
     },
     {
@@ -49,10 +49,10 @@
       }`}
       on:click={() => {
         //@ts-ignore
-        $AppMode = NavBtn.name;
         if (NavBtn.onClick) {
           NavBtn.onClick();
         }
+        $AppMode = NavBtn.name;
       }}
       disabled={NavBtn.disabled}
     >

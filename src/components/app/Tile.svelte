@@ -11,7 +11,8 @@
     EditModeColorSelectedValue,
     EditModeColorSelectedType,
     EditModeSwapTile,
-    CreateFolderTile,
+    PageHistory,
+    PageIndex,
   } from "../../lib/client/stores";
   import type { Tile } from "@prisma/client";
   import Plus from "svelte-material-icons/Plus.svelte";
@@ -200,17 +201,35 @@
     } else if ($AppMode === "home") {
       if (tile.navigationPageName) {
         $CurrentPage = tile.navigationPageName;
+
+        // If the user has already messed around with the page history, reset it to avoid conflicts
+        if ($PageIndex !== 0) {
+          $PageIndex = 0;
+          $PageHistory = [];
+        }
+
+        // If the page is the last page the user visited, don't add it to the history, pop it
+        if ($PageHistory.at(-1) === $CurrentPage) {
+          $PageHistory.pop();
+        } else {
+          $PageHistory.push($CurrentPage);
+        }
+
+        // Update the store
+        $PageHistory = $PageHistory;
       }
     }
   };
 
-  onMount(() => {
+  $: try {
     if (tile.image) {
       url2base64(tile.image).then((base64) => {
         img = "data:image/png;base64," + (base64 + "").split(",")[1];
       });
     }
-  });
+  } catch (e) {
+    console.error(e);
+  }
 </script>
 
 <button
@@ -278,7 +297,7 @@
     {#if dragging}
       <Plus size={30} />
     {:else}
-      {#if img}
+      {#if tile.image}
         <img width="50px" src={img} alt="Loading..." />
       {/if}
       <p

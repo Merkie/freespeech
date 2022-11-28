@@ -1,12 +1,16 @@
 <script>
-  import { CurrentPage } from "../../lib/client/stores";
+  import { CurrentPage, PageHistory, PageIndex } from "../../lib/client/stores";
 </script>
 
 <div
   class="flex w-full items-center justify-center border border-x-0 border-gray-600 bg-gray-800 p-4 text-xl text-gray-50"
 >
   <div class="flex items-center gap-4">
-    <button disabled={true}>
+    <button
+      disabled={$PageHistory.length <= 1 ||
+        $PageIndex === $PageHistory.length - 1}
+      on:click={() => ($PageIndex = $PageIndex + 1)}
+    >
       <svg style="width:36px;height:36px" viewBox="0 0 24 24">
         <path
           fill="currentColor"
@@ -14,8 +18,11 @@
         />
       </svg>
     </button>
-    <p class="text-2xl">{$CurrentPage}</p>
-    <button disabled={true}>
+    <p class="text-2xl">{$PageHistory[$PageHistory.length - 1 - $PageIndex]}</p>
+    <button
+      disabled={$PageIndex === 0}
+      on:click={() => ($PageIndex = $PageIndex - 1)}
+    >
       <svg style="width:36px;height:36px" viewBox="0 0 24 24">
         <path
           fill="currentColor"
