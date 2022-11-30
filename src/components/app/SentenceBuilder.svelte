@@ -1,19 +1,36 @@
 <script>
+  import { Sentence } from "../../lib/client/stores";
   import Backspace from "svelte-material-icons/Backspace.svelte";
-  import ViewDashboard from "svelte-material-icons/ViewDashboard.svelte";
   import colors from "tailwindcss/colors";
+
+  const speakSentence = () => {};
 </script>
 
 <div class="flex h-[100px] w-full items-center bg-gray-100 text-gray-900">
-  <div class="flex-1">
-    <div />
+  <div
+    on:keypress={() => null}
+    on:click={speakSentence}
+    class="sb text-x flex-1 pl-4"
+  >
+    <p>{$Sentence.map((tile) => tile.text).join(" ")}</p>
   </div>
-  <button class="grid h-full place-items-center p-4">
+  <button
+    on:click={() => {
+      $Sentence.pop(); // remove last item from sentence
+      $Sentence = $Sentence;
+    }}
+    on:dblclick={() => {
+      $Sentence = []; // clear sentence
+    }}
+    class="grid h-full place-items-center p-4"
+  >
     <Backspace color={colors.gray[900]} size={"40px"} />
   </button>
-  <!-- <button
-    class="mr-4 grid place-items-center rounded-md border border-gray-600 bg-gray-800 p-4"
-  >
-    <ViewDashboard color={colors.gray[50]} size={"40px"} />
-  </button> -->
 </div>
+
+<style>
+  .sb:active {
+    transform: scaleY(0.75);
+    cursor: pointer;
+  }
+</style>

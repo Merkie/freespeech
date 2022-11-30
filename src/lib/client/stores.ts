@@ -26,6 +26,7 @@ export const EditModeSwapTile = writable<Tile | null>(null);
 export const CreateFolderTile = writable<Tile | null>(null);
 export const PageHistory = writable<string[]>(["Home"]);
 export const PageIndex = writable<number>(0);
+export const Sentence = writable<Tile[]>([]);
 
 // Modal Logic
 export const ModalCreateProjectOpen = writable(false);

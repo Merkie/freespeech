@@ -13,6 +13,7 @@
     EditModeSwapTile,
     PageHistory,
     PageIndex,
+    Sentence,
   } from "../../lib/client/stores";
   import AddPic from "../../../public/add.png";
   import type { Tile } from "@prisma/client";
@@ -219,6 +220,8 @@
 
         // Update the store
         $PageHistory = $PageHistory;
+      } else {
+        $Sentence = [...$Sentence, tile];
       }
     }
   };
