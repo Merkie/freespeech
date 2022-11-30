@@ -15,6 +15,7 @@
   "dependencies": {
     "@astrojs/svelte": "^1.0.2",
     "@astrojs/tailwind": "^2.1.2",
+    "@astrojs/vercel": "^2.3.4",
     "@aws-sdk/client-s3": "^3.216.0",
     "@prisma/client": "4.6.1",
     "@types/bcrypt": "^5.0.0",
