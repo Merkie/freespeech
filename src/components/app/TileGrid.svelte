@@ -135,42 +135,35 @@
   } catch {}
 </script>
 
-{#if $PageIndex >= lag || $PageHistory.length > lag}
-  <main
-    on:click={(e) => {
-      // if(e.target.tagName === "MAIN" && $PageHistory) {
-      // }
-    }}
-    on:keypress={() => null}
-    bind:this={tgElement}
-    style={`
+<main
+  bind:this={tgElement}
+  style={`
     grid-template-columns: repeat(${$CurrentProject.columns || "10"}, 1fr);
     grid-template-rows: repeat(${$CurrentProject.rows || "6"}, 1fr);
   `}
-    class="grid gap-2  p-2 text-gray-900"
-  >
-    {#if tiles.length > 0}
-      {#each tiles as tile, i}
-        {#if tile}
-          <Tile {tile} />
-        {:else if $AppMode === "edit"}
-          <button
-            on:click={() =>
-              createTile({
-                x: (i % ($CurrentProject.columns || 10)) + 1,
-                y: Math.floor(i / ($CurrentProject.columns || 10)) + 1,
-              })}
-            class="grid h-[130px] w-full place-items-center rounded-md border-2 border-dashed border-gray-300 text-gray-300"
-          >
-            <Plus size={30} />
-          </button>
-        {:else}
-          <div />
-        {/if}
-      {/each}
-    {/if}
-  </main>
-{/if}
+  class="grid h-full  w-full gap-2 p-2 text-gray-900"
+>
+  {#if tiles.length > 0}
+    {#each tiles as tile, i}
+      {#if tile}
+        <Tile {tile} />
+      {:else if $AppMode === "edit"}
+        <button
+          on:click={() =>
+            createTile({
+              x: (i % ($CurrentProject.columns || 10)) + 1,
+              y: Math.floor(i / ($CurrentProject.columns || 10)) + 1,
+            })}
+          class="grid h-full w-full place-items-center rounded-md border-2 border-dashed border-gray-300 text-gray-300"
+        >
+          <Plus size={30} />
+        </button>
+      {:else}
+        <div />
+      {/if}
+    {/each}
+  {/if}
+</main>
 
 <style>
   @media (max-width: 750px) {

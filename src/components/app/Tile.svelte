@@ -14,6 +14,7 @@
     PageHistory,
     PageIndex,
   } from "../../lib/client/stores";
+  import AddPic from "../../../public/add.png";
   import type { Tile } from "@prisma/client";
   import Plus from "svelte-material-icons/Plus.svelte";
   import tailwindColors from "tailwindcss/colors";
@@ -42,7 +43,8 @@
     });
   };
 
-  const uploadImage = async (file: File) => {
+  const uploadImage = async (file: File | undefined) => {
+    if (!file) return;
     tile.image = "Loading...";
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -233,6 +235,7 @@
 </script>
 
 <button
+  on:click={handleInteraction}
   on:dragover={() => {
     if ($AppMode === "edit") {
       dragging = true;
@@ -243,10 +246,95 @@
   }}
   on:drop={(e) => {
     dragging = false;
-    //@ts-ignore
-    uploadImage(e.dataTransfer.files[0]);
+    uploadImage(e.dataTransfer?.files[0]);
   }}
-  on:click={handleInteraction}
+  style={`
+    --bg: ${tile.backgroundColor || tailwindColors["gray"]["50"]};
+    --border: ${tile.borderColor || tailwindColors["gray"]["900"]};
+    --text: ${tile.textColor || tailwindColors["gray"]["900"]};
+    background: var(--bg);
+    border: 2px solid var(--border);
+    color: var(--text);
+  `}
+  class="relative flex h-full w-full flex-col rounded-md"
+>
+  <!-- Folder piece -->
+  {#if tile.navigationPageName}
+    <div
+      style="left: -2px; border-top-right-radius: 10px; border-top-left-radius: 10px; background: var(--bg); border-color: var(--border);"
+      class="absolute top-1 h-[10px] w-1/2 -translate-y-full border-2 border-b-0"
+    />
+  {/if}
+
+  <!-- Accent -->
+  <div class="absolute top-0 left-0 h-full w-full overflow-hidden">
+    <div
+      style="background: var(--border)"
+      class={`absolute h-[50px] w-[50px] rotate-45 ${
+        tile.accented
+          ? "-top-[30px] -right-[30px]"
+          : "-top-[50px] -right-[50px]"
+      }`}
+    />
+  </div>
+
+  <!-- Image -->
+  {#if tile.image || dragging}
+    <div class="h-1/2 w-full flex-1">
+      <img
+        src={dragging ? AddPic : tile.image}
+        alt="Loading..."
+        width="40%"
+        class="mx-auto h-full object-contain pt-1"
+      />
+    </div>
+  {/if}
+
+  <!-- Text -->
+  <div
+    class={`grid h-${
+      tile.image ? "1/2" : "full"
+    } w-full flex-1 place-items-center text-xl`}
+  >
+    <p
+      bind:this={tileTextRef}
+      contenteditable={$AppMode === "edit" &&
+        $EditModeToolSelection === "text" &&
+        $TextEditTileId === tile.id}
+      on:input={(e) => {
+        $TileEditQueue = {
+          ...$TileEditQueue,
+          [tile.id]: {
+            ...tile,
+            // @ts-ignore
+            [$EditingSpeakText ? "speakText" : "text"]: e.target?.innerText,
+          },
+        };
+      }}
+    >
+      {$EditingSpeakText &&
+      $EditModeToolSelection === "text" &&
+      $AppMode === "edit"
+        ? tile.speakText || ""
+        : tile.text}
+    </p>
+  </div>
+</button>
+
+<!-- File input (hidden) -->
+<input
+  on:input={(e) => {
+    //@ts-ignore
+    uploadImage(e.target.files[0]);
+  }}
+  class="hidden"
+  type="file"
+  bind:this={fileInput}
+/>
+
+<!-- <button
+
+  
   style={dragging
     ? ""
     : `${
@@ -254,77 +342,26 @@
       } ${tile.textColor ? "color: " + tile.textColor + ";" : ""} ${
         tile.borderColor ? "border-color: " + tile.borderColor + ";" : ""
       } ${$EditModeSwapTile?.id === tile.id ? "transform: scale(0.9);" : ""}`}
-  class={`relative grid h-[130px] w-full place-items-center rounded-md border-2 text-lg ${
+  class={`relative grid h-full w-full place-items-center rounded-md border-2 text-lg ${
     dragging
       ? "border-green-400 bg-green-500 text-gray-50"
       : "border-gray-900 bg-gray-50 "
   }`}
 >
-  {#if tile.navigationPageName}
-    <div
-      style={"left: -2px; border-top-right-radius: 10px; border-top-left-radius: 10px;" +
-        `${
-          tile.backgroundColor
-            ? "background: " + tile.backgroundColor + ";"
-            : ""
-        }${tile.borderColor ? "border-color: " + tile.borderColor + ";" : ""}`}
-      class="absolute top-1 h-[10px] w-1/2 -translate-y-full border-2 border-b-0 border-gray-900 bg-gray-50"
-    />
-  {/if}
+
 
   <div
     class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-sm"
   >
-    <div
-      style={`${
-        tile.borderColor ? "background: " + tile.borderColor + ";" : ""
-      }`}
-      class={`absolute h-[50px] w-[50px] rotate-45 bg-gray-900 ${
-        tile.accented
-          ? "-top-[30px] -right-[30px]"
-          : "-top-[50px] -right-[50px]"
-      }`}
-    />
-    <input
-      on:input={(e) => {
-        //@ts-ignore
-        uploadImage(e.target.files[0]);
-      }}
-      class="hidden"
-      type="file"
-      bind:this={fileInput}
-    />
+    
+
     {#if dragging}
       <Plus size={30} />
     {:else}
       {#if tile.image}
         <img width="70px" src={img} alt="Loading..." />
       {/if}
-      <p
-        bind:this={tileTextRef}
-        contenteditable={$AppMode === "edit" &&
-          $EditModeToolSelection === "text" &&
-          $TextEditTileId === tile.id}
-        on:input={(e) => {
-          $TileEditQueue = $EditingSpeakText
-            ? {
-                ...$TileEditQueue,
-                //@ts-ignore
-                [tile.id]: { ...tile, speakText: e.target.innerText },
-              }
-            : {
-                ...$TileEditQueue,
-                //@ts-ignore
-                [tile.id]: { ...tile, text: e.target.innerText },
-              };
-        }}
-      >
-        {$EditingSpeakText &&
-        $EditModeToolSelection === "text" &&
-        $AppMode === "edit"
-          ? tile.speakText || ""
-          : tile.text}
-      </p>
+      
     {/if}
   </div>
-</button>
+</button> -->

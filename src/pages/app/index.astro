@@ -27,16 +27,11 @@ if (!user || !user.projects || user.projects.length < 1)
       >
         <SentenceBuilder client:load />
         <TileGridNav client:load />
-        <main
-          style="overflow-y: auto;"
-          class="w-full relative flex-1 bg-gray-200"
-        >
-          <main class="absolute top-0 w-full opacity-50 z-10">
-            <TileGrid lag={1} client:load />
-          </main>
-          <span class="absolute top-0 w-full z-20">
+        <main class="w-full relative flex-1 bg-gray-200">
+          <TileGrid client:load />
+          <!-- <span class="absolute top-0 w-full z-20">
             <TileGrid client:load />
-          </span>
+          </span> -->
         </main>
 
         <!-- <main class="absolute opacity-50 bottom-0 w-full bg-red-200">
