@@ -1,1 +1,0 @@
-import{S as i,i as l,s as u,f as _,B as c}from"./chunks/index.e1c8ffd7.js";import{a as r}from"./chunks/stores.8cf13533.js";function f(s,n,o){let a;_(s,r,t=>o(1,a=t));let{_Me:e=null}=n;return e.email&&c(r,a=e,a),s.$$set=t=>{"_Me"in t&&o(0,e=t._Me)},[e]}class p extends i{constructor(n){super(),l(this,n,f,null,u,{_Me:0})}}export{p as default};
