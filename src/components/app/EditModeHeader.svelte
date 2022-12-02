@@ -14,11 +14,11 @@
 
 {#if $AppMode === "edit"}
   <section
-    class="flex min-h-[40px] w-full flex-wrap items-center gap-2 bg-gray-800 p-1 px-2 text-gray-50 sm:px-2 sm:py-0"
+    class="border-y-o flex min-h-[40px] w-full flex-wrap items-center gap-2 border border-gray-700 bg-gray-800 p-1 px-2 text-gray-50 sm:px-2 sm:py-0"
   >
     <p class="flex h-[40px] items-center gap-2 text-gray-300">
       Current Tool: <span
-        class="h-[40px] rounded-md bg-gray-900 p-2 font-medium capitalize text-gray-50 sm:rounded-none"
+        class="h-[40px] rounded-md border border-y-0 border-gray-700 bg-gray-900 p-2 font-medium capitalize text-gray-50 sm:rounded-none"
         >{$EditModeToolSelection || "none"}</span
       >
     </p>
@@ -26,7 +26,7 @@
     {#if $EditModeToolSelection === "text"}
       <p>Mode:</p>
       <select
-        class="h-[40px] rounded-md bg-gray-900 p-2 font-medium capitalize text-gray-50 sm:rounded-none"
+        class="h-[40px] rounded-md border border-y-0 border-gray-700 bg-gray-900 p-2 font-medium capitalize text-gray-50 sm:rounded-none"
         on:input={(e) => {
           //@ts-ignore
           $EditingSpeakText = e.target.value === "speak";
