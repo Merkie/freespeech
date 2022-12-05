@@ -14,6 +14,7 @@ export const AppMode = writable<AppModes>("home");
 export const CurrentProject = writable<ProjectWithPages>(
   {} as ProjectWithPages
 );
+export const Sentence = writable<Tile[]>([]);
 // Page Logic
 export const CurrentPage = writable<string>("Home");
 export const PageIndex = writable<number>(0);

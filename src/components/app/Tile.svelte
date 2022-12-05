@@ -9,6 +9,7 @@
     PageHistory,
     PageIndex,
     EditModeData,
+    Sentence,
   } from "../../lib/client/stores";
   // Assets
   import AddPic from "../../../public/add.png";
@@ -204,6 +205,8 @@
 
         // Update the store
         $PageHistory = $PageHistory;
+      } else {
+        $Sentence = [...$Sentence, tile];
       }
     }
   };
@@ -219,8 +222,9 @@
   }
 </script>
 
-<button
+<div
   on:click={handleInteraction}
+  on:keypress={() => null}
   on:dragover={() => {
     if ($AppMode === "edit" && $EditModeData.tool === "image") {
       dragging = true;
@@ -241,7 +245,7 @@
     border: 2px solid var(--border);
     color: var(--text);
   `}
-  class="relative flex flex-col rounded-md"
+  class="btn relative flex flex-col  rounded-md"
 >
   <!-- Folder piece -->
   {#if tile.navigationPageName}
@@ -305,7 +309,7 @@
         : tile.text}
     </p>
   </div>
-</button>
+</div>
 
 <!-- File input (hidden) -->
 <input
@@ -317,3 +321,9 @@
   type="file"
   bind:this={fileInputRef}
 />
+
+<style>
+  .btn:active {
+    transform: translateY(2px) scale(0.98);
+  }
+</style>
