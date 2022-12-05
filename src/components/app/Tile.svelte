@@ -19,6 +19,8 @@
   import type { PageWithTiles } from "../../lib/types";
   // Helpers
   import { url2base64 } from "../../lib/client/api.svelte";
+  // Icons
+  import Link from "svelte-material-icons/Link.svelte";
   // Bindings
   let tileTextRef: HTMLParagraphElement;
   let fileInputRef: HTMLInputElement;
@@ -313,6 +315,16 @@
       }`}
     />
   </div>
+
+  <!-- Link -->
+  {#if tile.link && $AppMode === "edit"}
+    <div
+      style="background: rgba(0,0,0,0.5)"
+      class="absolute top-0 left-0 grid h-full w-full place-items-center"
+    >
+      <Link size={50} color={"white"} />
+    </div>
+  {/if}
 
   <!-- Image -->
   {#if tile.image || dragging}

@@ -25,6 +25,32 @@ export const post: APIRoute = async ({ request }) => {
       },
     },
   });
+  if (!project)
+    return new Response(JSON.stringify({ success: false }), { status: 404 });
+
+  // get list of all tiles flat
+  const tiles = project?.pages.reduce(
+    (acc, page) => [...acc, ...page.tiles],
+    [] as any[]
+  );
+
+  // update all the linked tiles
+  project.pages = project?.pages.map((page) => ({
+    ...page,
+    tiles: page.tiles.map((tile) => {
+      if (tile.link) {
+        const originalTile = tiles.find((t) => t.id === tile.link);
+        return {
+          ...tile,
+          ...originalTile,
+          id: tile.id,
+          pageId: tile.pageId,
+          link: originalTile.id,
+        };
+      }
+      return tile;
+    }),
+  }));
 
   // If the user can get the project, send it
   if (project?.userId === user.id || project?.visibility === "public")
