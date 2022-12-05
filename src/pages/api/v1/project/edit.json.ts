@@ -1,6 +1,8 @@
 import type { APIRoute } from "astro";
 import Me from "../../../../lib/server/Me";
 import pc from "../../../../lib/server/resources/prisma";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import s3 from "../../../../lib/server/resources/s3";
 
 export const post: APIRoute = async ({ request }) => {
   if (request.headers.get("Content-Type") !== "application/json")
@@ -30,6 +32,15 @@ export const post: APIRoute = async ({ request }) => {
   });
   if (_project?.userId !== user.id)
     return new Response(JSON.stringify({ success: false }), { status: 401 });
+
+  // Delete the old thumbnail
+  if (body.thumbnail !== _project.thumbnail) {
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.S3_BUCKET,
+      Key: _project.thumbnail.split("/").pop(),
+    });
+    await s3.send(command);
+  }
 
   // Update the project
   const project = await pc.project.update({

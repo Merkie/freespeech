@@ -29,7 +29,7 @@
 
   const uploadImage = async (file: File | undefined) => {
     if (!file) return;
-    tile.image = "Loading...";
+    tile.image = "";
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {

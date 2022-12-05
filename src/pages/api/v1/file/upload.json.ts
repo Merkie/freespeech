@@ -37,5 +37,6 @@ export const post: APIRoute = async ({ request }) => {
   });
   await s3.send(command);
   const url = `https://${process.env.S3_BUCKET}.s3.amazonaws.com/${command.input.Key}`;
+
   return new Response(JSON.stringify({ success: true, url }), { status: 200 });
 };
