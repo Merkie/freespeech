@@ -1,11 +1,13 @@
 <script lang="ts" context="module">
-  import { Loading, TileEditQueue } from "../../lib/client/stores";
+  import { Loading, EditModeData } from "../../lib/client/stores";
 
   export const saveAllTiles = async () => {
     let TileEditQueueVal = {};
+    let editData = {};
 
-    TileEditQueue.subscribe((val) => {
-      TileEditQueueVal = val;
+    EditModeData.subscribe((val) => {
+      TileEditQueueVal = val.queue;
+      editData = val;
     });
     Loading.set(true);
 
@@ -19,7 +21,24 @@
       }),
     });
     const data = await response.json();
-    if (data.success) TileEditQueue.set(false);
+    //@ts-ignore
+    if (data.success) EditModeData.set({ ...editData, queue: {} });
     Loading.set(false);
+  };
+
+  export const url2base64 = async (url: string) => {
+    return await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
+      xhr.send();
+    });
   };
 </script>

@@ -1,12 +1,5 @@
 <script lang="ts">
-  import {
-    AppMode,
-    EditModeToolSelection,
-    TileEditQueue,
-    Loading,
-    EditingSpeakText,
-    EditModeColorSelectedType,
-  } from "../../lib/client/stores";
+  import { AppMode, Loading, EditModeData } from "../../lib/client/stores";
   import EditModeColorPicker from "./EditModeColorPicker.svelte";
   import EditHeaderSelect from "./EditHeaderSelect.svelte";
   import { saveAllTiles } from "./../../lib/client/api.svelte";
@@ -19,17 +12,18 @@
     <p class="flex h-[40px] items-center gap-2 text-gray-300">
       Current Tool: <span
         class="h-[40px] rounded-md border border-y-0 border-gray-700 bg-gray-900 p-2 font-medium capitalize text-gray-50 sm:rounded-none"
-        >{$EditModeToolSelection || "none"}</span
+        >{$EditModeData.tool || "none"}</span
       >
     </p>
 
-    {#if $EditModeToolSelection === "text"}
+    {#if $EditModeData.tool === "text"}
       <p>Mode:</p>
       <select
         class="h-[40px] rounded-md border border-y-0 border-gray-700 bg-gray-900 p-2 font-medium capitalize text-gray-50 sm:rounded-none"
         on:input={(e) => {
           //@ts-ignore
-          $EditingSpeakText = e.target.value === "speak";
+          $EditModeData.opts.speakText = e.target.value === "speak";
+          $EditModeData = { ...$EditModeData };
         }}
       >
         <option value="display">Display</option>
@@ -38,17 +32,21 @@
       <p>Tip: Click or tap on a tile to edit its text.</p>
     {/if}
 
-    {#if $EditModeToolSelection === "color"}
+    {#if $EditModeData.tool === "color"}
       <p>Mode:</p>
       <EditHeaderSelect
         defaultValue={"border"}
         values={["border", "background", "text"]}
-        submitValue={(value) => ($EditModeColorSelectedType = value)}
+        submitValue={(value) => {
+          //@ts-ignore
+          $EditModeData.opts.colorType = value;
+          $EditModeData = { ...$EditModeData };
+        }}
       />
       <EditModeColorPicker />
     {/if}
 
-    {#if Object.keys($TileEditQueue).length > 0}
+    {#if Object.keys($EditModeData.queue).length > 0}
       <button
         on:click={saveAllTiles}
         class="rounded-md border border-green-500 bg-green-600 p-1"

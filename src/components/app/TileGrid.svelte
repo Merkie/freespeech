@@ -136,7 +136,38 @@
 </script>
 
 <main
+  style={`
+  grid-template-columns: repeat(${$CurrentProject.columns || "10"}, 1fr);
+  grid-template-rows: repeat(${$CurrentProject.rows || "6"}, 1fr);
+  `}
   bind:this={tgElement}
+  class="grid h-full w-full gap-2 p-2"
+>
+  {#if tiles.length > 0}
+    {#each tiles as tile, i}
+      {#if tile}
+        <Tile {tile} />
+      {:else if $AppMode === "edit"}
+        <button
+          on:click={() =>
+            createTile({
+              x: (i % ($CurrentProject.columns || 10)) + 1,
+              y: Math.floor(i / ($CurrentProject.columns || 10)) + 1,
+            })}
+          class="grid h-full w-full place-items-center rounded-md border-2 border-dashed border-gray-300 text-gray-300"
+        >
+          <Plus size={30} />
+        </button>
+      {:else}
+        <div />
+      {/if}
+    {/each}
+  {/if}
+</main>
+
+<!-- 
+<main
+  
   style={`
     grid-template-columns: repeat(${$CurrentProject.columns || "10"}, 1fr);
     grid-template-rows: repeat(${$CurrentProject.rows || "6"}, 1fr);
@@ -163,8 +194,7 @@
       {/if}
     {/each}
   {/if}
-</main>
-
+</main> -->
 <style>
   @media (max-width: 750px) {
     main {

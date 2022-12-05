@@ -1,9 +1,5 @@
 <script>
-  import {
-    EditModeToolSelection,
-    EditModeColorSelectedValue,
-    EditModeColorSelectedShade,
-  } from "../../lib/client/stores";
+  import { EditModeData } from "../../lib/client/stores";
   import tailwindColors from "tailwindcss/colors";
   import EditHeaderSelect from "./EditHeaderSelect.svelte";
 
@@ -37,18 +33,21 @@
   }
 </script>
 
-{#if $EditModeToolSelection === "color"}
+{#if $EditModeData.tool === "color"}
   <div
     class="flex h-[40px] items-center justify-center gap-2 rounded-md bg-gray-900 px-2 sm:rounded-none"
   >
     {#each Object.keys(colors) as color}
       <button
-        on:click={() => ($EditModeColorSelectedShade = color)}
+        on:click={() => {
+          $EditModeData.opts.colorShade = color;
+          $EditModeData = { ...$EditModeData };
+        }}
         style={`background-color: ${
-          colors[color][parseInt($EditModeColorSelectedValue)]
+          colors[color][parseInt($EditModeData.opts.colorValue || "500")]
         }`}
         class={`h-[27px] w-[27px] ${
-          $EditModeColorSelectedShade === color
+          $EditModeData.opts.colorShade === color
             ? "rounded-full ring-2 ring-gray-50"
             : ""
         } rounded-md`}
@@ -68,8 +67,10 @@
         "800",
         "900 (darkest)",
       ]}
-      submitValue={(value) =>
-        ($EditModeColorSelectedValue = value.split(" ")[0])}
+      submitValue={(value) => {
+        $EditModeData.opts.colorValue = value.split(" ")[0];
+        $EditModeData = { ...$EditModeData };
+      }}
     />
   </div>
 {/if}

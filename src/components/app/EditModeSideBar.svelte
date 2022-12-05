@@ -1,6 +1,6 @@
 <script lang="ts">
   // Stores
-  import { AppMode, EditModeToolSelection } from "../../lib/client/stores";
+  import { AppMode, EditModeData } from "../../lib/client/stores";
   // Icon
   import FormatText from "svelte-material-icons/FormatText.svelte";
   import Image from "svelte-material-icons/Image.svelte";
@@ -75,45 +75,34 @@
 </script>
 
 {#if $AppMode === "edit"}
-  <div class="z-10 flex w-[95px] flex-col bg-gray-800">
+  <div class="z-10 flex flex-col bg-gray-800">
     <div
-      class="w-full border border-x-0 border-t-0 border-gray-700 bg-gray-900 p-1 text-center"
+      class="w-full border border-x-0 border-t-0 border-gray-700 bg-gray-900 p-1 px-2 text-center"
     >
       <h1>Tools</h1>
     </div>
-    <div class={`flex flex-1  justify-center`}>
-      <div class="flex h-fit flex-wrap justify-center gap-2 pt-1">
+    <div class={`flex flex-1 justify-center`}>
+      <div class="flex h-fit flex-col justify-center gap-2 p-1">
         {#each EditButtons as EditBtn}
           <button
-            on:click={() => ($EditModeToolSelection = EditBtn.name)}
-            class={`rounded-md border  p-1 ${
-              $EditModeToolSelection === EditBtn.name
+            on:click={() => {
+              $EditModeData.tool = EditBtn.name;
+              $EditModeData = { ...$EditModeData };
+            }}
+            class={`rounded-md border p-4 ${
+              $EditModeData.tool === EditBtn.name
                 ? "border-gray-600 bg-gray-900"
                 : "border-gray-800"
             }`}
           >
             <svelte:component
               this={EditBtn.outlineIcon}
-              color={$EditModeToolSelection === EditBtn.name
+              color={$EditModeData.tool === EditBtn.name
                 ? "#f9fafb"
                 : "#9ca3af"}
               size={"25px"}
             />
           </button>
-
-          <!-- <button >
-             -->
-          <!-- {#if $EditModeToolSelection === EditBtn.name}
-          <p class="text-sm capitalize">
-            {EditBtn.name}
-          </p>
-                    class={`border shadow-md ${
-            $EditModeToolSelection === EditBtn.name
-              ? "border-gray-600 bg-gray-700 text-gray-50"
-              : "border-gray-700"
-          } flex h-fit flex-col items-center justify-center gap-2 rounded-md`}
-        {/if} -->
-          <!-- </button> -->
         {/each}
       </div>
     </div>

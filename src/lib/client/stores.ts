@@ -8,24 +8,52 @@ import type {
 } from "../types";
 
 // App Logic
-export const AppMode = writable<AppModes>("home");
+export const Loading = writable<boolean>(false);
 export const Me = writable<UserWithProjects>({} as UserWithProjects);
-export const EditModeToolSelection = writable<EditModeToolSelections>("");
+export const AppMode = writable<AppModes>("home");
 export const CurrentProject = writable<ProjectWithPages>(
   {} as ProjectWithPages
 );
+// Page Logic
 export const CurrentPage = writable<string>("Home");
-export const TextEditTileId = writable<string>("");
+export const PageIndex = writable<number>(0);
+export const PageHistory = writable<string[]>(["Home"]);
+
+export const EditModeData = writable<{
+  tool: EditModeToolSelections | string;
+  queue: any;
+  tile?: Tile;
+  opts?: {
+    speakText?: boolean;
+    colorValue?: string;
+    colorShade?: string;
+    colorType?: "text" | "background" | "border";
+  };
+}>({
+  tool: "",
+  queue: {},
+  opts: {
+    speakText: false,
+    colorValue: "500",
+    colorShade: "red",
+    colorType: "border",
+  },
+});
+
+// Edit Mode
 export const TileEditQueue = writable<any>({});
-export const Loading = writable<boolean>(false);
+export const EditModeToolSelection = writable<EditModeToolSelections>("");
+// Text Editing
+export const TextEditTileId = writable<string>(""); // Tile
 export const EditingSpeakText = writable<boolean>(false);
+// Color Editing
 export const EditModeColorSelectedValue = writable<string>("500");
 export const EditModeColorSelectedShade = writable<string>("gray");
 export const EditModeColorSelectedType = writable<string>("border");
-export const EditModeSwapTile = writable<Tile | null>(null);
-export const CreateFolderTile = writable<Tile | null>(null);
-export const PageHistory = writable<string[]>(["Home"]);
-export const PageIndex = writable<number>(0);
+// Swap Editing
+export const EditModeSwapTile = writable<Tile | null>(null); // Tile
+// Folder Editing
+export const CreateFolderTile = writable<Tile | null>(null); // Tile
 
 // Modal Logic
 export const ModalCreateProjectOpen = writable(false);

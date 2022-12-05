@@ -1,47 +1,28 @@
 <script lang="ts">
+  // Props
+  export let tile: Tile;
+  // Stores
   import {
     AppMode,
-    EditModeToolSelection,
-    TextEditTileId,
-    TileEditQueue,
-    EditingSpeakText,
     CurrentProject,
     CurrentPage,
-    EditModeColorSelectedShade,
-    EditModeColorSelectedValue,
-    EditModeColorSelectedType,
-    EditModeSwapTile,
     PageHistory,
     PageIndex,
+    EditModeData,
   } from "../../lib/client/stores";
+  // Assets
   import AddPic from "../../../public/add.png";
-  import type { Tile } from "@prisma/client";
-  import Plus from "svelte-material-icons/Plus.svelte";
   import tailwindColors from "tailwindcss/colors";
-  import { onMount } from "svelte";
+  // Types
+  import type { Tile } from "@prisma/client";
   import type { PageWithTiles } from "../../lib/types";
-  export let tile: Tile;
-
+  // Helpers
+  import { url2base64 } from "../../lib/client/api.svelte";
+  // Bindings
   let tileTextRef: HTMLParagraphElement;
-  let fileInput: HTMLInputElement;
+  let fileInputRef: HTMLInputElement;
   let dragging = false;
   let img: string;
-
-  const url2base64 = async (url: string) => {
-    return await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = () => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          resolve(reader.result);
-        };
-        reader.readAsDataURL(xhr.response);
-      };
-      xhr.open("GET", url);
-      xhr.responseType = "blob";
-      xhr.send();
-    });
-  };
 
   const uploadImage = async (file: File | undefined) => {
     if (!file) return;
@@ -63,8 +44,11 @@
       const { url } = await response.json();
       tile.image = url;
       // send to server to update
-      $TileEditQueue[tile.id] = { ...tile };
+      $EditModeData.queue[tile.id] = tile;
     };
+
+    // Update the store
+    $EditModeData = { ...$EditModeData };
   };
 
   // Handles interaction when tile is clicked
@@ -72,8 +56,8 @@
     // if the user is in edit mode
     if ($AppMode === "edit") {
       // Text
-      if ($EditModeToolSelection === "text" && $TextEditTileId !== tile.id) {
-        $TextEditTileId = tile.id;
+      if ($EditModeData.tool === "text" && $EditModeData.tile?.id !== tile.id) {
+        $EditModeData = { ...$EditModeData, tile };
         setTimeout(() => {
           tileTextRef.focus();
           //@ts-ignore
@@ -81,52 +65,52 @@
         }, 0);
       }
       // Image
-      if ($EditModeToolSelection === "image") {
+      if ($EditModeData.tool === "image") {
         if (tile.image) {
           tile.image = "";
-          $TileEditQueue[tile.id] = { ...tile };
+          $EditModeData.queue[tile.id] = { ...tile };
         } else {
-          fileInput.click();
+          fileInputRef.click();
         }
       }
       // Color
-      if ($EditModeToolSelection === "color") {
+      if ($EditModeData.tool === "color") {
         const color =
           // @ts-ignore
-          tailwindColors[$EditModeColorSelectedShade][
-            $EditModeColorSelectedValue
+          tailwindColors[$EditModeData.opts?.colorShade][
+            $EditModeData.opts?.colorValue
           ];
         //@ts-ignore
-        tile[$EditModeColorSelectedType + "Color"] = color;
-        $TileEditQueue[tile.id] = { ...tile };
+        tile[$EditModeData.opts?.colorType + "Color"] = color;
+        $EditModeData.queue[tile.id] = { ...tile };
       }
       // Swap
-      if ($EditModeToolSelection === "move") {
-        if ($EditModeSwapTile) {
-          $TileEditQueue[tile?.id] = {
-            ...$EditModeSwapTile,
+      if ($EditModeData.tool === "move") {
+        if ($EditModeData.tile) {
+          $EditModeData.queue[tile?.id] = {
+            ...$EditModeData.tile,
             id: tile?.id,
             x: tile.x,
             y: tile.y,
           };
-          $TileEditQueue[$EditModeSwapTile?.id] = {
+          $EditModeData.queue[$EditModeData.tile?.id] = {
             ...tile,
-            id: $EditModeSwapTile?.id,
-            x: $EditModeSwapTile.x,
-            y: $EditModeSwapTile.y,
+            id: $EditModeData.tile?.id,
+            x: $EditModeData.tile.x,
+            y: $EditModeData.tile.y,
           };
           //@ts-ignore
           $CurrentProject.pages.find((page) => page.id === tile.pageId)!.tiles =
             $CurrentProject.pages
               .find((page) => page.id === tile.pageId)!
-              .tiles.filter((t) => t.id !== $EditModeSwapTile?.id);
+              .tiles.filter((t) => t.id !== $EditModeData.tile?.id);
           $CurrentProject.pages
             .find((page) => page.id === tile.pageId)!
             .tiles.push({
               ...tile,
-              id: $EditModeSwapTile?.id,
-              x: $EditModeSwapTile.x,
-              y: $EditModeSwapTile.y,
+              id: $EditModeData.tile?.id,
+              x: $EditModeData.tile.x,
+              y: $EditModeData.tile.y,
             });
 
           $CurrentProject.pages.find((page) => page.id === tile.pageId)!.tiles =
@@ -136,25 +120,26 @@
           $CurrentProject.pages
             .find((page) => page.id === tile.pageId)!
             .tiles.push({
-              ...$EditModeSwapTile,
+              ...$EditModeData.tile,
               id: tile?.id,
               x: tile.x,
               y: tile.y,
             });
 
           $CurrentProject = $CurrentProject;
-          $EditModeSwapTile = null;
+          $EditModeData = { ...$EditModeData, tile: undefined };
         } else {
-          $EditModeSwapTile = tile;
+          $EditModeData = { ...$EditModeData, tile };
         }
       }
       // Accent
-      if ($EditModeToolSelection === "accent") {
+      if ($EditModeData.tool === "accent") {
         tile.accented = !tile.accented;
-        $TileEditQueue[tile.id] = { ...tile };
+        $EditModeData.queue[tile.id] = { ...tile };
+        $EditModeData = { ...$EditModeData };
       }
       // Folder
-      if ($EditModeToolSelection === "folder") {
+      if ($EditModeData.tool === "folder") {
         const resposne = await fetch("/api/v1/page/create.json", {
           method: "POST",
           headers: {
@@ -178,11 +163,11 @@
           ];
           $CurrentProject = $CurrentProject;
           tile.navigationPageName = data.page.name;
-          $TileEditQueue[tile.id] = { ...tile };
+          $EditModeData.queue[tile.id] = { ...tile };
         }
       }
       // Delete
-      if ($EditModeToolSelection === "delete") {
+      if ($EditModeData.tool === "delete") {
         // Update locally
         $CurrentProject.pages.find((page) => page.id === tile.pageId)!.tiles =
           $CurrentProject.pages
@@ -237,7 +222,7 @@
 <button
   on:click={handleInteraction}
   on:dragover={() => {
-    if ($AppMode === "edit") {
+    if ($AppMode === "edit" && $EditModeData.tool === "image") {
       dragging = true;
     }
   }}
@@ -256,7 +241,7 @@
     border: 2px solid var(--border);
     color: var(--text);
   `}
-  class="relative flex h-full w-full flex-col rounded-md"
+  class="relative flex flex-col rounded-md"
 >
   <!-- Folder piece -->
   {#if tile.navigationPageName}
@@ -280,12 +265,12 @@
 
   <!-- Image -->
   {#if tile.image || dragging}
-    <div class="h-1/2 w-full flex-1">
+    <div class="relative h-1/2 flex-1">
       <img
         src={dragging ? AddPic : tile.image}
         alt="Loading..."
         width="40%"
-        class="mx-auto h-full object-contain pt-1"
+        class="absolute left-1/2 h-full -translate-x-1/2 object-contain pt-1"
       />
     </div>
   {/if}
@@ -299,21 +284,22 @@
     <p
       bind:this={tileTextRef}
       contenteditable={$AppMode === "edit" &&
-        $EditModeToolSelection === "text" &&
-        $TextEditTileId === tile.id}
+        $EditModeData.tool === "text" &&
+        $EditModeData.tile?.id === tile.id}
       on:input={(e) => {
-        $TileEditQueue = {
-          ...$TileEditQueue,
+        $EditModeData.queue = {
+          ...$EditModeData.queue,
           [tile.id]: {
             ...tile,
             // @ts-ignore
-            [$EditingSpeakText ? "speakText" : "text"]: e.target?.innerText,
+            [$EditModeData.opts?.speakText ? "speakText" : "text"]:
+              e.target?.innerText,
           },
         };
       }}
     >
-      {$EditingSpeakText &&
-      $EditModeToolSelection === "text" &&
+      {$EditModeData.opts?.speakText &&
+      $EditModeData.tool === "text" &&
       $AppMode === "edit"
         ? tile.speakText || ""
         : tile.text}
@@ -329,39 +315,5 @@
   }}
   class="hidden"
   type="file"
-  bind:this={fileInput}
+  bind:this={fileInputRef}
 />
-
-<!-- <button
-
-  
-  style={dragging
-    ? ""
-    : `${
-        tile.backgroundColor ? "background: " + tile.backgroundColor + ";" : ""
-      } ${tile.textColor ? "color: " + tile.textColor + ";" : ""} ${
-        tile.borderColor ? "border-color: " + tile.borderColor + ";" : ""
-      } ${$EditModeSwapTile?.id === tile.id ? "transform: scale(0.9);" : ""}`}
-  class={`relative grid h-full w-full place-items-center rounded-md border-2 text-lg ${
-    dragging
-      ? "border-green-400 bg-green-500 text-gray-50"
-      : "border-gray-900 bg-gray-50 "
-  }`}
->
-
-
-  <div
-    class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-sm"
-  >
-    
-
-    {#if dragging}
-      <Plus size={30} />
-    {:else}
-      {#if tile.image}
-        <img width="70px" src={img} alt="Loading..." />
-      {/if}
-      
-    {/if}
-  </div>
-</button> -->

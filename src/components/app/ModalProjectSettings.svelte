@@ -1,8 +1,8 @@
 <script lang="ts">
   // Stores
   import {
-    EditModeToolSelection,
     CurrentProject,
+    EditModeData,
     Loading,
   } from "../../lib/client/stores";
   // Components
@@ -40,17 +40,20 @@
     const data = await response.json();
     if (data.success) {
       $CurrentProject = { ...$CurrentProject, ...data.project };
-      $EditModeToolSelection = "";
+      $EditModeData = { ...$EditModeData, tool: "" };
     }
     $Loading = false;
   };
 </script>
 
-{#if $EditModeToolSelection === "settings"}
+{#if $EditModeData.tool === "settings"}
   <Modal
     {editsMade}
     links={true}
-    close={() => ($EditModeToolSelection = "")}
+    close={() => {
+      $EditModeData.tool = "";
+      $EditModeData = { ...$EditModeData };
+    }}
     save={saveChanges}
   >
     <h1 class="text-2xl font-bold">Settings</h1>
