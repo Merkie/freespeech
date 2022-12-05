@@ -89,7 +89,16 @@
         {$Sentence.map((tile) => tile.text).join(" ")}
       </p>
     </div>
-    <button class="grid h-full place-items-center p-4">
+    <button
+      on:click={() => {
+        $Sentence.pop();
+        $Sentence = [...$Sentence];
+      }}
+      on:dblclick={() => {
+        $Sentence = [];
+      }}
+      class="grid h-full place-items-center p-4"
+    >
       <Backspace color={colors.gray[900]} size={"40px"} />
     </button>
   </div>
