@@ -141,6 +141,21 @@
       }
       // Folder
       if ($EditModeData.tool === "folder") {
+        if (tile.navigationPageName) {
+          tile.navigationPageName = "";
+          $EditModeData.queue[tile.id] = { ...tile };
+          $EditModeData = { ...$EditModeData };
+          return;
+        }
+        const page = $CurrentProject.pages.find(
+          (page) => page.name === tile.text
+        );
+        if (page) {
+          tile.navigationPageName = page.name;
+          $EditModeData.queue[tile.id] = { ...tile };
+          $EditModeData = { ...$EditModeData };
+          return;
+        }
         const resposne = await fetch("/api/v1/page/create.json", {
           method: "POST",
           headers: {
@@ -166,6 +181,38 @@
           tile.navigationPageName = data.page.name;
           $EditModeData.queue[tile.id] = { ...tile };
         }
+      }
+      // Link
+      if ($EditModeData.tool === "link") {
+        if (tile.link) {
+          tile.link = "";
+          $EditModeData.queue[tile.id] = { ...tile };
+          $EditModeData = { ...$EditModeData };
+          return;
+        }
+        // get the tile at the same x and y from the home page
+        const homePage = $CurrentProject.pages.find(
+          (page) => page.name === "Home"
+        );
+        if (!homePage) {
+          return;
+        }
+        const homeTile = homePage.tiles.find(
+          (t) => t.x === tile.x && t.y === tile.y
+        );
+        if (!homeTile) {
+          return;
+        }
+        tile.link = homeTile.id;
+        tile = {
+          ...tile,
+          ...homeTile,
+          id: tile.id,
+          pageId: tile.pageId,
+          link: homeTile.id,
+        };
+        $EditModeData.queue[tile.id] = { ...tile };
+        $EditModeData = { ...$EditModeData };
       }
       // Delete
       if ($EditModeData.tool === "delete") {
