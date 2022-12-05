@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { AppMode, Loading, EditModeData } from "../../lib/client/stores";
-  import EditModeColorPicker from "./EditModeColorPicker.svelte";
-  import EditHeaderSelect from "./EditHeaderSelect.svelte";
-  import { saveAllTiles } from "./../../lib/client/api.svelte";
+  import { AppMode, Loading, EditModeData } from "../../../lib/client/stores";
+  import ColorPicker from "./ColorPicker.svelte";
+  import EditHeaderSelect from "./ListBox.svelte";
+  import { saveAllTiles } from "./../../../lib/client/api.svelte";
 </script>
 
 {#if $AppMode === "edit"}
@@ -43,7 +43,7 @@
           $EditModeData = { ...$EditModeData };
         }}
       />
-      <EditModeColorPicker />
+      <ColorPicker />
     {/if}
 
     {#if Object.keys($EditModeData.queue).length > 0}

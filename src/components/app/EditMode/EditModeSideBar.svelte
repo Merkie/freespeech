@@ -1,6 +1,6 @@
 <script lang="ts">
   // Stores
-  import { AppMode, EditModeData } from "../../lib/client/stores";
+  import { AppMode, EditModeData } from "../../../lib/client/stores";
   // Icon
   import FormatText from "svelte-material-icons/FormatText.svelte";
   import Image from "svelte-material-icons/Image.svelte";

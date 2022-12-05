@@ -4,9 +4,9 @@
     CurrentProject,
     EditModeData,
     Loading,
-  } from "../../lib/client/stores";
+  } from "../../../lib/client/stores";
   // Components
-  import Modal from "../Modal.svelte";
+  import Modal from "../../Modal.svelte";
 
   let name = $CurrentProject.name;
   let description = $CurrentProject.description;

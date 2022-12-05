@@ -1,7 +1,7 @@
 <script>
-  import { EditModeData } from "../../lib/client/stores";
+  import { EditModeData } from "../../../lib/client/stores";
   import tailwindColors from "tailwindcss/colors";
-  import EditHeaderSelect from "./EditHeaderSelect.svelte";
+  import EditHeaderSelect from "./ListBox.svelte";
 
   let colors = {};
 

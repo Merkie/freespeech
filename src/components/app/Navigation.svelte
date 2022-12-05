@@ -57,10 +57,10 @@
           : "border-gray-600 bg-gray-700"
       }`}
       on:click={() => {
-        //@ts-ignore
         if (NavBtn.onClick) {
           NavBtn.onClick();
         }
+        //@ts-ignore
         $AppMode = NavBtn.name;
       }}
       disabled={NavBtn.disabled}
@@ -70,9 +70,6 @@
         color={"white"}
         size={"25px"}
       />
-      <!-- {@html `<${NavBtn.icon}${
-        $AppMode === NavBtn.name ? "" : "Outline"
-      } color={"white"} size={"25px"} />`} -->
       <span class="hidden sm:inline">{NavBtn.name}</span>
     </button>
   {/each}
