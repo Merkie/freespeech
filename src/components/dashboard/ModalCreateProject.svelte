@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ModalCreateProjectOpen, Me } from "../../lib/client/stores";
+  import { ModalData, Me } from "../../lib/client/stores";
   import Modal from "../Modal.svelte";
 
   let name: string;
@@ -29,16 +29,20 @@
     if (data.success) {
       $Me.projects.push(data.project);
       $Me = $Me;
-      $ModalCreateProjectOpen = false;
+      $ModalData.createProject = false;
+      $ModalData = $ModalData;
     }
   };
 </script>
 
-{#if $ModalCreateProjectOpen}
+{#if $ModalData.createProject}
   <Modal
     {editsMade}
     links={false}
-    close={() => ($ModalCreateProjectOpen = false)}
+    close={() => {
+      $ModalData.createProject = false;
+      $ModalData = $ModalData;
+    }}
     save={createProject}
   >
     <h1 class="text-2xl font-bold">Settings</h1>

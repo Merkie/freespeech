@@ -1,7 +1,7 @@
 <script>
   import {
     Me,
-    ModalCreateProjectOpen,
+    ModalData,
     CurrentProject,
     CurrentPage,
   } from "../../lib/client/stores";
@@ -31,7 +31,10 @@
   {/each}
   <button
     class="grid min-h-[150px] w-full place-items-center rounded-md border border-dashed"
-    on:click={() => ($ModalCreateProjectOpen = true)}
+    on:click={() => {
+      $ModalData.createProject = true;
+      $ModalData = { ...$ModalData };
+    }}
   >
     <span class="text-4xl">+</span>
   </button>

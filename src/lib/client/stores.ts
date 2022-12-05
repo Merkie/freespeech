@@ -18,7 +18,7 @@ export const CurrentProject = writable<ProjectWithPages>(
 export const CurrentPage = writable<string>("Home");
 export const PageIndex = writable<number>(0);
 export const PageHistory = writable<string[]>(["Home"]);
-
+// Edit Mode Data
 export const EditModeData = writable<{
   tool: EditModeToolSelections | string;
   queue: any;
@@ -39,25 +39,10 @@ export const EditModeData = writable<{
     colorType: "border",
   },
 });
-
-// Edit Mode
-export const TileEditQueue = writable<any>({});
-export const EditModeToolSelection = writable<EditModeToolSelections>("");
-// Text Editing
-export const TextEditTileId = writable<string>(""); // Tile
-export const EditingSpeakText = writable<boolean>(false);
-// Color Editing
-export const EditModeColorSelectedValue = writable<string>("500");
-export const EditModeColorSelectedShade = writable<string>("gray");
-export const EditModeColorSelectedType = writable<string>("border");
-// Swap Editing
-export const EditModeSwapTile = writable<Tile | null>(null); // Tile
-// Folder Editing
-export const CreateFolderTile = writable<Tile | null>(null); // Tile
-
-// Modal Logic
-export const ModalCreateProjectOpen = writable(false);
-export const ModalProjectSettingsOpen = writable(false);
+// Modal Data
+export const ModalData = writable({
+  createProject: false,
+});
 
 // Persistent Logic
 // Me
