@@ -55,47 +55,15 @@
   };
 
   // Handles interaction when tile is clicked
-  const handleInteraction = async () => {
-    // if the user is in edit mode
-    if ($AppMode === "edit") {
-      // Text
-      if ($EditModeData.tool === "text" && $EditModeData.tile?.id !== tile.id) {
-        $EditModeData = { ...$EditModeData, tile };
-        setTimeout(() => {
-          tileTextRef.focus();
-          //@ts-ignore
-          document.execCommand("selectall", null, false);
-        }, 0);
-      }
-      // Image
-      if ($EditModeData.tool === "image") {
-        if (tile.image) {
-          tile.image = "";
-          $EditModeData.queue[tile.id] = { ...tile };
-        } else {
-          fileInputRef.click();
-        }
-      }
-      // Color
-      if ($EditModeData.tool === "color") {
-        const color =
-          // @ts-ignore
-          tailwindColors[$EditModeData.opts?.colorShade][
-            $EditModeData.opts?.colorValue
-          ];
-        //@ts-ignore
-        tile[$EditModeData.opts?.colorType + "Color"] = color;
-        $EditModeData.queue[tile.id] = { ...tile };
-      }
-      // Swap
-      if ($EditModeData.tool === "move") {
-        if ($EditModeData.tile) {
-          $EditModeData.queue[tile?.id] = {
-            ...$EditModeData.tile,
-            id: tile?.id,
-            x: tile.x,
-            y: tile.y,
-          };
+  const handleInteraction = (e: { target: { innerText: string } }) => {
+    $EditModeData.queue = {
+      ...$EditModeData.queue,
+      [tile.id]: {
+        ...tile,
+        [$EditModeData.opts?.speakText ? "speakText" : "text"]:
+          e.target?.innerText,
+      },
+    };
           $EditModeData.queue[$EditModeData.tile?.id] = {
             ...tile,
             id: $EditModeData.tile?.id,
