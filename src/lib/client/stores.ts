@@ -16,6 +16,13 @@ export const CurrentProject = writable<ProjectWithPages>(
 );
 export const Sentence = writable<Tile[]>([]);
 // Page Logic
+export const PageData = writable<{
+  history: string[];
+  index: number;
+}>({
+  history: ["Home"],
+  index: 0,
+});
 export const CurrentPage = writable<string>("Home");
 export const PageIndex = writable<number>(0);
 export const PageHistory = writable<string[]>(["Home"]);

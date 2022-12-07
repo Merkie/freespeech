@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@astrojs/netlify": "^1.2.1",
+    "@astrojs/solid-js": "^1.2.3",
     "@astrojs/svelte": "^1.0.2",
     "@astrojs/tailwind": "^2.1.2",
     "@astrojs/vercel": "^2.3.4",
@@ -23,7 +24,6 @@
     "astro": "^1.6.10",
     "aws-sdk": "^2.1258.0",
     "bcrypt": "^5.1.0",
-    "device-detector-js": "^3.0.3",
     "dotenv": "^16.0.3",
     "html2canvas": "^1.4.1",
     "install": "^0.13.0",
@@ -35,6 +35,7 @@
     "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "prisma": "^4.6.1",
+    "solid-js": "^1.4.3",
     "svelte": "^3.46.4",
     "svelte-material-icons": "^2.0.4",
     "tailwindcss": "^3.0.24",

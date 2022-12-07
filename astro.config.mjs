@@ -11,8 +11,11 @@ import vercel from '@astrojs/vercel/edge';
 import netlify from "@astrojs/netlify/functions";
 
 // https://astro.build/config
+import solidJs from "@astrojs/solid-js";
+
+// https://astro.build/config
 export default defineConfig({
   output: 'server',
-  integrations: [tailwind(), svelte()],
+  integrations: [tailwind(), svelte(), solidJs()],
   adapter: netlify()
 });

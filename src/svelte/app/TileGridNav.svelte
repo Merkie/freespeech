@@ -24,7 +24,7 @@
           />
         </svg>
       </button>
-      <p class="text-2xl">
+      <p class="min-w-[200px] text-center text-2xl">
         {$PageHistory[$PageHistory.length - 1 - $PageIndex]}
       </p>
       <button

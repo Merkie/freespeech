@@ -4,72 +4,95 @@
     AppMode,
     CurrentProject,
     Me,
-    CurrentPage,
     PageIndex,
     PageHistory,
+    PageData,
   } from "../../lib/client/stores";
   import Tile from "./Tile.svelte";
   import Plus from "svelte-material-icons/Plus.svelte";
   import { onMount } from "svelte";
-  import type { Tile as ITile } from "@prisma/client";
+  import type { Page, Tile as ITile } from "@prisma/client";
   import html2canvas from "html2canvas";
+
+  import { createTile } from "./Controllers/TileController.svelte";
 
   let tiles: (ITile | undefined)[] = [];
   let tgElement: HTMLElement;
 
-  const createTile = async ({ x, y }: { x: number; y: number }) => {
-    // Get the page ID
-    const pageId = $CurrentProject.pages.find(
-      (p) => p.name === $CurrentPage
-    )?.id;
-    if (!pageId) return;
+  // const createTile = async ({ x, y }: { x: number; y: number }) => {
+  //   // Get the page ID
+  //   const pageId = $CurrentProject.pages.find(
+  //     (p) => p.name === $CurrentPage
+  //   )?.id;
+  //   if (!pageId) return;
 
-    // Update the local state first
-    $CurrentProject.pages
-      .find((p) => p.name === $CurrentPage)
-      ?.tiles.push({
-        x,
-        y,
-        text: "New Tile",
-        image: "",
-        id: "temp",
-      } as ITile);
-    $CurrentProject = $CurrentProject;
+  //   // Update the local state first
+  //   $CurrentProject.set((data) => ({
+  //     ...data,
+  //     pages: data.pages.map((page: Page) => {
+  //       if (page.name === $PageData.history[$PageData.index]) {
+  //         return {
+  //           ...page,
+  //           tiles: [
+  //             ...page.tiles,
+  //             {
+  //               x,
+  //               y,
+  //               text: "New Tile",
+  //               image: "",
+  //               id: "temp",
+  //             },
+  //           ],
+  //         };
+  //       }
+  //       return page;
+  //     }),
+  //   }));
+  //   $CurrentProject.pages
+  //     .find((p) => p.name === $CurrentPage)
+  //     ?.tiles.push({
+  //       x,
+  //       y,
+  //       text: "New Tile",
+  //       image: "",
+  //       id: "temp",
+  //     } as ITile);
+  //   $CurrentProject = $CurrentProject;
 
-    // call the API to create the tile
-    const response = await fetch("/api/v1/tile/create.json", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        pageId,
-        x,
-        y,
-      }),
-    });
+  //   // call the API to create the tile
+  //   const response = await fetch("/api/v1/tile/create.json", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       pageId,
+  //       x,
+  //       y,
+  //     }),
+  //   });
 
-    // consume the data from the response
-    const data = await response.json();
+  //   // consume the data from the response
+  //   const data = await response.json();
 
-    if (data.tile) {
-      // remove the tile with the id of "temp"
-      $CurrentProject.pages
-        .find((p) => p.name === $CurrentPage)
-        ?.tiles.splice(
-          $CurrentProject.pages
-            .find((p) => p.name === $CurrentPage)
-            ?.tiles.findIndex((t) => t.id === "temp")!,
-          1
-        );
-      // add the new tile
-      $CurrentProject.pages
-        .find((p) => p.name === $CurrentPage)
-        ?.tiles.push(data.tile);
-      // update the store
-      $CurrentProject = $CurrentProject;
-    }
-  };
+  //   if (data.tile) {
+  //     // remove the tile with the id of "temp"
+  //     $CurrentProject.pages
+  //       .find((p) => p.name === $CurrentPage)
+  //       ?.tiles.splice(
+  //         $CurrentProject.pages
+  //           .find((p) => p.name === $CurrentPage)
+  //           ?.tiles.findIndex((t) => t.id === "temp")!,
+  //         1
+  //       );
+  //     // add the new tile
+  //     $CurrentProject.pages
+  //       .find((p) => p.name === $CurrentPage)
+  //       ?.tiles.push(data.tile);
+  //     // update the store
+  //     $CurrentProject = $CurrentProject;
+  //   }
+  // };
 
   onMount(async () => {
     const res = await fetch("/api/v1/project/fetch.json", {

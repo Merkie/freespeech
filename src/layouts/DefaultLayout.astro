@@ -1,6 +1,6 @@
 ---
 import "../lib/client/app.css";
-import StoreManager from "../components/StoreManager.svelte";
+// import StoreManager from "../components/StoreManager.svelte";
 import Me from "../lib/server/Me";
 const { title } = Astro.props;
 let user = await Me(Astro.request.headers.get("cookie") + "");
@@ -18,11 +18,11 @@ let user = await Me(Astro.request.headers.get("cookie") + "");
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
-
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>{title}</title>
   </head>
   <body class="text-gray-50">
     <slot />
-    <StoreManager client:load _Me={user} />
+    <!-- <StoreManager client:load _Me={user} /> -->
   </body>
 </html>

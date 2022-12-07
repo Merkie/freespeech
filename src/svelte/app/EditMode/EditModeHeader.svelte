@@ -2,7 +2,7 @@
   import { AppMode, Loading, EditModeData } from "../../../lib/client/stores";
   import ColorPicker from "./ColorPicker.svelte";
   import EditHeaderSelect from "./ListBox.svelte";
-  import { saveAllTiles } from "./../../../lib/client/api.svelte";
+  import { saveAllTiles } from "../../../lib/client/api.svelte";
 </script>
 
 {#if $AppMode === "edit"}
