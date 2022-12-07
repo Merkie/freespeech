@@ -13,24 +13,24 @@ import Me from "../../lib/server/Me";
 
 import Navigation from "../../components/app/Navigation";
 import TileGrid from "../../components/app/TileGrid";
-import Sentence from "../../components/app/Sentence";
+import SentenceBuilder from "../../components/app/SentenceBuilder";
 import TileGridHeader from "../../components/app/TileGridHeader";
 import ToolBar from "../../components/app/EditMode/ToolBar";
 import ActionMenu from "../../components/app/EditMode/ActionMenu";
 import Keyboard from "../../components/app/Keyboard";
 
-const user = await Me(Astro.request.headers.get("cookie") + "");
-if (!user || !user.projects || user.projects.length < 1)
-  return Astro.redirect("/dashboard/projects");
+// const user = await Me(Astro.request.headers.get("cookie") + "");
+// if (!user || !user.projects || user.projects.length < 1)
+//   return Astro.redirect("/dashboard/projects");
 ---
 
 <DefaultLayout title={"App - FreeSpeech"}>
-  <div class="h-screen w-full flex flex-col">
+  <div class="h-screen max-w-full overflow-hidden flex flex-col">
     <ActionMenu client:load />
     <div class="flex flex-1">
       <ToolBar client:load />
       <div class="flex flex-col flex-1">
-        <Sentence client:load />
+        <SentenceBuilder client:load />
         <TileGridHeader client:load />
         <Keyboard client:load />
         <TileGrid client:load />

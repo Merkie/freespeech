@@ -16,6 +16,10 @@ button:active {
   transform: scale(0.97);
 }
 
+svg {
+  pointer-events: none;
+}
+
 select {
   -webkit-appearance: none;
   /* -moz-appearance: none; */

@@ -1,7 +1,27 @@
-import { AppMode } from "../../lib/client/signals";
+import { AppMode, Sentence, setSentence } from "../../lib/client/signals";
 import Key from "./Key";
+import { createEffect, createSignal } from "solid-js";
 
 const Keyboard = () => {
+  const [autocompleteOptions, setAutocompleteOptions] = createSignal<string[]>(
+    []
+  );
+
+  createEffect(async () => {
+    if (typeof Sentence()[Sentence().length - 1] !== "string") return;
+    const response = await fetch("/api/v1/keyboard/autocomplete.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fragment: Sentence()[Sentence().length - 1],
+      }),
+    });
+    const data = await response.json();
+    setAutocompleteOptions(data.words);
+  }, [Sentence]);
+
   return (
     <main
       class={`flex flex-1 flex-col bg-gray-900 p-2 ${
@@ -9,6 +29,24 @@ const Keyboard = () => {
       }`}
     >
       <div class="flex flex-1 flex-col gap-2">
+        <div class="flex h-[50px] flex-wrap items-center gap-4 overflow-hidden rounded-md bg-gray-800 p-2 text-xl">
+          {autocompleteOptions().map((option) => {
+            return (
+              <span
+                onClick={() => {
+                  setSentence([...Sentence().slice(0, -1), option, ""]);
+                  // setAutocompleteOptions([]);
+                }}
+                class="font-light"
+              >
+                <span class="flex-0 font-bold">
+                  {Sentence()[Sentence().length - 1]}
+                </span>
+                {option.replace(Sentence()[Sentence().length - 1], "")}
+              </span>
+            );
+          })}
+        </div>
         <div class="flex flex-1 justify-center gap-2">
           <Key letter={"q"} />
           <Key letter={"w"} />
@@ -42,6 +80,27 @@ const Keyboard = () => {
           <Key letter={"m"} />
           <Key letter={"."} />
         </div>
+      </div>
+      <div class="text-md flex h-[100px] w-full justify-center gap-2 p-2 md:text-2xl">
+        <button class="rounded-md border-2 border-b-0 border-r-0 border-gray-600 bg-gray-700 px-4 active:border-blue-300 active:bg-blue-500">
+          Shift
+        </button>
+        <button
+          onClick={() => {
+            // If the last item in the sentence is a string
+            if (typeof Sentence()[Sentence().length - 1] === "string") {
+              setSentence([...Sentence(), ""]);
+              return;
+            }
+          }}
+          class="flex-1 rounded-md border-2 border-b-0 border-r-0 border-gray-600 bg-gray-700 active:border-blue-300 active:bg-blue-500"
+        ></button>
+        <button class="rounded-md border-2 border-b-0 border-r-0 border-gray-600 bg-gray-700 px-4 active:border-blue-300 active:bg-blue-500">
+          123
+        </button>
+        <button class="rounded-md border-2 border-b-0 border-r-0 border-gray-600 bg-gray-700 px-4 active:border-blue-300 active:bg-blue-500">
+          .?!
+        </button>
       </div>
     </main>
   );

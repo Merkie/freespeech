@@ -1,3 +1,4 @@
+import type { Tile } from "@prisma/client";
 import { createSignal } from "solid-js";
 import type { AppModes } from "../types";
 
@@ -33,3 +34,4 @@ export const [EditModeData, setEditModeData] = createSignal<{
 });
 
 export const [AppMode, setAppMode] = createSignal<AppModes>("home");
+export const [Sentence, setSentence] = createSignal<(Tile | string)[]>([]);
