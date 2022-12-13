@@ -1,5 +1,12 @@
-import { AppMode, Sentence, setSentence } from "../../lib/client/signals";
+import {
+  AppMode,
+  Sentence,
+  setSentence,
+  CloudVoiceVariant,
+  setCloudVoiceVariant,
+} from "../../lib/client/signals";
 import Key from "./Key";
+import ListBox from "./ListBox";
 import { createEffect, createSignal } from "solid-js";
 
 const Keyboard = () => {
@@ -29,24 +36,53 @@ const Keyboard = () => {
       }`}
     >
       <div class="flex flex-1 flex-col gap-2">
-        <div class="flex h-[50px] flex-wrap items-center gap-4 overflow-hidden rounded-md bg-gray-800 p-2 text-xl">
-          {autocompleteOptions().map((option) => {
-            return (
-              <span
-                onClick={() => {
-                  setSentence([...Sentence().slice(0, -1), option, ""]);
-                  // setAutocompleteOptions([]);
-                }}
-                class="font-light"
-              >
-                <span class="flex-0 font-bold">
-                  {Sentence()[Sentence().length - 1]}
+        <div class="flex gap-4">
+          <ListBox
+            items={[
+              {
+                text: "assistant",
+              },
+              { text: "chat" },
+              { text: "customerservice" },
+              { text: "newscast" },
+              { text: "angry" },
+              { text: "cheerful" },
+              { text: "sad" },
+              { text: "excited" },
+              { text: "friendly" },
+              { text: "terrified" },
+              { text: "shouting" },
+              { text: "unfriendly" },
+              { text: "whispering" },
+              { text: "hopeful" },
+              { text: "none" },
+            ]}
+            selected={CloudVoiceVariant() || "none"}
+            setSignal={setCloudVoiceVariant}
+          />
+          <div class="flex h-[50px] flex-1 flex-wrap items-center gap-4 overflow-hidden rounded-md bg-gray-800 p-2 text-xl">
+            {autocompleteOptions().map((option) => {
+              return (
+                <span
+                  onClick={() => {
+                    setSentence([...Sentence().slice(0, -1), option, ""]);
+                    // setAutocompleteOptions([]);
+                  }}
+                  class="font-light"
+                >
+                  <span class="flex-0 font-bold">
+                    {Sentence()[Sentence().length - 1] as string}
+                  </span>
+                  {option.replace(
+                    Sentence()[Sentence().length - 1] as string,
+                    ""
+                  )}
                 </span>
-                {option.replace(Sentence()[Sentence().length - 1], "")}
-              </span>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+
         <div class="flex flex-1 justify-center gap-2">
           <Key letter={"q"} />
           <Key letter={"w"} />

@@ -19,7 +19,8 @@ const ActionMenu = () => {
           <p>Mode: </p>
           <ListBox
             selected="Display Text"
-            items={["Speak Text", "Display Text"]}
+            items={[{ text: "Speak Text" }, { text: "Display Text" }]}
+            setSignal={() => null}
           />
           <p>Tip: Click or tap on a tile to edit its text.</p>
         </>

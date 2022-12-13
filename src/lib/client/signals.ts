@@ -35,3 +35,6 @@ export const [EditModeData, setEditModeData] = createSignal<{
 
 export const [AppMode, setAppMode] = createSignal<AppModes>("home");
 export const [Sentence, setSentence] = createSignal<(Tile | string)[]>([]);
+export const [CloudVoiceVariant, setCloudVoiceVariant] = createSignal<
+  string | undefined
+>(undefined);

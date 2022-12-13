@@ -1,6 +1,15 @@
 import { createSignal } from "solid-js";
 
-const ListBox = (props: { items: string[]; selected: string }) => {
+type ListBoxItem = {
+  text: string;
+  element?: any;
+};
+
+const ListBox = (props: {
+  items: ListBoxItem[];
+  selected: string;
+  setSignal: (item: any) => void;
+}) => {
   const [isOpen, setIsOpen] = createSignal(false);
   return (
     <>
@@ -8,9 +17,11 @@ const ListBox = (props: { items: string[]; selected: string }) => {
         onClick={(e) => {
           if (e.target.tagName === "MAIN") setIsOpen(!isOpen());
         }}
-        class="relative z-30 cursor-pointer border border-y-0 border-gray-700 bg-gray-800 p-2 px-2 text-center capitalize"
+        class="relative z-30 grid cursor-pointer place-items-center rounded-md border border-gray-700 bg-gray-800 p-2 px-2 text-center capitalize"
       >
-        {props.selected} <i class="bx bx-chevron-down"></i>
+        <span class="pointer-events-none">
+          {props.selected} <i class="bx bx-chevron-down"></i>
+        </span>
         <div
           style={`bottom: ${
             isOpen() ? "-10px" : "0"
@@ -22,8 +33,17 @@ const ListBox = (props: { items: string[]; selected: string }) => {
           class="absolute z-20 flex w-full min-w-[150px] flex-col rounded-md border border-gray-600 bg-gray-800 shadow-md"
         >
           {props.items.map((item) => (
-            <p class="w-full rounded-md border border-x-0 border-t-0 border-gray-600 p-4 py-2 text-left hover:bg-gray-700">
-              {item}
+            <p
+              onClick={async () => {
+                props.setSignal(item.text);
+
+                await new Promise((r) => setTimeout(r, 10));
+                setIsOpen(false);
+              }}
+              class="w-full rounded-md border-gray-600 p-4 py-2 text-left hover:bg-gray-700  active:bg-blue-500"
+            >
+              {item.element ? item.element : ""}
+              {item.text}
             </p>
           ))}
         </div>

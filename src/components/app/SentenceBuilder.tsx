@@ -1,16 +1,63 @@
-import { AppMode, Sentence, setSentence } from "../../lib/client/signals";
+import {
+  AppMode,
+  Sentence,
+  setSentence,
+  CloudVoiceVariant,
+} from "../../lib/client/signals";
+import { createSignal } from "solid-js";
 
 const SentenceBuilder = () => {
+  const [loadingTTS, setLoadingTTS] = createSignal(false);
+  const [speaking, setSpeaking] = createSignal(false);
+
+  const speakSentence = async () => {
+    if (loadingTTS() || speaking()) return;
+    setLoadingTTS(true);
+    const response = await fetch("https://www.tts.gay/api/v1/synthesize", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: 205,
+        text: Sentence()
+          .map((item) => {
+            if (typeof item === "string") return item;
+            return item.text;
+          })
+          .join(" "),
+        variant: CloudVoiceVariant()?.replace("none", "chat") || "chat",
+      }),
+    });
+    const data = await response.json();
+    if (data.audio) {
+      setSpeaking(true);
+      const audio = new Audio(data.audio);
+      audio.play();
+      audio.onended = () => {
+        setSpeaking(false);
+      };
+    }
+    setLoadingTTS(false);
+  };
+
   return (
     <section
       class={`flex h-[100px] items-center bg-gray-50 p-4 ${
         AppMode() !== "edit" ? "" : "hidden"
       }`}
     >
-      <div class="flex flex-1 items-center gap-2 text-xl text-gray-900">
+      <div
+        onClick={speakSentence}
+        class={`flex h-full flex-1 cursor-pointer items-center gap-2 text-xl text-gray-900 active:scale-y-75 ${
+          loadingTTS() ? "opacity-50" : ""
+        } ${speaking() ? "text-blue-400" : ""}
+        }`}
+      >
         {Sentence().map((item) => {
-          if (typeof item === "string") return <p>{item}</p>;
-          return <p>{item.text}</p>;
+          if (typeof item === "string")
+            return <p class="pointer-events-none">{item}</p>;
+          return <p class="pointer-events-none">{item.text}</p>;
         })}
       </div>
       <button
@@ -27,7 +74,7 @@ const SentenceBuilder = () => {
             // remove last character from last item
             setSentence([
               ...Sentence().slice(0, -1),
-              Sentence()[Sentence().length - 1].slice(0, -1),
+              (Sentence()[Sentence().length - 1] as string).slice(0, -1),
             ]);
             return;
           }
