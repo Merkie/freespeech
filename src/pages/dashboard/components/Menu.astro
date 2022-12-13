@@ -1,0 +1,39 @@
+---
+const categories = [
+  {
+    name: "library",
+    icon: "book",
+  },
+  {
+    name: "account",
+    icon: "user",
+  },
+  {
+    name: "community",
+    icon: "group",
+  },
+];
+const { category } = Astro.props;
+---
+
+<div
+  class="bg-gray-800 flex flex-col gap-1 text-lg border border-gray-700 shadow-md h-min p-4 rounded-md w-[200px]"
+>
+  {
+    categories.map((_category) => (
+      <a
+        href={`/dashboard/${_category.name}`}
+        class={`flex cursor-pointer items-center gap-2 rounded-md ${
+          _category.name === category ? "bg-gray-700" : ""
+        } p-2 pl-4 capitalize`}
+      >
+        <i
+          class={`bx bx${_category.name === category ? "s" : ""}-${
+            _category.icon
+          }`}
+        />{" "}
+        {_category.name}
+      </a>
+    ))
+  }
+</div>

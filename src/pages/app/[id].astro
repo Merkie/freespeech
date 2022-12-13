@@ -1,0 +1,52 @@
+---
+// import EditModeHeader from "../../components/app/EditMode/EditModeHeader.svelte";
+// import EditModeSideBar from "../../components/app/EditMode/EditModeSideBar.svelte";
+// import Loader from "../../components/app/Loader.svelte";
+// import ModalProjectSettings from "../../components/app/Modals/ModalProjectSettings.svelte";
+// import Navigation from "../../components/app/Navigation.svelte";
+// import SentenceBuilder from "../../components/app/SentenceBuilder.svelte";
+// import TileGrid from "../../components/app/TileGrid.svelte";
+import DefaultLayout from "../../layouts/DefaultLayout.astro";
+// import TileGridNav from "../../components/app/TileGridNav.svelte";
+import Me from "../../lib/server/Me";
+// import pc from "../../lib/prisma";
+
+import Navigation from "./components/Navigation";
+import TileGrid from "./components/TileGrid";
+import SentenceBuilder from "./components/SentenceBuilder";
+import TileGridHeader from "./components/TileGridHeader";
+import EditModeToolBar from "./components/EditModeToolBar";
+import EditModeHeader from "./components/EditModeHeader";
+import Keyboard from "./components/Keyboard";
+
+const { id } = Astro.params;
+// const user = await Me(Astro.request.headers.get("cookie") + "");
+// if (!user || !user.projects || user.projects.length < 1)
+//   return Astro.redirect("/dashboard/projects");
+---
+
+<DefaultLayout title={"App - FreeSpeech"}>
+  <div class="h-screen max-w-full overflow-hidden flex flex-col">
+    <EditModeHeader client:load />
+    <div class="flex flex-1">
+      <!-- left side toolbar -->
+      <EditModeToolBar client:load />
+      <div class="flex flex-col flex-1">
+        <SentenceBuilder client:load />
+        <TileGridHeader client:load />
+        <Keyboard client:load />
+        <TileGrid client:load />
+      </div>
+    </div>
+    <Navigation client:load />
+  </div>
+</DefaultLayout>
+<script is:inline>
+  window.addEventListener("drop", () => {
+    event.preventDefault();
+  });
+  window.addEventListener("dragover", () => {
+    // event.dataTransfer.dropEffect = "none"; // dont allow drops
+    event.preventDefault();
+  });
+</script>

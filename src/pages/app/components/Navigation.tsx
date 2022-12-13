@@ -1,4 +1,4 @@
-import { AppMode, setAppMode } from "../../lib/client/signals";
+import { AppMode, setAppMode } from "../../../lib/client/signals";
 
 const NavigationButtons: {
   name: string;

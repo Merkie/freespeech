@@ -1,5 +1,5 @@
 import RelationManyToOneOrMany from "svelte-material-icons/RelationManyToOneOrMany.svelte";
-import { Sentence, setSentence } from "../../lib/client/signals";
+import { Sentence, setSentence } from "../../../lib/client/signals";
 
 const Key = ({ letter }: { letter: string }) => {
   return (

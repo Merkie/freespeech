@@ -17,7 +17,7 @@ const ListBox = (props: {
         onClick={(e) => {
           if (e.target.tagName === "MAIN") setIsOpen(!isOpen());
         }}
-        class="relative z-30 grid cursor-pointer place-items-center rounded-md border border-gray-700 bg-gray-800 p-2 px-2 text-center capitalize"
+        class="relative z-30 grid cursor-pointer place-items-center rounded-md bg-gray-800 p-2 px-2 text-center capitalize"
       >
         <span class="pointer-events-none">
           {props.selected} <i class="bx bx-chevron-down"></i>

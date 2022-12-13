@@ -4,9 +4,9 @@ import {
   setSentence,
   CloudVoiceVariant,
   setCloudVoiceVariant,
-} from "../../lib/client/signals";
+} from "../../../lib/client/signals";
 import Key from "./Key";
-import ListBox from "./ListBox";
+import ListBox from "../../../components/ListBox";
 import { createEffect, createSignal } from "solid-js";
 
 const Keyboard = () => {
@@ -36,7 +36,7 @@ const Keyboard = () => {
       }`}
     >
       <div class="flex flex-1 flex-col gap-2">
-        <div class="flex gap-4">
+        <div class="flex gap-2">
           <ListBox
             items={[
               {

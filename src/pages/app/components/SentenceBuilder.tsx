@@ -3,7 +3,7 @@ import {
   Sentence,
   setSentence,
   CloudVoiceVariant,
-} from "../../lib/client/signals";
+} from "../../../lib/client/signals";
 import { createSignal } from "solid-js";
 
 const SentenceBuilder = () => {

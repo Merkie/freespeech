@@ -1,5 +1,5 @@
 import { AppMode, EditModeData } from "../../../lib/client/signals";
-import ListBox from "../ListBox";
+import ListBox from "../../../components/ListBox";
 
 const ActionMenu = () => {
   return (

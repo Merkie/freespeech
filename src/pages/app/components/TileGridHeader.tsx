@@ -1,4 +1,4 @@
-import { AppMode } from "../../lib/client/signals";
+import { AppMode } from "../../../lib/client/signals";
 
 const TileGridHeader = () => {
   return (
