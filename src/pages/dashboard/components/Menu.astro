@@ -16,24 +16,32 @@ const categories = [
 const { category } = Astro.props;
 ---
 
-<div
-  class="bg-gray-800 flex flex-col gap-1 text-lg border border-gray-700 shadow-md h-min p-4 rounded-md w-[200px]"
->
-  {
-    categories.map((_category) => (
-      <a
-        href={`/dashboard/${_category.name}`}
-        class={`flex cursor-pointer items-center gap-2 rounded-md ${
-          _category.name === category ? "bg-gray-700" : ""
-        } p-2 pl-4 capitalize`}
-      >
-        <i
-          class={`bx bx${_category.name === category ? "s" : ""}-${
-            _category.icon
-          }`}
-        />{" "}
-        {_category.name}
-      </a>
-    ))
-  }
+<div class="flex-col-reverse sm:flex-col flex gap-4">
+  <div
+    class="bg-gray-800 overflow-x-auto flex sm:flex-col gap-1 text-lg border border-gray-700 shadow-md h-min p-4 rounded-md sm:w-[200px]"
+  >
+    {
+      categories.map((_category) => (
+        <a
+          href={`/dashboard/${_category.name}`}
+          class={`flex cursor-pointer items-center gap-2 rounded-md ${
+            _category.name === category ? "bg-gray-700" : ""
+          } p-2 px-4 capitalize sm:px-2 sm:pl-4`}
+        >
+          <i
+            class={`bx bx${_category.name === category ? "s" : ""}-${
+              _category.icon
+            }`}
+          />{" "}
+          {_category.name}
+        </a>
+      ))
+    }
+  </div>
+  <span class="flex sm:flex-col gap-4">
+    <a href="/docs" class="text-gray-500 hover:text-blue-400 underline"
+      >Documentation</a
+    >
+    <a href="/" class="text-gray-500 hover:text-blue-400 underline">Homepage</a>
+  </span>
 </div>

@@ -61,3 +61,13 @@ export const [Sentence, setSentence] = createSignal<(Tile | string)[]>([]);
 export const [CloudVoiceVariant, setCloudVoiceVariant] = createSignal<
   string | undefined
 >(undefined);
+export const [ModalData, setModalData] = createSignal<{
+  visible: boolean;
+  header: string;
+  body: any;
+  options: {
+    text: string;
+    color: string;
+    action: () => void;
+  }[];
+} | null>(null);

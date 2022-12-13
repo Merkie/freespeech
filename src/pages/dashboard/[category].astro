@@ -2,7 +2,7 @@
 import DefaultLayout from "../../layouts/DefaultLayout.astro";
 import Header from "./components/Header.astro";
 import Menu from "./components/Menu.astro";
-import DashboardContent from "./components/DashboardContent.astro";
+import DashboardContent from "./components/DashboardContent";
 const { category } = Astro.params;
 ---
 
@@ -11,9 +11,9 @@ const { category } = Astro.params;
     class="h-full p-4 text-gray-50 min-h-screen bg-gray-900 w-screen flex flex-col gap-4"
   >
     <Header />
-    <div class="flex-1 gap-4 flex">
+    <div class="flex-1 flex-col sm:flex-row gap-4 flex">
       <Menu category={category} />
-      <DashboardContent category={category} />
+      <DashboardContent category={category + ""} client:load />
     </div>
   </main>
 </DefaultLayout>
