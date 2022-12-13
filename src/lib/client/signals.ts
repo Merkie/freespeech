@@ -1,6 +1,6 @@
 import type { Tile } from "@prisma/client";
 import { createSignal } from "solid-js";
-import { AppModes, ProjectWithPages } from "../types";
+import type { AppModes, ProjectWithPages } from "../types";
 
 type AppSettings = {
   keyboardEnabled: boolean;
