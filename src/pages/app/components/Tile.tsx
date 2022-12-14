@@ -23,12 +23,12 @@ const Tile = (props: Tile) => {
       {props.navigationPageName && (
         <div
           style="border-radius: 5px 10px 0 0"
-          class="absolute top-[-3px] z-10 h-[8px] w-1/2 border-2 border-b-0 border-gray-900 bg-gray-50"
+          class="absolute top-[-3px] z-10 h-[8px] w-1/2 border-2 border-b-0 border-gray-500 bg-gray-50"
         />
       )}
 
       {/* Main tile content */}
-      <div class="relative flex h-full cursor-pointer flex-col overflow-hidden rounded-md border-2 border-gray-900 bg-gray-50 p-2 pt-0">
+      <div class="relative flex h-full cursor-pointer flex-col overflow-hidden rounded-md border-2 border-gray-500 bg-gray-50 p-2 pt-0 text-gray-700">
         {/* Accent */}
         {props.accented && (
           <div class="absolute right-[-33px] top-[-33px] h-[50px] w-[50px] rotate-45 bg-red-500" />
