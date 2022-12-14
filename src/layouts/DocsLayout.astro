@@ -1,0 +1,66 @@
+---
+import DefaultLayout from "./DefaultLayout.astro";
+---
+
+<DefaultLayout title={"Docs | FreeSpeech"}>
+  <main
+    class="w-screen min-h-screen h-screen bg-gray-900 text-gray-50 flex flex-col"
+  >
+    <div
+      class="p-4 flex items-center bg-gradient-to-r from-blue-800 to-blue-600"
+    >
+      <span class="font-bold text-2xl"
+        >FreeSpeech <span class="font-medium text-xl">Documentation</span>
+      </span>
+    </div>
+    <div class="flex p-4 gap-4 flex-1">
+      <div class="bg-gray-900 border p-4 border-gray-800 rounded-md w-[200px]">
+        <h1 class="text-lg font-bold">Getting Started</h1>
+        <a
+          href="/docs/getting-started/getting-started"
+          class="text-gray-500 hover:text-blue-400 underline">Getting Started</a
+        >
+        <h1 class="text-lg mt-4 font-bold">Configuration</h1>
+        <a
+          href="/docs/configuration/text-to-speech-voice"
+          class="text-gray-500 hover:text-blue-400 underline"
+          >Text-to-Speech Voice</a
+        >
+      </div>
+      <div class="bg-gray-800 border p-4 border-gray-700 rounded-md flex-1">
+        <slot />
+      </div>
+    </div>
+  </main>
+  <div class="bg-gray-800 border border-x-0 border-b-0 border-gray-700 p-8">
+    <div class="flex gap-4 items-baseline">
+      <div class="flex flex-col gap-2">
+        <a class="underline text-gray-500 hover:text-blue-500" href="/"
+          >Homepage</a
+        >
+        <a class="underline text-gray-500 hover:text-blue-500" href="/dashboard"
+          >Dashboard</a
+        >
+        <a class="underline text-gray-500 hover:text-blue-500" href="/app"
+          >Application</a
+        >
+      </div>
+      <div class="flex flex-col gap-2">
+        <a
+          class="underline text-gray-500 hover:text-blue-500"
+          href="/portal/login">Login</a
+        >
+        <a
+          class="underline text-gray-500 hover:text-blue-500"
+          href="/portal/signup">Create Account</a
+        >
+      </div>
+      <div class="flex flex-col gap-2">
+        <a
+          class="underline text-gray-500 hover:text-blue-500"
+          href="https://github.com/merkie/freespeech">Contribute</a
+        >
+      </div>
+    </div>
+  </div>
+</DefaultLayout>
