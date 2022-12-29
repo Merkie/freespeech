@@ -1,24 +1,24 @@
-# build output
-dist/
 
-# dependencies
-node_modules/
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
+dist
+.solid
+.output
 .vercel
 .netlify
+netlify
 
-# environment variables
-.env
-.env.production
+# dependencies
+/node_modules
 
-# macOS-specific files
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+
+# Temp
+gitignore
+
+# System Files
 .DS_Store
-/test-results/
-/playwright-report/
-/playwright/.cache/
+Thumbs.db

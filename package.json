@@ -1,48 +1,39 @@
 {
-  "name": "freespeech",
-  "type": "module",
-  "version": "0.0.1",
-  "private": true,
+  "name": "sstart",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "test": "playwright test",
-    "coverage": "playwright show-report"
+    "dev": "solid-start dev",
+    "build": "solid-start build",
+    "start": "solid-start start"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.18",
+    "solid-start-node": "^0.2.0",
+    "tailwindcss": "^3.2.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.8",
+    "vitest": "^0.26.2"
   },
   "dependencies": {
-    "@astrojs/netlify": "^1.2.1",
-    "@astrojs/solid-js": "^1.2.3",
-    "@astrojs/svelte": "^1.0.2",
-    "@astrojs/tailwind": "^2.1.2",
-    "@astrojs/vercel": "^2.3.4",
-    "@aws-sdk/client-s3": "^3.216.0",
-    "@prisma/client": "4.6.1",
-    "@types/bcrypt": "^5.0.0",
-    "astro": "^1.6.10",
-    "aws-sdk": "^2.1258.0",
+    "@aws-sdk/client-s3": "^3.238.0",
+    "@prisma/client": "^4.8.0",
+    "@solidjs/meta": "^0.28.0",
+    "@solidjs/router": "^0.6.0",
+    "aws-sdk": "^2.1282.0",
     "bcrypt": "^5.1.0",
-    "dotenv": "^16.0.3",
-    "html2canvas": "^1.4.1",
-    "install": "^0.13.0",
-    "is-email": "^1.0.2",
-    "jsonwebtoken": "^8.5.1",
-    "mock-aws-s3": "^4.0.2",
+    "jsonwebtoken": "^9.0.0",
     "nock": "^13.2.9",
-    "postcss": "^8.4.19",
-    "prettier": "2.7.1",
-    "prettier-plugin-tailwindcss": "^0.1.13",
-    "prisma": "^4.6.1",
-    "solid-js": "^1.4.3",
-    "svelte": "^3.46.4",
-    "svelte-material-icons": "^2.0.4",
-    "tailwindcss": "^3.0.24",
-    "typescript": "^4.9.3",
-    "vite": "^3.2.4"
+    "prisma": "^4.8.0",
+    "solid-js": "^1.6.2",
+    "solid-long-press": "^0.1.2",
+    "solid-start": "^0.2.0",
+    "undici": "^5.11.0",
+    "zod": "^3.20.2"
   },
-  "devDependencies": {
-    "@playwright/test": "^1.28.0"
+  "engines": {
+    "node": ">=16"
   }
 }
