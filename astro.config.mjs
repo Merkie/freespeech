@@ -5,14 +5,14 @@ import solidJs from "@astrojs/solid-js";
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
-import vercel from "@astrojs/vercel/serverless";
+import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
-import svelte from "@astrojs/svelte";
+import netlify from "@astrojs/netlify/functions";
 
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel(),
   integrations: [solidJs(), tailwind(), svelte()],
+  adapter: netlify()
 });
