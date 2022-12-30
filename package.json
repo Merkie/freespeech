@@ -28,7 +28,6 @@
     "nock": "^13.2.9",
     "prisma": "^4.8.0",
     "solid-js": "^1.6.2",
-    "solid-long-press": "^0.1.2",
     "solid-start": "^0.2.0",
     "undici": "^5.11.0",
     "zod": "^3.20.2"

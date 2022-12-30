@@ -1,5 +1,7 @@
+import AccountPortal from "~/components/AccountPortal";
+
 function Signup() {
-  return <h1>Sign up</h1>;
+  return <AccountPortal isLogin={false} />;
 }
 
 export default Signup;
