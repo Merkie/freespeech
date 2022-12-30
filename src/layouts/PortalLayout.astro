@@ -1,0 +1,20 @@
+---
+import PortalForm from "../components/PortalForm.svelte";
+import BaseLayout from "./BaseLayout.astro";
+const { isLogin } = Astro.props as { isLogin: boolean };
+---
+
+<head> </head>
+<BaseLayout>
+  <main class="h-screen w-screen bg-zinc-200 grid place-items-center">
+    <PortalForm client:load isLogin={isLogin} />
+  </main>
+  <script defer>
+    function _turnstileCb() {
+      turnstile.render("#myWidget", {
+        sitekey: "1x00000000000000000000AA",
+        theme: "light",
+      });
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=_turnstileCb"
+      async
+      defer
+    ></script>
+    <title>Astro</title>
+  </head>
+  <body>
+    <h1>Astro</h1>
+    <div id="myWidget"></div>
+    <script defer>
+      function _turnstileCb() {
+        turnstile.render("#myWidget", {
+          sitekey: "1x00000000000000000000AA",
+          theme: "light",
+        });
+      }
+    </script>
+  </body>
+</html>
