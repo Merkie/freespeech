@@ -1,0 +1,24 @@
+{
+	"/": [],
+	"/api/v1/captcha/create": [
+		"src/routes/api/v1/captcha/create/+server.ts"
+	],
+	"/api/v1/project/create": [
+		"src/routes/api/v1/project/create/+server.ts"
+	],
+	"/api/v1/project/read": [
+		"src/routes/api/v1/project/read/+server.ts"
+	],
+	"/api/v1/user/authenticate": [
+		"src/routes/api/v1/user/authenticate/+server.ts"
+	],
+	"/api/v1/user/create": [
+		"src/routes/api/v1/user/create/+server.ts"
+	],
+	"/api/v1/user/me": [
+		"src/routes/api/v1/user/me/+server.ts"
+	],
+	"/app": [],
+	"/login": [],
+	"/signup": []
+}

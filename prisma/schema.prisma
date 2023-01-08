@@ -36,13 +36,13 @@ model User {
   bio            String?
   avatar         String?
 
-  created_at          DateTime              @default(now())
-  updated_at          DateTime              @updatedAt
-  S3Object            S3Object[]
-  VerificationRequest VerificationRequest[]
-  Tile                Tile[]
-  Page                Page[]
-  Project             Project[]
+  created_at           DateTime              @default(now())
+  updated_at           DateTime              @updatedAt
+  S3Object             S3Object[]
+  verificationRequests VerificationRequest[]
+  tiles                Tile[]
+  pages                Page[]
+  projects             Project[]
 }
 
 model VerificationRequest {
@@ -56,6 +56,8 @@ model VerificationRequest {
 model Tile {
   id String @id @default(cuid())
 
+  x               Int
+  y               Int
   text            String
   speakText       String?
   image           String?
@@ -63,6 +65,8 @@ model Tile {
   textColor       String?
   borderColor     String?
   modifier        String?
+  link            String?
+  navigateTo      String?
   isAccented      Boolean @default(false)
   isPublic        Boolean @default(false)
   user            User    @relation(fields: [userId], references: [id])
@@ -77,11 +81,10 @@ model Tile {
 model Page {
   id String @id @default(cuid())
 
-  name         String
-  isPublic     Boolean @default(false)
-  tileMetadata Json
-  user         User    @relation(fields: [userId], references: [id])
-  tiles        Tile[]
+  name     String
+  isPublic Boolean @default(false)
+  user     User    @relation(fields: [userId], references: [id])
+  tiles    Tile[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
