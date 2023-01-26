@@ -5,18 +5,7 @@
 	import { onMount } from 'svelte';
 	import { elasticOut } from 'svelte/easing';
 	import TileElement from './Tile.svelte';
-
-	const createTile = (x: number, y: number) => {
-		$CurrentProject?.pages
-			.find((page) => page.name === $CurrentPage)
-			?.tiles.push({
-				x,
-				y,
-				text: 'New Tile'
-			} as Tile);
-
-		$CurrentProject = { ...$CurrentProject } as ProjectExpanded;
-	};
+	import AddTileGhostButton from './AddTileGhostButton.svelte';
 
 	let tileArray: { tile: Tile | undefined; x: number; y: number }[] = [];
 
@@ -55,13 +44,7 @@
 		{#if tile.tile}
 			<TileElement tile={tile.tile} />
 		{:else if $AppMode === 'edit'}
-			<button
-				in:scale={{ duration: 300, delay: Math.random() * 200 }}
-				out:scale|local={{ duration: 0 }}
-				on:click={() => createTile(tile.x, tile.y)}
-				class="border bg-zinc-200 border-zinc-400 border-dashed rounded-sm"
-				><i class="bi bi-plus-lg text-zinc-500 text-xl" /></button
-			>
+			<AddTileGhostButton x={tile.x} y={tile.y} />
 		{:else}
 			<div />
 		{/if}

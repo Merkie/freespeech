@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CurrentUser, CurrentProject, AppMode } from '$lib/stores';
+	import { CurrentUser, CurrentProject, AppMode, SelectedEditModeTool } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import TilePageHeader from './TilePageHeader.svelte';
 	import TilePageSentenceBuilder from './SentenceBuilder.svelte';
@@ -8,6 +8,7 @@
 
 	import Toolbar from '../Edit/Toolbar.svelte';
 	import EditModeHeader from '../Edit/EditModeHeader.svelte';
+	import PagePicker from '../Edit/PagePicker.svelte';
 
 	let welcomeModalClosed = false;
 
@@ -39,5 +40,8 @@
 			<TilePageHeader />
 			<TilePageTilePad />
 		</main>
+		{#if $AppMode === 'edit' && $SelectedEditModeTool === 'navigation'}
+			<PagePicker />
+		{/if}
 	</div>
 </div>

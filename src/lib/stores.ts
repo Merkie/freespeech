@@ -37,3 +37,12 @@ if (browser) {
 
 export const CurrentPage = writable<string>('home');
 export const SelectedEditModeTool = writable<string>('cursor');
+export const EditModeNavigation = writable<{
+	tileid: string | undefined;
+	pagename: string | undefined;
+}>({ tileid: undefined, pagename: undefined });
+export const ActiveDraggingTile = writable<Tile | undefined>(undefined);
+export const ActiveDraggingTilePlace = writable<{ x: number | undefined; y: number | undefined }>({
+	x: undefined,
+	y: undefined
+});

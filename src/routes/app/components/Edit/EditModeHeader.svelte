@@ -29,7 +29,7 @@
 					x: cord.x,
 					y: cord.y,
 					text: 'New Tile',
-					id: Math.random().toString(36).substr(2, 9)
+					id: Math.random().toString(36).substr(2, 25)
 				} as Tile);
 		});
 
