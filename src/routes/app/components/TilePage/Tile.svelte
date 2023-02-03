@@ -10,6 +10,7 @@
 	} from '$lib/stores';
 	import type { Page, Tile } from '$lib/types';
 	import { scale } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 	export let tile: Tile;
 
@@ -17,7 +18,10 @@
 	let tileTextInput: HTMLInputElement | null = null;
 	let draggingFileOver = false;
 	let fileInput: HTMLInputElement;
+	let imageBase64: string;
+	1;
 
+	// A function that updates the one tile that the component is responsible for inside the store
 	function updateTileStore(newTile: Tile) {
 		$CurrentProject = {
 			...$CurrentProject,
@@ -34,6 +38,7 @@
 		} as ProjectExpanded;
 	}
 
+	// Handles the events that occur when a user taps or clicks a tile
 	const handleInteraction = () => {
 		if ($AppMode === 'edit') {
 			if ($SelectedEditModeTool === 'text') {
@@ -43,7 +48,7 @@
 					tileTextInput?.focus();
 				}, 0);
 			} else if ($SelectedEditModeTool === 'navigation') {
-				$EditModeNavigation = { tileid: tile.id, pagename: undefined };
+				$EditModeNavigation = { tileid: tile._id, pagename: undefined };
 			}
 		} else {
 			if (tile.navigateTo) {
@@ -53,6 +58,7 @@
 		}
 	};
 
+	// Handles the events that occur when a user clicks outside of the tile
 	const handleOutsideClick = () => {
 		if (editingTileText) {
 			const updatedTile = {
@@ -64,6 +70,7 @@
 		}
 	};
 
+	// Handles the file upload when upload an image
 	const handleUpload = async () => {
 		draggingFileOver = false;
 		const file = fileInput.files?.[0];
@@ -77,13 +84,58 @@
 			});
 			reader.readAsDataURL(file);
 			const image = await base64Promise;
+
+			// if the tile already has an image, delete it
+			if (tile.image) {
+				await fetch('/api/v1/cloud/delete', {
+					method: 'POST',
+					body: JSON.stringify({
+						location: tile.image
+					})
+				});
+			}
+
+			const response = await (
+				await fetch('/api/v1/cloud/upload', {
+					method: 'POST',
+					body: JSON.stringify({
+						data: image
+					})
+				})
+			).json();
+
 			const updatedTile = {
 				...tile,
-				image: image
+				image: response.location
 			};
+
 			updateTileStore(updatedTile as Tile);
 		}
 	};
+
+	// This can be abstracted out to a utils file
+	const urlToBase64String = async (url: string) => {
+		const response = await fetch(url);
+		const blob = await response.blob();
+		const reader = new FileReader();
+		const base64Promise = new Promise((resolve, reject) => {
+			reader.onloadend = () => {
+				resolve(reader.result);
+			};
+			reader.onerror = reject;
+		});
+		reader.readAsDataURL(blob);
+		return base64Promise;
+	};
+
+	// Convert the image url to a base64 string for rendering
+	$: {
+		if (tile.image) {
+			urlToBase64String(tile.image).then((base64) => {
+				imageBase64 = base64 as string;
+			});
+		}
+	}
 
 	$: {
 		// This triggers when the user is updating the navigation of a tile
@@ -108,16 +160,21 @@
 	on:click={handleInteraction}
 	in:scale={{ duration: 300, delay: Math.random() * 200 }}
 	class={`border relative p-2 rounded-sm ${
-		draggingFileOver
-			? 'bg-emerald-600 border-emerald-400 text-emerald-100'
-			: 'bg-zinc-100 border-zinc-400'
-	} ${
-		$EditModeNavigation.tileid === tile.id &&
+		!draggingFileOver &&
+		!(
+			$EditModeNavigation.tileid === tile._id &&
+			$AppMode === 'edit' &&
+			$SelectedEditModeTool === 'navigation'
+		)
+			? 'bg-zinc-100 border-zinc-400'
+			: ''
+	} ${draggingFileOver ? 'bg-emerald-600 border-emerald-400 text-emerald-100' : ''} ${
+		$EditModeNavigation.tileid === tile._id &&
 		$AppMode === 'edit' &&
 		$SelectedEditModeTool === 'navigation'
 			? 'bg-blue-500 border-blue-700 text-blue-50 border-dashed'
 			: ''
-	} `}
+	}`}
 >
 	{#if !draggingFileOver}
 		<div
@@ -131,7 +188,7 @@
 
 			{#if tile.image}
 				<div class="relative flex-1 w-full">
-					<img class="absolute h-full left-1/2 -translate-x-1/2" src={tile.image || ''} alt="" />
+					<img class="absolute h-full left-1/2 -translate-x-1/2" src={imageBase64 || ''} alt="" />
 				</div>
 			{/if}
 		</div>

@@ -59,8 +59,6 @@ export const createUser = async ({
 	// remove the hashed password from the user object
 	delete (user as any).hashedPassword;
 
-	//  console.log(user);
-
 	// create the jwt
 	const token = jwt.sign(user as any, process.env.SECRET + '', {
 		expiresIn: '7d'

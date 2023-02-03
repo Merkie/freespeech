@@ -21,7 +21,7 @@
 				pages: ($CurrentProject as ProjectExpanded).pages.map((p) => {
 					if (p.name === $CurrentPage) {
 						p.tiles = p.tiles.map((tile) => {
-							if (tile.id === $EditModeNavigation.tileid) {
+							if (tile._id === $EditModeNavigation.tileid) {
 								tile.navigateTo = page.name.toLowerCase();
 							}
 							return tile;

@@ -49,7 +49,6 @@
 		} as UserExpanded;
 
 		$CurrentProject = response.project;
-		//  console.log($CurrentProject);
 	};
 </script>
 

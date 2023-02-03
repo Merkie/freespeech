@@ -25,7 +25,7 @@ export function updateTile({
 			return {
 				...page,
 				tiles: page.tiles.map((tile) => {
-					if (tile.id !== tileId) return tile;
+					if (tile._id !== tileId) return tile;
 					return newTile;
 				})
 			};

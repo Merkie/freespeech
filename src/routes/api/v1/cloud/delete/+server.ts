@@ -1,15 +1,15 @@
 import validateRequest from '$lib/helpers/validateRequest';
-import mongo from '$lib/resources/mongo';
 import type { RequestHandler } from '@sveltejs/kit';
 import { z } from 'zod';
+import s3 from '$lib/resources/aws-s3';
 
-const getProject = async ({ id, userid }: { id: string; userid: string }) => {
+const deleteFromS3 = async ({ location, userid }: { location: string; userid: string }) => {
 	const schema = z.object({
-		id: z.string(),
+		location: z.string(),
 		userid: z.string()
 	});
 
-	if (!schema.safeParse({ id, userid }).success) {
+	if (!schema.safeParse({ location, userid }).success) {
 		return {
 			status: 400,
 			body: {
@@ -19,36 +19,21 @@ const getProject = async ({ id, userid }: { id: string; userid: string }) => {
 		};
 	}
 
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	const project = await mongo.collection('projects').findOne({ _id: id });
+	const key = location.split('amazonaws.com/')[1];
 
-	if (!project) {
-		return {
-			status: 404,
-			body: {
-				success: false,
-				message: 'Project not found.'
-			}
-		};
-	}
+	const params = {
+		Bucket: 'archer-freespeech',
+		Key: key
+	};
 
-	if (project.userid !== userid && project.private === true) {
-		return {
-			status: 403,
-			body: {
-				success: false,
-				message: 'You do not have permission to view this project.'
-			}
-		};
-	}
+	const result = await s3.deleteObject(params).promise();
 
 	return {
+		status: 200,
 		body: {
-			project,
+			location: result,
 			success: true
-		},
-		status: 200
+		}
 	};
 };
 
@@ -60,7 +45,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 	}
 	const json = await request.json();
-	const result = await getProject({
+	const result = await deleteFromS3({
 		...json,
 		userid: (user as unknown as { _id: string })._id
 	});

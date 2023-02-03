@@ -1,6 +1,8 @@
 export type Tile = {
 	_id: string;
 	text: string;
+	image: string;
+	navigateTo: string;
 	x: number;
 	y: number;
 };

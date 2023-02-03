@@ -49,10 +49,6 @@ export default async (request: Request): Promise<UserExpanded | null> => {
 	delete (user as any).password;
 
 	// Return the user
-	console.log({
-		...user,
-		projects
-	});
 	return {
 		...user,
 		projects

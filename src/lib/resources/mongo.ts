@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
-const client = new MongoClient(
-	'mongodb+srv://archer:A6arlzJDBbsYtZuW@freespeech.90yuq.mongodb.net/?retryWrites=true&w=majority'
-);
+import dotenv from 'dotenv';
+dotenv.config();
+
+const client = new MongoClient(process.env.MONGO_URI || 'mongodb://localhost:27017');
 await client.connect();
 export default client.db('freespeech'); // select database
