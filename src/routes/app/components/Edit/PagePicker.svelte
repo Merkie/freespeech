@@ -1,6 +1,11 @@
 <script lang="ts">
-	import { CurrentProject, CurrentPage, EditModeNavigation } from '$lib/stores';
-	import type { Page } from '@prisma/client';
+	import {
+		CurrentProject,
+		CurrentPage,
+		EditModeNavigation,
+		type ProjectExpanded
+	} from '$lib/stores';
+	import type { Page } from '$lib/types';
 	import Modal from '../Modal.svelte';
 	import CreateNewPageModal from './CreateNewPageModal.svelte';
 	let createNewPageModalShowing = false;
@@ -11,7 +16,21 @@
 				alert('A tile cannot navigate to its parent page.');
 				return;
 			}
-			$EditModeNavigation.pagename = page.name.toLowerCase();
+			$CurrentProject = {
+				...$CurrentProject,
+				pages: ($CurrentProject as ProjectExpanded).pages.map((p) => {
+					if (p.name === $CurrentPage) {
+						p.tiles = p.tiles.map((tile) => {
+							if (tile.id === $EditModeNavigation.tileid) {
+								tile.navigateTo = page.name.toLowerCase();
+							}
+							return tile;
+						});
+					}
+					return p;
+				})
+			} as unknown as ProjectExpanded;
+			$EditModeNavigation = { tileid: undefined, pagename: undefined };
 			return;
 		}
 		$CurrentPage = page.name.toLowerCase();

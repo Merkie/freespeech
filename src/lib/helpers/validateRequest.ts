@@ -1,6 +1,7 @@
-import type { User } from '@prisma/client';
+import type { Project, User } from '$lib/types';
 import jwt from 'jsonwebtoken';
-import prisma from '../resources/prisma';
+import mongo from '$lib/resources/mongo';
+import type { UserExpanded } from '$lib/stores';
 
 const cookieStringToObject = (cookieString: string) => {
 	// Split the cookie string into an array of cookies
@@ -17,7 +18,7 @@ const cookieStringToObject = (cookieString: string) => {
 };
 
 // return the user if the request is valid, otherwise return null
-export default async (request: Request): Promise<User | null> => {
+export default async (request: Request): Promise<UserExpanded | null> => {
 	// Get the cookies from the request
 	const cookies = cookieStringToObject(request.headers.get('Cookie') + '');
 	// If there is no token, return null
@@ -30,21 +31,30 @@ export default async (request: Request): Promise<User | null> => {
 	if (!decoded) {
 		return null;
 	}
-	// Find the user in the database
-	const user = await prisma.user.findFirst({
-		where: {
-			id: (decoded as { id: string }).id
-		},
-		include: {
-			projects: true
-		}
-	});
+
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	//@ts-ignore
+	const user = await mongo.collection('users').findOne({ _id: (decoded as User)._id });
+
+	const projects = await mongo
+		.collection('projects')
+		.find({ userid: (decoded as { _id: string })._id.toString() })
+		.toArray();
+
 	// If there is no user, return null
 	if (!user) {
 		return null;
 	}
 	// Delete the password from the user
 	delete (user as any).password;
+
 	// Return the user
-	return user;
+	console.log({
+		...user,
+		projects
+	});
+	return {
+		...user,
+		projects
+	} as unknown as UserExpanded;
 };

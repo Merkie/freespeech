@@ -1,19 +1,28 @@
 <script lang="ts">
 	import { CurrentProject, AppMode, CurrentPage, type ProjectExpanded } from '$lib/stores';
-	import type { Tile } from '@prisma/client';
-	import { fade, scale } from 'svelte/transition';
-	import { onMount } from 'svelte';
-	import { elasticOut } from 'svelte/easing';
+	import type { Tile } from '$lib/types';
 	import TileElement from './Tile.svelte';
 	import AddTileGhostButton from './AddTileGhostButton.svelte';
+	import { onMount } from 'svelte';
+	import html2canvas from 'html2canvas';
 
-	let tileArray: { tile: Tile | undefined; x: number; y: number }[] = [];
+	let tilePageElement: HTMLElement;
 
 	onMount(async () => {
 		await new Promise((resolve) => setTimeout(resolve, 2000));
-		// animationWindow = false;
+		html2canvas(tilePageElement, {
+			allowTaint: true
+		}).then(function (canvas) {
+			const img = canvas.toDataURL('image/png');
+			if (!$CurrentProject) return;
+			$CurrentProject = {
+				...$CurrentProject,
+				image: img
+			};
+		});
 	});
 
+	let tileArray: { tile: Tile | undefined; x: number; y: number }[] = [];
 	$: {
 		tileArray = [];
 		if ($CurrentProject && $CurrentProject.pages) {
@@ -37,6 +46,7 @@
 </script>
 
 <section
+	bind:this={tilePageElement}
 	style={`grid-template-columns: repeat(${$CurrentProject?.columns}, 1fr); grid-template-rows: repeat(${$CurrentProject?.rows}, 1fr);`}
 	class={`flex-1 p-2 gap-2 grid`}
 >

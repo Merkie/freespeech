@@ -5,11 +5,6 @@
 	let createProjectModalOpen = false;
 
 	const switchProject = async (id: string) => {
-		console.log(
-			JSON.stringify({
-				id
-			})
-		);
 		const response = await fetch('/api/v1/project/read', {
 			method: 'POST',
 			headers: {
@@ -54,14 +49,14 @@
 						<img
 							class="h-[150px] rounded-md w-full object-cover"
 							alt="Mini preview of the project"
-							src="https://picsum.photos/300/300"
+							src={item.image}
 						/>
 					</div>
 					<p
-						on:click={async () => await switchProject(item.id)}
+						on:click={async () => await switchProject(item._id.toString())}
 						on:keypress={async (e) => {
 							if (e.key === 'Enter') {
-								await switchProject(item.id);
+								await switchProject(item._id.toString());
 							}
 						}}
 						class="hover:underline cursor-pointer"

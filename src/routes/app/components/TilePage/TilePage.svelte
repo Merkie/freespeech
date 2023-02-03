@@ -12,8 +12,8 @@
 
 	let welcomeModalClosed = false;
 
-	onMount(() => {
-		if (!$CurrentProject?.isPublic && $CurrentProject?.userId !== $CurrentUser?.id) {
+	onMount(async () => {
+		if ($CurrentProject?.private && $CurrentProject?.userid !== $CurrentUser?._id) {
 			$CurrentProject = null;
 		}
 	});

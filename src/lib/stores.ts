@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { User, Project, Page, Tile } from '@prisma/client';
+import type { User, Project, Page, Tile } from '$lib/types';
 import { browser } from '$app/environment';
 
 export type AppModes = 'home' | 'edit' | 'dashboard';
@@ -12,6 +12,7 @@ export type UserExpanded = User & {
 		})[];
 	})[];
 };
+
 export const CurrentUser = writable<UserExpanded | null>(null);
 if (browser) {
 	const storedCurrentUser = localStorage.getItem('freespeech-current-user');
@@ -41,6 +42,12 @@ export const EditModeNavigation = writable<{
 	tileid: string | undefined;
 	pagename: string | undefined;
 }>({ tileid: undefined, pagename: undefined });
+export const EditModeColor = writable<{ mode: 'background' | 'border' | 'text'; color: string }>({
+	mode: 'border',
+	color: 'zinc-400'
+});
+
+// Depricated
 export const ActiveDraggingTile = writable<Tile | undefined>(undefined);
 export const ActiveDraggingTilePlace = writable<{ x: number | undefined; y: number | undefined }>({
 	x: undefined,

@@ -34,12 +34,13 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^4.8.0",
+		"@paralleldrive/cuid2": "^2.0.1",
 		"@types/bcryptjs": "^2.4.2",
 		"@types/jsonwebtoken": "^9.0.0",
 		"bcryptjs": "^2.4.3",
+		"html2canvas": "^1.4.1",
 		"jsonwebtoken": "^9.0.0",
-		"prisma": "^4.8.0",
+		"mongodb": "^5.0.0",
 		"svelte-use-click-outside": "^1.0.0",
 		"trek-captcha": "^0.4.0",
 		"zod": "^3.20.2"

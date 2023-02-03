@@ -1,16 +1,15 @@
 import validateRequest from '$lib/helpers/validateRequest';
 import mongo from '$lib/resources/mongo';
 import type { RequestHandler } from '@sveltejs/kit';
-import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
-const getProject = async ({ id, userid }: { id: string; userid: string }) => {
+const updateProject = async ({ project, userid }: { project: any; userid: string }) => {
 	const schema = z.object({
-		id: z.string(),
-		userid: z.string()
+		userid: z.string(),
+		project: z.any()
 	});
 
-	if (!schema.safeParse({ id, userid }).success) {
+	if (!schema.safeParse({ project, userid }).success) {
 		return {
 			status: 400,
 			body: {
@@ -20,11 +19,9 @@ const getProject = async ({ id, userid }: { id: string; userid: string }) => {
 		};
 	}
 
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	const project = await mongo.collection('projects').findOne({ _id: id });
+	const oldProject = await mongo.collection('projects').findOne({ _id: project._id });
 
-	if (!project) {
+	if (!oldProject) {
 		return {
 			status: 404,
 			body: {
@@ -44,6 +41,11 @@ const getProject = async ({ id, userid }: { id: string; userid: string }) => {
 		};
 	}
 
+	// replace the project with the new one
+	await mongo
+		.collection('projects')
+		.replaceOne({ _id: oldProject._id }, { ...oldProject, ...project });
+
 	return {
 		body: {
 			project,
@@ -61,7 +63,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 	}
 	const json = await request.json();
-	const result = await getProject({
+	const result = await updateProject({
 		...json,
 		userid: (user as unknown as { _id: string })._id
 	});

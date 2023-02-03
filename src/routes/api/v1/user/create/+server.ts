@@ -1,8 +1,10 @@
 import type { RequestHandler } from './$types';
 import { z } from 'zod';
-import prisma from '$lib/resources/prisma';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import mongo from '$lib/resources/mongo';
+import type { ObjectId } from 'mongodb';
+import { createId } from '@paralleldrive/cuid2';
 
 export const createUser = async ({
 	email,
@@ -31,9 +33,7 @@ export const createUser = async ({
 	}
 
 	// Check if the user already exists
-	const userExists = await prisma.user.findUnique({
-		where: { email }
-	});
+	const userExists = await mongo.collection('users').findOne({ email });
 
 	// If the user exists, return an error
 	if (userExists) {
@@ -47,19 +47,22 @@ export const createUser = async ({
 	const hashedPassword = await bcrypt.hash(password, 10);
 
 	// Create the user
-	const user = await prisma.user.create({
-		data: {
-			email,
-			hashedPassword,
-			name
-		}
+	await mongo.collection('users').insertOne({
+		_id: createId() as unknown as ObjectId,
+		email,
+		hashedPassword,
+		name
 	});
+
+	const user = await mongo.collection('users').findOne({ email });
 
 	// remove the hashed password from the user object
 	delete (user as any).hashedPassword;
 
+	//  console.log(user);
+
 	// create the jwt
-	const token = jwt.sign(user, process.env.SECRET + '', {
+	const token = jwt.sign(user as any, process.env.SECRET + '', {
 		expiresIn: '7d'
 	});
 

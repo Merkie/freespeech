@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { clickOutside } from 'svelte-use-click-outside';
 	import {
-		ActiveDraggingTile,
 		AppMode,
 		CurrentPage,
 		CurrentProject,
@@ -9,9 +8,9 @@
 		SelectedEditModeTool,
 		type ProjectExpanded
 	} from '$lib/stores';
-	import type { Page, Tile } from '@prisma/client';
+	import type { Page, Tile } from '$lib/types';
 	import { scale } from 'svelte/transition';
-	import { insert } from 'svelte/internal';
+
 	export let tile: Tile;
 
 	let editingTileText = false;
@@ -27,7 +26,7 @@
 				return {
 					...page,
 					tiles: page.tiles.map((_tile: Tile) => {
-						if (tile.id !== _tile.id) return _tile;
+						if (tile._id !== _tile._id) return _tile;
 						return newTile;
 					})
 				};
@@ -87,6 +86,7 @@
 	};
 
 	$: {
+		// This triggers when the user is updating the navigation of a tile
 		if ($EditModeNavigation.tileid && $EditModeNavigation.pagename) {
 			updateTileStore({
 				...tile,
@@ -104,13 +104,9 @@
 		}
 	}}
 	on:dragleave={() => (draggingFileOver = false)}
-	draggable={true}
-	on:drag={() => ($ActiveDraggingTile = tile)}
-	on:dragend={() => ($ActiveDraggingTile = undefined)}
 	use:clickOutside={handleOutsideClick}
 	on:click={handleInteraction}
 	in:scale={{ duration: 300, delay: Math.random() * 200 }}
-	out:scale|local={{ duration: 0 }}
 	class={`border relative p-2 rounded-sm ${
 		draggingFileOver
 			? 'bg-emerald-600 border-emerald-400 text-emerald-100'
@@ -125,17 +121,18 @@
 >
 	{#if !draggingFileOver}
 		<div
-			class={`relative w-full h-full overflow-hidden ${
-				tile.image ? '' : 'grid place-items-center'
-			}`}
+			class={`absolute left-0 p-2 top-0 w-full h-full flex gap-2 flex-col items-center justify-center`}
 		>
 			{#if editingTileText}
 				<input size={10} class="text-center w-fit" bind:this={tileTextInput} value={tile.text} />
 			{:else}
 				<p>{tile.text}</p>
 			{/if}
+
 			{#if tile.image}
-				<img draggable={false} class="absolute object-contain" src={tile.image || ''} alt="" />
+				<div class="relative flex-1 w-full">
+					<img class="absolute h-full left-1/2 -translate-x-1/2" src={tile.image || ''} alt="" />
+				</div>
 			{/if}
 		</div>
 	{:else}
@@ -143,7 +140,7 @@
 			bind:this={fileInput}
 			on:input={handleUpload}
 			type="file"
-			class="absolute top-0 left-0 w-full pointer-events-auto h-full"
+			class="absolute top-0 left-0 w-full pointer-events-auto h-full opacity-0 http://127.0.0.1:5173/"
 		/>
 		<i class="bi bi-plus-lg text-xl" />
 	{/if}

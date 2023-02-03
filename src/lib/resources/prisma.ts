@@ -1,2 +1,2 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '$lib/types';
 export default new PrismaClient();

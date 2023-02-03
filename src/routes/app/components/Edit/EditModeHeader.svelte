@@ -1,18 +1,24 @@
 <script lang="ts">
+	import { addTile } from '$lib/helpers/tileActions';
 	import { SelectedEditModeTool, CurrentPage, CurrentProject } from '$lib/stores';
-	import type { Tile } from '@prisma/client';
+	import type { Tile } from '$lib/types';
 	import { fly } from 'svelte/transition';
+	import ColorPicker from './ColorPicker.svelte';
 	import ListBox from './ListBox.svelte';
 
 	const fillAllBlankTiles = () => {
 		if (!$CurrentProject) return;
 		const totalTiles = $CurrentProject.columns * $CurrentProject.rows;
 		const listOfCords: { x: number; y: number }[] = [];
+
+		// Create a list of all the cords for the page
 		for (let i = 0; i < totalTiles; i++) {
 			const x = i % $CurrentProject.columns;
 			const y = Math.floor(i / $CurrentProject.columns);
 			listOfCords.push({ x, y });
 		}
+
+		// Remove all the cords that already have a tile
 		$CurrentProject.pages
 			.find((page) => page.name === $CurrentPage)
 			?.tiles.forEach((tile) => {
@@ -22,29 +28,30 @@
 				}
 			});
 
+		// Add a tile for each cord
 		listOfCords.forEach((cord) => {
-			$CurrentProject?.pages
-				.find((page) => page.name === $CurrentPage)
-				?.tiles.push({
-					x: cord.x,
-					y: cord.y,
-					text: 'New Tile',
-					id: Math.random().toString(36).substr(2, 25)
-				} as Tile);
+			addTile({ tilePage: $CurrentPage, x: cord.x, y: cord.y });
 		});
-
-		$CurrentProject = $CurrentProject;
 	};
 
 	const deleteAllBlankTiles = () => {
 		if (!$CurrentProject) return;
 
-		//@ts-ignore
-		$CurrentProject.pages.find((page) => page.name === $CurrentPage).tiles = $CurrentProject.pages
-			.find((page) => page.name === $CurrentPage)
-			?.tiles.filter((tile) => tile.text !== 'New Tile');
-
-		$CurrentProject = $CurrentProject;
+		// Remove all the tiles that are blank
+		$CurrentProject = {
+			...$CurrentProject,
+			pages: $CurrentProject.pages.map((page) => {
+				if (page.name === $CurrentPage) {
+					return {
+						...page,
+						tiles: page.tiles.filter(
+							(tile) => tile.text !== 'New Tile' && tile.image !== null && tile.navigateTo !== null
+						)
+					};
+				}
+				return page;
+			})
+		};
 	};
 </script>
 
@@ -84,5 +91,13 @@
 			selected={'s3 bucket'}
 			options={[{ label: 'base64' }, { label: 's3 bucket' }]}
 		/>
+	{/if}
+	{#if $SelectedEditModeTool === 'color'}
+		<ListBox
+			title={'color mode'}
+			selected={'border'}
+			options={[{ label: 'border' }, { label: 'background' }, { label: 'text' }]}
+		/>
+		<ColorPicker />
 	{/if}
 </div>

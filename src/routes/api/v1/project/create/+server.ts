@@ -1,6 +1,8 @@
 import validateRequest from '$lib/helpers/validateRequest';
-import prisma from '$lib/resources/prisma';
+import mongo from '$lib/resources/mongo';
+import { createId } from '@paralleldrive/cuid2';
 import type { RequestHandler } from '@sveltejs/kit';
+import type { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
 const createProject = async ({
@@ -31,60 +33,32 @@ const createProject = async ({
 		};
 	}
 
-	const tile = await prisma.tile.create({
-		data: {
-			x: 0,
-			y: 0,
-			text: 'New Tile',
-			user: {
-				connect: {
-					id: userid
-				}
-			}
-		}
-	});
-
-	const page = await prisma.page.create({
-		data: {
-			name: 'home',
-			user: {
-				connect: {
-					id: userid
-				}
-			},
-			tiles: {
-				connect: {
-					id: tile.id
-				}
-			}
-		}
-	});
-
-	const project = await prisma.project.create({
-		data: {
+	const projectid = (
+		await mongo.collection('projects').insertOne({
+			_id: createId() as unknown as ObjectId,
 			name,
 			columns,
 			rows,
 			slug: name.toLowerCase().replace(/ /g, '-'),
-			user: {
-				connect: {
-					id: userid
+			userid,
+			pages: [
+				{
+					_id: createId() as unknown as ObjectId,
+					name: 'home',
+					tiles: [
+						{
+							_id: createId() as unknown as ObjectId,
+							x: 0,
+							y: 0,
+							text: 'New Tile'
+						}
+					]
 				}
-			},
-			pages: {
-				connect: {
-					id: page.id
-				}
-			}
-		},
-		include: {
-			pages: {
-				include: {
-					tiles: true
-				}
-			}
-		}
-	});
+			]
+		})
+	).insertedId;
+
+	const project = await mongo.collection('projects').findOne({ _id: projectid });
 
 	return {
 		body: {
@@ -103,7 +77,10 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 	}
 	const json = await request.json();
-	const result = await createProject({ ...json, userid: user.id });
+	const result = await createProject({
+		...json,
+		userid: user._id
+	});
 	return new Response(JSON.stringify(result.body), {
 		status: result.status,
 		headers: {

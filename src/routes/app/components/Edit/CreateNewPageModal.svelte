@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { CurrentProject, CurrentPage } from '$lib/stores';
-	import type { Page, Tile } from '@prisma/client';
+	import type { Page, Tile } from '$lib/types';
 	import Modal from '../Modal.svelte';
 	export let callback: () => void;
 

@@ -1,11 +1,29 @@
 <script lang="ts">
-	import { type AppModes, AppMode } from '$lib/stores';
+	import { type AppModes, AppMode, CurrentPage, CurrentProject } from '$lib/stores';
 
-	let buttons: { label: AppModes; icon: string; disabled?: boolean }[] = [];
+	let buttons: { label: AppModes; icon: string; disabled?: boolean; onClick?: () => void }[] = [];
+
+	const updateProject = async () => {
+		const response = await fetch('/api/v1/project/update', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				project: $CurrentProject
+			})
+		});
+	};
 
 	$: {
 		buttons = [
-			{ label: 'home', icon: 'house' },
+			{
+				label: 'home',
+				icon: 'house',
+				onClick: () => {
+					$CurrentPage = 'home';
+				}
+			},
 			{ label: 'edit', icon: 'pencil', disabled: $AppMode === 'dashboard' },
 			{ label: 'dashboard', icon: 'gear' }
 		];
@@ -16,7 +34,12 @@
 	{#if $AppMode !== 'edit'}
 		{#each buttons as button}
 			<button
-				on:click={() => ($AppMode = button.label)}
+				on:click={() => {
+					$AppMode = button.label;
+					if (button.onClick) {
+						button.onClick();
+					}
+				}}
 				disabled={button.disabled || false}
 				class="capitalize p-2 bg-zinc-800 border border-zinc-700 rounded-md flex justify-center items-center gap-2 flex-1"
 			>
@@ -33,7 +56,10 @@
 			Cancel
 		</button>
 		<button
-			on:click={() => ($AppMode = 'home')}
+			on:click={async () => {
+				$AppMode = 'home';
+				await updateProject();
+			}}
 			class="capitalize p-2 bg-blue-700 border border-blue-500 rounded-md flex justify-center items-center gap-2 flex-1"
 		>
 			<i class="bi bi-check-lg" />

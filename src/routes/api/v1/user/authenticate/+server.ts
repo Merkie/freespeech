@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 import { z } from 'zod';
-import prisma from '$lib/resources/prisma';
+import mongo from '$lib/resources/mongo';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import verifyCaptcha from '$lib/helpers/verifyCaptcha';
@@ -32,11 +32,7 @@ export const authenticateUser = async ({
 	}
 
 	// find the user
-	const user = await prisma.user.findUnique({
-		where: {
-			email
-		}
-	});
+	const user = await mongo.collection('users').findOne({ email });
 
 	// If there is no user with the given email, return an error
 	if (!user) {
