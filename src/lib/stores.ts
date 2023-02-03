@@ -47,9 +47,4 @@ export const EditModeColor = writable<{ mode: 'background' | 'border' | 'text'; 
 	color: 'zinc-400'
 });
 
-// Depricated
-export const ActiveDraggingTile = writable<Tile | undefined>(undefined);
-export const ActiveDraggingTilePlace = writable<{ x: number | undefined; y: number | undefined }>({
-	x: undefined,
-	y: undefined
-});
+export const Sentence = writable<Tile[]>([]);

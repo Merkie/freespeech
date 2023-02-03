@@ -6,6 +6,7 @@
 		CurrentProject,
 		EditModeNavigation,
 		SelectedEditModeTool,
+		Sentence,
 		type ProjectExpanded
 	} from '$lib/stores';
 	import type { Page, Tile } from '$lib/types';
@@ -54,6 +55,8 @@
 			if (tile.navigateTo) {
 				$CurrentPage = tile.navigateTo;
 				return;
+			} else {
+				$Sentence = [...$Sentence, tile];
 			}
 		}
 	};

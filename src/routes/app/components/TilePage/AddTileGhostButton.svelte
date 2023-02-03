@@ -1,14 +1,6 @@
 <script lang="ts">
-	import {
-		ActiveDraggingTile,
-		CurrentPage,
-		CurrentProject,
-		ActiveDraggingTilePlace,
-		type ProjectExpanded
-	} from '$lib/stores';
-	import type { Tile } from '$lib/types';
+	import { CurrentPage } from '$lib/stores';
 	import { scale } from 'svelte/transition';
-	import TileElement from './Tile.svelte';
 	export let x: number;
 	export let y: number;
 
