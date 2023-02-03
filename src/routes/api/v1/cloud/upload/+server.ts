@@ -1,5 +1,5 @@
 import validateRequest from '$lib/helpers/validateRequest';
-import mongo from '$lib/resources/mongo';
+import { AWS_S3_BUCKET } from '$env/static/private';
 import type { RequestHandler } from '@sveltejs/kit';
 import { z } from 'zod';
 import s3 from '$lib/resources/aws-s3';
@@ -25,7 +25,7 @@ const uploadToS3 = async ({ data, userid }: { data: string; userid: string }) =>
 	const filetype = data.match(/data:image\/(.*);base64/)?.[1];
 
 	const params = {
-		Bucket: 'archer-freespeech',
+		Bucket: AWS_S3_BUCKET,
 		Key: `${userid}/${Date.now()}.${filetype}`,
 		Body: Buffer.from(data.split(',')[1], 'base64')
 	};

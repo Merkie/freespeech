@@ -1,8 +1,13 @@
 <script lang="ts">
 	import { CurrentUser, CurrentProject } from '$lib/stores';
+	import { scale } from 'svelte/transition';
 	import CreateProjectModal from './CreateProjectModal.svelte';
+	import DeleteProjectModal from './DeleteProjectModal.svelte';
 
 	let createProjectModalOpen = false;
+	let managingProjects = false;
+	let deleteProjectModalOpen = false;
+	let deleteProjectId = '';
 
 	const switchProject = async (id: string) => {
 		const response = await fetch('/api/v1/project/read', {
@@ -19,10 +24,19 @@
 			$CurrentProject = response.project;
 		}
 	};
+
+	const deleteProject = (id: string) => {};
 </script>
 
 {#if createProjectModalOpen}
 	<CreateProjectModal callback={() => (createProjectModalOpen = false)} />
+{/if}
+
+{#if deleteProjectModalOpen}
+	<DeleteProjectModal
+		projectid={deleteProjectId}
+		callback={() => (deleteProjectModalOpen = false)}
+	/>
 {/if}
 
 <main class="p-8 py-4 text-zinc-200">
@@ -34,7 +48,9 @@
 			class="bg-green-700 px-2 p-1 border border-green-600 rounded-md"
 			><i class="bi bi-plus-lg" />{' '}Create New Project</button
 		>
-		<button class="bg-zinc-700 px-2 p-1 border border-zinc-600 rounded-md"
+		<button
+			on:click={() => (managingProjects = !managingProjects)}
+			class="bg-zinc-700 px-2 p-1 border border-zinc-600 rounded-md"
 			><i class="bi bi-gear" />{' '}Manage Projects</button
 		>
 	</div>
@@ -43,8 +59,21 @@
 		{#if $CurrentUser?.projects}
 			{#each $CurrentUser.projects as item}
 				<div
-					class="bg-zinc-700 flex flex-col gap-2 p-2 border rounded-md border-zinc-600 text-zinc-100"
+					class="bg-zinc-700 relative flex flex-col gap-2 p-2 border rounded-md border-zinc-600 text-zinc-100"
 				>
+					{#if managingProjects}
+						<button
+							transition:scale
+							on:click={() => {
+								deleteProjectModalOpen = true;
+								deleteProjectId = item._id;
+							}}
+							class="bg-red-500 cursor-pointer grid place-items-center border border-red-600 w-[30px] h-[30px] absolute right-0 top-0 rounded-full translate-x-2 -translate-y-2"
+						>
+							<i class="bg bi-trash pointer-events-none" />
+						</button>
+					{/if}
+
 					<div class="w-full">
 						<img
 							class="h-[150px] rounded-md w-full object-cover"

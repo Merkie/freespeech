@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 button {
-  transition: all 0.1s ease-in-out;
+	transition: all 0.1s ease-in-out;
 }
 
 button:hover {
-  filter: brightness(1.1);
+	filter: brightness(1.1);
 }
 
 button:active {
-  filter: brightness(0.9) !important;
+	filter: brightness(0.9) !important;
 }
 
 button:disabled {
-  opacity: 0.5;
+	opacity: 0.5;
 }

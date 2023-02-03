@@ -2,6 +2,7 @@ import validateRequest from '$lib/helpers/validateRequest';
 import type { RequestHandler } from '@sveltejs/kit';
 import { z } from 'zod';
 import s3 from '$lib/resources/aws-s3';
+import { AWS_S3_BUCKET } from '$env/static/private';
 
 const deleteFromS3 = async ({ location, userid }: { location: string; userid: string }) => {
 	const schema = z.object({
@@ -22,7 +23,7 @@ const deleteFromS3 = async ({ location, userid }: { location: string; userid: st
 	const key = location.split('amazonaws.com/')[1];
 
 	const params = {
-		Bucket: 'archer-freespeech',
+		Bucket: AWS_S3_BUCKET,
 		Key: key
 	};
 
