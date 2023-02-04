@@ -1,8 +1,8 @@
 import validateRequest from '$lib/helpers/validateRequest';
 import type { RequestHandler } from '@sveltejs/kit';
 import { z } from 'zod';
-import s3 from '$lib/resources/aws-s3';
-import { AWS_S3_BUCKET } from '$env/static/private';
+import { R2_BUCKET } from '$env/static/private';
+import r2 from '$lib/resources/cf-r2';
 
 const deleteFromS3 = async ({ location, userid }: { location: string; userid: string }) => {
 	const schema = z.object({
@@ -20,19 +20,28 @@ const deleteFromS3 = async ({ location, userid }: { location: string; userid: st
 		};
 	}
 
-	const key = location.split('amazonaws.com/')[1];
-
 	const params = {
-		Bucket: AWS_S3_BUCKET,
-		Key: key
+		bucket: R2_BUCKET,
+		key: location.split('.dev/')[1]
 	};
 
-	const result = await s3.deleteObject(params).promise();
+	// Delete the file from R2
+	const result = await r2.deleteObject(params);
+
+	// If the deletion was not successful
+	if (result.status !== 204) {
+		return {
+			status: 500,
+			body: {
+				success: false,
+				message: 'There was an issue deleting the file.'
+			}
+		};
+	}
 
 	return {
 		status: 200,
 		body: {
-			location: result,
 			success: true
 		}
 	};

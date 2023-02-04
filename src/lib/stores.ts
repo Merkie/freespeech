@@ -1,17 +1,9 @@
 import { writable } from 'svelte/store';
 import type { User, Project, Page, Tile } from '$lib/types';
 import { browser } from '$app/environment';
+import type { AppModes, UserExpanded, ProjectExpanded } from '$lib/types';
 
-export type AppModes = 'home' | 'edit' | 'dashboard';
 export const AppMode = writable<AppModes>('home');
-
-export type UserExpanded = User & {
-	projects: (Project & {
-		pages: (Page & {
-			tiles: Tile[];
-		})[];
-	})[];
-};
 
 export const CurrentUser = writable<UserExpanded | null>(null);
 if (browser) {
@@ -22,11 +14,6 @@ if (browser) {
 	});
 }
 
-export type ProjectExpanded = Project & {
-	pages: (Page & {
-		tiles: Tile[];
-	})[];
-};
 export const CurrentProject = writable<ProjectExpanded | null>(null);
 if (browser) {
 	const storedCurrentProject = localStorage.getItem('freespeech-current-project');
@@ -48,3 +35,4 @@ export const EditModeColor = writable<{ mode: 'background' | 'border' | 'text'; 
 });
 
 export const Sentence = writable<Tile[]>([]);
+export const DashboardPage = writable<string>('library');

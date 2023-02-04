@@ -27,7 +27,7 @@
 <main class="w-screen min-h-screen h-full bg-zinc-200 flex flex-col justify-end">
 	{#if authenticated}
 		<slot />
-		<DebugBar />
+		<!-- <DebugBar /> -->
 		<AppModeSwitcher />
 	{/if}
 </main>

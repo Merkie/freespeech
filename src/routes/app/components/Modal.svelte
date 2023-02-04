@@ -17,9 +17,9 @@
 		class="fixed flex rounded-md border border-zinc-700 flex-col text-zinc-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900"
 		style={`width: ${width}px; height: ${height}px;`}
 	>
-		<div class="relative">
-			<button on:click={callback} class="p-4 pb-0 w-min"><i class="bi bi-x-lg " /></button>
-			<p class="absolute top-4 left-1/2 -translate-x-1/2">{title}</p>
+		<div class="relative flex items-center p-2">
+			<button on:click={callback} class="w-min"><i class="bi bi-x-lg " /></button>
+			<p class="flex-1 text-center">{title}</p>
 		</div>
 		<div class="flex-1 rounded-md bg-zinc-900 p-4 flex flex-col gap-2">
 			<slot />

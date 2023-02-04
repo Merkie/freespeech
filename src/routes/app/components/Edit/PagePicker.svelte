@@ -1,12 +1,6 @@
 <script lang="ts">
-	import {
-		CurrentProject,
-		CurrentPage,
-		EditModeNavigation,
-		type ProjectExpanded
-	} from '$lib/stores';
-	import type { Page } from '$lib/types';
-	import Modal from '../Modal.svelte';
+	import { CurrentProject, CurrentPage, EditModeNavigation } from '$lib/stores';
+	import type { Page, ProjectExpanded } from '$lib/types';
 	import CreateNewPageModal from './CreateNewPageModal.svelte';
 	let createNewPageModalShowing = false;
 

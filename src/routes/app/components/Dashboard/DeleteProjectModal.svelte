@@ -23,9 +23,8 @@
 	};
 </script>
 
-<Modal {callback} title={''}>
-	<div class="min-w-[500px] flex gap-4 flex-col items-center">
-		<p class="text-lg">Are you sure you want to delete this project?</p>
+<Modal {callback} title={'Are you sure you want to delete this project?'}>
+	<div class="w-[500px] flex flex-col gap-2">
 		<div class="flex gap-2 w-full">
 			<button
 				on:click={deleteProject}

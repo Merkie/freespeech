@@ -6,10 +6,9 @@
 		CurrentProject,
 		EditModeNavigation,
 		SelectedEditModeTool,
-		Sentence,
-		type ProjectExpanded
+		Sentence
 	} from '$lib/stores';
-	import type { Page, Tile } from '$lib/types';
+	import type { Page, Tile, ProjectExpanded } from '$lib/types';
 	import { scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
@@ -40,7 +39,7 @@
 	}
 
 	// Handles the events that occur when a user taps or clicks a tile
-	const handleInteraction = () => {
+	const handleInteraction = async () => {
 		if ($AppMode === 'edit') {
 			if ($SelectedEditModeTool === 'text') {
 				editingTileText = true;
@@ -50,6 +49,25 @@
 				}, 0);
 			} else if ($SelectedEditModeTool === 'navigation') {
 				$EditModeNavigation = { tileid: tile._id, pagename: undefined };
+			} else if ($SelectedEditModeTool === 'image') {
+				if (tile.image) {
+					// delete the image
+
+					await fetch('/api/v1/cloud/delete', {
+						method: 'POST',
+						body: JSON.stringify({
+							location: tile.image
+						})
+					});
+
+					// remove the image
+					updateTileStore({
+						...tile,
+						image: ''
+					});
+				} else {
+					fileInput.click();
+				}
 			}
 		} else {
 			if (tile.navigateTo) {
@@ -191,18 +209,24 @@
 
 			{#if tile.image}
 				<div class="relative flex-1 w-full">
-					<img class="absolute h-full left-1/2 -translate-x-1/2" src={imageBase64 || ''} alt="" />
+					<img
+						class="absolute mix-blend-multiply h-full left-1/2 -translate-x-1/2"
+						src={imageBase64 || ''}
+						alt=""
+					/>
 				</div>
 			{/if}
 		</div>
 	{:else}
+		<i class="bi bi-plus-lg text-xl" />
+	{/if}
+	{#if $AppMode === 'edit' && $SelectedEditModeTool === 'image' && !tile.image}
 		<input
 			bind:this={fileInput}
 			on:input={handleUpload}
 			type="file"
-			class="absolute top-0 left-0 w-full pointer-events-auto h-full opacity-0 http://127.0.0.1:5173/"
+			class="absolute top-0 left-0 w-full h-full opacity-0 http://127.0.0.1:5173/"
 		/>
-		<i class="bi bi-plus-lg text-xl" />
 	{/if}
 	{#if tile.navigateTo}
 		<i class="bi bi-folder bottom-1 right-2 absolute" />

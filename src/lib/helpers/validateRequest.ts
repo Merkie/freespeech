@@ -1,7 +1,7 @@
 import type { Project, User } from '$lib/types';
 import jwt from 'jsonwebtoken';
 import mongo from '$lib/resources/mongo';
-import type { UserExpanded } from '$lib/stores';
+import type { UserExpanded } from '$lib/types';
 
 const cookieStringToObject = (cookieString: string) => {
 	// Split the cookie string into an array of cookies

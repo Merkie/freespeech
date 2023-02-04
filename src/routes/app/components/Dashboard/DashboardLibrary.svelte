@@ -24,8 +24,6 @@
 			$CurrentProject = response.project;
 		}
 	};
-
-	const deleteProject = (id: string) => {};
 </script>
 
 {#if createProjectModalOpen}
@@ -50,8 +48,12 @@
 		>
 		<button
 			on:click={() => (managingProjects = !managingProjects)}
-			class="bg-zinc-700 px-2 p-1 border border-zinc-600 rounded-md"
-			><i class="bi bi-gear" />{' '}Manage Projects</button
+			class={managingProjects
+				? 'bg-red-600 px-2 p-1 border border-red-500 rounded-md'
+				: 'bg-zinc-700 px-2 p-1 border border-zinc-600 rounded-md'}
+			><i class="bi bi-gear" />{managingProjects
+				? ' Stop Managing Projects'
+				: ' Manage Projects'}</button
 		>
 	</div>
 
@@ -59,7 +61,11 @@
 		{#if $CurrentUser?.projects}
 			{#each $CurrentUser.projects as item}
 				<div
-					class="bg-zinc-700 relative flex flex-col gap-2 p-2 border rounded-md border-zinc-600 text-zinc-100"
+					class={`relative flex flex-col gap-2 p-2 border rounded-md  ${
+						$CurrentProject?._id === item._id
+							? 'bg-blue-500 border-blue-400 text-blue-100'
+							: 'bg-zinc-700 border-zinc-600 text-zinc-100'
+					}`}
 				>
 					{#if managingProjects}
 						<button
@@ -76,7 +82,7 @@
 
 					<div class="w-full">
 						<img
-							class="h-[150px] rounded-md w-full object-cover"
+							class="h-[150px] rounded-md w-full object-cover bg-zinc-100 text-zinc-100"
 							alt="Mini preview of the project"
 							src={item.image}
 						/>

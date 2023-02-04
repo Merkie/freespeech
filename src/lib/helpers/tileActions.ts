@@ -1,5 +1,5 @@
-import { CurrentProject, type ProjectExpanded } from '$lib/stores';
-import type { Tile } from '$lib/types';
+import { CurrentProject } from '$lib/stores';
+import type { Tile, ProjectExpanded } from '$lib/types';
 import { createId } from '@paralleldrive/cuid2';
 
 let currentProjectValue: ProjectExpanded | null = null;
@@ -61,7 +61,7 @@ export function addTile({ tilePage, x, y }: { tilePage: string; x: number; y: nu
 						isPublic: false,
 						userid: currentProjectValue?.userid,
 						pageId: page._id
-					} as Tile
+					} as unknown as Tile
 				]
 			};
 		})

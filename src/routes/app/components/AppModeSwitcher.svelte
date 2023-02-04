@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { type AppModes, AppMode, CurrentPage, CurrentProject } from '$lib/stores';
+	import { AppMode, CurrentPage, CurrentProject } from '$lib/stores';
+	import type { AppModes } from '$lib/types';
 
 	let buttons: { label: AppModes; icon: string; disabled?: boolean; onClick?: () => void }[] = [];
 

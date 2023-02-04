@@ -2,13 +2,9 @@
 	import { Sentence } from '$lib/stores';
 
 	const speak = () => {
-		console.log(10);
 		const utterance = new SpeechSynthesisUtterance();
 		utterance.text = $Sentence.map((tile) => tile.text).join(' ');
 		utterance.lang = 'en-US';
-		utterance.rate = 1;
-		utterance.pitch = 1;
-		utterance.volume = 1;
 		utterance.voice = speechSynthesis.getVoices()[0];
 		speechSynthesis.speak(utterance);
 	};

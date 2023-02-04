@@ -28,3 +28,19 @@ export type User = {
 	_id: string;
 	projects: Project[];
 };
+
+export type AppModes = 'home' | 'edit' | 'dashboard';
+
+export type UserExpanded = User & {
+	projects: (Project & {
+		pages: (Page & {
+			tiles: Tile[];
+		})[];
+	})[];
+};
+
+export type ProjectExpanded = Project & {
+	pages: (Page & {
+		tiles: Tile[];
+	})[];
+};

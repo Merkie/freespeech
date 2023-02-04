@@ -1,6 +1,7 @@
 <script lang="ts">
 	import generateRandomName from '$lib/helpers/randomUsername';
-	import { CurrentProject, CurrentUser, type UserExpanded } from '$lib/stores';
+	import { CurrentProject, CurrentUser } from '$lib/stores';
+	import type { UserExpanded } from '$lib/types';
 
 	let columns: number = 8;
 	let rows: number = 6;

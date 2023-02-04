@@ -1,8 +1,8 @@
 import validateRequest from '$lib/helpers/validateRequest';
-import { AWS_S3_BUCKET } from '$env/static/private';
+import { R2_HOST, R2_BUCKET } from '$env/static/private';
 import type { RequestHandler } from '@sveltejs/kit';
 import { z } from 'zod';
-import s3 from '$lib/resources/aws-s3';
+import r2 from '$lib/resources/cf-r2';
 
 const uploadToS3 = async ({ data, userid }: { data: string; userid: string }) => {
 	const schema = z.object({
@@ -20,23 +20,33 @@ const uploadToS3 = async ({ data, userid }: { data: string; userid: string }) =>
 		};
 	}
 
-	// infer file type from beginning of base64 string
-
 	const filetype = data.match(/data:image\/(.*);base64/)?.[1];
 
 	const params = {
-		Bucket: AWS_S3_BUCKET,
-		Key: `${userid}/${Date.now()}.${filetype}`,
-		Body: Buffer.from(data.split(',')[1], 'base64')
+		bucket: R2_BUCKET,
+		key: `${userid}/${Date.now()}.${filetype}`,
+		body: Buffer.from(data.split(',')[1], 'base64')
 	};
 
-	const result = await s3.upload(params).promise();
+	// Upload the file to R2
+	const result = await r2.putObject(params);
+
+	// If the upload failed send an empty location
+	if (result.status !== 200) {
+		return {
+			status: 500,
+			body: {
+				success: false,
+				location: ''
+			}
+		};
+	}
 
 	return {
 		status: 200,
 		body: {
-			location: result.Location || null,
-			success: result.Location ? true : false
+			location: `${R2_HOST}/${params.key}`,
+			success: true
 		}
 	};
 };
