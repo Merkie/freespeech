@@ -82,7 +82,7 @@
 
 					<div class="w-full">
 						<img
-							class="h-[150px] rounded-md w-full object-cover bg-zinc-100 text-zinc-100"
+							class="h-[150px] rounded-md w-full object-fit bg-zinc-100 text-zinc-100"
 							alt="Mini preview of the project"
 							src={item.image}
 						/>

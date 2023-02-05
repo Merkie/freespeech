@@ -8,17 +8,51 @@
 
 	let tilePageElement: HTMLElement;
 
+	// Onmount script that takes a screenshot of the tile page and uploads it to the cloud
 	onMount(async () => {
-		await new Promise((resolve) => setTimeout(resolve, 2000));
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 		html2canvas(tilePageElement, {
 			allowTaint: true
-		}).then(function (canvas) {
+		}).then(async (canvas) => {
 			const img = canvas.toDataURL('image/png');
 			if (!$CurrentProject) return;
+
+			// Delete the old image
+			if ($CurrentProject?.image) {
+				await fetch('/api/v1/cloud/delete', {
+					method: 'POST',
+					body: JSON.stringify({
+						location: $CurrentProject.image
+					})
+				});
+			}
+
+			// upload the new image
+			const response = await (
+				await fetch('/api/v1/cloud/upload', {
+					method: 'POST',
+					body: JSON.stringify({
+						data: img
+					})
+				})
+			).json();
+
+			// update the project locally
 			$CurrentProject = {
 				...$CurrentProject,
-				image: img
+				image: response.location
 			};
+
+			// update the project on the server
+			await fetch('/api/v1/project/update', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					project: $CurrentProject
+				})
+			});
 		});
 	});
 

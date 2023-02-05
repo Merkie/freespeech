@@ -1,11 +1,12 @@
 <script>
-	import { Sentence } from '$lib/stores';
+	import { Sentence, ApplicationSettings } from '$lib/stores';
 
 	const speak = () => {
 		const utterance = new SpeechSynthesisUtterance();
 		utterance.text = $Sentence.map((tile) => tile.text).join(' ');
 		utterance.lang = 'en-US';
-		utterance.voice = speechSynthesis.getVoices()[0];
+		utterance.voice = speechSynthesis.getVoices()[$ApplicationSettings.offlineVoiceIndex];
+		utterance.rate = 0.75;
 		speechSynthesis.speak(utterance);
 	};
 

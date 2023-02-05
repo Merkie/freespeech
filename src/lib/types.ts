@@ -3,6 +3,10 @@ export type Tile = {
 	text: string;
 	image: string;
 	navigateTo: string;
+	isAccented: boolean;
+	backgroundColor: string;
+	borderColor: string;
+	textColor: string;
 	x: number;
 	y: number;
 };

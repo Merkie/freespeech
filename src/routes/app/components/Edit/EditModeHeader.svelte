@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { addTile } from '$lib/helpers/tileActions';
-	import { SelectedEditModeTool, CurrentPage, CurrentProject } from '$lib/stores';
+	import { SelectedEditModeTool, CurrentPage, CurrentProject, EditModeColor } from '$lib/stores';
 	import type { Tile } from '$lib/types';
 	import { fly } from 'svelte/transition';
 	import ColorPicker from './ColorPicker.svelte';
@@ -85,18 +85,37 @@
 			options={[{ label: 'display text' }, { label: 'speak text' }]}
 		/>
 	{/if}
-	{#if $SelectedEditModeTool === 'image'}
+	<!-- {#if $SelectedEditModeTool === 'image'}
 		<ListBox
 			title={'storage setting'}
 			selected={'s3 bucket'}
 			options={[{ label: 'base64' }, { label: 's3 bucket' }]}
 		/>
-	{/if}
+	{/if} -->
 	{#if $SelectedEditModeTool === 'color'}
 		<ListBox
 			title={'color mode'}
 			selected={'border'}
-			options={[{ label: 'border' }, { label: 'background' }, { label: 'text' }]}
+			options={[
+				{
+					label: 'border',
+					onClick: () => {
+						$EditModeColor = { ...$EditModeColor, mode: 'border' };
+					}
+				},
+				{
+					label: 'background',
+					onClick: () => {
+						$EditModeColor = { ...$EditModeColor, mode: 'background' };
+					}
+				},
+				{
+					label: 'text',
+					onClick: () => {
+						$EditModeColor = { ...$EditModeColor, mode: 'text' };
+					}
+				}
+			]}
 		/>
 		<ColorPicker />
 	{/if}

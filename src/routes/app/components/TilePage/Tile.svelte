@@ -6,7 +6,8 @@
 		CurrentProject,
 		EditModeNavigation,
 		SelectedEditModeTool,
-		Sentence
+		Sentence,
+		EditModeColor
 	} from '$lib/stores';
 	import type { Page, Tile, ProjectExpanded } from '$lib/types';
 	import { scale } from 'svelte/transition';
@@ -68,6 +69,16 @@
 				} else {
 					fileInput.click();
 				}
+			} else if ($SelectedEditModeTool === 'accent') {
+				updateTileStore({
+					...tile,
+					isAccented: tile.isAccented ? false : true
+				});
+			} else if ($SelectedEditModeTool === 'color') {
+				updateTileStore({
+					...tile,
+					[$EditModeColor.mode + 'Color']: `${$EditModeColor.color}-${$EditModeColor.value}`
+				});
 			}
 		} else {
 			if (tile.navigateTo) {
@@ -187,7 +198,9 @@
 			$AppMode === 'edit' &&
 			$SelectedEditModeTool === 'navigation'
 		)
-			? 'bg-zinc-100 border-zinc-400'
+			? `bg-${tile.backgroundColor || 'zinc-100'} border-${tile.borderColor || 'zinc-400'} text-${
+					tile.textColor || 'zinc-800'
+			  }`
 			: ''
 	} ${draggingFileOver ? 'bg-emerald-600 border-emerald-400 text-emerald-100' : ''} ${
 		$EditModeNavigation.tileid === tile._id &&
@@ -199,8 +212,15 @@
 >
 	{#if !draggingFileOver}
 		<div
-			class={`absolute left-0 p-2 top-0 w-full h-full flex gap-2 flex-col items-center justify-center`}
+			class={`absolute overflow-hidden rounded-sm left-0 p-2 top-0 w-full h-full flex gap-2 flex-col items-center justify-center`}
 		>
+			<div
+				class={`transition absolute rotate-45 bg-${
+					tile.borderColor || 'zinc-400'
+				} w-[50px] h-[50px] right-0 top-0 ${
+					tile.isAccented ? 'translate-x-8 -translate-y-8' : 'translate-x-12 -translate-y-12'
+				}`}
+			/>
 			{#if editingTileText}
 				<input size={10} class="text-center w-fit" bind:this={tileTextInput} value={tile.text} />
 			{:else}
