@@ -1,8 +1,8 @@
 import validateRequest from '$lib/helpers/validateRequest';
 import mongo from '$lib/resources/mongo';
+import type { Project } from '$lib/types';
 import { createId } from '@paralleldrive/cuid2';
 import type { RequestHandler } from '@sveltejs/kit';
-import type { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
 const createProject = async ({
@@ -33,24 +33,31 @@ const createProject = async ({
 		};
 	}
 
+	const pageid = createId();
 	const projectid = (
-		await mongo.collection('projects').insertOne({
-			_id: createId() as unknown as ObjectId,
+		await mongo.collection<Project>('projects').insertOne({
+			_id: createId(),
 			name,
 			columns,
 			rows,
-			slug: name.toLowerCase().replace(/ /g, '-'),
+			slug: name.toLowerCase().replace(/ /g, '-') + '',
 			userid,
+			description: '',
+			private: true,
+			image: '',
+			templates: [],
 			pages: [
 				{
-					_id: createId() as unknown as ObjectId,
+					_id: pageid,
 					name: 'home',
 					tiles: [
 						{
-							_id: createId() as unknown as ObjectId,
+							_id: createId(),
 							x: 0,
 							y: 0,
-							text: 'New Tile'
+							text: 'New Tile',
+							userid,
+							pageid
 						}
 					]
 				}
@@ -58,7 +65,7 @@ const createProject = async ({
 		})
 	).insertedId;
 
-	const project = await mongo.collection('projects').findOne({ _id: projectid });
+	const project = await mongo.collection<Project>('projects').findOne({ _id: projectid });
 
 	return {
 		body: {

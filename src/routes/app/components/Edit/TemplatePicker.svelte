@@ -1,58 +1,38 @@
 <script lang="ts">
-	import { CurrentProject, CurrentPage, EditModeNavigation } from '$lib/stores';
+	import { CurrentProject, CurrentPage, EditModeNavigation, TemplateMode } from '$lib/stores';
 	import type { Page, Project } from '$lib/types';
 	import CreateNewPageModal from './CreateNewPageModal.svelte';
+	import CreateNewTemplateModal from './CreateNewTemplateModal.svelte';
 
 	let createNewPageModalShowing = false;
 	let managingPages = false;
-
-	const handlePageInteraction = (page: Page) => {
-		if ($EditModeNavigation.tileid) {
-			if (page.name.toLowerCase() === $CurrentPage) {
-				alert('A tile cannot navigate to its parent page.');
-				return;
-			}
-			$CurrentProject = {
-				...$CurrentProject,
-				pages: ($CurrentProject as Project).pages.map((p) => {
-					if (p.name === $CurrentPage) {
-						p.tiles = p.tiles.map((tile) => {
-							if (tile._id === $EditModeNavigation.tileid) {
-								tile.navigateTo = page.name.toLowerCase();
-							}
-							return tile;
-						});
-					}
-					return p;
-				})
-			} as unknown as Project;
-			$EditModeNavigation = { tileid: undefined, pagename: undefined };
-			return;
-		}
-		$CurrentPage = page.name.toLowerCase();
-	};
 </script>
 
 {#if createNewPageModalShowing}
-	<CreateNewPageModal callback={() => (createNewPageModalShowing = false)} />
+	<CreateNewTemplateModal callback={() => (createNewPageModalShowing = false)} />
 {/if}
 
 <div class="bg-zinc-900 text-zinc-200 flex flex-col">
-	<p class="p-1 px-4 bg-zinc-800 text-center gap-2 border border-zinc-700 border-x-0">Pages</p>
+	<p class="p-1 px-4 bg-zinc-800 text-center gap-2 border border-zinc-700 border-x-0">Templates</p>
 	<span
 		class={`rounded-md flex flex-col border bg-zinc-900 ${
 			$EditModeNavigation.tileid ? ' border-blue-500 brightness-125' : 'border-zinc-900'
 		}`}
 	>
 		{#if $CurrentProject}
-			{#each $CurrentProject.pages as page, i}
+			{#each $CurrentProject.templates as template, i}
 				<button
-					on:click={() => handlePageInteraction(page)}
+					on:click={() => {
+						$TemplateMode = {
+							mode: 'edit',
+							templateid: template._id
+						};
+					}}
 					class={`p-2 min-w-[150px] gap-2 flex items-center w-full capitalize text-left ${
 						(i + 1) % 2 === 0 ? 'bg-zinc-800' : ''
 					}`}
 				>
-					<span>{page.name}</span>
+					<span>{template.name}</span>
 					{#if managingPages}
 						<div class="flex-1" />
 						<button
@@ -78,7 +58,7 @@
 		<button
 			on:click={() => (createNewPageModalShowing = true)}
 			class="bg-zinc-700 border-zinc-600 hover:bg-zinc-600 capitalize border hover:border-zinc-500 px-2 p-1 m-2 my-0 rounded-md"
-			><i class="bi bi-file-earmark-plus" /> create new page</button
+			><i class="bi bi-file-earmark-plus" /> create template</button
 		>
 		<button
 			on:click={() => (managingPages = !managingPages)}
@@ -87,7 +67,8 @@
 					? 'bg-red-700 border-red-600 hover:bg-red-600 hover:border-red-500'
 					: 'bg-zinc-700 border-zinc-600 hover:bg-zinc-600 hover:border-zinc-500'
 			}  capitalize border  px-2 p-1 m-2 my-0 rounded-md`}
-			><i class="bi bi-gear" /> {managingPages ? 'stop managing pages' : 'manage pages'}</button
+			><i class="bi bi-gear" />
+			{managingPages ? 'stop managing templates' : 'manage templates'}</button
 		>
 	</div>
 </div>

@@ -1,14 +1,18 @@
 export type Tile = {
 	_id: string;
-	text: string;
-	image: string;
-	navigateTo: string;
-	isAccented: boolean;
-	backgroundColor: string;
-	borderColor: string;
-	textColor: string;
 	x: number;
 	y: number;
+	text: string;
+	speakText?: string;
+	image?: string;
+	backgroundColor?: string;
+	textColor?: string;
+	borderColor?: string;
+	modifier?: string;
+	navigateTo?: string;
+	isAccented?: boolean;
+	userid: string;
+	pageid: string;
 };
 export type Page = {
 	_id: string;
@@ -17,12 +21,19 @@ export type Page = {
 };
 export type Project = {
 	name: string;
-	description: string;
+	description: string; // TBA
+	private: boolean; // TBA
+	templates: {
+		_id: string;
+		name: string;
+		parentPageId: string;
+		tiles: { x: number; y: number }[];
+	}[];
 	columns: number;
 	rows: number;
 	image: string;
-	private: boolean;
 	userid: string;
+	slug: string;
 	_id: string;
 	pages: Page[];
 };
@@ -43,8 +54,8 @@ export type UserExpanded = User & {
 	})[];
 };
 
-export type ProjectExpanded = Project & {
-	pages: (Page & {
-		tiles: Tile[];
-	})[];
-};
+// export type Project = Project & {
+// 	pages: (Page & {
+// 		tiles: Tile[];
+// 	})[];
+// };

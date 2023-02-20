@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { addTile } from '$lib/helpers/tileActions';
 	import { SelectedEditModeTool, CurrentPage, CurrentProject, EditModeColor } from '$lib/stores';
-	import type { Tile } from '$lib/types';
-	import { fly } from 'svelte/transition';
 	import ColorPicker from './ColorPicker.svelte';
 	import ListBox from './ListBox.svelte';
 
@@ -55,18 +53,22 @@
 	};
 </script>
 
-<div class="flex items-center gap-4 text-zinc-200 p-2 bg-zinc-900">
-	<p
-		class="flex items-center gap-2 font-bold bg-blue-700 border border-blue-500 w-fit p-1 rounded-md px-2"
-	>
-		<img src="/logo-transparent.png" alt="logo" width={20} /> FreeSpeech
+<div class="flex items-center text-zinc-200 p-2 h-[50px] bg-zinc-900 text-sm">
+	<!-- FreeSpeech Name, Version & Logo -->
+	<p class="flex items-center gap-2 font-bold w-fit p-1 rounded-md px-2">
+		<img src="/logo-transparent.png" alt="logo" width={15} /> FreeSpeech
 		<span style="font-size: 10px" class="font-mono font-thin mt-[5px]">v0.1</span>
 	</p>
-	<span
-		>Tool: <span class="capitalize bg-zinc-800 p-1 px-2 rounded-md">{$SelectedEditModeTool}</span
-		></span
-	>
+	<!-- Horizontal Divider -->
+	<div class="h-[20px] w-[1px] bg-zinc-700 mx-2" />
+	<!-- Selected Tool Indicator -->
+	<span class="opacity-75 mr-2">Tool:</span><span class="capitalize">{$SelectedEditModeTool}</span>
+
+	<!-- Display when cursor tool is selected -->
 	{#if $SelectedEditModeTool === 'cursor'}
+		<!-- Horizontal Divider -->
+		<div class="h-[20px] w-[1px] bg-zinc-700 mx-2" />
+		<!-- Dropdown "listbox" for page actions -->
 		<ListBox
 			title={'page actions'}
 			options={[
@@ -77,22 +79,47 @@
 				{ label: 'delete unedited tiles', onClick: deleteAllBlankTiles }
 			]}
 		/>
+		<!-- Horizontal Divider -->
+		<!-- <div class="h-[20px] w-[1px] bg-zinc-700 mx-2" /> -->
+		<!-- Dropdown "listbox" for template actions -->
+		<!-- <ListBox
+			title={'template'}
+			options={[
+				{
+					label: 'create template from page',
+					onClick: () => {
+						$TemplateMode = { mode: 'create', templateid: '' };
+					}
+				},
+				{
+					label: 'apply template to page',
+					onClick: () => {}
+				},
+				{
+					label: 'manage templates',
+					onClick: () => {}
+				}
+			]}
+		/> -->
 	{/if}
+
+	<!-- Display when text tool is selected -->
 	{#if $SelectedEditModeTool === 'text'}
+		<!-- Horizontal Divider -->
+		<div class="h-[20px] w-[1px] bg-zinc-700 mx-2" />
+		<!-- Dropdown for different text modes, speak and display -->
 		<ListBox
 			title={'text mode'}
 			selected={'display text'}
 			options={[{ label: 'display text' }, { label: 'speak text' }]}
 		/>
 	{/if}
-	<!-- {#if $SelectedEditModeTool === 'image'}
-		<ListBox
-			title={'storage setting'}
-			selected={'s3 bucket'}
-			options={[{ label: 'base64' }, { label: 's3 bucket' }]}
-		/>
-	{/if} -->
+
+	<!-- Display when color tool is selected -->
 	{#if $SelectedEditModeTool === 'color'}
+		<!-- Horizontal Divider -->
+		<div class="h-[20px] w-[1px] bg-zinc-700 mx-2" />
+		<!-- Dropdown for different color modes, border, background, and text color -->
 		<ListBox
 			title={'color mode'}
 			selected={'border'}
@@ -117,6 +144,9 @@
 				}
 			]}
 		/>
+		<!-- Horizontal Divider -->
+		<div class="h-[20px] w-[1px] bg-zinc-700 mx-2" />
+		<!-- Color Picker Component -->
 		<ColorPicker />
 	{/if}
 </div>

@@ -1,8 +1,8 @@
 import { CurrentProject } from '$lib/stores';
-import type { Tile, ProjectExpanded } from '$lib/types';
+import type { Tile, Project } from '$lib/types';
 import { createId } from '@paralleldrive/cuid2';
 
-let currentProjectValue: ProjectExpanded | null = null;
+let currentProjectValue: Project | null = null;
 CurrentProject.subscribe((value) => {
 	currentProjectValue = value;
 });
@@ -55,10 +55,8 @@ export function addTile({ tilePage, x, y }: { tilePage: string; x: number; y: nu
 						textColor: null,
 						borderColor: null,
 						modifier: null,
-						link: null,
 						navigateTo: null,
 						isAccented: false,
-						isPublic: false,
 						userid: currentProjectValue?.userid,
 						pageId: page._id
 					} as unknown as Tile

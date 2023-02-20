@@ -31,6 +31,8 @@
 				} as Page & { tiles: Tile[] }
 			]
 		};
+		// Close the modal after the page is created
+		callback();
 	};
 </script>
 
@@ -38,6 +40,7 @@
 	<div class="w-[500px] flex flex-col gap-2">
 		<input
 			bind:value={pageName}
+			placeholder="Page Name"
 			class="bg-zinc-200 border border-zinc-400 rounded-md p-2 text-zinc-600"
 			type="text"
 		/>

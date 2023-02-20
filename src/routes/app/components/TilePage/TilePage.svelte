@@ -9,6 +9,7 @@
 	import Toolbar from '../Edit/Toolbar.svelte';
 	import EditModeHeader from '../Edit/EditModeHeader.svelte';
 	import PagePicker from '../Edit/PagePicker.svelte';
+	import TemplatePicker from '../Edit/TemplatePicker.svelte';
 
 	let welcomeModalClosed = false;
 
@@ -42,6 +43,9 @@
 		</main>
 		{#if $AppMode === 'edit' && $SelectedEditModeTool === 'navigation'}
 			<PagePicker />
+		{/if}
+		{#if $AppMode === 'edit' && $SelectedEditModeTool === 'template'}
+			<TemplatePicker />
 		{/if}
 	</div>
 </div>

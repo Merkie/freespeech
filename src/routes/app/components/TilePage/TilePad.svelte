@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { CurrentProject, AppMode, CurrentPage } from '$lib/stores';
-	import type { Tile, ProjectExpanded } from '$lib/types';
+	import { CurrentProject, AppMode, CurrentPage, TemplateMode } from '$lib/stores';
+	import type { Tile, Project } from '$lib/types';
 	import TileElement from './Tile.svelte';
 	import AddTileGhostButton from './AddTileGhostButton.svelte';
 	import { onMount } from 'svelte';

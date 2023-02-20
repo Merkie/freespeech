@@ -25,6 +25,14 @@
 		{
 			label: 'navigation',
 			icon: 'box-arrow-in-up-right'
+		},
+		{
+			label: 'template',
+			icon: 'grid'
+		},
+		{
+			label: 'trash',
+			icon: 'trash'
 		}
 	];
 </script>

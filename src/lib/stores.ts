@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import type { Tile } from '$lib/types';
 import { browser } from '$app/environment';
-import type { AppModes, UserExpanded, ProjectExpanded } from '$lib/types';
+import type { AppModes, UserExpanded, Project } from '$lib/types';
 
 // Application Mode
 export const AppMode = writable<AppModes>('home');
@@ -17,7 +17,7 @@ if (browser) {
 }
 
 // Current Project
-export const CurrentProject = writable<ProjectExpanded | null>(null);
+export const CurrentProject = writable<Project | null>(null);
 if (browser) {
 	const storedCurrentProject = localStorage.getItem('freespeech-current-project');
 	CurrentProject.set(storedCurrentProject ? JSON.parse(storedCurrentProject) : null);
@@ -54,15 +54,27 @@ export const EditModeColor = writable<{
 // The current page in dashboard mode
 export const DashboardPage = writable<string>('library');
 
+export const TemplateMode = writable<{
+	mode: 'create' | 'edit' | 'disabled';
+	templateid: string;
+	tiles: { x: number; y: number }[];
+}>({
+	mode: 'disabled',
+	templateid: '',
+	tiles: []
+});
+
 const defaultSettings = {
 	renderImagesAsBase64: false,
 	displayImagesInMixMode: false,
-	offlineVoiceIndex: 0
+	offlineVoiceIndex: 0,
+	preferCloudVoice: true
 };
 export const ApplicationSettings = writable<{
 	renderImagesAsBase64: boolean;
 	displayImagesInMixMode: boolean;
 	offlineVoiceIndex: number;
+	preferCloudVoice: boolean;
 }>(defaultSettings);
 if (browser) {
 	const storedApplicationSettings = localStorage.getItem('freespeech-application-settings');

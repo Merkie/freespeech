@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CurrentUser, CurrentProject, ApplicationSettings } from '$lib/stores';
+	import { ApplicationSettings } from '$lib/stores';
 	import { onMount } from 'svelte';
 	let settings: {
 		text: string;
@@ -37,10 +37,26 @@
 					displayImagesInMixMode: e.target.checked
 				};
 			}
+		},
+		{
+			text: 'prefer cloud voice',
+			description:
+				'This will prefer the cloud voice over the offline voice when connected to the internet.',
+			type: 'checkbox',
+			default: true,
+			value: $ApplicationSettings.preferCloudVoice,
+			onChange: (e) => {
+				$ApplicationSettings = {
+					...$ApplicationSettings,
+					preferCloudVoice: e.target.checked
+				};
+			}
 		}
 	];
 
 	onMount(async () => {
+		const listVoicesResponse = await (await fetch('/api/v1/voices/list')).json();
+
 		settings = [
 			...settings,
 			{
@@ -49,7 +65,7 @@
 					"This is the offline voice the app will use to read out your sentences. Voices are sourced from your device's browser.",
 				type: 'select',
 				// use the browser's speechSynthesis API to get the voices
-				options: speechSynthesis.getVoices().map((voice) => voice.name + ' ' + voice.lang),
+				options: speechSynthesis.getVoices().map((voice) => `${voice.lang} ${voice.name}`),
 				default: 0,
 				value: $ApplicationSettings.offlineVoiceIndex || 0,
 				onChange: (e) => {
@@ -65,8 +81,9 @@
 					'These voices are higher quality but they can only be used while connected to the internet.',
 				type: 'select',
 				default: 0,
-				options: (await (await fetch('https://tts.gay/api/v1/list')).json()).voices.map(
-					(voice) => voice.name + ' ' + voice.languageCode
+				options: listVoicesResponse.map(
+					(voice: { languageCode: string; name: string; variants: string[] }) =>
+						`${voice.languageCode} ${voice.name}${voice.variants.length > 2 ? ' (variants)' : ''}`
 				),
 				value: 0,
 				onChange: (e) => null
