@@ -31,7 +31,9 @@
 	}
 </script>
 
-<div class="p-2 bg-zinc-900 border border-x-0 border-b-0 border-zinc-700 flex gap-2 text-zinc-100">
+<div
+	class="p-2 bg-zinc-900 border border-x-0 border-b-0 border-zinc-700 flex gap-2 text-zinc-100 z-20"
+>
 	{#if $AppMode !== 'edit'}
 		{#each buttons as button}
 			<button

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import generateRandomUsername from '$lib/helpers/randomUsername';
-	// import '$lib/helpers/cloudflareTurnstyle';
+	import generateRandomUsername from '$lib/ts/randomName';
+	// import '$lib/ts/cloudflareTurnstyle';
 
 	export let isLogin: Boolean;
 	// export let captcha: { image: string; hash: string };

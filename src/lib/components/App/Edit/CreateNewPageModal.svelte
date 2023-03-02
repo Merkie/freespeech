@@ -2,7 +2,8 @@
 	import { CurrentProject, CurrentPage } from '$lib/stores';
 	import type { Page, Tile } from '$lib/types';
 	import { createId } from '@paralleldrive/cuid2';
-	import Modal from '../Modal.svelte';
+	import { createPage as CreatePage } from '$lib/ts/pageActions';
+	import Modal from '../../../../lib/components/Modal.svelte';
 	export let callback: () => void;
 
 	let pageName: string;
@@ -13,24 +14,9 @@
 			alert('A page with that name already exists in this project.');
 			return;
 		}
-		$CurrentProject = {
-			...$CurrentProject,
-			pages: [
-				...$CurrentProject.pages,
-				{
-					_id: createId(),
-					name: pageName.toLowerCase(),
-					tiles: [
-						{
-							_id: createId(),
-							text: 'New Tile',
-							x: 0,
-							y: 0
-						}
-					]
-				} as Page & { tiles: Tile[] }
-			]
-		};
+
+		CreatePage({ pageName: pageName.toLowerCase() });
+
 		// Close the modal after the page is created
 		callback();
 	};

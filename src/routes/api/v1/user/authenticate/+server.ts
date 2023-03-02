@@ -3,7 +3,7 @@ import { z } from 'zod';
 import mongo from '$lib/resources/mongo';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import verifyCaptcha from '$lib/helpers/verifyCaptcha';
+import verifyCaptcha from '$lib/ts/verifyCaptcha';
 
 export const authenticateUser = async ({
 	email,

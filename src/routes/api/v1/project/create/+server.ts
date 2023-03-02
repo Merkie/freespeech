@@ -1,4 +1,4 @@
-import validateRequest from '$lib/helpers/validateRequest';
+import validateRequest from '$lib/ts/validateRequest';
 import mongo from '$lib/resources/mongo';
 import type { Project } from '$lib/types';
 import { createId } from '@paralleldrive/cuid2';

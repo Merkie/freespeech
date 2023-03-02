@@ -37,8 +37,8 @@
 	];
 </script>
 
-<div class="flex text-zinc-200 flex-col bg-zinc-900">
-	<p class="p-1 px-4 bg-zinc-800 border border-zinc-700 border-x-0">Tools</p>
+<div class="flex text-zinc-200 flex-col bg-zinc-900 border border-y-0 border-l-0 border-zinc-700">
+	<p class="p-1 px-4 bg-zinc-800 border border-zinc-700 border-x-0 border-t-0">Tools</p>
 	<div class="flex flex-col pt-2 gap-4 items-center">
 		{#each tools as tool}
 			<button

@@ -1,15 +1,18 @@
 <script lang="ts">
 	import { CurrentUser, CurrentProject, AppMode, SelectedEditModeTool } from '$lib/stores';
 	import { onMount } from 'svelte';
-	import TilePageHeader from './TilePageHeader.svelte';
-	import TilePageSentenceBuilder from './SentenceBuilder.svelte';
-	import TilePageTilePad from './TilePad.svelte';
+
+	// App Components
+	import TileGridHeader from './TileGrid/TileGridHeader.svelte';
+	import SentenceBuilder from './SentenceBuilder.svelte';
+	import TileGrid from './TileGrid/TileGrid.svelte';
 	import WelcomeModal from './WelcomeModal.svelte';
 
-	import Toolbar from '../Edit/Toolbar.svelte';
-	import EditModeHeader from '../Edit/EditModeHeader.svelte';
-	import PagePicker from '../Edit/PagePicker.svelte';
-	import TemplatePicker from '../Edit/TemplatePicker.svelte';
+	// Edit Mode Components
+	import Toolbar from './Edit/Toolbar.svelte';
+	import EditModeHeader from './Edit/EditModeHeader.svelte';
+	import PagePicker from './Edit/PagePicker.svelte';
+	import TemplatePicker from './Edit/TemplatePicker.svelte';
 
 	let welcomeModalClosed = false;
 
@@ -37,9 +40,9 @@
 			<Toolbar />
 		{/if}
 		<main class="flex-1 bg-zinc-200 flex flex-col">
-			<TilePageSentenceBuilder />
-			<TilePageHeader />
-			<TilePageTilePad />
+			<SentenceBuilder />
+			<TileGridHeader />
+			<TileGrid />
 		</main>
 		{#if $AppMode === 'edit' && $SelectedEditModeTool === 'navigation'}
 			<PagePicker />

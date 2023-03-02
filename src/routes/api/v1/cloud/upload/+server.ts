@@ -1,4 +1,4 @@
-import validateRequest from '$lib/helpers/validateRequest';
+import validateRequest from '$lib/ts/validateRequest';
 import { R2_HOST, R2_BUCKET } from '$env/static/private';
 import type { RequestHandler } from '@sveltejs/kit';
 import { z } from 'zod';

@@ -4,7 +4,7 @@
 	export let x: number;
 	export let y: number;
 
-	import { addTile } from '$lib/helpers/tileActions';
+	import { addTile } from '$lib/ts/tileActions';
 
 	const createTile = () => {
 		addTile({ tilePage: $CurrentPage, x, y });

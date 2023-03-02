@@ -1,5 +1,5 @@
 <script lang="ts">
-	import generateRandomName from '$lib/helpers/randomUsername';
+	import generateRandomName from '$lib/ts/randomName';
 	import { CurrentProject, CurrentUser } from '$lib/stores';
 	import type { UserExpanded } from '$lib/types';
 

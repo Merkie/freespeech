@@ -1,9 +1,16 @@
 <script lang="ts">
-	import { addTile } from '$lib/helpers/tileActions';
-	import { SelectedEditModeTool, CurrentPage, CurrentProject, EditModeColor } from '$lib/stores';
+	import { addTile } from '$lib/ts/tileActions';
+	import {
+		SelectedEditModeTool,
+		CurrentPage,
+		CurrentProject,
+		EditModeColor,
+		TemplateMode
+	} from '$lib/stores';
 	import ColorPicker from './ColorPicker.svelte';
 	import ListBox from './ListBox.svelte';
 
+	// TODO: Put these in $lib/ts and fix bugs
 	const fillAllBlankTiles = () => {
 		if (!$CurrentProject) return;
 		const totalTiles = $CurrentProject.columns * $CurrentProject.rows;
@@ -32,6 +39,7 @@
 		});
 	};
 
+	// TODO: Put these in $lib/ts and fix bugs
 	const deleteAllBlankTiles = () => {
 		if (!$CurrentProject) return;
 
@@ -53,7 +61,9 @@
 	};
 </script>
 
-<div class="flex items-center text-zinc-200 p-2 h-[50px] bg-zinc-900 text-sm">
+<div
+	class="flex items-center text-zinc-200 p-2 h-[50px] bg-zinc-900 border border-x-0 border-t-0 border-zinc-700 text-sm"
+>
 	<!-- FreeSpeech Name, Version & Logo -->
 	<p class="flex items-center gap-2 font-bold w-fit p-1 rounded-md px-2">
 		<img src="/logo-transparent.png" alt="logo" width={15} /> FreeSpeech
@@ -149,4 +159,18 @@
 		<!-- Color Picker Component -->
 		<ColorPicker />
 	{/if}
+
+	{#if $SelectedEditModeTool === 'template' && $TemplateMode.mode !== 'disabled'}
+		<div class="h-[20px] w-[1px] bg-zinc-700 mx-2" />
+		<button class="bg-blue-700 border border-blue-600 px-4 p-1 rounded-md mr-2">Save Changes</button
+		>
+		<button class="bg-zinc-700 border border-zinc-600 px-4 p-1 rounded-md">Cancel</button>
+	{/if}
+
+	<div class="flex-1" />
+
+	<!-- undo button -->
+	<button>
+		<i class="bi bi-arrow-counterclockwise text-lg" />
+	</button>
 </div>

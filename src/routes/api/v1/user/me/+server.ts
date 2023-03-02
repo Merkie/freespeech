@@ -1,4 +1,4 @@
-import validateRequest from '$lib/helpers/validateRequest';
+import validateRequest from '$lib/ts/validateRequest';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ request }) => {

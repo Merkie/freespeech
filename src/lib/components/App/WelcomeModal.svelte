@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CreateProjectInner from '../CreateProjectInner.svelte';
-	import Modal from '../Modal.svelte';
+	import CreateProjectInner from '$lib/components/CreateProjectInner.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	let creationOption: 'new' | 'community' = 'new';
 	export let callback: () => void;
 </script>

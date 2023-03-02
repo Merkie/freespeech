@@ -11,11 +11,13 @@ CurrentProject.subscribe((value) => {
 export function updateTile({
 	tilePage,
 	tileId,
-	newTile
+	newTile,
+	merge = false
 }: {
 	tilePage: string;
 	tileId: string;
-	newTile: Tile;
+	newTile: Tile | any;
+	merge?: boolean;
 }) {
 	if (!currentProjectValue) return;
 	CurrentProject.set({
@@ -26,6 +28,12 @@ export function updateTile({
 				...page,
 				tiles: page.tiles.map((tile) => {
 					if (tile._id !== tileId) return tile;
+					if (merge) {
+						return {
+							...tile,
+							...newTile
+						};
+					}
 					return newTile;
 				})
 			};

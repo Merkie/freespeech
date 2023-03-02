@@ -20,22 +20,22 @@ export type Page = {
 	tiles: Tile[];
 };
 export type Project = {
+	_id: string;
 	name: string;
 	description: string; // TBA
 	private: boolean; // TBA
+	columns: number;
+	rows: number;
+	slug: string;
+	image: string;
 	templates: {
 		_id: string;
 		name: string;
 		parentPageId: string;
 		tiles: { x: number; y: number }[];
 	}[];
-	columns: number;
-	rows: number;
-	image: string;
-	userid: string;
-	slug: string;
-	_id: string;
 	pages: Page[];
+	userid: string;
 };
 export type User = {
 	name: string;

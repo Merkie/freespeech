@@ -12,8 +12,8 @@
 	} from '$lib/stores';
 	import type { Page, Tile, Project } from '$lib/types';
 	import { scale } from 'svelte/transition';
-	import urlToBase64 from '$lib/helpers/urlToBase64';
-	import { updateTile } from '$lib/helpers/tileActions';
+	import urlToBase64 from '$lib/ts/urlToBase64';
+	import { updateTile } from '$lib/ts/tileActions';
 
 	export let tile: Tile;
 
