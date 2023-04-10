@@ -37,7 +37,7 @@
 		"@paralleldrive/cuid2": "^2.0.1",
 		"@types/bcryptjs": "^2.4.2",
 		"@types/jsonwebtoken": "^9.0.0",
-		"aws-sdk": "^2.1308.0",
+		"aws-sdk": "^2.1354.0",
 		"bcryptjs": "^2.4.3",
 		"cloudflare-r2": "^1.0.0",
 		"dotenv": "^16.0.3",
