@@ -1,8 +1,8 @@
-import s3 from '$ts/server/s3';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import prisma from '$ts/server/prisma';
 import MediaUploadSchema from '$ts/schema/MediaUploadSchema';
 import { z } from 'zod';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+// import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3_BUCKET, AWS_REGION } from '$env/static/private';
 import stringGate from '$ts/common/stringGate';
 
@@ -20,10 +20,7 @@ export const POST = async ({ request, locals }) => {
 	} catch (err) {
 		if (err instanceof z.ZodError) {
 			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400,
-				headers: {
-					'Content-Type': 'application/json'
-				}
+				status: 400
 			});
 		}
 		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), {
@@ -44,7 +41,8 @@ export const POST = async ({ request, locals }) => {
 	});
 
 	// Upload the media to S3
-	const s3response = await s3.send(command);
+	const s3Client = new S3Client({});
+	const s3response = await s3Client.send(command);
 
 	// Check if the upload was successful
 	if (s3response.$metadata.httpStatusCode !== 200) {
@@ -70,9 +68,6 @@ export const POST = async ({ request, locals }) => {
 
 	// Return the file URL
 	return new Response(JSON.stringify({ fileurl }), {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
-		}
+		status: 200
 	});
 };

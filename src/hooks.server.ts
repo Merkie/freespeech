@@ -1,6 +1,7 @@
 import prisma from '$ts/server/prisma';
 
 export async function handle({ event, resolve }) {
+	console.log(event);
 	// get the token from the request cookies
 	const cookie = event.cookies.get('verificationToken');
 
