@@ -3,7 +3,7 @@ import prisma from '$ts/server/prisma';
 import MediaUploadSchema from '$ts/schema/MediaUploadSchema';
 import { z } from 'zod';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { S3_BUCKET, S3_REGION } from '$env/static/private';
+import { S3_BUCKET, AWS_REGION } from '$env/static/private';
 import stringGate from '$ts/common/stringGate';
 
 export const POST = async ({ request, locals }) => {
@@ -54,7 +54,7 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	// Create the file URL
-	const fileurl = `https://${S3_BUCKET}.s3.${S3_REGION}.amazonaws.com/${mediapath}`;
+	const fileurl = `https://${S3_BUCKET}.s3.${AWS_REGION}.amazonaws.com/${mediapath}`;
 
 	// Log the media in the DB
 	await prisma.userMedia.create({
