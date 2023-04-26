@@ -1,0 +1,34 @@
+<script lang="ts">
+	import CloseIcon from '$components/icons/CloseIcon.svelte';
+	export let title: string;
+	export let closeModal: () => void;
+</script>
+
+<main
+	on:keypress={(e) => {
+		if (e.key === 'Escape') {
+			closeModal();
+		}
+	}}
+	on:click={(e) => {
+		//@ts-ignore
+		if (e.target.tagName === 'MAIN') {
+			closeModal();
+		}
+	}}
+	class="fixed top-0 left-0 h-screen w-screen grid place-items-center bg-[rgba(0,0,0,0.5)] z-40"
+>
+	<div
+		class="bg-zinc-900 border border-zinc-800 text-zinc-100 font-light shadow-md p-2 rounded-md flex flex-col w-[90%] max-w-[500px]"
+	>
+		<div class="flex items-center gap-2 mb-2">
+			<button on:click={closeModal}>
+				<CloseIcon />
+			</button>
+			<p>{title}</p>
+		</div>
+		<div class="p-2 flex flex-col">
+			<slot />
+		</div>
+	</div>
+</main>
