@@ -9,10 +9,7 @@ export const GET = async ({ locals, cookies }) => {
 
 	if (!verification) {
 		return new Response(JSON.stringify({ error: 'Invalid token.' }), {
-			status: 400,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 400
 		});
 	}
 

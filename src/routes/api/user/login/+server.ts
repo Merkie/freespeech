@@ -25,20 +25,14 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	// Check if the user already exists
 	if (!user) {
 		return new Response(JSON.stringify({ error: 'A user with that email does not exist.' }), {
-			status: 404,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 404
 		});
 	}
 
 	// Check if the password is correct
 	if (!(await bcrypt.compare(body.password, user.password))) {
 		return new Response(JSON.stringify({ error: 'Incorrect password.' }), {
-			status: 401,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 401
 		});
 	}
 

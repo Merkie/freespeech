@@ -18,20 +18,14 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 			});
 		}
 		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), {
-			status: 500,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 500
 		});
 	}
 
 	// Check if the user already exists
 	if (await prisma.user.findUnique({ where: { email: body.email } })) {
 		return new Response(JSON.stringify({ error: 'A user already exists with that email.' }), {
-			status: 409,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 409
 		});
 	}
 

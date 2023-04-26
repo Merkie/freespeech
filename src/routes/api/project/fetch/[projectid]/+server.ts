@@ -14,28 +14,19 @@ export const GET = async ({ params, locals }) => {
 
 	if (!project)
 		return new Response(JSON.stringify({ error: 'Project not found.' }), {
-			status: 404,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 404
 		});
 
 	if (project.userId === locals.user?.id || project.isPublic) {
 		return new Response(JSON.stringify({ project }), {
-			status: 200,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 200
 		});
 	}
 
 	return new Response(
 		JSON.stringify({ error: 'You do not have permission to view this project.' }),
 		{
-			status: 403,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			status: 403
 		}
 	);
 };
