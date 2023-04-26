@@ -11,7 +11,10 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	} catch (err) {
 		if (err instanceof z.ZodError) {
 			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400
+				status: 400,
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			});
 		}
 		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), { status: 500 });
@@ -22,14 +25,20 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	// Check if the user already exists
 	if (!user) {
 		return new Response(JSON.stringify({ error: 'A user with that email does not exist.' }), {
-			status: 404
+			status: 404,
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 	}
 
 	// Check if the password is correct
 	if (!(await bcrypt.compare(body.password, user.password))) {
 		return new Response(JSON.stringify({ error: 'Incorrect password.' }), {
-			status: 401
+			status: 401,
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 	}
 
@@ -56,5 +65,10 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 
 	locals.user = user;
 
-	return new Response(JSON.stringify({ success: true }), { status: 200 });
+	return new Response(JSON.stringify({ success: true }), {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
 };

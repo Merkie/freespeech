@@ -6,7 +6,10 @@ export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in
 	if (!locals.user)
 		return new Response(JSON.stringify({ error: 'You must be logged in to create a project.' }), {
-			status: 401
+			status: 401,
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 
 	// Validate the request body
@@ -16,10 +19,18 @@ export const POST = async ({ request, locals }) => {
 	} catch (err) {
 		if (err instanceof z.ZodError) {
 			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400
+				status: 400,
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			});
 		}
-		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), { status: 500 });
+		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), {
+			status: 500,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 	}
 
 	// Create the project
@@ -72,5 +83,10 @@ export const POST = async ({ request, locals }) => {
 		}
 	});
 
-	return new Response(JSON.stringify({ project: fullProject }), { status: 200 });
+	return new Response(JSON.stringify({ project: fullProject }), {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
 };

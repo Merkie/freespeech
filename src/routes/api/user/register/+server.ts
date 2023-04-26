@@ -11,16 +11,27 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	} catch (err) {
 		if (err instanceof z.ZodError) {
 			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400
+				status: 400,
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			});
 		}
-		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), { status: 500 });
+		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), {
+			status: 500,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 	}
 
 	// Check if the user already exists
 	if (await prisma.user.findUnique({ where: { email: body.email } })) {
 		return new Response(JSON.stringify({ error: 'A user already exists with that email.' }), {
-			status: 409
+			status: 409,
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 	}
 
@@ -59,5 +70,10 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 
 	locals.user = user;
 
-	return new Response(JSON.stringify({ success: true }), { status: 200 });
+	return new Response(JSON.stringify({ success: true }), {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
 };

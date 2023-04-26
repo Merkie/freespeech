@@ -6,7 +6,10 @@ export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in
 	if (!locals.user)
 		return new Response(JSON.stringify({ error: 'You must be logged in to edit a project.' }), {
-			status: 401
+			status: 401,
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 
 	// Validate the request body
@@ -16,7 +19,10 @@ export const POST = async ({ request, locals }) => {
 	} catch (err) {
 		if (err instanceof z.ZodError) {
 			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400
+				status: 400,
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			});
 		}
 		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), { status: 500 });
@@ -34,7 +40,10 @@ export const POST = async ({ request, locals }) => {
 		return new Response(
 			JSON.stringify({ error: 'The project you are trying to edit does not exist.' }),
 			{
-				status: 404
+				status: 404,
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			}
 		);
 
@@ -43,7 +52,10 @@ export const POST = async ({ request, locals }) => {
 	// Check if the user is the owner of the project
 	if (project.userId !== locals.user.id)
 		return new Response(JSON.stringify({ error: 'You are not the owner of this project.' }), {
-			status: 403
+			status: 403,
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 
 	const requestedPage = await prisma.tilePage.findFirst({
@@ -58,7 +70,10 @@ export const POST = async ({ request, locals }) => {
 		return new Response(
 			JSON.stringify({ error: 'The page you are trying to edit does not exist.' }),
 			{
-				status: 404
+				status: 404,
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			}
 		);
 
@@ -71,5 +86,10 @@ export const POST = async ({ request, locals }) => {
 		}
 	});
 
-	return new Response(JSON.stringify({ success: true }), { status: 200 });
+	return new Response(JSON.stringify({ success: true }), {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
 };

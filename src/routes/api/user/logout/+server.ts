@@ -8,7 +8,12 @@ export const GET = async ({ locals, cookies }) => {
 	});
 
 	if (!verification) {
-		return new Response(JSON.stringify({ error: 'Invalid token.' }), { status: 400 });
+		return new Response(JSON.stringify({ error: 'Invalid token.' }), {
+			status: 400,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 	}
 
 	await prisma.verificationToken.delete({
@@ -24,5 +29,10 @@ export const GET = async ({ locals, cookies }) => {
 
 	locals.user = undefined;
 
-	return new Response(JSON.stringify({ success: true }), { status: 200 });
+	return new Response(JSON.stringify({ success: true }), {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
 };
