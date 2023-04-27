@@ -35,7 +35,7 @@ export const POST = async ({ request, locals }) => {
 	// Check if the project exists
 	if (!project)
 		return new Response(
-			JSON.stringify({ error: 'The project you are trying to edit does not exist.' }),
+			JSON.stringify({ error: 'The project you ∫are trying to edit does not exist.' }),
 			{
 				status: 404,
 				headers: {
@@ -44,7 +44,7 @@ export const POST = async ({ request, locals }) => {
 			}
 		);
 
-	console.log(body.data);
+	// console.log(body.data);
 
 	// Check if the user is the owner of the project
 	if (project.userId !== locals.user.id)

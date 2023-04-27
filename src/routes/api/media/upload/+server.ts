@@ -1,9 +1,11 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import prisma from '$ts/server/prisma';
+// import prisma from '$ts/server/prisma';
 import MediaUploadSchema from '$ts/schema/MediaUploadSchema';
 import { z } from 'zod';
-import { S3_BUCKET, AWS_REGION } from '$env/static/private';
+import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/static/private';
 import stringGate from '$ts/common/stringGate';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+import R2 from 'cloudflare-r2';
 
 export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in
@@ -28,43 +30,24 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	// Create the media path
-	const mediapath = `${stringGate(locals.user.name)}-${locals.user.id}/${Date.now()}-${stringGate(
+	const key = `${stringGate(locals.user.name)}-${locals.user.id}/${Date.now()}-${stringGate(
 		body.filename
 	)}`;
 
-	// Create the S3 upload command
-	const command = new PutObjectCommand({
-		Bucket: S3_BUCKET,
-		Key: mediapath,
-		Body: Buffer.from(body.base64data, 'base64')
+	const r2 = new R2({
+		accessKey: R2_ACCESS_KEY,
+		secretKey: R2_SECRET_KEY,
+		accountId: R2_ACCOUNT_ID,
+		region: 'auto'
 	});
 
-	// Upload the media to S3
-	const s3Client = new S3Client({});
-	const s3response = await s3Client.send(command);
-
-	// Check if the upload was successful
-	if (s3response.$metadata.httpStatusCode !== 200) {
-		return new Response(JSON.stringify({ error: 'An error occured when uploading media.' }), {
-			status: 500
-		});
-	}
-
-	// Create the file URL
-	const fileurl = `https://${S3_BUCKET}.s3.${AWS_REGION}.amazonaws.com/${mediapath}`;
-
-	// Log the media in the DB
-	await prisma.userMedia.create({
-		data: {
-			user: {
-				connect: {
-					id: locals.user.id
-				}
-			},
-			url: fileurl
-		}
+	const putResponse = await r2.putObject({
+		bucket: R2_BUCKET,
+		key,
+		body: Buffer.from(body.base64data, 'base64')
 	});
 
+	const fileurl = `https://pub-3aabe8e9655b4a5eb94c0efbaa7142a1.r2.dev/${key}`;
 	// Return the file URL
 	return new Response(JSON.stringify({ fileurl }), {
 		status: 200
