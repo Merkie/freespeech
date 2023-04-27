@@ -2,6 +2,7 @@
 	import LeftArrow from '$components/icons/LeftArrow.svelte';
 	import { ActivePage, ActiveProject } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
+	import type { TilePage } from '@prisma/client';
 	export let closeModal: () => void;
 
 	let addingPage = false;
@@ -26,7 +27,11 @@
 
 		if (data.error) return alert(data.error);
 
-		$ActiveProject = data.project;
+		//@ts-ignore
+		$ActiveProject = {
+			...$ActiveProject,
+			pages: [...($ActiveProject?.pages as TilePage[]), data.page as TilePage]
+		};
 		addingPage = false;
 	};
 </script>

@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { ActiveProject } from '$ts/client/stores';
+
 	const logout = async () => {
 		await fetch('/api/user/logout');
+		$ActiveProject = null;
 		window.location.assign('/');
 	};
 </script>

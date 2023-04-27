@@ -5,6 +5,8 @@
 	import type { PageData } from './$types';
 	import { ActiveProject, AppMode } from '$ts/client/stores';
 	import Dashboard from '$components/dashboard/Dashboard.svelte';
+	import Loader from '$components/common/Loader.svelte';
+	import { Loading } from '$ts/client/stores';
 	export let data: PageData;
 
 	onMount(async () => {
@@ -22,6 +24,10 @@
 		}
 	});
 </script>
+
+{#if $Loading}
+	<Loader />
+{/if}
 
 <main class="h-screen flex flex-col">
 	{#if ['home', 'edit'].includes($AppMode)}

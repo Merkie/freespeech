@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ActivePage, ActiveProject, AppMode } from '$ts/client/stores';
-	import AddTileButton from './AddTileButton.svelte';
-	import Tile from './Tile.svelte';
+	import Tile from '$components/app/Tile.svelte';
+	import AddTileButton from '$components/app/AddTileButton.svelte';
 	export let containerHeight: number;
 	import type { TilePage } from '@prisma/client';
 

@@ -72,7 +72,7 @@ export const POST = async ({ request, locals }) => {
 		);
 
 	// Create the page
-	await prisma.tilePage.create({
+	const page = await prisma.tilePage.create({
 		data: {
 			name: body.name,
 			Project: {
@@ -98,16 +98,16 @@ export const POST = async ({ request, locals }) => {
 	});
 
 	// get the full project
-	const fullProject = await prisma.project.findUnique({
-		where: {
-			id: body.projectid
-		},
-		include: {
-			pages: true
-		}
-	});
+	// const fullProject = await prisma.project.findUnique({
+	// 	where: {
+	// 		id: body.projectid
+	// 	},
+	// 	include: {
+	// 		pages: true
+	// 	}
+	// });
 
-	return new Response(JSON.stringify({ project: fullProject }), {
+	return new Response(JSON.stringify({ page }), {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/json'
