@@ -2,7 +2,6 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import prisma from '$ts/server/prisma';
 import MediaUploadSchema from '$ts/schema/MediaUploadSchema';
 import { z } from 'zod';
-// import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3_BUCKET, AWS_REGION } from '$env/static/private';
 import stringGate from '$ts/common/stringGate';
 

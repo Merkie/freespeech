@@ -10,8 +10,8 @@
 		if (currentPageIndex === -1) return;
 		if (!$ActiveProject.pages[currentPageIndex]) return;
 
-		($ActiveProject.pages[0].data as unknown as { tiles: any[] }).tiles = [
-			...($ActiveProject.pages[0].data as unknown as { tiles: any[] }).tiles,
+		($ActiveProject.pages[currentPageIndex].data as unknown as { tiles: any[] }).tiles = [
+			...($ActiveProject.pages[currentPageIndex].data as unknown as { tiles: any[] }).tiles,
 			{ x, y, text: 'New tile' }
 		];
 	};

@@ -30,6 +30,7 @@
 	"type": "module",
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.319.0",
+		"@aws-sdk/fetch-http-handler": "^3.310.0",
 		"@prisma/client": "^4.13.0",
 		"@types/bcrypt": "^5.0.0",
 		"autoprefixer": "^10.4.14",

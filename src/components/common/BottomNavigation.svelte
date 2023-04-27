@@ -17,6 +17,7 @@
 			});
 			console.log(await response.json());
 		}
+		$ActivePage = 'Home';
 		$AppMode = 'home';
 	};
 </script>
