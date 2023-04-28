@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ActiveProject } from '$ts/client/stores';
+	import { ActivePage, ActiveProject } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 	import ImageResize from 'image-resize';
 	export let text: string;
@@ -9,6 +9,7 @@
 	export let handleTextChange: (newText: string) => void;
 	export let handleImageChange: (newImage: string) => void;
 	export let handleNavigationChange: (newNavigation: string) => void;
+	export let deleteTile: () => void;
 
 	let fileinput: HTMLInputElement;
 
@@ -78,6 +79,16 @@
 			<option value={page.name}>{page.name}</option>
 		{/each}
 	</select>
+	<button
+		on:click={() => {
+			deleteTile();
+			closeModal();
+		}}
+		class="bg-red-600 p-1 rounded-md border border-red-500 mt-4"
+		on:click={deleteTile}
+	>
+		Delete Tile
+	</button>
 </ModalShell>
 
 <style lang="postcss">

@@ -88,6 +88,7 @@ export const POST = async ({ request, locals }) => {
 			data: {
 				tiles: [
 					{
+						page: 0,
 						text: 'New tile',
 						x: 0,
 						y: 0

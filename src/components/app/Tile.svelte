@@ -8,6 +8,7 @@
 	export let navigation = '';
 	export let x: number;
 	export let y: number;
+	export let subpage: number;
 
 	let editingTileModalOpen = false;
 
@@ -47,9 +48,32 @@
 						...page.data,
 						// @ts-ignore
 						tiles: page.data.tiles.map((tile) => {
-							if (tile.x === x && tile.y === y) return { x, y, text, image, navigation };
+							if (tile.x === x && tile.y === y && tile.page === subpage)
+								return { x, y, text, image, navigation, page: subpage };
 							return tile;
 						})
+					}
+				} as TilePage;
+			})
+		};
+	};
+
+	const deleteTile = () => {
+		if (!$ActiveProject) return;
+		$ActiveProject = {
+			...$ActiveProject,
+			pages: $ActiveProject.pages.map((page) => {
+				if (page.name !== $ActivePage) return page;
+				return {
+					...page,
+					data: {
+						// @ts-ignore
+						...page.data,
+						// @ts-ignore
+						tiles: page.data.tiles.filter(
+							// @ts-ignore
+							(tile) => !(tile.x === x && tile.y === y && tile.page === subpage)
+						)
 					}
 				} as TilePage;
 			})
@@ -71,6 +95,7 @@
 			navigation = newNavigation;
 			addTileEditToStore();
 		}}
+		{deleteTile}
 		{text}
 		{image}
 		{navigation}

@@ -1,18 +1,14 @@
 <script lang="ts">
-	import { ActivePage, ActiveProject, AppMode } from '$ts/client/stores';
+	import { AppMode } from '$ts/client/stores';
 	import Tile from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
 	export let containerHeight: number;
-	import type { TilePage } from '@prisma/client';
+	import type ITile from '$ts/types/Tile';
 
-	let pageData:
-		| (TilePage & { data: { tiles: { text: string; image?: string; x: number; y: number }[] } })
-		| undefined;
-
+	export let tiles: ITile[] = [];
+	export let page = 0;
 	let unusedCoords: { x: number; y: number }[] = [];
 
-	//@ts-ignore
-	$: pageData = $ActiveProject?.pages.find((page) => page.name === $ActivePage);
 	$: {
 		// fill array with all possible cords, 6 cols and 4 rows, starting with 0,0
 		for (let x = 0; x < 6; x++) {
@@ -20,7 +16,7 @@
 				unusedCoords.push({ x, y });
 			}
 		}
-		const usedCoords = pageData?.data.tiles.map((tile) => ({ x: tile.x, y: tile.y }));
+		const usedCoords = tiles.map((tile) => ({ x: tile.x, y: tile.y }));
 		// filter out used coords
 		unusedCoords = unusedCoords.filter(
 			(coord) =>
@@ -33,13 +29,13 @@
 	style={`height: ${containerHeight}px;`}
 	class="grid grid-cols-4 grid-rows-6 md:grid-cols-6 md:grid-rows-4 gap-2 p-2"
 >
-	{#if pageData}
-		{#each pageData.data.tiles as tile}
-			<Tile {...tile} />
+	{#if tiles}
+		{#each tiles as tile, index}
+			<Tile subpage={page} {...tile} />
 		{/each}
 		{#if $AppMode === 'edit'}
 			{#each unusedCoords as unusedCoord}
-				<AddTileButton {...unusedCoord} />
+				<AddTileButton {page} {...unusedCoord} />
 			{/each}
 		{/if}
 	{/if}
