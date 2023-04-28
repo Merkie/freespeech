@@ -8,6 +8,7 @@
 	export let navigation = '';
 	export let x: number;
 	export let y: number;
+	export let color: string = 'white';
 	export let subpage: number;
 
 	let editingTileModalOpen = false;
@@ -49,7 +50,7 @@
 						// @ts-ignore
 						tiles: page.data.tiles.map((tile) => {
 							if (tile.x === x && tile.y === y && tile.page === subpage)
-								return { x, y, text, image, navigation, page: subpage };
+								return { x, y, text, image, navigation, page: subpage, color };
 							return tile;
 						})
 					}
@@ -95,6 +96,10 @@
 			navigation = newNavigation;
 			addTileEditToStore();
 		}}
+		handleColorChange={(newColor) => {
+			color = newColor;
+			addTileEditToStore();
+		}}
 		{deleteTile}
 		{text}
 		{image}
@@ -106,7 +111,11 @@
 <button
 	on:click={handleInteraction}
 	style={`grid-row: ${y + 1}; grid-column: ${x + 1};`}
-	class={`w-full h-full bg-zinc-50 border border-zinc-500 rounded-md ${
+	class={`w-full h-full bg-${color === 'white' ? 'zinc' : color}-${
+		color === 'zinc' ? '50' : '100'
+	} text-${color === 'white' ? 'zinc' : color}-950 border border-${
+		color === 'white' ? 'zinc' : color
+	}-500 rounded-md ${
 		image ? 'flex flex-col items-center overflow-hidden' : 'grid place-items-center'
 	}`}
 >

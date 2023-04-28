@@ -9,6 +9,7 @@
 	export let handleTextChange: (newText: string) => void;
 	export let handleImageChange: (newImage: string) => void;
 	export let handleNavigationChange: (newNavigation: string) => void;
+	export let handleColorChange: (newColor: string) => void;
 	export let deleteTile: () => void;
 
 	let fileinput: HTMLInputElement;
@@ -75,10 +76,29 @@
 		value={navigation}
 	>
 		<option value="">None</option>
-		{#each $ActiveProject?.pages || [] as page}
+		{#each $ActiveProject?.pages.filter((page) => page.name !== $ActivePage) || [] as page}
 			<option value={page.name}>{page.name}</option>
 		{/each}
 	</select>
+
+	<p class="mt-2">Color:</p>
+	<select
+		on:input={(e) => {
+			//@ts-ignore
+			handleColorChange(e.target.value);
+		}}
+		value={'white'}
+	>
+		<option value="white">White</option>
+		<option value="red">Red</option>
+		<option value="orange">Orange</option>
+		<option value="yellow">Yellow</option>
+		<option value="green">Green</option>
+		<option value="blue">Blue</option>
+		<option value="purple">Purple</option>
+		<option value="pink">Pink</option>
+	</select>
+
 	<button
 		on:click={() => {
 			deleteTile();

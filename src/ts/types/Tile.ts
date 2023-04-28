@@ -5,6 +5,7 @@ type Tile = {
 	image?: string;
 	navigation?: string;
 	page?: number;
+	color?: string;
 };
 
 export default Tile;
