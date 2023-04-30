@@ -20,6 +20,14 @@
 					return alert(projectData.error);
 				}
 				$ActiveProject = projectData.project;
+			} else {
+				const project = await fetch(`/api/project/fetch/${$ActiveProject.id}`);
+				const projectData = await project.json();
+				if (projectData.error) {
+					return alert(projectData.error);
+				}
+				$ActiveProject = projectData.project;
+				console.log('Updated project from server.');
 			}
 		}
 	});

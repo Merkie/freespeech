@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import UserCreationSchema from '$ts/schema/UserCreationSchema';
-import prisma from '$ts/server/prisma.js';
 import bcrypt from 'bcrypt';
 
 export const POST = async ({ request, cookies, locals, getClientAddress }) => {
@@ -23,7 +22,7 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	}
 
 	// Check if the user already exists
-	if (await prisma.user.findUnique({ where: { email: body.email } })) {
+	if (await locals.prisma.user.findUnique({ where: { email: body.email } })) {
 		return new Response(JSON.stringify({ error: 'A user already exists with that email.' }), {
 			status: 409
 		});
@@ -33,7 +32,7 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	const hashedPassword = await bcrypt.hash(body.password, 10);
 
 	// Create the user
-	const user = await prisma.user.create({
+	const user = await locals.prisma.user.create({
 		data: {
 			email: body.email,
 			password: hashedPassword,
@@ -42,7 +41,7 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	});
 
 	// Create the VerficationToken
-	const verificationToken = await prisma.verificationToken.create({
+	const verificationToken = await locals.prisma.verificationToken.create({
 		data: {
 			user: {
 				connect: {

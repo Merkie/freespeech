@@ -1,5 +1,5 @@
 import { z } from 'zod';
 const MediaDeleteSchema = z.object({
-	mediaId: z.string()
+	url: z.string()
 });
 export default MediaDeleteSchema;

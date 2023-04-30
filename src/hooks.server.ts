@@ -50,5 +50,8 @@ export async function handle({ event, resolve }) {
 		}
 	}
 
+	// Add prisma to the locals
+	event.locals.prisma = prisma;
+
 	return await resolve(event);
 }

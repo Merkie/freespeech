@@ -1,4 +1,3 @@
-import prisma from '$ts/server/prisma';
 import { z } from 'zod';
 import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/static/private';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -6,7 +5,7 @@ import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/sta
 import R2 from 'cloudflare-r2';
 import MediaDeleteSchema from '$ts/schema/MediaDeleteSchema';
 
-export const DELETE = async ({ request, locals }) => {
+export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in
 	if (!locals.user)
 		return new Response(JSON.stringify({ error: 'You must be logged in to delete media.' }), {
@@ -29,22 +28,21 @@ export const DELETE = async ({ request, locals }) => {
 	}
 
 	// Get the media from the database
-	const media = await prisma.userMedia.findUnique({
+	const media = await locals.prisma.userMedia.findFirst({
 		where: {
-			id: body.mediaId
-		},
-		select: {
-			url: true,
-			userId: true
+			url: body.url,
+			userId: locals.user.id
 		}
 	});
 
-	// Check if the media exists and belongs to the user
-	if (!media || media.userId !== locals.user.id) {
-		return new Response(JSON.stringify({ error: 'Media not found or access denied.' }), {
-			status: 404
-		});
-	}
+	// Check if the media exists
+	if (!media)
+		return new Response(
+			JSON.stringify({ error: 'The media you are trying to delete does not exist.' }),
+			{
+				status: 404
+			}
+		);
 
 	// Extract the key from the media URL
 	const key = media.url.replace(/^https:\/\/pub-3aabe8e9655b4a5eb94c0efbaa7142a1\.r2\.dev\//, '');
@@ -58,20 +56,27 @@ export const DELETE = async ({ request, locals }) => {
 	});
 
 	// Delete the media from R2 storage
-	await r2.deleteObject({
+
+	const deleteResponse = await r2.deleteObject({
 		bucket: R2_BUCKET,
 		key
 	});
 
+	// Check if the deletion was successful
+	if (deleteResponse.status !== 204)
+		return new Response(JSON.stringify({ error: 'An error occured when deleting the media.' }), {
+			status: 500
+		});
+
 	// Delete the media from the database
-	await prisma.userMedia.delete({
+	await locals.prisma.userMedia.delete({
 		where: {
-			id: body.mediaId
+			id: media.id
 		}
 	});
 
 	// Return success message
-	return new Response(JSON.stringify({ message: 'Media successfully deleted.' }), {
+	return new Response(JSON.stringify({ message: 'Media successfully deleted.', success: true }), {
 		status: 200
 	});
 };

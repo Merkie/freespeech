@@ -1,4 +1,3 @@
-import prisma from '$ts/server/prisma';
 import ProjectUpdateSchema from '$ts/schema/ProjectUpdateSchema';
 import { z } from 'zod';
 
@@ -26,7 +25,7 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	// Get the project
-	const project = await prisma.project.findUnique({
+	const project = await locals.prisma.project.findUnique({
 		where: {
 			id: body.id
 		}
@@ -52,7 +51,7 @@ export const POST = async ({ request, locals }) => {
 			status: 403
 		});
 
-	const requestedPage = await prisma.tilePage.findFirst({
+	const requestedPage = await locals.prisma.tilePage.findFirst({
 		where: {
 			name: body.pageName,
 			projectId: body.id,
@@ -71,7 +70,7 @@ export const POST = async ({ request, locals }) => {
 			}
 		);
 
-	await prisma.tilePage.update({
+	await locals.prisma.tilePage.update({
 		where: {
 			id: requestedPage.id
 		},

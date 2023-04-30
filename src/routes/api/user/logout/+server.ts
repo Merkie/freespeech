@@ -1,7 +1,5 @@
-import prisma from '$ts/server/prisma';
-
 export const GET = async ({ locals, cookies }) => {
-	const verification = await prisma.verificationToken.findFirst({
+	const verification = await locals.prisma.verificationToken.findFirst({
 		where: {
 			token: cookies.get('verificationToken')
 		}
@@ -13,7 +11,7 @@ export const GET = async ({ locals, cookies }) => {
 		});
 	}
 
-	await prisma.verificationToken.delete({
+	await locals.prisma.verificationToken.delete({
 		where: {
 			id: verification.id
 		}

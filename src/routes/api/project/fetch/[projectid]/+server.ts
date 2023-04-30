@@ -1,9 +1,7 @@
-import prisma from '$ts/server/prisma';
-
 export const GET = async ({ params, locals }) => {
 	const { projectid } = params;
 
-	const project = await prisma.project.findUnique({
+	const project = await locals.prisma.project.findUnique({
 		where: {
 			id: projectid
 		},

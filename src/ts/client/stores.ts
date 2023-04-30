@@ -5,7 +5,7 @@ import { browser } from '$app/environment';
 export const AppMode = writable<'home' | 'edit' | 'dashboard'>('home');
 export const ActiveProject = writable<(Project & { pages: TilePage[] }) | null>(null);
 export const ActivePage = writable('Home');
-export const ActiveDashboardPage = writable('Projects');
+export const ActiveDashboardPage = writable('projects');
 export const Loading = writable(false);
 
 if (browser) {

@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import UserLoginSchema from '$ts/schema/UserLoginSchema';
-import prisma from '$ts/server/prisma.js';
 import bcrypt from 'bcrypt';
 
 export const POST = async ({ request, cookies, locals, getClientAddress }) => {
@@ -19,8 +18,7 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 		}
 		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), { status: 500 });
 	}
-
-	const user = await prisma.user.findUnique({ where: { email: body.email } });
+	const user = await locals.prisma.user.findUnique({ where: { email: body.email } });
 
 	// Check if the user already exists
 	if (!user) {
@@ -37,7 +35,7 @@ export const POST = async ({ request, cookies, locals, getClientAddress }) => {
 	}
 
 	// Create the VerficationToken
-	const verificationToken = await prisma.verificationToken.create({
+	const verificationToken = await locals.prisma.verificationToken.create({
 		data: {
 			user: {
 				connect: {

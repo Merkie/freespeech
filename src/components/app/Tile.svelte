@@ -35,7 +35,6 @@
 	};
 
 	const addTileEditToStore = () => {
-		// active project contains pages which is a list of objects that each contain a property called data which is an object that contains a list called tiles which is a list of objects that are the tiles, we can just replace the tile object of the current one {x, y, text}
 		// @ts-ignore
 		if (!$ActiveProject) return;
 		$ActiveProject = {
@@ -80,30 +79,42 @@
 			})
 		};
 	};
+
+	// Define variables for the background color, text color, and border color
+	let bgColorClass: string;
+	let textColorClass: string;
+	let borderColorClass: string;
+	$: {
+		bgColorClass =
+			color === 'white' ? 'bg-white' : `bg-${color}-${color === 'zinc' ? '50' : '100'}`;
+		textColorClass = color === 'white' ? 'text-zinc-950' : `text-${color}-950`;
+		borderColorClass = color === 'white' ? 'border-zinc-500' : `border-${color}-500`;
+	}
+	$: {
+		let _ = { x, y, text, image, navigation, color };
+		addTileEditToStore();
+	}
 </script>
 
 {#if editingTileModalOpen}
 	<EditTileModal
 		handleTextChange={(newText) => {
 			text = newText;
-			addTileEditToStore();
 		}}
 		handleImageChange={(newImage) => {
 			image = newImage;
-			addTileEditToStore();
 		}}
 		handleNavigationChange={(newNavigation) => {
 			navigation = newNavigation;
-			addTileEditToStore();
 		}}
 		handleColorChange={(newColor) => {
 			color = newColor;
-			addTileEditToStore();
 		}}
 		{deleteTile}
 		{text}
 		{image}
 		{navigation}
+		{color}
 		closeModal={() => (editingTileModalOpen = false)}
 	/>
 {/if}
@@ -111,11 +122,7 @@
 <button
 	on:click={handleInteraction}
 	style={`grid-row: ${y + 1}; grid-column: ${x + 1};`}
-	class={`w-full h-full bg-${color === 'white' ? 'zinc' : color}-${
-		color === 'zinc' ? '50' : '100'
-	} text-${color === 'white' ? 'zinc' : color}-950 border border-${
-		color === 'white' ? 'zinc' : color
-	}-500 rounded-md ${
+	class={`w-full h-full border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
 		image ? 'flex flex-col items-center overflow-hidden' : 'grid place-items-center'
 	}`}
 >

@@ -19,7 +19,11 @@
 		$ActiveProject?.id === project.id ? 'ring-2 ring-blue-500' : ''
 	}`}
 >
-	<div class="flex-1 bg-zinc-900 rounded-sm opacity-50" />
+	<img
+		src={project.imageUrl}
+		class="w-fit h-full aspect-video object-cover bg-zinc-900 text-zinc-900 rounded-sm"
+		alt="preview"
+	/>
 	<p class="w-full text-left">
 		{project.name}
 	</p>

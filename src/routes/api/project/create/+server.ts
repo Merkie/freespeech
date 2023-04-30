@@ -1,4 +1,3 @@
-import prisma from '$ts/server/prisma';
 import ProjectCreationSchema from '$ts/schema/ProjectCreationSchema';
 import { z } from 'zod';
 
@@ -28,7 +27,7 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	// Create the project
-	const project = await prisma.project.create({
+	const project = await locals.prisma.project.create({
 		data: {
 			name: body.name,
 			description: body.description || '',
@@ -42,7 +41,7 @@ export const POST = async ({ request, locals }) => {
 	});
 
 	// Create the home page
-	await prisma.tilePage.create({
+	await locals.prisma.tilePage.create({
 		data: {
 			name: 'Home',
 			Project: {
@@ -69,7 +68,7 @@ export const POST = async ({ request, locals }) => {
 	});
 
 	// Get the entire project
-	const fullProject = await prisma.project.findUnique({
+	const fullProject = await locals.prisma.project.findUnique({
 		where: {
 			id: project.id
 		},

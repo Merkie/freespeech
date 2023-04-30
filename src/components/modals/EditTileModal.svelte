@@ -5,6 +5,7 @@
 	export let text: string;
 	export let image: string;
 	export let navigation: string;
+	export let color: string;
 	export let closeModal: () => void;
 	export let handleTextChange: (newText: string) => void;
 	export let handleImageChange: (newImage: string) => void;
@@ -75,7 +76,7 @@
 		}}
 		value={navigation}
 	>
-		<option value="">None</option>
+		<option value={''}>None</option>
 		{#each $ActiveProject?.pages.filter((page) => page.name !== $ActivePage) || [] as page}
 			<option value={page.name}>{page.name}</option>
 		{/each}
@@ -87,7 +88,7 @@
 			//@ts-ignore
 			handleColorChange(e.target.value);
 		}}
-		value={'white'}
+		value={color}
 	>
 		<option value="white">White</option>
 		<option value="red">Red</option>

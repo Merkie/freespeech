@@ -1,4 +1,3 @@
-import prisma from '$ts/server/prisma';
 import MediaUploadSchema from '$ts/schema/MediaUploadSchema';
 import { z } from 'zod';
 import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/static/private';
@@ -47,11 +46,16 @@ export const POST = async ({ request, locals }) => {
 		body: Buffer.from(body.base64data, 'base64')
 	});
 
+	if (putResponse.status !== 200)
+		return new Response(JSON.stringify({ error: 'An error occured when uploading the file.' }), {
+			status: 500
+		});
+
 	// Check if the upload was successful
 	const fileurl = `https://pub-3aabe8e9655b4a5eb94c0efbaa7142a1.r2.dev/${key}`;
 
 	// Add the media to the database
-	await prisma.userMedia.create({
+	await locals.prisma.userMedia.create({
 		data: {
 			url: fileurl,
 			user: {

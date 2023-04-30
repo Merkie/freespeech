@@ -1,8 +1,13 @@
 <script lang="ts">
 	import { ActiveProject, ActivePage, AppMode } from '$ts/client/stores';
+
 	import type Tile from '$ts/types/Tile';
 	import PageHeader from './PageHeader.svelte';
 	import TilePage from './TilePage.svelte';
+	import { onMount } from 'svelte';
+
+	import * as htmlToImage from 'html-to-image';
+	import ImageResize from 'image-resize';
 
 	let containerHeight: number;
 	let tiles: Tile[] = [];
@@ -10,53 +15,109 @@
 	// @ts-ignore
 	$: tiles = $ActiveProject?.pages.find((page) => page.name === $ActivePage)?.data.tiles;
 
-	let pagesTiles: Tile[][] = [];
+	let organizedTiles: Tile[][] = [];
 
-	/**
-	 * Removes empty pages from the given pages array and updates the 'page' property
-	 * of the tiles in the remaining pages to match their new index.
-	 *
-	 * @param {Tile[][]} pagesTiles - The array of pages containing tiles.
-	 * @returns {Tile[][]} - The refactored array of pages containing tiles.
-	 */
-	function refactorPagesTiles(pagesTiles: Tile[][]): Tile[][] {
-		// Remove empty pages from the pages array
-		let refactoredPagesTiles = pagesTiles.filter((page) => page.length > 0);
+	// removes the empty subpages to avoid void pages between pages with tiles
+	// also updates the subpage indexs if edits are made
+	const removeEmptySubpagesAndUpdateSubpageIndex = (pagesTiles: Tile[][]): Tile[][] => {
+		// remove empty subpages
+		let updatedPagesTiles = pagesTiles.filter((page) => page.length > 0);
 
-		// Update the 'page' property of the tiles in the remaining pages
-		refactoredPagesTiles.forEach((pageTiles, index) => {
+		// update subpage index
+		updatedPagesTiles.forEach((pageTiles, index) => {
 			pageTiles.forEach((tile) => {
+				// TODO: change .page to .subpage
 				tile.page = index;
 			});
 		});
 
-		return refactoredPagesTiles;
-	}
+		return updatedPagesTiles;
+	};
 
-	// Reactive statement for updating the pagesTiles array
+	let node: HTMLElement;
+
+	const imageResize = new ImageResize({
+		format: 'png',
+		width: 500,
+		height: 500
+	});
+
+	onMount(async () => {
+		if ($ActiveProject?.imageUrl) {
+			const lastThumbnailUploadedDate = $ActiveProject.imageUrl.split('/').pop()?.split('-')[0];
+			// time in seconds since last thumbnail upload
+			const timeSinceLastThumbnailUpload =
+				(Date.now() - parseInt(lastThumbnailUploadedDate + '')) / 1000;
+
+			if (timeSinceLastThumbnailUpload < 200) return;
+		}
+
+		const oldImageUrl = $ActiveProject?.imageUrl;
+
+		// capture the node with html-to-image
+		const image = await imageResize.play(await htmlToImage.toPng(node));
+
+		const mediaUploadResponse = await fetch('/api/media/upload', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				filename: 'project-thumbnail.png',
+				base64data: (image + '').split(',')[1]
+			})
+		});
+
+		const mediaUploadResponseJson = await mediaUploadResponse.json();
+
+		if (!mediaUploadResponseJson.fileurl) {
+			console.error('Failed to upload thumbnail');
+			return;
+		}
+
+		const projectUpdateResponse = await fetch('/api/project/update/thumbnail', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				id: $ActiveProject?.id,
+				imageUrl: mediaUploadResponseJson.fileurl
+			})
+		});
+
+		// Delete last image
+		await fetch('/api/media/delete', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ url: oldImageUrl })
+		});
+
+		console.log("Updated project's thumbnail");
+	});
+
 	$: {
 		if (tiles) {
-			// Find the maximum page number among the tiles
-			const maxPage = tiles.reduce((max, tile) => Math.max(max, tile.page || 0), 0);
-			// Create an array of pages, each containing the tiles with the respective page number
-			pagesTiles = Array.from({ length: maxPage + 1 }, (_, pageIndex) =>
+			const maxSubpage = tiles.reduce((max, tile) => Math.max(max, tile.page || 0), 0);
+			let pages = Array.from({ length: maxSubpage + 1 }, (_, pageIndex) =>
 				tiles.filter((tile) => (tile.page === undefined ? 0 : tile.page) === pageIndex)
 			);
 
-			// Refactor the pagesTiles array by removing empty pages and updating tile.page values
-			pagesTiles = refactorPagesTiles(pagesTiles);
+			organizedTiles = removeEmptySubpagesAndUpdateSubpageIndex(pages);
 
-			// If the app is in edit mode, add an empty page for adding new tiles
+			// add an empty subpage if in edit mode
 			if ($AppMode === 'edit') {
-				pagesTiles.push([]);
+				organizedTiles.push([]);
 			}
 		}
 	}
 </script>
 
 <PageHeader />
-<div bind:clientHeight={containerHeight} class="flex-1 bg-zinc-100 overflow-auto">
-	{#each pagesTiles as pageTiles, pageIndex}
+<div bind:this={node} bind:clientHeight={containerHeight} class="flex-1 bg-zinc-100 overflow-auto">
+	{#each organizedTiles as pageTiles, pageIndex}
 		<TilePage {containerHeight} page={pageIndex} tiles={pageTiles} />
 	{/each}
 </div>

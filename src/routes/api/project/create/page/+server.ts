@@ -1,4 +1,3 @@
-import prisma from '$ts/server/prisma';
 import PageCreationSchema from '$ts/schema/PageCreationSchema';
 import { z } from 'zod';
 
@@ -28,7 +27,7 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	// Get the project
-	const project = await prisma.project.findUnique({
+	const project = await locals.prisma.project.findUnique({
 		where: {
 			id: body.projectid
 		}
@@ -54,7 +53,7 @@ export const POST = async ({ request, locals }) => {
 
 	// Check if the page already exists
 	if (
-		await prisma.tilePage.findFirst({
+		await locals.prisma.tilePage.findFirst({
 			where: {
 				name: body.name,
 				projectId: body.projectid
@@ -72,7 +71,7 @@ export const POST = async ({ request, locals }) => {
 		);
 
 	// Create the page
-	const page = await prisma.tilePage.create({
+	const page = await locals.prisma.tilePage.create({
 		data: {
 			name: body.name,
 			Project: {
@@ -97,16 +96,6 @@ export const POST = async ({ request, locals }) => {
 			}
 		}
 	});
-
-	// get the full project
-	// const fullProject = await prisma.project.findUnique({
-	// 	where: {
-	// 		id: body.projectid
-	// 	},
-	// 	include: {
-	// 		pages: true
-	// 	}
-	// });
 
 	return new Response(JSON.stringify({ page }), {
 		status: 200,
