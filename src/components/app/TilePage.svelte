@@ -25,10 +25,7 @@
 	}
 </script>
 
-<div
-	style={`height: ${containerHeight}px;`}
-	class="grid grid-cols-4 grid-rows-6 md:grid-cols-6 md:grid-rows-4 gap-2 p-2"
->
+<div style={`height: ${containerHeight}px;`} class="grid grid-cols-6 grid-rows-4 gap-2 p-2">
 	{#if tiles}
 		{#each tiles as tile, index}
 			<Tile subpage={page} {...tile} />
