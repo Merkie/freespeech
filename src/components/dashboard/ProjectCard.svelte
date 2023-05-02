@@ -23,6 +23,7 @@
 		src={project.imageUrl}
 		class="w-fit h-full aspect-video object-cover bg-zinc-900 text-zinc-900 rounded-sm"
 		alt="preview"
+		width={100}
 	/>
 	<p class="w-full text-left">
 		{project.name}

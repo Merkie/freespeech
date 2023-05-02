@@ -26,19 +26,21 @@
 	>
 </div>
 <div class="flex-1 pt-4 flex flex-col">
-	<div
-		class={`flex-1 bg-zinc-900 rounded-md grid p-2 gap-2 ${
-			projects.length === 0
-				? 'place-items-center'
-				: 'grid-cols-2 sm:grid-cols-4 md:grid-cols-5 grid-rows-4 gap-2'
-		}`}
-	>
-		{#if projects.length === 0}
-			<p class="text-zinc-500 text-[1vw]">Nothing here yet!</p>
-		{:else}
-			{#each projects as project}
-				<ProjectCard {project} />
-			{/each}
-		{/if}
+	<div class="overflow-auto h-full bg-zinc-900 rounded-md">
+		<div
+			class={`flex-1 grid p-2 gap-2 ${
+				projects.length === 0
+					? 'place-items-center'
+					: 'grid-cols-2 md:grid-cols-3 grid-rows-2 gap-2'
+			}`}
+		>
+			{#if projects.length === 0}
+				<p class="text-zinc-500 text-[1vw]">Nothing here yet!</p>
+			{:else}
+				{#each projects as project}
+					<ProjectCard {project} />
+				{/each}
+			{/if}
+		</div>
 	</div>
 </div>
