@@ -43,7 +43,7 @@
 	>
 </div>
 <div class="flex-1 pt-4 flex flex-col">
-	<div class={`flex-1 bg-zinc-900 rounded-md flex flex-col p-2 gap-2 overflow-auto`}>
+	<div class={`flex-1 bg-zinc-900 rounded-md flex flex-col p-2 gap-2`}>
 		{#each files as file, index}
 			<div class={`p-2 gap-4 flex items-center ${index % 2 !== 0 ? 'bg-zinc-950' : ''}`}>
 				<img src={file.url} class="w-[100px] object-contain h-[100px]" alt="preview" />

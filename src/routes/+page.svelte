@@ -24,6 +24,7 @@
 				const project = await fetch(`/api/project/fetch/${$ActiveProject.id}`);
 				const projectData = await project.json();
 				if (projectData.error) {
+					$ActiveProject = null;
 					return alert(projectData.error);
 				}
 				$ActiveProject = projectData.project;
@@ -38,11 +39,16 @@
 {/if}
 
 <main class="h-screen flex flex-col">
-	{#if ['home', 'edit'].includes($AppMode)}
-		<Application />
-	{/if}
-	{#if $AppMode === 'dashboard'}
-		<Dashboard projects={data.projects} />
-	{/if}
+	<div class="flex-1 relative overflow-auto">
+		<div class="absolute w-full max-h-full min-h-full top-0 left-0 flex flex-col">
+			{#if ['home', 'edit'].includes($AppMode)}
+				<Application />
+			{/if}
+			{#if $AppMode === 'dashboard'}
+				<Dashboard projects={data.projects} />
+			{/if}
+		</div>
+	</div>
+
 	<BottomNavigation noProjects={data.projects.length === 0} />
 </main>

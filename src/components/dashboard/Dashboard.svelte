@@ -4,6 +4,7 @@
 	import ProjectsPage from './ProjectsPage.svelte';
 	import { ActiveDashboardPage } from '$ts/client/stores';
 	import UploadedMediaPage from './UploadedMediaPage.svelte';
+	import ApplicationSettingsPage from './ApplicationSettingsPage.svelte';
 	export let projects: Project[];
 </script>
 
@@ -14,5 +15,8 @@
 	{/if}
 	{#if $ActiveDashboardPage === 'uploaded-media'}
 		<UploadedMediaPage />
+	{/if}
+	{#if $ActiveDashboardPage === 'application-settings'}
+		<ApplicationSettingsPage />
 	{/if}
 </div>

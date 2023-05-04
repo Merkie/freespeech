@@ -14,6 +14,11 @@
 		class={$ActiveDashboardPage !== 'projects' ? 'text-zinc-500' : ''}>Projects</button
 	>
 	<button
+		on:click={() => ($ActiveDashboardPage = 'application-settings')}
+		class={$ActiveDashboardPage !== 'application-settings' ? 'text-zinc-500' : ''}
+		>Application Settings</button
+	>
+	<button
 		on:click={() => ($ActiveDashboardPage = 'uploaded-media')}
 		class={$ActiveDashboardPage !== 'uploaded-media' ? 'text-zinc-500' : ''}>Uploaded Media</button
 	>

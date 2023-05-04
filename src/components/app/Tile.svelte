@@ -1,6 +1,14 @@
 <script lang="ts">
 	import EditTileModal from '$components/modals/EditTileModal.svelte';
-	import { ActivePage, ActiveProject, AppMode } from '$ts/client/stores';
+	import {
+		ActivePage,
+		ActiveProject,
+		AppMode,
+		ElevenLabsVoice,
+		OfflineVoice,
+		VoiceGenerator
+	} from '$ts/client/stores';
+	import ElevenLabsVoices from '$ts/types/ElevenLabsVoices';
 	import type { TilePage } from '@prisma/client';
 
 	export let text: string;
@@ -13,10 +21,37 @@
 
 	let editingTileModalOpen = false;
 
-	const speakTileText = () => {
-		const utterance = new SpeechSynthesisUtterance(text);
-		utterance.lang = 'en-US';
-		speechSynthesis.speak(utterance);
+	const speakTileText = async (offline = false) => {
+		if ($VoiceGenerator === 'offline' || offline) {
+			const utterance = new SpeechSynthesisUtterance(text);
+			if ($OfflineVoice) {
+				utterance.voice =
+					speechSynthesis.getVoices().find((voice) => voice.name === $OfflineVoice) || null;
+			}
+			utterance.lang = 'en-US';
+			speechSynthesis.speak(utterance);
+		} else if ($VoiceGenerator === 'elevenlabs') {
+			const elevenLabsResponse = await fetch('/api/text-to-speech/elevenlabs/speak', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					text,
+					name: $ElevenLabsVoice || ElevenLabsVoices[0].name
+				})
+			});
+
+			try {
+				const blob = await elevenLabsResponse.blob();
+				const audio = new Audio(URL.createObjectURL(blob));
+				audio.play();
+			} catch (err) {
+				console.log('Error playing audio from elevenlabs api, using offline voice instead.');
+				$VoiceGenerator = 'offline';
+				speakTileText();
+			}
+		}
 	};
 
 	const handleInteraction = () => {
@@ -26,7 +61,7 @@
 			return;
 		}
 		// Speak the text
-		speakTileText();
+		void speakTileText();
 		// Handle navigation
 		if ($ActiveProject?.pages.map((page) => page.name).includes(navigation)) {
 			$ActivePage = navigation;
