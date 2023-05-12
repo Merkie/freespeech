@@ -4,6 +4,8 @@
 	import { ActiveProject, Loading } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
+	import { page } from '$app/stores';
+	import { fly, scale } from 'svelte/transition';
 	export let data: LayoutData;
 
 	onMount(() => {
@@ -26,5 +28,5 @@
 			<slot><!-- optional fallback --></slot>
 		</div>
 	</div>
-	<BottomNavigation path={data.path} noProjects={false} />
+	<BottomNavigation noProjects={false} />
 </main>

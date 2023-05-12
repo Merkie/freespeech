@@ -7,8 +7,8 @@
 		Loading
 	} from '$ts/client/stores';
 	import stringGate from '$ts/common/stringGate';
+	import { page } from '$app/stores';
 	export let noProjects: boolean;
-	export let path: string;
 
 	const saveProjectToDb = async () => {
 		$Loading = true;
@@ -27,8 +27,9 @@
 	};
 </script>
 
+<!-- TODO: This wont display in new versions of safari -->
 <div
-	class="bg-zinc-900 text-zinc-100 font-light p-2 flex gap-2 border border-x-0 border-b-0 border-zinc-700 pb-12 sm:pb-2"
+	class="bg-zinc-900 text-zinc-100 font-light p-2 flex gap-2 border border-x-0 border-b-0 border-zinc-700"
 >
 	{#if $isEditing}
 		<!-- Cancel Edits Button -->
@@ -74,7 +75,10 @@
 				$isEditing = false;
 				if (!$ActiveProject) return;
 			}}
-			class={path.startsWith('/app/') && !path.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''}
+			class={$page.url.pathname.startsWith('/app/') &&
+			!$page.url.pathname.startsWith('/app/dashboard')
+				? 'bg-zinc-800'
+				: ''}
 			href={$ActiveProject
 				? `/app/${stringGate(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
 				: ''}
@@ -86,11 +90,12 @@
 			on:click={() => {
 				$isEditing = true;
 			}}
-			disabled={noProjects || path.startsWith('/app/dashboard')}>Edit</button
+			disabled={noProjects || $page.url.pathname.startsWith('/app/dashboard')}>Edit</button
 		>
 		<!-- Dashboard Button -->
-		<a href="/app/dashboard/projects" class={path.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''}
-			>Dashboard</a
+		<a
+			href="/app/dashboard/projects"
+			class={$page.url.pathname.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''}>Dashboard</a
 		>
 	{/if}
 </div>
@@ -98,6 +103,6 @@
 <style lang="postcss">
 	button,
 	a {
-		@apply p-1 flex-1 rounded-md text-center;
+		@apply p-1 flex-1 rounded-md text-center transition-colors;
 	}
 </style>
