@@ -21,7 +21,7 @@
 >
 	<img
 		src={project.imageUrl}
-		class="w-fit h-full aspect-video object-cover bg-zinc-900 text-zinc-900 rounded-sm"
+		class="w-full h-full aspect-video object-cover bg-zinc-900 text-zinc-900 rounded-sm"
 		alt="preview"
 		width={100}
 	/>

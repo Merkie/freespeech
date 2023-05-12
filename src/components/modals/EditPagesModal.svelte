@@ -1,6 +1,6 @@
 <script lang="ts">
-	import LeftArrow from '$components/icons/LeftArrow.svelte';
-	import { ActivePage, ActiveProject } from '$ts/client/stores';
+	import { ActivePage, ActiveProject, hasUnsavedChanges } from '$ts/client/stores';
+	import stringGate from '$ts/common/stringGate';
 	import ModalShell from './ModalShell.svelte';
 	import type { TilePage } from '@prisma/client';
 	export let closeModal: () => void;
@@ -10,6 +10,7 @@
 	let creatingPage = false;
 
 	const createPage = async () => {
+		$hasUnsavedChanges = true;
 		creatingPage = true;
 		const response = await fetch('/api/project/create/page', {
 			method: 'POST',
@@ -42,7 +43,7 @@
 			on:click={() => (addingPage = false)}
 			class="flex items-center gap-1 mb-2 text-sm text-zinc-300"
 		>
-			<LeftArrow />
+			<i class="bi bi-arrow-left" />
 			Back
 		</button>
 		<input bind:value={pageName} type="text" placeholder="Page name" />
@@ -60,9 +61,12 @@
 			>
 				<p>{page.name}</p>
 				<div class="flex-1" />
-				<button
+				<a
+					href={`/app/${stringGate($ActiveProject?.name || '').toLowerCase()}/${stringGate(
+						page.name || ''
+					).toLowerCase()}`}
 					on:click={() => ($ActivePage = page.name)}
-					class="text-sm p-1 px-2 bg-blue-600 border border-blue-500 rounded-md">View</button
+					class="text-sm p-1 px-2 bg-blue-600 border border-blue-500 rounded-md">View</a
 				>
 				{#if page.name !== 'Home'}
 					<button class="text-sm p-1 px-2 bg-yellow-600 border border-yellow-500 rounded-md"

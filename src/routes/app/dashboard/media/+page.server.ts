@@ -1,10 +1,5 @@
-export const GET = async ({ locals }) => {
-	// Check if the user is logged in
-	if (!locals.user) {
-		return new Response(JSON.stringify({ error: 'You must be logged in to view your files.' }), {
-			status: 401
-		});
-	}
+export const load = async ({ locals }) => {
+	if (!locals.user) return { files: [] };
 
 	// Query the database for all the media files associated with the user
 	const userMedia = await locals.prisma.userMedia.findMany({
@@ -59,11 +54,5 @@ export const GET = async ({ locals }) => {
 		return file;
 	});
 
-	// Return the array of file objects as a JSON response
-	return new Response(JSON.stringify({ files }), {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+	return { files };
 };

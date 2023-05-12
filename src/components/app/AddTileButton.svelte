@@ -21,7 +21,7 @@
 <button
 	on:click={addTile}
 	style={`grid-row: ${y + 1}; grid-column: ${x + 1};`}
-	class={`w-full h-fullborder rounded-md bg-zinc-100 grid place-items-center border border-dashed border-zinc-500 text-zinc-500 text-3xl font-light`}
+	class={`w-[200px] h-[150px] sm:w-full sm:h-full rounded-md bg-zinc-100 grid place-items-center border border-dashed border-zinc-500 text-zinc-500 text-3xl font-light`}
 >
 	<p>+</p>
 </button>

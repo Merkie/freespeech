@@ -3,13 +3,13 @@
 	import {
 		ActivePage,
 		ActiveProject,
-		AppMode,
-		ElevenLabsVoice,
-		OfflineVoice,
-		VoiceGenerator
+		Sentence,
+		SpeakOnTap,
+		hasUnsavedChanges,
+		isEditing
 	} from '$ts/client/stores';
-	import ElevenLabsVoices from '$ts/types/ElevenLabsVoices';
 	import type { TilePage } from '@prisma/client';
+	import type Tile from '$ts/types/Tile';
 
 	export let text: string;
 	export let image = '';
@@ -18,50 +18,23 @@
 	export let y: number;
 	export let color: string = 'white';
 	export let subpage: number;
+	export let speakText: (text: string) => void;
 
 	let editingTileModalOpen = false;
 
-	const speakTileText = async (offline = false) => {
-		if ($VoiceGenerator === 'offline' || offline) {
-			const utterance = new SpeechSynthesisUtterance(text);
-			if ($OfflineVoice) {
-				utterance.voice =
-					speechSynthesis.getVoices().find((voice) => voice.name === $OfflineVoice) || null;
-			}
-			utterance.lang = 'en-US';
-			speechSynthesis.speak(utterance);
-		} else if ($VoiceGenerator === 'elevenlabs') {
-			const elevenLabsResponse = await fetch('/api/text-to-speech/elevenlabs/speak', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					text,
-					name: $ElevenLabsVoice || ElevenLabsVoices[0].name
-				})
-			});
-
-			try {
-				const blob = await elevenLabsResponse.blob();
-				const audio = new Audio(URL.createObjectURL(blob));
-				audio.play();
-			} catch (err) {
-				console.log('Error playing audio from elevenlabs api, using offline voice instead.');
-				$VoiceGenerator = 'offline';
-				speakTileText();
-			}
-		}
-	};
-
 	const handleInteraction = () => {
 		// Edit Mode
-		if ($AppMode === 'edit') {
+		if ($isEditing) {
+			$hasUnsavedChanges = true;
 			editingTileModalOpen = true;
 			return;
 		}
-		// Speak the text
-		void speakTileText();
+		// Add tile to store
+		$Sentence = [...$Sentence, { text, image, color } as Tile];
+		// Speak the text if the user has enabled the speak on tap setting
+		if ($SpeakOnTap) {
+			speakText(text);
+		}
 		// Handle navigation
 		if ($ActiveProject?.pages.map((page) => page.name).includes(navigation)) {
 			$ActivePage = navigation;
@@ -156,7 +129,6 @@
 
 <button
 	on:click={handleInteraction}
-	style={`grid-row: ${y + 1}; grid-column: ${x + 1};`}
 	class={`w-full h-full border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
 		image ? 'flex flex-col items-center overflow-hidden' : 'grid place-items-center'
 	}`}

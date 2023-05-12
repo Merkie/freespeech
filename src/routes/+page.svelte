@@ -1,54 +1,7 @@
 <script lang="ts">
-	import Application from '$components/app/Application.svelte';
-	import BottomNavigation from '$components/common/BottomNavigation.svelte';
 	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
-	import { ActiveProject, AppMode } from '$ts/client/stores';
-	import Dashboard from '$components/dashboard/Dashboard.svelte';
-	import Loader from '$components/common/Loader.svelte';
-	import { Loading } from '$ts/client/stores';
-	export let data: PageData;
 
-	onMount(async () => {
-		if (data.projects.length === 0) {
-			$AppMode = 'dashboard';
-		} else {
-			if (!$ActiveProject) {
-				const project = await fetch(`/api/project/fetch/${data.projects[0].id}`);
-				const projectData = await project.json();
-				if (projectData.error) {
-					return alert(projectData.error);
-				}
-				$ActiveProject = projectData.project;
-			} else {
-				const project = await fetch(`/api/project/fetch/${$ActiveProject.id}`);
-				const projectData = await project.json();
-				if (projectData.error) {
-					$ActiveProject = null;
-					return alert(projectData.error);
-				}
-				$ActiveProject = projectData.project;
-				console.log('Updated project from server.');
-			}
-		}
+	onMount(() => {
+		window.location.assign('/app');
 	});
 </script>
-
-{#if $Loading}
-	<Loader />
-{/if}
-
-<main class="h-screen flex flex-col">
-	<div class="flex-1 relative overflow-auto">
-		<div class="absolute w-full max-h-full min-h-full top-0 left-0 flex flex-col">
-			{#if ['home', 'edit'].includes($AppMode)}
-				<Application />
-			{/if}
-			{#if $AppMode === 'dashboard'}
-				<Dashboard projects={data.projects} />
-			{/if}
-		</div>
-	</div>
-
-	<BottomNavigation noProjects={data.projects.length === 0} />
-</main>

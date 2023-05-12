@@ -1,17 +1,21 @@
 import type { Project, TilePage } from '@prisma/client';
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import type Tile from '$ts/types/Tile';
 
 export type VoiceGeneratorOption = 'elevenlabs' | 'offline';
 
-export const AppMode = writable<'home' | 'edit' | 'dashboard'>('home');
-export const ActiveProject = writable<(Project & { pages: TilePage[] }) | null>(null);
+export const ActiveProject = writable<(Project & { pages: TilePage[] }) | null>(null); // stored
+export const OfflineVoice = writable(''); // stored
+export const ElevenLabsVoice = writable(''); // stored
+export const isSynthesizingSpeech = writable(false);
+export const VoiceGenerator = writable<VoiceGeneratorOption>('offline'); // stored
+export const SpeakOnTap = writable(true); // stored
 export const ActivePage = writable('Home');
-export const ActiveDashboardPage = writable('projects');
+export const Sentence = writable<Tile[]>([]);
 export const Loading = writable(false);
-export const OfflineVoice = writable('');
-export const ElevenLabsVoice = writable('');
-export const VoiceGenerator = writable<VoiceGeneratorOption>('offline');
+export const isEditing = writable(false);
+export const hasUnsavedChanges = writable(false);
 
 if (browser) {
 	// ActiveProject
@@ -62,6 +66,15 @@ if (browser) {
 			localStorage.removeItem('voiceGenerator');
 		}
 	});
-}
+	//	SpeakOnTap
+	const speakOnTap = localStorage.getItem('speakOnTap') === 'true';
+	SpeakOnTap.set(speakOnTap);
 
-// export const Edits = writable<{ type: string; id: string; data: any }[]>([]);
+	SpeakOnTap.subscribe((value) => {
+		if (value) {
+			localStorage.setItem('speakOnTap', value ? 'true' : 'false');
+		} else {
+			localStorage.removeItem('speakOnTap');
+		}
+	});
+}
