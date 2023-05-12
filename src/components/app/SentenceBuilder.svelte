@@ -25,7 +25,7 @@
 					$Sentence = $Sentence.filter((_, i) => i !== index);
 				}}
 				transition:scale={{ duration: 100 }}
-				class={`p-1 min-w-[100px] w-fit h-[70px] border bg-zinc-50 border-zinc-500 rounded-md flex flex-col items-center overflow-hidden ${
+				class={`p-1 min-w-[100px] w-fit h-[70px] border bg-zinc-50 border-zinc-500 text-zinc-950 rounded-md flex flex-col items-center overflow-hidden ${
 					!tile.image ? 'justify-center' : ''
 				}`}
 			>

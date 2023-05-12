@@ -28,7 +28,7 @@
 </script>
 
 <div
-	class="bg-zinc-900 text-zinc-100 font-light p-2 flex gap-2 border border-x-0 border-b-0 border-zinc-700"
+	class="bg-zinc-900 text-zinc-100 font-light p-2 flex gap-2 border border-x-0 border-b-0 border-zinc-700 pb-12 sm:pb-2"
 >
 	{#if $isEditing}
 		<!-- Cancel Edits Button -->
