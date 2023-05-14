@@ -29,6 +29,10 @@
 		{
 			name: 'Uploaded Media',
 			path: '/app/dashboard/media'
+		},
+		{
+			name: 'Your Profile',
+			path: '/app/dashboard/profile'
 		}
 	];
 </script>
