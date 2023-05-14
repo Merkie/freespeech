@@ -22,7 +22,7 @@
 	<Loader />
 {/if}
 
-<main class="h-screen flex flex-col">
+<main class="h-[100dvh] flex flex-col">
 	<div class="flex-1 relative overflow-auto">
 		<div class="absolute w-full max-h-full min-h-full top-0 left-0 flex flex-col">
 			<slot><!-- optional fallback --></slot>
