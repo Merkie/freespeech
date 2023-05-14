@@ -1,6 +1,6 @@
 import transporter from '$ts/server/mail';
 
-export const POST = async ({ locals }) => {
+export const GET = async ({ locals }) => {
 	if (!locals.user) return new Response(null, { status: 401 });
 
 	let emailVerificationToken = await locals.prisma.emailVerificationToken.findFirst({

@@ -77,6 +77,6 @@ export const actions = {
 		locals.user = user;
 
 		// Redirect to the dashboard
-		throw redirect(302, '/app/dashboard/projects');
+		throw redirect(302, '/verify-email');
 	}
 };

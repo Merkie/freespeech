@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import elevenLabsVoices from '$ts/types/ElevenLabsVoices';
 	import { fly } from 'svelte/transition';
+	import Fuse from 'fuse.js';
 
 	type SettingType = 'select';
 
@@ -25,6 +26,8 @@
 	let offlineBrowserVoices: string[] = [];
 	let settings: Setting[];
 	let visible = false;
+	let searchQuery = '';
+	let searchSettings: Setting[] = [];
 
 	onMount(async () => {
 		visible = true;
@@ -91,9 +94,31 @@
 			}
 		];
 	}
+
+	$: {
+		if (searchQuery) {
+			const fuse = new Fuse(settings, {
+				keys: ['name', 'description']
+			});
+			searchSettings = fuse.search(searchQuery).map((result) => result.item);
+		}
+	}
 </script>
 
-{#each settings as setting, index}
+<div class="p-2 border-b border-zinc-700 mb-2">
+	<div
+		class="px-2 p-1 text-sm border bg-zinc-800 border-zinc-700 flex-1 rounded-md items-center flex gap-2"
+	>
+		<i class="bi bi-search" />
+		<input
+			bind:value={searchQuery}
+			placeholder="Search settings..."
+			type="text"
+			class="flex-1 outline-none bg-transparent"
+		/>
+	</div>
+</div>
+{#each searchQuery ? searchSettings : settings as setting, index}
 	<div in:fly={{ delay: index * 100, y: -10 }} class="p-2 border-b border-zinc-700">
 		<div class="flex gap-2 items-center">
 			<p class="">{setting.name}{': '}</p>
@@ -119,7 +144,7 @@
 						setting.onInput({ target: { value: setting.default } });
 					}}
 					class="bg-zinc-800 border border-zinc-700 text-xs rounded-md p-1 m-2"
-					>Reset to default</button
+					><i class="bi bi-arrow-clockwise" /> Reset to default</button
 				>
 			{/if}
 		</p>

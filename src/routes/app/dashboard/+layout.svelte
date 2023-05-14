@@ -3,6 +3,9 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/stores';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
 
 	let visible = false;
 	let containerHeight: number;
@@ -11,15 +14,9 @@
 		visible = true;
 	});
 
-	const logout = async () => {
-		await fetch('/api/user/logout');
-		$ActiveProject = null;
-		window.location.assign('/');
-	};
-
 	const links = [
 		{
-			name: 'Projects',
+			name: 'Your Projects',
 			path: '/app/dashboard/projects'
 		},
 		{
@@ -32,9 +29,18 @@
 		},
 		{
 			name: 'Your Profile',
-			path: '/app/dashboard/profile'
+			path: '/app/dashboard/profile',
+			hidden: true
 		}
 	];
+
+	const getUserInitials = () => {
+		const name = data.user?.name;
+		if (!name) return '';
+		const names = name.split(' ');
+		if (names.length === 1) return names[0].charAt(0);
+		return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+	};
 </script>
 
 <!-- webpage title -->
@@ -45,16 +51,19 @@
 <!-- dashboard header -->
 <div class="p-2 bg-zinc-900 text-zinc-100 flex items-center font-light gap-2 text-sm">
 	{#each links as link}
-		<a
-			href={link.path}
-			class={`${$page.url.pathname.startsWith(link.path) ? '' : 'text-zinc-500'} transition-colors`}
-			>{link.name}</a
-		>
+		{#if !link.hidden}
+			<a
+				href={link.path}
+				class={`${
+					$page.url.pathname.startsWith(link.path) ? '' : 'text-zinc-500'
+				} transition-colors`}>{link.name}</a
+			>
+		{/if}
 	{/each}
 	<div class="flex-1" />
-	<button on:click={logout} class="bg-red-600 px-2 p-1 border border-red-500 rounded-md text-red-50"
-		>Logout</button
-	>
+	<a href="/app/dashboard/profile">
+		<p class="bg-blue-600 text-blue-50 font-bold text-xs p-3 rounded-full">{getUserInitials()}</p>
+	</a>
 </div>
 
 <!-- main content container -->
@@ -68,7 +77,7 @@
 		{/key}
 	</div>
 	<!-- page content container -->
-	<div bind:clientHeight={containerHeight} class="flex-1 relative mt-4 flex flex-col">
+	<div bind:clientHeight={containerHeight} class="flex-1 relative mt-2 flex flex-col">
 		<!-- inner absolutely positioned container -->
 		<!-- this is done to force the y overflow to not intrude on the rest of the app ui -->
 		{#if containerHeight}
