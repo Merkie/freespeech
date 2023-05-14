@@ -7,7 +7,7 @@ button {
 }
 
 button:hover {
-	@apply brightness-110;
+	@apply brightness-105;
 }
 
 button:active {

@@ -83,7 +83,7 @@
 	</select>
 
 	<p class="mt-2">Color:</p>
-	<select
+	<!-- <select
 		on:input={(e) => {
 			//@ts-ignore
 			handleColorChange(e.target.value);
@@ -98,8 +98,34 @@
 		<option value="blue">Blue</option>
 		<option value="purple">Purple</option>
 		<option value="pink">Pink</option>
-	</select>
-
+	</select> -->
+	<div class="gap-2 flex flex-wrap rounded-md">
+		{#each ['white', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'] as _color}
+			{#if _color === 'white'}
+				<button
+					on:click={() => {
+						handleColorChange(_color);
+					}}
+					class={`${
+						color === 'white' ? 'ring ring-zinc-50' : ''
+					} shadow-md rounded-md bg-zinc-50 text-zinc-950 border border-zinc-500 p-4 text-md font-medium`}
+				>
+					Aa
+				</button>
+			{:else}
+				<button
+					on:click={() => {
+						handleColorChange(_color);
+					}}
+					class={`${
+						color === _color ? 'ring ring-zinc-50' : ''
+					}  shadow-md rounded-md bg-${_color}-100 text-${_color}-950 border border-${_color}-500 p-4 text-md font-medium`}
+				>
+					Aa
+				</button>
+			{/if}
+		{/each}
+	</div>
 	<button
 		on:click={() => {
 			deleteTile();
