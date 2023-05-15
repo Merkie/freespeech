@@ -62,7 +62,11 @@
 	{/each}
 	<div class="flex-1" />
 	<a href="/app/dashboard/profile">
-		<p class="bg-blue-600 text-blue-50 font-bold text-xs p-3 rounded-full">{getUserInitials()}</p>
+		<p
+			class="bg-blue-600 text-blue-50 font-bold text-xs grid place-items-center w-[35px] h-[35px] rounded-full"
+		>
+			{getUserInitials()}
+		</p>
 	</a>
 </div>
 
