@@ -9,7 +9,7 @@
 			window.location.assign('/app/dashboard/projects');
 		} else {
 			window.location.assign(
-				`/app/${stringGate($ActiveProject.name).toLowerCase()}/${
+				`/app/project/${stringGate($ActiveProject.name).toLowerCase()}/${
 					$ActivePage ? stringGate($ActivePage).toLowerCase() : 'home'
 				}`
 			);

@@ -62,7 +62,7 @@
 				<p>{page.name}</p>
 				<div class="flex-1" />
 				<a
-					href={`/app/${stringGate($ActiveProject?.name || '').toLowerCase()}/${stringGate(
+					href={`/app/project/${stringGate($ActiveProject?.name || '').toLowerCase()}/${stringGate(
 						page.name || ''
 					).toLowerCase()}`}
 					on:click={() => ($ActivePage = page.name)}

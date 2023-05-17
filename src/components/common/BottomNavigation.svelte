@@ -80,7 +80,7 @@
 				? 'bg-zinc-800'
 				: ''}
 			href={$ActiveProject
-				? `/app/${stringGate(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
+				? `/app/project/${stringGate(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
 				: ''}
 		>
 			Home

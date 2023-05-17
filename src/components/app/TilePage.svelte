@@ -48,7 +48,7 @@
 			>
 				{#if tile.navigation && !$isEditing}
 					<a
-						href={`/app/${stringGate($ActiveProject.name).toLowerCase()}/${stringGate(
+						href={`/app/project/${stringGate($ActiveProject.name).toLowerCase()}/${stringGate(
 							tile.navigation
 						).toLowerCase()}`}
 					>
