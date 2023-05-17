@@ -1,5 +1,6 @@
 <script lang="ts">
 	import EditTileModal from '$components/modals/EditTileModal.svelte';
+	import OnlineImageSearchModal from '$components/modals/OnlineImageSearchModal.svelte';
 	import {
 		ActivePage,
 		ActiveProject,
@@ -21,6 +22,7 @@
 	export let speakText: (text: string) => void;
 
 	let editingTileModalOpen = false;
+	let onlineImageSearchModalOpen = false;
 
 	const handleInteraction = () => {
 		// Edit Mode
@@ -118,12 +120,30 @@
 		handleColorChange={(newColor) => {
 			color = newColor;
 		}}
+		handleOnlineImageSearch={() => {
+			editingTileModalOpen = false;
+			onlineImageSearchModalOpen = true;
+		}}
 		{deleteTile}
 		{text}
 		{image}
 		{navigation}
 		{color}
 		closeModal={() => (editingTileModalOpen = false)}
+	/>
+{/if}
+
+{#if onlineImageSearchModalOpen}
+	<OnlineImageSearchModal
+		handleImageChange={(newImage) => {
+			image = newImage;
+		}}
+		handleNavigateBack={() => {
+			onlineImageSearchModalOpen = false;
+			editingTileModalOpen = true;
+		}}
+		{image}
+		closeModal={() => (onlineImageSearchModalOpen = false)}
 	/>
 {/if}
 

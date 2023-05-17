@@ -1,14 +1,18 @@
 <script lang="ts">
+	// stores
 	import { ActiveProject, isEditing } from '$ts/client/stores';
+	// components
 	import Tile from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
-	export let containerHeight: number;
-	import type ITile from '$ts/types/Tile';
+	// helpers
 	import stringGate from '$ts/common/stringGate';
 	import { scale } from 'svelte/transition';
+	// types
+	import type ITile from '$ts/types/Tile';
 
+	export let containerHeight: number;
 	export let tiles: ITile[] = [];
-	export let page = 0;
+	export let subpage = 0;
 	export let speakText: (text: string) => void;
 	let unusedCoords: { x: number; y: number }[] = [];
 
@@ -30,7 +34,9 @@
 
 <div
 	style={`height: ${containerHeight}px;`}
-	class={`grid grid-cols-6 grid-rows-4 gap-2 p-2 ${page % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'}`}
+	class={`grid grid-cols-6 grid-rows-4 gap-2 p-2 ${
+		subpage % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'
+	}`}
 >
 	{#if tiles && $ActiveProject}
 		{#each tiles as tile}
@@ -46,11 +52,11 @@
 							tile.navigation
 						).toLowerCase()}`}
 					>
-						<Tile {speakText} subpage={page} {...tile} />
+						<Tile {speakText} {subpage} {...tile} />
 					</a>
 				{:else}
 					<!-- Else, just add the tile -->
-					<Tile {speakText} subpage={page} {...tile} />
+					<Tile {speakText} {subpage} {...tile} />
 				{/if}
 			</div>
 		{/each}
@@ -59,7 +65,7 @@
 				   "add tile" buttons -->
 			{#each unusedCoords as unusedCoord}
 				<!-- TODO: add animation -->
-				<AddTileButton {page} {...unusedCoord} />
+				<AddTileButton {subpage} {...unusedCoord} />
 			{/each}
 		{/if}
 	{/if}

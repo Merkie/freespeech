@@ -3,7 +3,7 @@
 
 	export let x: number;
 	export let y: number;
-	export let page: number;
+	export let subpage: number;
 
 	const addTile = () => {
 		if (!$ActiveProject) return;
@@ -13,7 +13,7 @@
 
 		($ActiveProject.pages[currentPageIndex].data as unknown as { tiles: any[] }).tiles = [
 			...($ActiveProject.pages[currentPageIndex].data as unknown as { tiles: any[] }).tiles,
-			{ x, y, page, text: 'New tile' }
+			{ x, y, page: subpage, text: 'New tile' }
 		];
 	};
 </script>

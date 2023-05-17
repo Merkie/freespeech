@@ -26,11 +26,11 @@
 				closeModal();
 			}
 		}}
-		class="fixed top-0 left-0 h-screen w-screen grid place-items-center bg-[rgba(0,0,0,0.5)] z-40"
+		class="fixed top-0 left-0 h-screen w-screen grid place-items-center bg-[rgba(0,0,0,0.5)] z-30"
 	>
 		<div
 			transition:fly={{ y: 100, duration: 200 }}
-			class="bg-zinc-900 border border-zinc-800 text-zinc-100 font-light shadow-md p-2 rounded-md flex flex-col w-[90%] max-w-[500px]"
+			class="bg-zinc-900 border border-zinc-800 text-zinc-100 font-light shadow-md p-2 rounded-md flex flex-col w-[90%] max-w-[500px] max-h-[90%] overflow-y-auto"
 		>
 			<div class="flex items-center gap-2 mb-2">
 				<button on:click={closeModal}>

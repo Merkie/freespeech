@@ -43,6 +43,7 @@
 				>
 			{/if}
 			<button
+				disabled={true}
 				class="mt-2 p-1 w-[200px] sm:w-full bg-zinc-800 text-zinc-200 border border-zinc-700 text-sm rounded-md"
 				><i class="bi bi-pencil-square mr-2" />Edit Profile</button
 			>
