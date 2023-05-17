@@ -113,8 +113,17 @@
 				>
 			</div>
 			{#if image}
-				<div class="flex flex-col gap-1">
-					<img src={image} width={100} alt="Uploaded media preview" />
+				<div class="relative w-fit mt-5">
+					<button
+						on:click={() => {
+							image = '';
+							handleImageChange('');
+						}}
+						class="absolute w-[25px] h-[25px] flex justify-center bg-red-600 border border-red-400 text-red-50 rounded-full top-0 right-0 -translate-y-2 translate-x-2"
+					>
+						<i class="bi bi-x" />
+					</button>
+					<img src={image} width={200} alt="Uploaded media preview" />
 				</div>
 			{/if}
 		</div>
