@@ -64,6 +64,8 @@ model Project {
   name        String
   description String?
   imageUrl    String?
+  columns     Int        @default(6)
+  rows        Int        @default(4)
   user        User       @relation(fields: [userId], references: [id])
   userId      String
   isPublic    Boolean    @default(false)

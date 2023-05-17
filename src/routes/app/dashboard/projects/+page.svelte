@@ -27,7 +27,10 @@
 </script>
 
 {#if createProjectModalOpen}
-	<CreateProjectModal closeModal={() => (createProjectModalOpen = false)} />
+	<CreateProjectModal
+		form={data.createProjectForm}
+		closeModal={() => (createProjectModalOpen = false)}
+	/>
 {/if}
 
 <div class="p-2 pt-0 flex items-center gap-2">

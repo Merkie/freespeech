@@ -17,26 +17,26 @@
 	let unusedCoords: { x: number; y: number }[] = [];
 
 	$: {
-		// fill array with all possible cords, 6 cols and 4 rows, starting with 0,0
-		for (let x = 0; x < 6; x++) {
-			for (let y = 0; y < 4; y++) {
-				unusedCoords.push({ x, y });
+		if ($ActiveProject) {
+			// fill array with all possible cords, 6 cols and 4 rows, starting with 0,0
+			for (let x = 0; x < $ActiveProject.columns; x++) {
+				for (let y = 0; y < $ActiveProject.rows; y++) {
+					unusedCoords.push({ x, y });
+				}
 			}
+			const usedCoords = tiles.map((tile) => ({ x: tile.x, y: tile.y }));
+			// filter out used coords
+			unusedCoords = unusedCoords.filter(
+				(coord) =>
+					!usedCoords?.find((usedCoord) => usedCoord.x === coord.x && usedCoord.y === coord.y)
+			);
 		}
-		const usedCoords = tiles.map((tile) => ({ x: tile.x, y: tile.y }));
-		// filter out used coords
-		unusedCoords = unusedCoords.filter(
-			(coord) =>
-				!usedCoords?.find((usedCoord) => usedCoord.x === coord.x && usedCoord.y === coord.y)
-		);
 	}
 </script>
 
 <div
-	style={`height: ${containerHeight}px;`}
-	class={`grid grid-cols-6 grid-rows-4 gap-2 p-2 ${
-		subpage % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'
-	}`}
+	style={`height: ${containerHeight}px; grid-template-columns: repeat(${$ActiveProject?.columns}, 1fr); grid-template-rows: repeat(${$ActiveProject?.rows}, 1fr);`}
+	class={`grid gap-2 p-2 ${subpage % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'}`}
 >
 	{#if tiles && $ActiveProject}
 		{#each tiles as tile}

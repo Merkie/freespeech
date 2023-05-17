@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { superForm } from 'sveltekit-superforms/client';
 	import ModalShell from './ModalShell.svelte';
 	export let closeModal: () => void;
+	export let form: any;
 
 	let projectName: string;
+	let showingAdvancedSettings = false;
 
 	const createProject = async () => {
 		const response = await fetch('/api/project/create', {
@@ -22,15 +25,62 @@
 		alert('Project created successfully');
 		window.location.reload();
 	};
+
+	const { form: createProjectForm, errors, enhance, message, constraints } = superForm(form);
+
+	$: {
+		if ($message === 'good') {
+			closeModal();
+		}
+	}
 </script>
 
 <ModalShell {closeModal} title="Create Project">
-	<p>Project name:</p>
-	<input type="text" bind:value={projectName} />
-	<button
-		on:click={createProject}
-		class="bg-blue-600 text-blue-50 p-2 rounded-md mt-2 border border-blue-500">Submit</button
-	>
+	<p class="mb-2">Project name:</p>
+	<form class="flex flex-col" use:enhance method="POST" action="?/create">
+		<input type="text" name="name" bind:value={$createProjectForm.name} {...$constraints.name} />
+		{#if $errors.name}
+			<p class="text-red-500 text-sm">{$errors.name}</p>
+		{/if}
+
+		{#if showingAdvancedSettings}
+			<p class="my-2">Project Dimensions:</p>
+			<div class="flex items-center gap-2 mb-2">
+				<input
+					type="number"
+					class="flex-1"
+					name="columns"
+					placeholder="Columns"
+					bind:value={$createProjectForm.columns}
+					{...$constraints.columns}
+				/>
+				<p>X</p>
+				<input
+					type="number"
+					class="flex-1"
+					name="rows"
+					placeholder="Rows"
+					bind:value={$createProjectForm.rows}
+					{...$constraints.rows}
+				/>
+			</div>
+			{#if $errors.columns}
+				<p class="text-red-500 text-sm">{$errors.columns}</p>
+			{/if}
+			{#if $errors.rows}
+				<p class="text-red-500 text-sm">{$errors.rows}</p>
+			{/if}
+		{:else}
+			<button
+				on:click={() => (showingAdvancedSettings = true)}
+				class="text-sm text-zinc-300 w-fit py-4 hover:underline">Show advanced settings</button
+			>
+		{/if}
+		<button
+			type="submit"
+			class="bg-blue-600 text-blue-50 p-2 rounded-md mt-2 border border-blue-500">Submit</button
+		>
+	</form>
 </ModalShell>
 
 <style lang="postcss">
