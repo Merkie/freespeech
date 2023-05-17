@@ -68,7 +68,9 @@ if (browser) {
 	});
 	//	SpeakOnTap
 	const speakOnTap = localStorage.getItem('speakOnTap') === 'true';
-	SpeakOnTap.set(speakOnTap);
+	if (SpeakOnTap) {
+		SpeakOnTap.set(speakOnTap);
+	}
 
 	SpeakOnTap.subscribe((value) => {
 		if (value) {

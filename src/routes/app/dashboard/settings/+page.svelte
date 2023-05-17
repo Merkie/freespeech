@@ -86,7 +86,7 @@
 				description: 'When enabled, the app will speak the text when you tap on a tile.',
 				type: 'select',
 				value: $SpeakOnTap ? 'enabled' : 'disabled',
-				default: 'disabled',
+				default: 'enabled',
 				options: ['disabled', 'enabled'],
 				onInput: (e: Event) => {
 					$SpeakOnTap = (e.target as HTMLInputElement).value === 'enabled';
