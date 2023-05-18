@@ -1,4 +1,4 @@
-import PageCreationSchema from '$ts/schema/PageCreationSchema';
+import { PageCreationSchema } from '$ts/common/schema';
 import { z } from 'zod';
 
 export const POST = async ({ request, locals }) => {

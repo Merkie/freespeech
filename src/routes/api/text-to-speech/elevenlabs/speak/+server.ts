@@ -1,6 +1,6 @@
 import { ELEVEN_LABS_KEY } from '$env/static/private';
-import ElevenLabsTTSSchema from '$ts/schema/ElevenLabsTTSSchema';
-import voices from '$ts/types/ElevenLabsVoices';
+import { ElevenLabsTTSSchema } from '$ts/common/schema';
+import voices from '$ts/common/ElevenLabsVoices';
 
 export const POST = async ({ locals, request }) => {
 	// Check if the user is logged in

@@ -1,4 +1,4 @@
-import MediaUploadSchema from '$ts/schema/MediaUploadSchema';
+import { MediaUploadSchema } from '$ts/common/schema';
 import { z } from 'zod';
 import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/static/private';
 import stringGate from '$ts/common/stringGate';

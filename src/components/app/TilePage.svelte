@@ -8,7 +8,7 @@
 	import stringGate from '$ts/common/stringGate';
 	import { scale } from 'svelte/transition';
 	// types
-	import type ITile from '$ts/types/Tile';
+	import type { Tile as ITile } from '$ts/common/types';
 
 	export let containerHeight: number;
 	export let tiles: ITile[] = [];

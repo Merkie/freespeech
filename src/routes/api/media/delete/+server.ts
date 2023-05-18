@@ -3,7 +3,7 @@ import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/sta
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import R2 from 'cloudflare-r2';
-import MediaDeleteSchema from '$ts/schema/MediaDeleteSchema';
+import { MediaDeleteSchema } from '$ts/common/schema';
 
 export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in

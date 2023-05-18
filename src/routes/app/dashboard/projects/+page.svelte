@@ -11,6 +11,7 @@
 	let createProjectModalOpen = false;
 	let searchQuery = '';
 	let searchedProjects: Project[] = [];
+	let editModeOn = false;
 
 	onMount(() => {
 		if (data.projects.length === 0) createProjectModalOpen = true;
@@ -51,7 +52,7 @@
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>
 	<button
-		disabled={true}
+		on:click={() => (editModeOn = !editModeOn)}
 		class="bg-zinc-700 px-2 sm:block hidden p-1 border border-zinc-600 rounded-md text-zinc-50 text-sm"
 		><i class="bi bi-gear" /> Manage Projects</button
 	>
@@ -62,7 +63,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-2 gap-2 m-2">
 	{#each searchQuery ? searchedProjects : data.projects as project, index}
 		<div in:fly={{ delay: (index + 1) * 100, y: 10 }}>
-			<ProjectCard {project} />
+			<ProjectCard {editModeOn} {project} />
 		</div>
 	{/each}
 </div>

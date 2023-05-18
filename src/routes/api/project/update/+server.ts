@@ -1,4 +1,4 @@
-import ProjectUpdateSchema from '$ts/schema/ProjectUpdateSchema';
+import { ProjectUpdateSchema } from '$ts/common/schema';
 import { z } from 'zod';
 
 export const POST = async ({ request, locals }) => {

@@ -1,16 +1,15 @@
-import type { Project, TilePage } from '@prisma/client';
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type Tile from '$ts/types/Tile';
+import type { FullProject, Tile, ILocalSettings } from '$ts/common/types';
 
-export type VoiceGeneratorOption = 'elevenlabs' | 'offline';
-
-export const ActiveProject = writable<(Project & { pages: TilePage[] }) | null>(null); // stored
-export const OfflineVoice = writable(''); // stored
-export const ElevenLabsVoice = writable(''); // stored
+export const ActiveProject = writable<FullProject | null>(null); // stored
+export const LocalSettings = writable<ILocalSettings>({
+	offlineVoice: '',
+	elevenLabsVoice: 'Rachel',
+	voiceGenerator: 'offline',
+	speakOnTap: true
+});
 export const isSynthesizingSpeech = writable(false);
-export const VoiceGenerator = writable<VoiceGeneratorOption>('offline'); // stored
-export const SpeakOnTap = writable(true); // stored
 export const ActivePage = writable('Home');
 export const Sentence = writable<Tile[]>([]);
 export const Loading = writable(false);
@@ -30,53 +29,16 @@ if (browser) {
 			localStorage.removeItem('activeProject');
 		}
 	});
-	// OfflineVoice
-	const offlineVoice = localStorage.getItem('offlineVoice');
-	if (offlineVoice) {
-		OfflineVoice.set(offlineVoice);
+	// LocalSettings
+	const localSettings = localStorage.getItem('localSettings');
+	if (localSettings) {
+		LocalSettings.set(JSON.parse(localSettings));
 	}
-	OfflineVoice.subscribe((value) => {
+	LocalSettings.subscribe((value) => {
 		if (value) {
-			localStorage.setItem('offlineVoice', value);
+			localStorage.setItem('localSettings', JSON.stringify(value));
 		} else {
-			localStorage.removeItem('offlineVoice');
-		}
-	});
-	// ElevenLabsVoice
-	const elevenLabsVoice = localStorage.getItem('elevenLabsVoice');
-	if (elevenLabsVoice) {
-		ElevenLabsVoice.set(elevenLabsVoice);
-	}
-	ElevenLabsVoice.subscribe((value) => {
-		if (value) {
-			localStorage.setItem('elevenLabsVoice', value);
-		} else {
-			localStorage.removeItem('elevenLabsVoice');
-		}
-	});
-	// VoiceGenerator
-	const voiceGenerator = localStorage.getItem('voiceGenerator');
-	if (voiceGenerator) {
-		VoiceGenerator.set(voiceGenerator as VoiceGeneratorOption);
-	}
-	VoiceGenerator.subscribe((value) => {
-		if (value) {
-			localStorage.setItem('voiceGenerator', value);
-		} else {
-			localStorage.removeItem('voiceGenerator');
-		}
-	});
-	//	SpeakOnTap
-	const speakOnTap = localStorage.getItem('speakOnTap') === 'true';
-	if (SpeakOnTap) {
-		SpeakOnTap.set(speakOnTap);
-	}
-
-	SpeakOnTap.subscribe((value) => {
-		if (value) {
-			localStorage.setItem('speakOnTap', value ? 'true' : 'false');
-		} else {
-			localStorage.removeItem('speakOnTap');
+			localStorage.removeItem('localSettings');
 		}
 	});
 }

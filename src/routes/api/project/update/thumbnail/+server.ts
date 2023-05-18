@@ -1,4 +1,4 @@
-import ProjectUpdateThumbnailSchema from '$ts/schema/ProjectUpdateThumbnailSchema';
+import { ProjectUpdateThumbnailSchema } from '$ts/common/schema';
 
 export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in

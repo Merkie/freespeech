@@ -1,15 +1,10 @@
 <script lang="ts">
-	import {
-		OfflineVoice,
-		ElevenLabsVoice,
-		VoiceGenerator,
-		SpeakOnTap,
-		type VoiceGeneratorOption
-	} from '$ts/client/stores';
+	import { LocalSettings } from '$ts/client/stores';
 	import { onMount } from 'svelte';
-	import elevenLabsVoices from '$ts/types/ElevenLabsVoices';
+	import elevenLabsVoices from '$ts/common/ElevenLabsVoices';
 	import { fly } from 'svelte/transition';
 	import Fuse from 'fuse.js';
+	import type { IElevenLabsVoice, IVoiceGenerator } from '$ts/common/types';
 
 	type SettingType = 'select';
 
@@ -48,14 +43,17 @@
 	$: {
 		settings = [
 			{
-				name: 'Voice',
+				name: 'Offline Voice',
 				description: `The offline voice is generated on your device without the need for an internet connection, however you are limited to what is natively supported on your device's browser.`,
 				type: 'select',
-				value: $OfflineVoice,
+				value: $LocalSettings.offlineVoice || offlineBrowserVoices[0],
 				default: offlineBrowserVoices[0],
 				options: offlineBrowserVoices,
 				onInput: (e: Event) => {
-					$OfflineVoice = (e.target as HTMLInputElement).value;
+					$LocalSettings = {
+						...$LocalSettings,
+						offlineVoice: (e.target as HTMLInputElement).value
+					};
 				}
 			},
 			{
@@ -63,33 +61,42 @@
 				description:
 					'ElevenLabs voices are advanced AI-generated voices that sound extremely realistic. These voices are generated on a remote server and require an internet connection. For more information visit ElevenLabs.io',
 				type: 'select',
-				value: $ElevenLabsVoice,
+				value: $LocalSettings.elevenLabsVoice || elevenLabsVoices.map((voice) => voice.name)[0],
 				default: elevenLabsVoices.map((voice) => voice.name)[0],
 				options: elevenLabsVoices.map((voice) => voice.name),
 				onInput: (e: Event) => {
-					$ElevenLabsVoice = (e.target as HTMLInputElement).value;
+					$LocalSettings = {
+						...$LocalSettings,
+						elevenLabsVoice: (e.target as HTMLInputElement).value as IElevenLabsVoice
+					};
 				}
 			},
 			{
 				name: 'Voice Generator',
 				description: 'This decides with generator to use when generating voices in the app.',
 				type: 'select',
-				value: $VoiceGenerator,
+				value: $LocalSettings.voiceGenerator || 'offline',
 				default: 'offline',
 				options: ['offline', 'elevenlabs'],
 				onInput: (e: Event) => {
-					$VoiceGenerator = (e.target as HTMLInputElement).value as VoiceGeneratorOption;
+					$LocalSettings = {
+						...$LocalSettings,
+						voiceGenerator: (e.target as HTMLInputElement).value as IVoiceGenerator
+					};
 				}
 			},
 			{
 				name: 'Speak on Tile Tap',
 				description: 'When enabled, the app will speak the text when you tap on a tile.',
 				type: 'select',
-				value: $SpeakOnTap ? 'enabled' : 'disabled',
+				value: $LocalSettings.speakOnTap ? 'enabled' : 'disabled',
 				default: 'enabled',
 				options: ['disabled', 'enabled'],
 				onInput: (e: Event) => {
-					$SpeakOnTap = (e.target as HTMLInputElement).value === 'enabled';
+					$LocalSettings = {
+						...$LocalSettings,
+						speakOnTap: (e.target as HTMLInputElement).value === 'enabled'
+					};
 				}
 			}
 		];

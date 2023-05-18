@@ -52,5 +52,5 @@
 			{/if}
 		</form>
 	{/if}
-	<a href="/app" class="mt-4 underline text-blue-500">Verify email later</a>
+	<a href="/app/dashboard/projects" class="mt-4 underline text-blue-500">Verify email later</a>
 </main>

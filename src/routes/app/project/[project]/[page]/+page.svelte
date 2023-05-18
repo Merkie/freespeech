@@ -4,9 +4,7 @@
 		ActivePage,
 		ActiveProject,
 		isEditing,
-		ElevenLabsVoice,
-		OfflineVoice,
-		VoiceGenerator,
+		LocalSettings,
 		isSynthesizingSpeech
 	} from '$ts/client/stores';
 	// components
@@ -19,15 +17,15 @@
 	import ImageResize from 'image-resize';
 	// types
 	import type { PageData } from './$types';
-	import type Tile from '$ts/types/Tile';
-	import ElevenLabsVoices from '$ts/types/ElevenLabsVoices';
+	import ElevenLabsVoices from '$ts/common/ElevenLabsVoices';
+	import type { FullProject, Tile } from '$ts/common/types';
 
 	export let data: PageData;
 
 	/* The data object contains the project and page pulled from
 	the page params and database. So we update the stores here for
 	the most recent version. */
-	$ActiveProject = data.project;
+	$ActiveProject = data.project as FullProject;
 	$ActivePage = data.page;
 
 	/* Set the tiles to the tiles of the active page
@@ -134,9 +132,10 @@
 	const speakText = async (text: string) => {
 		const useOffline = () => {
 			const utterance = new SpeechSynthesisUtterance(text);
-			if ($OfflineVoice) {
+			if ($LocalSettings.offlineVoice) {
 				utterance.voice =
-					speechSynthesis.getVoices().find((voice) => voice.name === $OfflineVoice) || null;
+					speechSynthesis.getVoices().find((voice) => voice.name === $LocalSettings.offlineVoice) ||
+					null;
 			}
 			utterance.lang = 'en-US';
 			speechSynthesis.speak(utterance);
@@ -144,9 +143,9 @@
 
 		if (text.trim() === '') return;
 
-		if ($VoiceGenerator === 'offline') {
+		if ($LocalSettings.voiceGenerator === 'offline') {
 			useOffline();
-		} else if ($VoiceGenerator === 'elevenlabs') {
+		} else if ($LocalSettings.voiceGenerator === 'elevenlabs') {
 			if ($isSynthesizingSpeech) return;
 			$isSynthesizingSpeech = true;
 			const elevenLabsResponse = await fetch('/api/text-to-speech/elevenlabs/speak', {
@@ -156,7 +155,7 @@
 				},
 				body: JSON.stringify({
 					text,
-					name: $ElevenLabsVoice || ElevenLabsVoices[0].name
+					name: $LocalSettings.elevenLabsVoice || ElevenLabsVoices[0].name
 				})
 			});
 			$isSynthesizingSpeech = false;

@@ -4,13 +4,12 @@
 	import {
 		ActivePage,
 		ActiveProject,
+		LocalSettings,
 		Sentence,
-		SpeakOnTap,
 		hasUnsavedChanges,
 		isEditing
 	} from '$ts/client/stores';
-	import type { TilePage } from '@prisma/client';
-	import type Tile from '$ts/types/Tile';
+	import type { Tile, TilePage } from '$ts/common/types';
 
 	export let text: string;
 	export let image = '';
@@ -34,7 +33,7 @@
 		// Add tile to store
 		$Sentence = [...$Sentence, { text, image, color } as Tile];
 		// Speak the text if the user has enabled the speak on tap setting
-		if ($SpeakOnTap) {
+		if ($LocalSettings.speakOnTap) {
 			speakText(text);
 		}
 		// Handle navigation
