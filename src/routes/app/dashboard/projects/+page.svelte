@@ -6,6 +6,7 @@
 	import { fly } from 'svelte/transition';
 	import type { Project } from '@prisma/client';
 	import Fuse from 'fuse.js';
+	import { openModal } from '$ts/client/stores';
 	export let data: PageData;
 
 	let createProjectModalOpen = false;
@@ -27,11 +28,8 @@
 	}
 </script>
 
-{#if createProjectModalOpen}
-	<CreateProjectModal
-		form={data.createProjectForm}
-		closeModal={() => (createProjectModalOpen = false)}
-	/>
+{#if $openModal === 'create-project'}
+	<CreateProjectModal form={data.createProjectForm} />
 {/if}
 
 <div class="p-2 pt-0 flex items-center gap-2">
@@ -47,7 +45,7 @@
 		/>
 	</div>
 	<button
-		on:click={() => (createProjectModalOpen = true)}
+		on:click={() => ($openModal = 'create-project')}
 		class="bg-blue-600 px-2 sm:block hidden p-1 border border-blue-500 rounded-md text-blue-50 text-sm"
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>

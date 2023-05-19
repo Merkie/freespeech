@@ -7,7 +7,8 @@
 		LocalSettings,
 		Sentence,
 		hasUnsavedChanges,
-		isEditing
+		isEditing,
+		openModal
 	} from '$ts/client/stores';
 	import type { Tile, TilePage } from '$ts/common/types';
 
@@ -20,14 +21,11 @@
 	export let subpage: number;
 	export let speakText: (text: string) => void;
 
-	let editingTileModalOpen = false;
-	let onlineImageSearchModalOpen = false;
-
 	const handleInteraction = () => {
 		// Edit Mode
 		if ($isEditing) {
 			$hasUnsavedChanges = true;
-			editingTileModalOpen = true;
+			$openModal = 'edit-tile' + tileSignature;
 			return;
 		}
 		// Add tile to store
@@ -93,6 +91,10 @@
 	let bgColorClass: string;
 	let textColorClass: string;
 	let borderColorClass: string;
+
+	let tileSignature = '';
+	$: tileSignature = '' + x + y + subpage + $ActivePage;
+
 	$: {
 		bgColorClass =
 			color === 'white' ? 'bg-white' : `bg-${color}-${color === 'zinc' ? '50' : '100'}`;
@@ -105,7 +107,7 @@
 	}
 </script>
 
-{#if editingTileModalOpen}
+{#if $openModal === 'edit-tile' + tileSignature}
 	<EditTileModal
 		handleTextChange={(newText) => {
 			text = newText;
@@ -120,29 +122,25 @@
 			color = newColor;
 		}}
 		handleOnlineImageSearch={() => {
-			editingTileModalOpen = false;
-			onlineImageSearchModalOpen = true;
+			$openModal = 'search-online-images' + tileSignature;
 		}}
 		{deleteTile}
 		{text}
 		{image}
 		{navigation}
 		{color}
-		closeModal={() => (editingTileModalOpen = false)}
 	/>
 {/if}
 
-{#if onlineImageSearchModalOpen}
+{#if $openModal === 'search-online-images' + tileSignature}
 	<OnlineImageSearchModal
 		handleImageChange={(newImage) => {
 			image = newImage;
 		}}
 		handleNavigateBack={() => {
-			onlineImageSearchModalOpen = false;
-			editingTileModalOpen = true;
+			$openModal = 'edit-tile' + tileSignature;
 		}}
 		{image}
-		closeModal={() => (onlineImageSearchModalOpen = false)}
 	/>
 {/if}
 

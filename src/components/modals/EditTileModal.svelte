@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { ActivePage, ActiveProject } from '$ts/client/stores';
+	import { ActivePage, ActiveProject, openModal } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 	import ImageResize from 'image-resize';
 	export let text: string;
 	export let image: string;
 	export let navigation: string;
 	export let color: string;
-	export let closeModal: () => void;
 	export let handleTextChange: (newText: string) => void;
 	export let handleImageChange: (newImage: string) => void;
 	export let handleNavigationChange: (newNavigation: string) => void;
@@ -48,7 +47,7 @@
 	};
 </script>
 
-<ModalShell {closeModal} title="Edit Tile">
+<ModalShell title="Edit Tile">
 	<p class="mb-2">Tile Text:</p>
 	<input
 		on:input={(e) => {
@@ -132,7 +131,7 @@
 	<button
 		on:click={() => {
 			deleteTile();
-			closeModal();
+			$openModal = '';
 		}}
 		class="bg-red-600 p-1 rounded-md border border-red-500 mt-4"
 		on:click={deleteTile}

@@ -15,6 +15,7 @@ export const Sentence = writable<Tile[]>([]);
 export const Loading = writable(false);
 export const isEditing = writable(false);
 export const hasUnsavedChanges = writable(false);
+export const openModal = writable('');
 
 if (browser) {
 	// ActiveProject

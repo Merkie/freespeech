@@ -2,8 +2,7 @@
 	import { ActivePage, ActiveProject, hasUnsavedChanges } from '$ts/client/stores';
 	import stringGate from '$ts/common/stringGate';
 	import ModalShell from './ModalShell.svelte';
-	import type { TilePage } from '@prisma/client';
-	export let closeModal: () => void;
+	import type { TilePage } from '$ts/common/types';
 
 	let addingPage = false;
 	let pageName: string;
@@ -37,7 +36,7 @@
 	};
 </script>
 
-<ModalShell {closeModal} title="Edit Pages">
+<ModalShell title="Edit Pages">
 	{#if addingPage}
 		<button
 			on:click={() => (addingPage = false)}

@@ -4,7 +4,6 @@
 	import ImageResize from 'image-resize';
 
 	export let image: string;
-	export let closeModal: () => void;
 	export let handleImageChange: (newImage: string) => void;
 	export let handleNavigateBack: () => void;
 
@@ -58,7 +57,7 @@
 	};
 </script>
 
-<ModalShell {closeModal} title="Edit Tile">
+<ModalShell title="Edit Tile">
 	<button on:click={handleNavigateBack} class="flex items-center gap-1 mb-2 text-sm text-zinc-300">
 		<i class="bi bi-arrow-left" />
 		Back

@@ -1,12 +1,10 @@
 <script>
 	import EditPagesModal from '$components/modals/EditPagesModal.svelte';
-	import { ActivePage, isEditing } from '$ts/client/stores';
-
-	let editPagesModalOpen = false;
+	import { ActivePage, isEditing, openModal } from '$ts/client/stores';
 </script>
 
-{#if editPagesModalOpen}
-	<EditPagesModal closeModal={() => (editPagesModalOpen = false)} />
+{#if $openModal === 'edit-pages'}
+	<EditPagesModal />
 {/if}
 
 <div class="p-2 bg-zinc-900 text-zinc-100 font-light flex items-center justify-center gap-2">
@@ -16,7 +14,7 @@
 	<p>{$ActivePage}</p>
 	{#if $isEditing}
 		<button
-			on:click={() => (editPagesModalOpen = true)}
+			on:click={() => ($openModal = 'edit-pages')}
 			class="bg-zinc-800 px-2 p-1 text-sm rounded-md border border-zinc-700">Edit Pages</button
 		>
 	{/if}

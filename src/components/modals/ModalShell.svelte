@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { openModal } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 
 	export let title: string;
-	export let closeModal: () => void;
+
+	const closeModal = () => {
+		$openModal = '';
+	};
 
 	let visible = false;
 

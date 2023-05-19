@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
 	import ModalShell from './ModalShell.svelte';
-	export let closeModal: () => void;
+	import { openModal } from '$ts/client/stores';
 	export let form: any;
 
 	let projectName: string;
@@ -30,12 +30,12 @@
 
 	$: {
 		if ($message === 'good') {
-			closeModal();
+			$openModal = '';
 		}
 	}
 </script>
 
-<ModalShell {closeModal} title="Create Project">
+<ModalShell title="Create Project">
 	<p class="mb-2">Project name:</p>
 	<form class="flex flex-col" use:enhance method="POST" action="?/create">
 		<input type="text" name="name" bind:value={$createProjectForm.name} {...$constraints.name} />
