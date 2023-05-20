@@ -78,31 +78,26 @@
 			>{searching ? 'Searching...' : 'Search'}</button
 		>
 	</div>
-	<div class="masonry-layout min-h-[300px] max-h-[500px] overflow-y-auto">
-		{#each imageSearchResults as image}
-			<button disabled={searching} on:click={() => handleUploadFromInternet(image.thumbnail)}>
-				<img width={200} class="object-contain" src={image.thumbnail} alt="search result" />
-			</button>
-		{/each}
+	<div class="min-h-[300px] max-h-[500px] overflow-y-auto flex gap-2">
+		<div class="flex-1">
+			{#each imageSearchResults.filter((_, i) => i % 2 === 0) as image}
+				<button disabled={searching} on:click={() => handleUploadFromInternet(image.thumbnail)}>
+					<img class="w-full" src={image.thumbnail} alt="search result" />
+				</button>
+			{/each}
+		</div>
+		<div class="flex-1">
+			{#each imageSearchResults.filter((_, i) => i % 2 !== 0) as image}
+				<button disabled={searching} on:click={() => handleUploadFromInternet(image.thumbnail)}>
+					<img class="w-full" src={image.thumbnail} alt="search result" />
+				</button>
+			{/each}
+		</div>
 	</div>
 </ModalShell>
 
 <style lang="postcss">
 	input {
 		@apply px-2 p-1 rounded-md border border-zinc-300 text-zinc-800;
-	}
-
-	.masonry-layout {
-		/* Create a column layout with a gap between items */
-		display: grid;
-		grid-gap: 10px;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		grid-auto-rows: min-content;
-	}
-	@media screen and (max-width: 600px) {
-		.masonry-layout {
-			/* For small screens, reduce the number of columns */
-			grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-		}
 	}
 </style>

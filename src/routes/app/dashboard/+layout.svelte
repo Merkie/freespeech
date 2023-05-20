@@ -17,16 +17,18 @@
 	const links = [
 		{
 			name: 'Your Projects',
+			icon: 'grid',
 			path: '/app/dashboard/projects'
 		},
 		{
 			name: 'Application Settings',
+			icon: 'sliders',
 			path: '/app/dashboard/settings'
 		},
-		{
-			name: 'Uploaded Media',
-			path: '/app/dashboard/media'
-		},
+		// {
+		// 	name: 'Uploaded Media',
+		// 	path: '/app/dashboard/media'
+		// },
 		{
 			name: 'Your Profile',
 			path: '/app/dashboard/profile',
@@ -55,8 +57,11 @@
 			<a
 				href={link.path}
 				class={`${
-					$page.url.pathname.startsWith(link.path) ? '' : 'text-zinc-500'
-				} transition-colors`}>{link.name}</a
+					$page.url.pathname.startsWith(link.path)
+						? 'border-zinc-700'
+						: 'text-zinc-500 border-zinc-900'
+				} transition-colors border rounded-md p-2 py-1`}
+				><i class={`bi bi-${link.icon} mr-2`} />{link.name}</a
 			>
 		{/if}
 	{/each}

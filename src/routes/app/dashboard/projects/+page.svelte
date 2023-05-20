@@ -32,14 +32,14 @@
 	<CreateProjectModal form={data.createProjectForm} />
 {/if}
 
-<div class="p-2 pt-0 flex items-center gap-2">
+<div class="p-2 pt-0 flex items-center gap-2 pb-0 border-b border-zinc-700">
 	<div
 		class="px-2 p-1 text-sm border bg-zinc-800 border-zinc-700 flex-1 rounded-md items-center flex gap-2"
 	>
 		<i class="bi bi-search" />
 		<input
 			bind:value={searchQuery}
-			placeholder="Search projects..."
+			placeholder="Search settings..."
 			type="text"
 			class="flex-1 outline-none bg-transparent"
 		/>

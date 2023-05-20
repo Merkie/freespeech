@@ -68,17 +68,18 @@
 		<!-- Home button -->
 		<a
 			on:click={async () => {
+				if (!$ActiveProject) return;
 				if ($isEditing) {
 					await saveProjectToDb();
 				}
 				$ActivePage = 'Home';
 				$isEditing = false;
-				if (!$ActiveProject) return;
 			}}
-			class={$page.url.pathname.startsWith('/app/') &&
-			!$page.url.pathname.startsWith('/app/dashboard')
-				? 'bg-zinc-800'
-				: ''}
+			class={`${
+				$page.url.pathname.startsWith('/app/') && !$page.url.pathname.startsWith('/app/dashboard')
+					? 'bg-zinc-800'
+					: ''
+			} ${$ActiveProject ? '' : 'opacity-50'}`}
 			href={$ActiveProject
 				? `/app/project/${stringGate(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
 				: ''}
