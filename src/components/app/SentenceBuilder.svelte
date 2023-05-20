@@ -3,6 +3,20 @@
 	import { Sentence, isSynthesizingSpeech } from '$ts/client/stores';
 	import { fade, scale } from 'svelte/transition';
 	export let speakText: (text: string) => void;
+
+	const getColorClasses = (color: string | undefined): string => {
+		if (!color) return '';
+		let bgColorClass: string;
+		let textColorClass: string;
+		let borderColorClass: string;
+
+		bgColorClass =
+			color === 'white' ? 'bg-white' : `bg-${color}-${color === 'zinc' ? '50' : '100'}`;
+		textColorClass = color === 'white' ? 'text-zinc-950' : `text-${color}-950`;
+		borderColorClass = color === 'white' ? 'border-zinc-500' : `border-${color}-500`;
+
+		return `${bgColorClass} ${textColorClass} ${borderColorClass}`;
+	};
 </script>
 
 <div
@@ -25,7 +39,9 @@
 					$Sentence = $Sentence.filter((_, i) => i !== index);
 				}}
 				transition:scale={{ duration: 100 }}
-				class={`p-1 min-w-[100px] w-fit h-[70px] border bg-zinc-50 border-zinc-500 text-zinc-950 rounded-md flex flex-col items-center overflow-hidden ${
+				class={`p-1 min-w-[100px] w-fit h-[70px] border ${getColorClasses(
+					tile.color
+				)} rounded-md flex flex-col items-center overflow-hidden ${
 					!tile.image ? 'justify-center' : ''
 				}`}
 			>

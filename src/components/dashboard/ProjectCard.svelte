@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { ActiveProject } from '$ts/client/stores';
+	import { ActiveProject, Sentence } from '$ts/client/stores';
 	import type { Project } from '@prisma/client';
 	import { scale } from 'svelte/transition';
 	export let project: Project;
 	export let editModeOn = false;
 
 	const switchProject = async (id: string) => {
+		$Sentence = [];
 		const project = await fetch(`/api/project/fetch/${id}`);
 		const projectData = await project.json();
 		if (projectData.error) {
