@@ -45,7 +45,7 @@
 					!tile.image ? 'justify-center' : ''
 				}`}
 			>
-				<p class="text-ellipsis py-1 text-sm">{tile.text}</p>
+				<p class="text-ellipsis py-1 text-sm">{tile.displayText || tile.text}</p>
 				{#if tile.image}
 					<div class="flex-1 w-full relative">
 						<img src={tile.image} class="absolute w-full h-full object-contain" alt="Tile media" />

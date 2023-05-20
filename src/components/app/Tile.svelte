@@ -13,6 +13,7 @@
 	import type { Tile, TilePage } from '$ts/common/types';
 
 	export let text: string;
+	export let displayText = '';
 	export let image = '';
 	export let navigation = '';
 	export let x: number;
@@ -56,7 +57,7 @@
 						// @ts-ignore
 						tiles: page.data.tiles.map((tile) => {
 							if (tile.x === x && tile.y === y && tile.page === subpage)
-								return { x, y, text, image, navigation, page: subpage, color };
+								return { x, y, text, displayText, image, navigation, page: subpage, color };
 							return tile;
 						})
 					}
@@ -102,7 +103,7 @@
 		borderColorClass = color === 'white' ? 'border-zinc-500' : `border-${color}-500`;
 	}
 	$: {
-		let _ = { x, y, text, image, navigation, color };
+		let _ = { x, y, text, displayText, image, navigation, color };
 		addTileEditToStore();
 	}
 </script>
@@ -111,6 +112,9 @@
 	<EditTileModal
 		handleTextChange={(newText) => {
 			text = newText;
+		}}
+		handleDisplayTextChange={(newDisplayText) => {
+			displayText = newDisplayText;
 		}}
 		handleImageChange={(newImage) => {
 			image = newImage;
@@ -126,6 +130,7 @@
 		}}
 		{deleteTile}
 		{text}
+		{displayText}
 		{image}
 		{navigation}
 		{color}
@@ -150,7 +155,9 @@
 		image ? 'flex flex-col items-center overflow-hidden' : 'grid place-items-center'
 	}`}
 >
-	<p class={`text-ellipsis ${!image ? 'text-[2vw]' : 'py-2'}`}>{text}</p>
+	<p class={`text-ellipsis ${!image ? 'text-[2vw]' : 'py-2'}`}>
+		{displayText || text}
+	</p>
 	{#if image}
 		<div class="flex-1 w-full relative">
 			<img src={image} class="absolute w-full h-full object-contain" alt="Tile media" />

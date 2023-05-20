@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { ActivePage, ActiveProject, openModal } from '$ts/client/stores';
+	import { bubble } from 'svelte/internal';
 	import ModalShell from './ModalShell.svelte';
 	import ImageResize from 'image-resize';
 	export let text: string;
+	export let displayText: string;
 	export let image: string;
 	export let navigation: string;
 	export let color: string;
 	export let handleTextChange: (newText: string) => void;
+	export let handleDisplayTextChange: (newDisplayText: string) => void;
 	export let handleImageChange: (newImage: string) => void;
 	export let handleNavigationChange: (newNavigation: string) => void;
 	export let handleColorChange: (newColor: string) => void;
@@ -14,6 +17,7 @@
 	export let deleteTile: () => void;
 
 	let fileinput: HTMLInputElement;
+	let showingDisplayTextOption = false;
 
 	const imageResize = new ImageResize({
 		format: 'png',
@@ -57,6 +61,23 @@
 		type="text"
 		value={text}
 	/>
+	{#if showingDisplayTextOption || displayText}
+		<p class="my-2">Tile Display Text:</p>
+		<input
+			on:input={(e) => {
+				//@ts-ignore
+				handleDisplayTextChange(e.target.value);
+			}}
+			type="text"
+			value={displayText}
+		/>
+	{:else}
+		<button
+			on:click={() => (showingDisplayTextOption = true)}
+			class="text-sm hover:underline text-zinc-300 text-left mt-2"
+			>Edit display text separately</button
+		>
+	{/if}
 	<p class="my-2">Image:</p>
 	<div class="flex flex-col gap-2">
 		{#if image}

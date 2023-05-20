@@ -4,6 +4,7 @@ export type Tile = {
 	x: number;
 	y: number;
 	text: string;
+	displayText?: string;
 	image?: string;
 	navigation?: string;
 	page?: number;
