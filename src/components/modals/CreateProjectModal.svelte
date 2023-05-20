@@ -48,7 +48,7 @@
 			<div class="flex items-center gap-2 mb-2">
 				<input
 					type="number"
-					class="flex-1"
+					class="w-[50%]"
 					name="columns"
 					placeholder="Columns"
 					bind:value={$createProjectForm.columns}
@@ -57,7 +57,7 @@
 				<p>X</p>
 				<input
 					type="number"
-					class="flex-1"
+					class="w-[50%]"
 					name="rows"
 					placeholder="Rows"
 					bind:value={$createProjectForm.rows}
