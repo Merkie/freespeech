@@ -152,7 +152,7 @@
 	<button
 		on:click={() => {
 			deleteTile();
-			$openModal = '';
+			$openModal = { name: '' };
 		}}
 		class="bg-red-600 p-1 rounded-md border border-red-500 mt-4"
 		on:click={deleteTile}

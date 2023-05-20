@@ -6,7 +6,7 @@
 	export let title: string;
 
 	const closeModal = () => {
-		$openModal = '';
+		$openModal = { name: '' };
 	};
 
 	let visible = false;

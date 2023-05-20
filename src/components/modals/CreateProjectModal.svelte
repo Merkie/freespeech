@@ -30,7 +30,7 @@
 
 	$: {
 		if ($message === 'good') {
-			$openModal = '';
+			$openModal = { name: '' };
 		}
 	}
 </script>

@@ -2,6 +2,8 @@
 	import { ActiveProject, Sentence } from '$ts/client/stores';
 	import type { Project } from '@prisma/client';
 	import { scale } from 'svelte/transition';
+	import { invalidateAll } from '$app/navigation';
+
 	export let project: Project;
 	export let editModeOn = false;
 
@@ -13,6 +15,17 @@
 			return alert(projectData.error);
 		}
 		$ActiveProject = projectData.project;
+	};
+
+	const deleteProject = async (id: string) => {
+		const project = await fetch(`/api/project/delete/${id}`, {
+			method: 'DELETE'
+		});
+		const projectData = await project.json();
+		if (projectData.error) {
+			return alert(projectData.error);
+		}
+		invalidateAll();
 	};
 </script>
 
@@ -43,7 +56,7 @@
 				<i class="bi bi-pencil text-sm" />
 			</button>
 			<button
-				disabled={false}
+				on:click={() => deleteProject(project.id)}
 				in:scale
 				class="w-[25px] h-[25px] bg-red-500 border border-red-400 rounded-full text-red-50 grid place-items-center"
 			>

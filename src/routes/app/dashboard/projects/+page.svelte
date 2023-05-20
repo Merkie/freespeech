@@ -9,13 +9,13 @@
 	import { openModal } from '$ts/client/stores';
 	export let data: PageData;
 
-	let createProjectModalOpen = false;
 	let searchQuery = '';
 	let searchedProjects: Project[] = [];
 	let editModeOn = false;
 
 	onMount(() => {
-		if (data.projects.length === 0) createProjectModalOpen = true;
+		// Open the create project modal if there are no projects
+		if (data.projects.length === 0) $openModal = { name: 'create-project' };
 	});
 
 	$: {
@@ -28,7 +28,7 @@
 	}
 </script>
 
-{#if $openModal === 'create-project'}
+{#if $openModal.name === 'create-project'}
 	<CreateProjectModal form={data.createProjectForm} />
 {/if}
 
@@ -45,7 +45,7 @@
 		/>
 	</div>
 	<button
-		on:click={() => ($openModal = 'create-project')}
+		on:click={() => ($openModal = { name: 'create-project' })}
 		class="bg-blue-600 px-2 sm:block hidden p-1 border border-blue-500 rounded-md text-blue-50 text-sm"
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>

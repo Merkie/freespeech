@@ -3,7 +3,7 @@
 	import { ActivePage, isEditing, openModal } from '$ts/client/stores';
 </script>
 
-{#if $openModal === 'edit-pages'}
+{#if $openModal.name === 'edit-pages'}
 	<EditPagesModal />
 {/if}
 
@@ -14,7 +14,7 @@
 	<p>{$ActivePage}</p>
 	{#if $isEditing}
 		<button
-			on:click={() => ($openModal = 'edit-pages')}
+			on:click={() => ($openModal = { name: 'edit-pages' })}
 			class="bg-zinc-800 px-2 p-1 text-sm rounded-md border border-zinc-700">Edit Pages</button
 		>
 	{/if}

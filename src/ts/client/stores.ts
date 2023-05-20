@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { FullProject, Tile, ILocalSettings } from '$ts/common/types';
+import type { FullProject, Tile, ILocalSettings, IModal } from '$ts/common/types';
 
 export const ActiveProject = writable<FullProject | null>(null); // stored
 export const LocalSettings = writable<ILocalSettings>({
@@ -15,7 +15,7 @@ export const Sentence = writable<Tile[]>([]);
 export const Loading = writable(false);
 export const isEditing = writable(false);
 export const hasUnsavedChanges = writable(false);
-export const openModal = writable('');
+export const openModal = writable<IModal>({ name: '' });
 
 if (browser) {
 	// ActiveProject

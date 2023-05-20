@@ -26,7 +26,7 @@
 		// Edit Mode
 		if ($isEditing) {
 			$hasUnsavedChanges = true;
-			$openModal = 'edit-tile' + tileSignature;
+			$openModal = { name: 'edit-tile', key: tileSignature };
 			return;
 		}
 		// Add tile to store
@@ -108,7 +108,7 @@
 	}
 </script>
 
-{#if $openModal === 'edit-tile' + tileSignature}
+{#if $openModal.name === 'edit-tile' && $openModal.key === tileSignature}
 	<EditTileModal
 		handleTextChange={(newText) => {
 			text = newText;
@@ -126,7 +126,7 @@
 			color = newColor;
 		}}
 		handleOnlineImageSearch={() => {
-			$openModal = 'search-online-images' + tileSignature;
+			$openModal = { name: 'search-online-images', key: tileSignature };
 		}}
 		{deleteTile}
 		{text}
@@ -137,13 +137,13 @@
 	/>
 {/if}
 
-{#if $openModal === 'search-online-images' + tileSignature}
+{#if $openModal.name === 'search-online-images' && $openModal.key === tileSignature}
 	<OnlineImageSearchModal
 		handleImageChange={(newImage) => {
 			image = newImage;
 		}}
 		handleNavigateBack={() => {
-			$openModal = 'edit-tile' + tileSignature;
+			$openModal = { name: 'edit-tile', key: tileSignature };
 		}}
 		{image}
 	/>

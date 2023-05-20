@@ -38,3 +38,7 @@ export type ILocalSettings = {
 	voiceGenerator: IVoiceGenerator;
 	speakOnTap: boolean;
 };
+export type IModal = {
+	name: 'edit-pages' | 'edit-tile' | 'search-online-images' | 'create-project' | '';
+	key?: string;
+};
