@@ -3,6 +3,8 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 
+	let profileInput: HTMLInputElement;
+
 	const logout = async () => {
 		await fetch('/api/user/logout');
 		$ActiveProject = null;
@@ -42,11 +44,7 @@
 					><i class="bi bi-envelope mr-2" />Verify Email</a
 				>
 			{/if}
-			<button
-				disabled={true}
-				class="mt-2 p-1 w-[200px] sm:w-full bg-zinc-800 text-zinc-200 border border-zinc-700 text-sm rounded-md"
-				><i class="bi bi-pencil-square mr-2" />Edit Profile</button
-			>
+
 			<button
 				on:click={logout}
 				class="mt-2 p-1 w-[200px] sm:w-full bg-red-600 text-red-50 border border-red-500 text-sm rounded-md"
@@ -54,11 +52,39 @@
 			>
 		</div>
 		<div class="flex-1 px-2 flex flex-col overflow-y-auto">
-			<div class="flex gap-2 text-zinc-500">
-				<button class="text-zinc-200 underline">Uploaded Media</button>
-				<button disabled={true}>Parental Controls</button>
-				<button disabled={true}>Organization</button>
-			</div>
+			<form class="flex flex-col gap-2 text-zinc-300">
+				<label class="text-lg" for="email">Email</label>
+				<input type="text" name="email" value={data.user?.email} disabled={true} />
+				<label class="text-lg" for="name">Name</label>
+				<input type="text" name="name" value={data.user?.name} />
+				<!-- profile pic -->
+				<label class="text-lg" for="profile">Profile Picture</label>
+				<button
+					on:click={(e) => {
+						e.preventDefault();
+						profileInput.click();
+					}}
+					class="p-1 bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-md"
+					><i class="bi bi-image mr-2" />Upload Profile Picture</button
+				>
+				<input bind:this={profileInput} type="file" name="profile" class="hidden" />
+				<button
+					disabled={true}
+					type="submit"
+					class="bg-blue-600 text-blue-50 p-1 rounded-md mt-2 border border-blue-500"
+					>Submit Changes</button
+				>
+			</form>
 		</div>
 	</div>
 </div>
+
+<style lang="postcss">
+	input {
+		@apply p-1 px-2 rounded-md border border-zinc-700 bg-zinc-800 flex-1 outline-none;
+	}
+
+	input:disabled {
+		@apply opacity-75;
+	}
+</style>
