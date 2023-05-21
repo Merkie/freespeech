@@ -5,6 +5,8 @@
 	import { fly } from 'svelte/transition';
 	import Fuse from 'fuse.js';
 	import type { IElevenLabsVoice, IVoiceGenerator } from '$ts/common/types';
+	import SearchBar from '$components/dashboard/SearchBar.svelte';
+	import { writable } from 'svelte/store';
 
 	type SettingType = 'select';
 
@@ -21,7 +23,7 @@
 	let offlineBrowserVoices: string[] = [];
 	let settings: Setting[];
 	let visible = false;
-	let searchQuery = '';
+	let searchQuery = writable('');
 	let searchSettings: Setting[] = [];
 
 	onMount(async () => {
@@ -103,29 +105,17 @@
 	}
 
 	$: {
-		if (searchQuery) {
+		if ($searchQuery) {
 			const fuse = new Fuse(settings, {
 				keys: ['name', 'description']
 			});
-			searchSettings = fuse.search(searchQuery).map((result) => result.item);
+			searchSettings = fuse.search($searchQuery).map((result) => result.item);
 		}
 	}
 </script>
 
-<div class="p-2 border-b border-zinc-700 mb-2">
-	<div
-		class="px-2 p-1 text-sm border bg-zinc-800 border-zinc-700 flex-1 rounded-md items-center flex gap-2"
-	>
-		<i class="bi bi-search" />
-		<input
-			bind:value={searchQuery}
-			placeholder="Search settings..."
-			type="text"
-			class="flex-1 outline-none bg-transparent"
-		/>
-	</div>
-</div>
-{#each searchQuery ? searchSettings : settings as setting, index}
+<SearchBar query={searchQuery} />
+{#each $searchQuery ? searchSettings : settings as setting, index}
 	<div in:fly={{ delay: index * 100, y: -10 }} class="p-2 border-b border-zinc-700">
 		<div class="flex gap-2 items-center">
 			<p class="">{setting.name}{': '}</p>

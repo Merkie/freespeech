@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { ActivePage, ActiveProject, openModal } from '$ts/client/stores';
-	import { bubble } from 'svelte/internal';
 	import ModalShell from './ModalShell.svelte';
 	import ImageResize from 'image-resize';
 	export let text: string;
@@ -14,7 +13,7 @@
 	export let handleNavigationChange: (newNavigation: string) => void;
 	export let handleColorChange: (newColor: string) => void;
 	export let handleOnlineImageSearch: () => void;
-	export let deleteTile: () => void;
+	export let deleteTile: (key: string) => void;
 
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
@@ -151,11 +150,10 @@
 	</div>
 	<button
 		on:click={() => {
-			deleteTile();
+			deleteTile($openModal.key + '');
 			$openModal = { name: '' };
 		}}
 		class="bg-red-600 p-1 rounded-md border border-red-500 mt-4"
-		on:click={deleteTile}
 	>
 		Delete Tile
 	</button>

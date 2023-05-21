@@ -66,7 +66,8 @@
 		};
 	};
 
-	const deleteTile = () => {
+	const deleteTile = (key: string) => {
+		if (tileSignature !== key) return;
 		if (!$ActiveProject) return;
 		$ActiveProject = {
 			...$ActiveProject,

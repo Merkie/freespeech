@@ -7,9 +7,11 @@
 	import type { Project } from '@prisma/client';
 	import Fuse from 'fuse.js';
 	import { openModal } from '$ts/client/stores';
+	import SearchBar from '$components/dashboard/SearchBar.svelte';
+	import { writable } from 'svelte/store';
 	export let data: PageData;
 
-	let searchQuery = '';
+	let searchQuery = writable('');
 	let searchedProjects: Project[] = [];
 	let editModeOn = false;
 
@@ -23,7 +25,7 @@
 			const fuse = new Fuse(data.projects, {
 				keys: ['name', 'description']
 			});
-			searchedProjects = fuse.search(searchQuery).map((result) => result.item);
+			searchedProjects = fuse.search($searchQuery).map((result) => result.item);
 		}
 	}
 </script>
@@ -32,18 +34,7 @@
 	<CreateProjectModal form={data.createProjectForm} />
 {/if}
 
-<div class="p-2 pt-0 flex items-center gap-2 pb-0 border-b border-zinc-700">
-	<div
-		class="px-2 p-1 text-sm border bg-zinc-800 border-zinc-700 flex-1 rounded-md items-center flex gap-2"
-	>
-		<i class="bi bi-search" />
-		<input
-			bind:value={searchQuery}
-			placeholder="Search settings..."
-			type="text"
-			class="flex-1 outline-none bg-transparent"
-		/>
-	</div>
+<SearchBar query={searchQuery}>
 	<button
 		on:click={() => ($openModal = { name: 'create-project' })}
 		class="bg-blue-600 px-2 sm:block hidden p-1 border border-blue-500 rounded-md text-blue-50 text-sm"
@@ -54,12 +45,12 @@
 		class="bg-zinc-700 px-2 sm:block hidden p-1 border border-zinc-600 rounded-md text-zinc-50 text-sm"
 		><i class="bi bi-gear" /> Manage Projects</button
 	>
-	<button disabled={true} class="p-2 text-xl">
+	<button disabled={true} class="text-xl">
 		<i class="bi bi-three-dots" />
 	</button>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-2 gap-2 m-2">
-	{#each searchQuery ? searchedProjects : data.projects as project, index}
+</SearchBar>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 m-2">
+	{#each $searchQuery ? searchedProjects : data.projects as project, index}
 		<div in:fly={{ delay: (index + 1) * 100, y: 10 }}>
 			<ProjectCard {editModeOn} {project} />
 		</div>

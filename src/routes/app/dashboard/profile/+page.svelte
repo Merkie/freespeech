@@ -18,7 +18,7 @@
 	};
 </script>
 
-<div class="flex justify-center">
+<div class="flex justify-center h-full">
 	<div class="w-[90%] p-4 max-w-[1000px] flex sm:flex-row flex-col">
 		<div class="flex flex-col items-center sm:items-start sm:w-fit p-2">
 			<p
@@ -53,9 +53,9 @@
 				>Logout</button
 			>
 		</div>
-		<div class="flex-1 px-2 flex flex-col">
+		<div class="flex-1 px-2 flex flex-col overflow-y-auto">
 			<div class="flex gap-2 text-zinc-500">
-				<button disabled={true} class="text-zinc-200 underline">Uploaded Media</button>
+				<button class="text-zinc-200 underline">Uploaded Media</button>
 				<button disabled={true}>Parental Controls</button>
 				<button disabled={true}>Organization</button>
 			</div>
