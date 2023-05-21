@@ -61,7 +61,7 @@ export const actions = {
 					}
 				},
 				token: crypto.getRandomValues(new Uint8Array(32)) + '',
-				expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
+				expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
 				ip: getClientAddress(),
 				userAgent: request.headers.get('User-Agent') || 'none'
 			}
