@@ -150,18 +150,25 @@
 	/>
 {/if}
 
-<button
-	on:click={handleInteraction}
-	class={`w-full h-full border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
-		image ? 'flex flex-col items-center overflow-hidden' : 'grid place-items-center'
-	}`}
->
-	<p class={`text-ellipsis ${!image ? 'text-[2vw]' : 'py-2'}`}>
-		{displayText || text}
-	</p>
-	{#if image}
-		<div class="flex-1 w-full relative">
-			<img src={image} class="absolute w-full h-full object-contain" alt="Tile media" />
-		</div>
+<div class="relative w-full h-full">
+	<button
+		on:click={handleInteraction}
+		class={`overflow-hidden w-full h-full border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
+			image ? 'flex flex-col items-center' : 'grid place-items-center'
+		}`}
+	>
+		<p class={`text-ellipsis break-spaces ${!image ? 'text-[2vw]' : 'py-2'}`}>
+			{displayText || text}
+		</p>
+		{#if image}
+			<div class="flex-1 w-full relative">
+				<img src={image} class="absolute w-full h-full object-contain" alt="Tile media" />
+			</div>
+		{/if}
+	</button>
+	{#if navigation}
+		<div
+			class={`absolute -top-1 left-0 rounded-t-md h-[10px] border border-b-0 ${bgColorClass} ${textColorClass} ${borderColorClass} w-[50%]`}
+		/>
 	{/if}
-</button>
+</div>
