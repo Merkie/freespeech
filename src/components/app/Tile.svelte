@@ -29,16 +29,16 @@
 			$openModal = { name: 'edit-tile', key: tileSignature };
 			return;
 		}
+		// Handle navigation
+		if ($ActiveProject?.pages.map((page) => page.name).includes(navigation)) {
+			$ActivePage = navigation;
+			return;
+		}
 		// Add tile to store
 		$Sentence = [...$Sentence, { text, image, color } as Tile];
 		// Speak the text if the user has enabled the speak on tap setting
 		if ($LocalSettings.speakOnTap) {
 			speakText(text);
-		}
-		// Handle navigation
-		if ($ActiveProject?.pages.map((page) => page.name).includes(navigation)) {
-			$ActivePage = navigation;
-			return;
 		}
 	};
 

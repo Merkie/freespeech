@@ -89,6 +89,7 @@ export const POST = async ({ request, locals }) => {
 					{
 						page: 0,
 						text: 'New tile',
+						color: 'white',
 						x: 0,
 						y: 0
 					}
