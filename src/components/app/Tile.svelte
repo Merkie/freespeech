@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CropImageModal from '$components/modals/CropImageModal.svelte';
 	import EditTileModal from '$components/modals/EditTileModal.svelte';
 	import OnlineImageSearchModal from '$components/modals/OnlineImageSearchModal.svelte';
 	import {
@@ -107,6 +108,10 @@
 		let _ = { x, y, text, displayText, image, navigation, color };
 		addTileEditToStore();
 	}
+
+	const handleImageChange = (newImage: string) => {
+		image = newImage;
+	};
 </script>
 
 {#if $openModal.name === 'edit-tile' && $openModal.key === tileSignature}
@@ -135,6 +140,14 @@
 		{image}
 		{navigation}
 		{color}
+	/>
+{/if}
+
+{#if $openModal.name === 'crop-image' && $openModal.key === tileSignature}
+	<CropImageModal
+		{image}
+		{handleImageChange}
+		handleNavigateBack={() => ($openModal = { name: 'edit-tile', key: tileSignature })}
 	/>
 {/if}
 

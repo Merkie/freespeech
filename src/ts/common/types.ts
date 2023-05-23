@@ -39,6 +39,6 @@ export type ILocalSettings = {
 	speakOnTap: boolean;
 };
 export type IModal = {
-	name: 'edit-pages' | 'edit-tile' | 'search-online-images' | 'create-project' | '';
+	name: 'edit-pages' | 'edit-tile' | 'search-online-images' | 'create-project' | 'crop-image' | '';
 	key?: string;
 };

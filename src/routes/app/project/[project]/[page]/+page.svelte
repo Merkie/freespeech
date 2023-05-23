@@ -76,8 +76,8 @@
 		// capture the node with html-to-image
 		const imageResize = new ImageResize({
 			format: 'png',
-			width: 500,
-			height: 500
+			width: 800,
+			height: 800
 		});
 		const image = await imageResize.play(await htmlToImage.toPng(containerDOMNode));
 

@@ -14,8 +14,8 @@
 
 	const imageResize = new ImageResize({
 		format: 'png',
-		width: 500,
-		height: 500
+		width: 800,
+		height: 800
 	});
 
 	const handleUploadFromInternet = async (url: string) => {

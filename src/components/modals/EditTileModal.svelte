@@ -20,8 +20,8 @@
 
 	const imageResize = new ImageResize({
 		format: 'png',
-		width: 500,
-		height: 500
+		width: 800,
+		height: 800
 	});
 
 	const handleMediaUpload = async () => {
@@ -81,15 +81,23 @@
 	<div class="flex flex-col gap-2">
 		{#if image}
 			<img src={image} width={150} alt="Uploaded media preview" />
-			<button
-				on:click={() => {
-					image = '';
-					handleImageChange('');
-				}}
-				class="bg-red-600 w-fit px-3 p-1 text-sm rounded-md border border-red-500"
-			>
-				<i class="bi bi-trash mr-1" /> Remove Tile Image
-			</button>
+			<div class="flex gap-2 items-center">
+				<button
+					on:click={() => ($openModal = { name: 'crop-image', key: $openModal.key })}
+					class="bg-zinc-600 w-fit px-3 p-1 text-sm rounded-md border border-zinc-500"
+				>
+					<i class="bi bi-crop" /> Crop Tile Image
+				</button>
+				<button
+					on:click={() => {
+						image = '';
+						handleImageChange('');
+					}}
+					class="bg-red-600 w-fit px-3 p-1 text-sm rounded-md border border-red-500"
+				>
+					<i class="bi bi-trash mr-1" /> Remove Tile Image
+				</button>
+			</div>
 		{:else}
 			<div class="flex flex-wrap gap-2">
 				<button

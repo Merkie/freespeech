@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@novacbn/svelte-image-crop": "github:novacbn/svelte-image-crop",
 		"@prisma/client": "^4.14.0",
 		"@types/duckduckgo-images-api": "^1.0.1",
 		"aws-sdk": "^2.1380.0",
