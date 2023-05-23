@@ -17,13 +17,13 @@ export const load = async ({ locals, params }) => {
 		(project) => stringGate(project.name).toLowerCase() === params.project.toLowerCase()
 	);
 
-	if (!project) throw redirect(302, '/app');
+	if (!project) throw redirect(302, '/app/dashboard/projects');
 
 	const page = project.pages.find(
 		(page) => stringGate(page.name).toLowerCase() === params.page.toLowerCase()
 	);
 
-	if (!page) throw redirect(302, '/app');
+	if (!page) throw redirect(302, '/app/dashboard/projects');
 
 	return { projects, project, page: page.name };
 };
