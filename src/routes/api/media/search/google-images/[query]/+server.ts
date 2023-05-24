@@ -1,18 +1,20 @@
-import { image_search } from 'duckduckgo-images-api';
+import google from 'googlethis';
 
 export const GET = async ({ params }) => {
-	const results = await image_search({ query: params.query, moderate: true });
+	// Image Search
+	const images = await google.image(params.query, { safe: true });
+	const results = images.map((image) => ({
+		image: image.url,
+		thumbnail: image.preview.url,
+		alt: image.origin.title
+	}));
 
 	return new Response(
 		JSON.stringify(
 			results
 				.map((result) => {
 					if (result.image.endsWith('.gif')) return;
-					return {
-						image: result.image,
-						thumbnail: result.thumbnail,
-						alt: result.title
-					};
+					return result;
 				})
 				.filter((result) => result)
 		),

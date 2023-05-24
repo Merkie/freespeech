@@ -49,7 +49,7 @@
 	const searchImages = async () => {
 		searching = true;
 		const response = await fetch(
-			`/api/media/search/duckduckgo/${encodeURIComponent(onlineSearchTerm)}`
+			`/api/media/search/google-images/${encodeURIComponent(onlineSearchTerm)}`
 		);
 		searching = false;
 		const data = await response.json();
@@ -58,27 +58,27 @@
 </script>
 
 <ModalShell title="Edit Tile">
-	<button on:click={handleNavigateBack} class="flex items-center gap-1 mb-2 text-sm text-zinc-300">
+	<button on:click={handleNavigateBack} class="mb-2 flex items-center gap-1 text-sm text-zinc-300">
 		<i class="bi bi-arrow-left" />
 		Back
 	</button>
-	<div class="flex items-center gap-2 mb-2">
+	<div class="mb-2 flex items-center gap-2">
 		<div
-			class="px-2 rounded-md bg-white border border-zinc-300 text-zinc-800 flex items-center gap-1 flex-1"
+			class="flex flex-1 items-center gap-1 rounded-md border border-zinc-300 bg-white px-2 text-zinc-800"
 		>
 			<i class="bi bi-search" />
 			<input
 				type="text"
 				bind:value={onlineSearchTerm}
 				placeholder="Search for images..."
-				class="outline-none flex-1 border-none"
+				class="flex-1 border-none outline-none"
 			/>
 		</div>
-		<button on:click={searchImages} class="p-1 px-2 bg-blue-600 border border-blue-500 rounded-md"
+		<button on:click={searchImages} class="rounded-md border border-blue-500 bg-blue-600 p-1 px-2"
 			>{searching ? 'Searching...' : 'Search'}</button
 		>
 	</div>
-	<div class="min-h-[300px] max-h-[500px] overflow-y-auto flex gap-2">
+	<div class="flex max-h-[500px] min-h-[300px] gap-2 overflow-y-auto">
 		<div class="flex-1">
 			{#each imageSearchResults.filter((_, i) => i % 2 === 0) as image}
 				<button disabled={searching} on:click={() => handleUploadFromInternet(image.thumbnail)}>
@@ -98,6 +98,6 @@
 
 <style lang="postcss">
 	input {
-		@apply px-2 p-1 rounded-md border border-zinc-300 text-zinc-800;
+		@apply rounded-md border border-zinc-300 p-1 px-2 text-zinc-800;
 	}
 </style>
