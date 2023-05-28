@@ -40,12 +40,12 @@
 	<form class="flex flex-col" use:enhance method="POST" action="?/create">
 		<input type="text" name="name" bind:value={$createProjectForm.name} {...$constraints.name} />
 		{#if $errors.name}
-			<p class="text-red-500 text-sm">{$errors.name}</p>
+			<p class="text-sm text-red-500">{$errors.name}</p>
 		{/if}
 
 		{#if showingAdvancedSettings}
 			<p class="my-2">Project Dimensions:</p>
-			<div class="flex items-center gap-2 mb-2">
+			<div class="mb-2 flex items-center gap-2">
 				<input
 					type="number"
 					class="w-[50%]"
@@ -65,26 +65,26 @@
 				/>
 			</div>
 			{#if $errors.columns}
-				<p class="text-red-500 text-sm">{$errors.columns}</p>
+				<p class="text-sm text-red-500">{$errors.columns}</p>
 			{/if}
 			{#if $errors.rows}
-				<p class="text-red-500 text-sm">{$errors.rows}</p>
+				<p class="text-sm text-red-500">{$errors.rows}</p>
 			{/if}
 		{:else}
 			<button
 				on:click={() => (showingAdvancedSettings = true)}
-				class="text-sm text-zinc-300 w-fit py-4 hover:underline">Show advanced settings</button
+				class="w-fit py-4 text-sm text-zinc-300 hover:underline">Show advanced settings</button
 			>
 		{/if}
 		<button
 			type="submit"
-			class="bg-blue-600 text-blue-50 p-2 rounded-md mt-2 border border-blue-500">Submit</button
+			class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 		>
 	</form>
 </ModalShell>
 
 <style lang="postcss">
 	input {
-		@apply px-2 p-1 rounded-md border border-zinc-300 text-zinc-800;
+		@apply rounded-md border border-zinc-300 p-1 px-2 text-zinc-800;
 	}
 </style>
