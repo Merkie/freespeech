@@ -16,7 +16,6 @@ const config = {
 			'$components': './src/components',
 			'$ts': './src/ts',
 		},
-		checkOrigin: false
 	}
 };
 
