@@ -15,7 +15,8 @@ const config = {
 		alias: {
 			'$components': './src/components',
 			'$ts': './src/ts',
-		}
+		},
+		checkOrigin: false
 	}
 };
 
