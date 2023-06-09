@@ -6,7 +6,7 @@ import stringGate from '$ts/common/stringGate';
 //@ts-ignore
 import R2 from 'cloudflare-r2';
 
-export const POST = async ({ request, locals }) => {
+export const POST = async ({ request, locals, fetch }) => {
 	// Check if the user is logged in
 	if (!locals.user)
 		return new Response(JSON.stringify({ error: 'You must be logged in to upload media.' }), {
@@ -28,46 +28,26 @@ export const POST = async ({ request, locals }) => {
 		});
 	}
 
-	// Create the media path
-	const key = `${stringGate(locals.user.name)}-${locals.user.id}/${Date.now()}-${stringGate(
-		body.filename
-	)}`;
-
-	const r2 = new R2({
-		accessKey: R2_ACCESS_KEY,
-		secretKey: R2_SECRET_KEY,
-		accountId: R2_ACCOUNT_ID,
-		region: 'auto'
+	const response = await fetch('https://api.freespeechaac.com/v1/media/upload', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			base64data: body.base64data,
+			ext: body.filename.split('.').pop()
+		})
 	});
 
-	const putResponse = await r2.putObject({
-		bucket: R2_BUCKET,
-		key,
-		body: Buffer.from(body.base64data, 'base64')
-	});
+	const data = await response.json();
 
-	if (putResponse.status !== 200)
+	if (!data.url) {
 		return new Response(JSON.stringify({ error: 'An error occured when uploading the file.' }), {
 			status: 500
 		});
+	}
 
-	// Check if the upload was successful
-	const fileurl = `https://pub-3aabe8e9655b4a5eb94c0efbaa7142a1.r2.dev/${key}`;
-
-	// Add the media to the database
-	await locals.prisma.userMedia.create({
-		data: {
-			url: fileurl,
-			user: {
-				connect: {
-					id: locals.user.id
-				}
-			}
-		}
-	});
-
-	// Return the file URL
-	return new Response(JSON.stringify({ fileurl }), {
+	return new Response(JSON.stringify({ fileurl: `https://api.freespeechaac.com${data.url}` }), {
 		status: 200
 	});
 };
