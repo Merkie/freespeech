@@ -41,6 +41,7 @@
 	"dependencies": {
 		"@novacbn/svelte-image-crop": "github:novacbn/svelte-image-crop",
 		"@prisma/client": "^4.14.0",
+		"@sveltejs/adapter-node": "^1.2.4",
 		"aws-sdk": "^2.1380.0",
 		"bcrypt": "^5.1.0",
 		"cloudflare-r2": "^1.0.0",
