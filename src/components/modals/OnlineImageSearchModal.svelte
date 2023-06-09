@@ -25,7 +25,7 @@
 		const base64data = await imageResize.play(blob);
 
 		$Loading = true;
-		const uploadImageResponse = await fetch('/api/media/upload', {
+		const uploadImageResponse = await fetch('/api/v1/media/upload', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -49,7 +49,7 @@
 	const searchImages = async () => {
 		searching = true;
 		const response = await fetch(
-			`/api/media/search/google-images/${encodeURIComponent(onlineSearchTerm)}`
+			`/api/media/search-google-images/${encodeURIComponent(onlineSearchTerm)}`
 		);
 		searching = false;
 		const data = await response.json();
@@ -70,6 +70,9 @@
 			<input
 				type="text"
 				bind:value={onlineSearchTerm}
+				on:keydown={(e) => {
+					if (e.key === 'Enter') searchImages();
+				}}
 				placeholder="Search for images..."
 				class="flex-1 border-none outline-none"
 			/>

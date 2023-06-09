@@ -17,3 +17,7 @@ button:active {
 button:disabled {
 	@apply opacity-50;
 }
+
+.input-light {
+	@apply rounded-md border border-zinc-300 p-2 text-zinc-800;
+}

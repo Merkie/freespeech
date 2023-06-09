@@ -1,65 +1,57 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms/client';
-	import type { PageData } from './$types';
-	export let data: PageData;
-	const { form, enhance, errors, constraints, message } = superForm(data.form);
+	let email = '';
+	let name = '';
+	let password = '';
+	let confirmPassword = '';
+	let error = '';
+
+	const submitRegistration = async () => {
+		const registrationResponse = await fetch('/api/v1/user/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				email,
+				name,
+				password,
+				confirmPassword
+			})
+		});
+
+		const registrationResponseJson = await registrationResponse.json();
+
+		if (registrationResponseJson.error) {
+			error = registrationResponseJson.error;
+		} else {
+			window.location.assign('/app/dashboard/projects');
+		}
+	};
 </script>
 
-<main class="min-h-screen grid place-items-center">
-	<div class="w-[90%] max-w-[500px] flex flex-col gap-2">
-		<p class="text-xl mb-2">Register for FreeSpeech AAC</p>
-		<form method="POST" use:enhance class="flex flex-col gap-2">
-			<input
-				type="text"
-				placeholder="Email"
-				name="email"
-				bind:value={$form.email}
-				{...$constraints.email}
-			/>
-			{#if $errors.email}
-				<small class="text-red-500">{$errors.email}</small>
-			{/if}
-			<input
-				type="text"
-				placeholder="Name"
-				name="name"
-				bind:value={$form.name}
-				{...$constraints.name}
-			/>
-			{#if $errors.name}
-				<small class="text-red-500">{$errors.name}</small>
-			{/if}
-			<input
-				type="password"
-				placeholder="Password"
-				name="password"
-				bind:value={$form.password}
-				{...$constraints.password}
-			/>
-			{#if $errors.password}
-				<small class="text-red-500">{$errors.password}</small>
-			{/if}
-			<input
-				type="password"
-				placeholder="Confirm Password"
-				name="confirmPassword"
-				bind:value={$form.confirmPassword}
-				{...$constraints.confirmPassword}
-			/>
-			{#if $errors.confirmPassword}
-				<small class="text-red-500">{$errors.confirmPassword}</small>
-			{/if}
-			{#if $message}
-				<small class="text-red-500">{$message}</small>
-			{/if}
-			<button type="submit" class="p-2 rounded-md bg-blue-500 text-blue-50">Submit</button>
-		</form>
-		<a class="text-sm text-blue-500 underline mt-2" href="/login">Already have an account?</a>
+<main class="grid min-h-screen place-items-center">
+	<div class="flex w-[90%] max-w-[500px] flex-col gap-2">
+		<p class="mb-2 text-xl">Register for FreeSpeech AAC</p>
+		<input class="input-light" type="text" placeholder="Email" bind:value={email} />
+		<input class="input-light" type="text" placeholder="Name" bind:value={name} />
+		<input
+			class="input-light"
+			type="password"
+			placeholder="Password (Must be at least 8 characters)"
+			bind:value={password}
+		/>
+		<input
+			class="input-light"
+			type="password"
+			placeholder="Confirm Password"
+			bind:value={confirmPassword}
+		/>
+		{#if error}
+			<small class="text-red-500">{error}</small>
+		{/if}
+		<button on:click={submitRegistration} class="rounded-md bg-blue-500 p-2 text-blue-50"
+			>Submit</button
+		>
+		<a class="mt-2 text-sm text-blue-500 underline" href="/login">Already have an account?</a>
 	</div>
 </main>
-
-<style lang="postcss">
-	input {
-		@apply p-2 rounded-md border border-zinc-300;
-	}
-</style>

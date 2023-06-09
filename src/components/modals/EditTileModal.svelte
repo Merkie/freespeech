@@ -30,7 +30,7 @@
 
 		const base64data = await imageResize.play(uploadedFile);
 
-		const response = await fetch('/api/media/upload', {
+		const response = await fetch('/api/v1/media/upload', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -73,7 +73,7 @@
 	{:else}
 		<button
 			on:click={() => (showingDisplayTextOption = true)}
-			class="text-sm hover:underline text-zinc-300 text-left mt-2"
+			class="mt-2 text-left text-sm text-zinc-300 hover:underline"
 			>Edit display text separately</button
 		>
 	{/if}
@@ -81,10 +81,10 @@
 	<div class="flex flex-col gap-2">
 		{#if image}
 			<img src={image} width={150} alt="Uploaded media preview" />
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<button
 					on:click={() => ($openModal = { name: 'crop-image', key: $openModal.key })}
-					class="bg-zinc-600 w-fit px-3 p-1 text-sm rounded-md border border-zinc-500"
+					class="w-fit rounded-md border border-zinc-500 bg-zinc-600 p-1 px-3 text-sm"
 				>
 					<i class="bi bi-crop" /> Crop Tile Image
 				</button>
@@ -93,7 +93,7 @@
 						image = '';
 						handleImageChange('');
 					}}
-					class="bg-red-600 w-fit px-3 p-1 text-sm rounded-md border border-red-500"
+					class="w-fit rounded-md border border-red-500 bg-red-600 p-1 px-3 text-sm"
 				>
 					<i class="bi bi-trash mr-1" /> Remove Tile Image
 				</button>
@@ -102,12 +102,12 @@
 			<div class="flex flex-wrap gap-2">
 				<button
 					on:click={() => fileinput.click()}
-					class="bg-zinc-800 px-3 p-1 text-sm rounded-md border border-zinc-700"
+					class="rounded-md border border-zinc-700 bg-zinc-800 p-1 px-3 text-sm"
 					><i class="bi bi-upload mr-1" /> Upload Image From Device</button
 				>
 				<button
 					on:click={handleOnlineImageSearch}
-					class="bg-zinc-800 px-3 p-1 text-sm rounded-md border border-zinc-700"
+					class="rounded-md border border-zinc-700 bg-zinc-800 p-1 px-3 text-sm"
 					><i class="bi bi-search" /> Search for Images Online</button
 				>
 			</div>
@@ -129,7 +129,7 @@
 	</select>
 
 	<p class="my-2">Color:</p>
-	<div class="gap-2 flex flex-wrap rounded-md">
+	<div class="flex flex-wrap gap-2 rounded-md">
 		{#each ['white', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'] as _color}
 			{#if _color === 'white'}
 				<button
@@ -138,7 +138,7 @@
 					}}
 					class={`${
 						color === 'white' ? 'ring ring-zinc-50' : ''
-					} shadow-md rounded-md bg-zinc-50 text-zinc-950 border border-zinc-500 p-4 text-md font-medium`}
+					} text-md rounded-md border border-zinc-500 bg-zinc-50 p-4 font-medium text-zinc-950 shadow-md`}
 				>
 					Aa
 				</button>
@@ -149,7 +149,7 @@
 					}}
 					class={`${
 						color === _color ? 'ring ring-zinc-50' : ''
-					}  shadow-md rounded-md bg-${_color}-100 text-${_color}-950 border border-${_color}-500 p-4 text-md font-medium`}
+					}  rounded-md shadow-md bg-${_color}-100 text-${_color}-950 border border-${_color}-500 text-md p-4 font-medium`}
 				>
 					Aa
 				</button>
@@ -161,7 +161,7 @@
 			deleteTile($openModal.key + '');
 			$openModal = { name: '' };
 		}}
-		class="bg-red-600 p-1 rounded-md border border-red-500 mt-4"
+		class="mt-4 rounded-md border border-red-500 bg-red-600 p-1"
 	>
 		Delete Tile
 	</button>
@@ -170,6 +170,6 @@
 <style lang="postcss">
 	input,
 	select {
-		@apply px-2 p-1 rounded-md border border-zinc-300 text-zinc-800;
+		@apply rounded-md border border-zinc-300 p-1 px-2 text-zinc-800;
 	}
 </style>

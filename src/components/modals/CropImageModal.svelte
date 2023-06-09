@@ -30,7 +30,7 @@
 			);
 		});
 
-		const response = await fetch('/api/media/upload', {
+		const response = await fetch('/api/v1/media/upload', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -74,21 +74,21 @@
 	<ImageCrop bind:this={image_crop} {src} on:state={on_state} />
 	<div class="flex gap-2">
 		<button
-			class="flex-1 p-1 bg-zinc-700 border border-zinc-600 text-zinc-50 rounded-md mt-2"
+			class="mt-2 flex-1 rounded-md border border-zinc-600 bg-zinc-700 p-1 text-zinc-50"
 			disabled={src === DEFAULT_IMAGE_SRC}
 			on:click={on_reset_click}
 		>
 			Reset
 		</button>
 		<button
-			class="flex-1 p-1 bg-zinc-700 border border-zinc-600 text-zinc-50 rounded-md mt-2"
+			class="mt-2 flex-1 rounded-md border border-zinc-600 bg-zinc-700 p-1 text-zinc-50"
 			disabled={state === CROP_STATE.default}
 			on:click={on_clear_click}
 		>
 			Clear
 		</button>
 		<button
-			class="flex-1 p-1 bg-blue-600 border border-blue-500 text-blue-50 rounded-md mt-2"
+			class="mt-2 flex-1 rounded-md border border-blue-500 bg-blue-600 p-1 text-blue-50"
 			disabled={state === CROP_STATE.default}
 			on:click={on_commit_click}
 		>
