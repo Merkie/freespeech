@@ -82,7 +82,7 @@
 		const image = await imageResize.play(await htmlToImage.toPng(containerDOMNode));
 
 		// upload the image to the server
-		const mediaUploadResponse = await fetch('/api/media/upload', {
+		const mediaUploadResponse = await fetch('/api/v1/media/upload', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -204,7 +204,7 @@
 <div
 	bind:this={containerDOMNode}
 	bind:clientHeight={containerHeight}
-	class="flex-1 bg-zinc-100 overflow-auto"
+	class="flex-1 overflow-auto bg-zinc-100"
 >
 	{#if containerHeight}
 		{#each organizedTiles as pageTiles, pageIndex}
