@@ -1,20 +1,22 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms/client';
 	import ModalShell from './ModalShell.svelte';
-	import { openModal } from '$ts/client/stores';
-	export let form: any;
 
-	let projectName: string;
+	let name: string;
+	let columns = 6;
+	let rows = 4;
 	let showingAdvancedSettings = false;
 
 	const createProject = async () => {
+		console.log({ name, columns, rows });
 		const response = await fetch('/api/project/create', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ name: projectName })
+			body: JSON.stringify({ name, columns, rows })
 		});
+
+		console.log(response);
 
 		const data = await response.json();
 
@@ -22,54 +24,34 @@
 			return alert(data.error);
 		}
 
-		alert('Project created successfully');
 		window.location.reload();
 	};
-
-	const { form: createProjectForm, errors, enhance, message, constraints } = superForm(form);
-
-	$: {
-		if ($message === 'good') {
-			$openModal = { name: '' };
-		}
-	}
 </script>
 
 <ModalShell title="Create Project">
 	<p class="mb-2">Project name:</p>
-	<form class="flex flex-col" use:enhance method="POST" action="?/create">
-		<input type="text" name="name" bind:value={$createProjectForm.name} {...$constraints.name} />
-		{#if $errors.name}
-			<p class="text-sm text-red-500">{$errors.name}</p>
-		{/if}
+	<div class="flex flex-col">
+		<input type="text" name="name" bind:value={name} />
 
 		{#if showingAdvancedSettings}
 			<p class="my-2">Project Dimensions:</p>
 			<div class="mb-2 flex items-center gap-2">
 				<input
+					bind:value={columns}
 					type="number"
 					class="w-[50%]"
 					name="columns"
 					placeholder="Columns"
-					bind:value={$createProjectForm.columns}
-					{...$constraints.columns}
 				/>
 				<p>X</p>
-				<input
-					type="number"
-					class="w-[50%]"
-					name="rows"
-					placeholder="Rows"
-					bind:value={$createProjectForm.rows}
-					{...$constraints.rows}
-				/>
+				<input bind:value={rows} type="number" class="w-[50%]" name="rows" placeholder="Rows" />
 			</div>
-			{#if $errors.columns}
+			<!-- {#if $errors.columns}
 				<p class="text-sm text-red-500">{$errors.columns}</p>
 			{/if}
 			{#if $errors.rows}
 				<p class="text-sm text-red-500">{$errors.rows}</p>
-			{/if}
+			{/if} -->
 		{:else}
 			<button
 				on:click={() => (showingAdvancedSettings = true)}
@@ -77,10 +59,11 @@
 			>
 		{/if}
 		<button
+			on:click={createProject}
 			type="submit"
 			class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 		>
-	</form>
+	</div>
 </ModalShell>
 
 <style lang="postcss">
