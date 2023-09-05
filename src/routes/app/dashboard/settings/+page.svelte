@@ -116,14 +116,14 @@
 
 <SearchBar query={searchQuery} />
 {#each $searchQuery ? searchSettings : settings as setting, index}
-	<div in:fly={{ delay: index * 100, y: -10 }} class="p-2 border-b border-zinc-700">
-		<div class="flex gap-2 items-center">
+	<div in:fly={{ delay: index * 100, y: -10 }} class="border-b border-zinc-300 p-2">
+		<div class="flex items-center gap-2">
 			<p class="">{setting.name}{': '}</p>
 			{#if setting.type === 'select' && setting.options}
 				<select
 					bind:value={setting.value}
 					on:input={setting.onInput}
-					class="p-2 rounded-md border border-zinc-700 bg-zinc-800 flex-1 outline-none"
+					class="flex-1 rounded-md border border-zinc-300 bg-zinc-200 p-2 outline-none"
 				>
 					{#each setting.options as option}
 						<option value={option}>{option}</option>
@@ -132,7 +132,7 @@
 			{/if}
 		</div>
 
-		<p class="text-sm text-zinc-400 pt-2">
+		<p class="pt-2 text-sm">
 			{setting.description}
 			{#if setting.value !== setting.default}
 				<button
@@ -140,7 +140,7 @@
 						// @ts-ignore
 						setting.onInput({ target: { value: setting.default } });
 					}}
-					class="bg-zinc-800 border border-zinc-700 text-xs rounded-md p-1 m-2"
+					class="m-2 rounded-md border border-zinc-300 bg-zinc-200 p-1 text-xs"
 					><i class="bi bi-arrow-clockwise" /> Reset to default</button
 				>
 			{/if}

@@ -55,7 +55,7 @@
 		{:else}
 			<button
 				on:click={() => (showingAdvancedSettings = true)}
-				class="w-fit py-4 text-sm text-zinc-300 hover:underline">Show advanced settings</button
+				class="w-fit py-4 text-sm hover:underline">Show advanced settings</button
 			>
 		{/if}
 		<button
@@ -68,6 +68,6 @@
 
 <style lang="postcss">
 	input {
-		@apply rounded-md border border-zinc-300 p-1 px-2 text-zinc-800;
+		@apply rounded-md border border-zinc-300 p-2 px-4 text-zinc-800;
 	}
 </style>

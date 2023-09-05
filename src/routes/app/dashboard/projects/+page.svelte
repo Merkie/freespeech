@@ -37,15 +37,15 @@
 <SearchBar query={searchQuery}>
 	<button
 		on:click={() => ($openModal = { name: 'create-project' })}
-		class="hidden rounded-md border border-blue-500 bg-blue-600 p-1 px-2 text-sm text-blue-50 sm:block"
+		class="hidden rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-sm text-blue-50 sm:block"
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>
 	<button
 		on:click={() => (editModeOn = !editModeOn)}
-		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-1 px-2 text-sm text-zinc-50 sm:block"
+		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-2 px-4 text-sm text-zinc-50 sm:block"
 		><i class="bi bi-gear" /> Manage Projects</button
 	>
-	<button disabled={true} class="text-xl">
+	<button disabled={true} class="px-2 text-xl">
 		<i class="bi bi-three-dots" />
 	</button>
 </SearchBar>

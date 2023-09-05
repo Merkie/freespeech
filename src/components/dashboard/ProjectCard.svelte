@@ -32,33 +32,33 @@
 <div class="relative">
 	<button
 		on:click={() => switchProject(project.id)}
-		class={`w-full h-full bg-zinc-800 border border-zinc-700 rounded-md p-2 flex flex-col gap-2 relative ${
+		class={`relative flex h-full w-full flex-col gap-2 rounded-md border border-zinc-300 bg-zinc-200 p-2 ${
 			$ActiveProject?.id === project.id ? 'ring-2 ring-blue-500' : ''
 		}`}
 	>
 		<img
 			src={project.imageUrl}
-			class="w-full h-full aspect-video object-cover bg-zinc-900 text-zinc-900 rounded-sm"
+			class="aspect-video h-full w-full rounded-sm border border-zinc-300 bg-zinc-300 object-cover"
 			alt="preview"
 			width={100}
 		/>
-		<p class="w-full text-left">
+		<p class="w-full text-left text-lg">
 			{project.name}
 		</p>
 	</button>
-	<div class="flex gap-1 items-center absolute top-0 right-0 -translate-y-2 translate-x-2">
+	<div class="absolute right-0 top-0 flex -translate-y-2 translate-x-2 items-center gap-1">
 		{#if editModeOn}
 			<button
 				disabled={false}
 				in:scale
-				class="w-[25px] h-[25px] bg-yellow-600 border border-yellow-500 rounded-full text-yellow-50 grid place-items-center"
+				class="grid h-[25px] w-[25px] place-items-center rounded-full border border-yellow-500 bg-yellow-600 text-yellow-50"
 			>
 				<i class="bi bi-pencil text-sm" />
 			</button>
 			<button
 				on:click={() => deleteProject(project.id)}
 				in:scale
-				class="w-[25px] h-[25px] bg-red-500 border border-red-400 rounded-full text-red-50 grid place-items-center"
+				class="grid h-[25px] w-[25px] place-items-center rounded-full border border-red-400 bg-red-500 text-red-50"
 			>
 				<i class="bi bi-trash text-sm" />
 			</button>

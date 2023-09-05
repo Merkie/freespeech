@@ -51,7 +51,7 @@
 </svelte:head>
 
 <!-- dashboard header -->
-<div class="p-2 bg-zinc-900 text-zinc-100 flex items-center font-light gap-2 text-sm">
+<div class="flex items-center gap-2 bg-zinc-900 p-2 text-sm font-light text-zinc-100">
 	{#each links as link}
 		{#if !link.hidden}
 			<a
@@ -59,8 +59,8 @@
 				class={`${
 					$page.url.pathname.startsWith(link.path)
 						? 'border-zinc-700'
-						: 'text-zinc-500 border-zinc-900'
-				} transition-colors border rounded-md p-2 py-1`}
+						: 'border-zinc-900 text-zinc-500'
+				} rounded-md border p-2 py-1 transition-colors`}
 				><i class={`bi bi-${link.icon} mr-2`} />{link.name}</a
 			>
 		{/if}
@@ -68,7 +68,7 @@
 	<div class="flex-1" />
 	<a href="/app/dashboard/profile">
 		<p
-			class="bg-blue-600 text-blue-50 font-bold text-xs grid place-items-center w-[35px] h-[35px] rounded-full"
+			class="grid h-[35px] w-[35px] place-items-center rounded-full bg-blue-600 text-xs font-bold text-blue-50"
 		>
 			{getUserInitials()}
 		</p>
@@ -76,22 +76,14 @@
 </div>
 
 <!-- main content container -->
-<div class="flex-1 flex flex-col bg-zinc-800 p-2 font-light text-zinc-100">
-	<!-- dashboard page title -->
-	<div class="flex items-center">
-		{#key $page.url.pathname}
-			<p in:fly={{ x: -20 }} class="text-3xl">
-				{links.find((link) => link.path.startsWith($page.url.pathname))?.name}:
-			</p>
-		{/key}
-	</div>
+<div class="flex flex-1 flex-col bg-zinc-100">
 	<!-- page content container -->
-	<div bind:clientHeight={containerHeight} class="flex-1 relative mt-2 flex flex-col">
+	<div bind:clientHeight={containerHeight} class="relative flex flex-1 flex-col">
 		<!-- inner absolutely positioned container -->
 		<!-- this is done to force the y overflow to not intrude on the rest of the app ui -->
 		{#if containerHeight}
 			<div
-				class="absolute w-full bg-zinc-900 rounded-md border border-zinc-700"
+				class="absolute w-full"
 				style={`height: ${containerHeight}px; max-height: ${containerHeight}px; overflow-y: auto;`}
 			>
 				<slot><!-- optional fallback --></slot>

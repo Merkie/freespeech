@@ -30,19 +30,19 @@
 				closeModal();
 			}
 		}}
-		class="fixed top-0 left-0 h-screen w-screen grid place-items-center bg-[rgba(0,0,0,0.5)] z-30"
+		class="fixed left-0 top-0 z-30 grid h-screen w-screen place-items-center bg-[rgba(0,0,0,0.5)]"
 	>
 		<div
 			transition:fly={{ y: 100, duration: 200 }}
-			class="bg-zinc-900 border border-zinc-800 text-zinc-100 font-light shadow-md p-2 rounded-md flex flex-col w-[90%] max-w-[500px] max-h-[90%] overflow-y-auto"
+			class="flex max-h-[90%] w-[90%] max-w-[500px] flex-col overflow-y-auto rounded-md border border-zinc-300 bg-zinc-200 p-2 shadow-md"
 		>
-			<div class="flex items-center gap-2 mb-2">
+			<div class="mb-2 flex items-center gap-2">
 				<button on:click={closeModal}>
 					<i class="bi bi-x" />
 				</button>
 				<p>{title}</p>
 			</div>
-			<div class="p-2 flex flex-col">
+			<div class="flex flex-col p-2">
 				<slot />
 			</div>
 		</div>
