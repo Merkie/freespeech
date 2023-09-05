@@ -1,53 +1,23 @@
 import prisma from '$ts/server/prisma';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '$env/static/private';
+import type { User } from '@prisma/client';
 
 export async function handle({ event, resolve }) {
-	// console.log(event);
-	// get the token from the request cookies
-	const cookie = event.cookies.get('verificationToken');
+	const cookie = event.cookies.get('token');
 
-	const verificationToken = await prisma.verificationToken.findUnique({
-		where: {
-			token: cookie || ''
-		},
-		include: {
-			user: true
-		}
-	});
-
-	if (!verificationToken) {
-		event.locals.user = undefined;
-	} else {
-		const secondsUntilTokenExpires = (verificationToken.expiresAt.getTime() - Date.now()) / 1000;
-
-		// Delete the token if it has expired
-		if (secondsUntilTokenExpires <= 0) {
-			await prisma.verificationToken.delete({
-				where: {
-					id: verificationToken.id
-				}
-			});
-			event.locals.user = undefined;
+	// Decode the token and add user to locals
+	if(cookie) {
+		const decodedToken = jwt.verify(cookie, JWT_SECRET) as { id: string };
+		const fetchedUser = await prisma.user.findUnique({ where: { id: decodedToken.id } });
+		if(fetchedUser) {
+			delete (fetchedUser as { password?: string }).password;
+			event.locals.user = fetchedUser as Omit<User, 'password'>;
 		} else {
-			// If the token is not expired
-			// Refresh the token if it is about to expire
-			if (secondsUntilTokenExpires < 10000) {
-				await prisma.verificationToken.update({
-					where: {
-						id: verificationToken.id
-					},
-					data: {
-						expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
-					}
-				});
-			}
-
-			// Delete the password from the user object
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			delete verificationToken.user.password;
-
-			event.locals.user = verificationToken.user;
+			event.locals.user = undefined;
 		}
+	} else {
+		event.locals.user = undefined;
 	}
 
 	// Add prisma to the locals

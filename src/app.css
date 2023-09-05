@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,8 +18,4 @@ button:active {
 
 button:disabled {
 	@apply opacity-50;
-}
-
-.input-light {
-	@apply rounded-md border border-zinc-300 p-2 text-zinc-800;
 }
