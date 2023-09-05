@@ -30,7 +30,7 @@
 			</p>
 			<div>
 				<p class="mt-2 text-lg font-medium">{data.user?.name}</p>
-				<p class="items-cetner flex text-sm text-zinc-300">
+				<p class="items-cetner flex text-sm">
 					<span>{data.user?.email}</span>
 					{#if data.user?.emailVerified}
 						<i class="bi bi-envelope-check ml-2 translate-y-[1px]" />
@@ -52,7 +52,7 @@
 			>
 		</div>
 		<div class="flex flex-1 flex-col overflow-y-auto px-2">
-			<form class="flex flex-col gap-2 text-zinc-300">
+			<form class="flex flex-col gap-2">
 				<label class="text-lg" for="email">Email</label>
 				<input type="text" name="email" value={data.user?.email} disabled={true} />
 				<label class="text-lg" for="name">Name</label>
@@ -64,14 +64,14 @@
 						e.preventDefault();
 						profileInput.click();
 					}}
-					class="rounded-md border border-zinc-700 bg-zinc-800 p-1 text-zinc-200"
+					class="rounded-md border border-zinc-300 bg-zinc-200 p-2 px-4 text-zinc-500"
 					><i class="bi bi-image mr-2" />Upload Profile Picture</button
 				>
 				<input bind:this={profileInput} type="file" name="profile" class="hidden" />
 				<button
 					disabled={true}
 					type="submit"
-					class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-1 text-blue-50"
+					class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-blue-50"
 					>Submit Changes</button
 				>
 			</form>
@@ -81,7 +81,7 @@
 
 <style lang="postcss">
 	input {
-		@apply flex-1 rounded-md border border-zinc-700 bg-zinc-800 p-1 px-2 outline-none;
+		@apply rounded-md border border-zinc-300 p-2 px-4 text-zinc-800;
 	}
 
 	input:disabled {
