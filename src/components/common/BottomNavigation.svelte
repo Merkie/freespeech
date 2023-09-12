@@ -12,13 +12,12 @@
 
 	const saveProjectToDb = async () => {
 		$Loading = true;
-		await fetch('/api/v1/project/update', {
+		await fetch(`/api/v1/project/${$ActiveProject?.id}/update`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				id: $ActiveProject?.id,
 				pageName: $ActivePage,
 				data: $ActiveProject?.pages.find((page) => page.name === $ActivePage)?.data
 			})
@@ -41,7 +40,7 @@
 				if (!$hasUnsavedChanges) return;
 				// Fetch the project from the db to reset the data
 				$Loading = true;
-				const project = await fetch(`/api/v1/project/fetch/${$ActiveProject?.id}`);
+				const project = await fetch(`/api/v1/project/${$ActiveProject?.id}`);
 				$Loading = false;
 				const projectData = await project.json();
 				// Error handling

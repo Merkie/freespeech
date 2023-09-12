@@ -101,13 +101,12 @@
 		}
 
 		// update the project with the new thumbnail
-		const projectUpdatePromise = fetch('/api/v1/project/update/thumbnail', {
+		const projectUpdatePromise = fetch(`/api/v1/project/${$ActiveProject?.id}/update/thumbnail`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				id: $ActiveProject?.id,
 				imageUrl: mediaUploadResponseJson.fileurl
 			})
 		});

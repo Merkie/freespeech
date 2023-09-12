@@ -6,7 +6,7 @@
 	let profileInput: HTMLInputElement;
 
 	const logout = async () => {
-		await fetch('/api/v1/user/logout');
+		await fetch('/api/v1/auth/logout');
 		$ActiveProject = null;
 		window.location.assign('/');
 	};

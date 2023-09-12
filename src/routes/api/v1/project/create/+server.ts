@@ -1,45 +1,27 @@
 import { json } from '@sveltejs/kit';
+import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 export const POST = async ({ request, locals }) => {
-	// Check if the user is logged in
-	if (!locals.user)
-		return new Response(JSON.stringify({ error: 'You must be logged in to create a page.' }), {
-			status: 401
-		});
+	const form = await superValidate(
+		await request.json(),
+		z.object({
+			name: z.string(),
+			columns: z.number(),
+			rows: z.number()
+		})
+	);
 
-	const ProjectCreationSchema = z.object({
-		name: z.string(),
-		columns: z.number(),
-		rows: z.number()
-	});
-
-	// Validate the request body
-	let body;
-	try {
-		body = ProjectCreationSchema.parse(await request.json());
-	} catch (err) {
-		if (err instanceof z.ZodError) {
-			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-		}
-		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), {
-			status: 500
-		});
-	}
+	if (!form.valid) return json({ error: 'Invalid form' });
 
 	// Create the project
 	const project = await locals.prisma.project.create({
 		data: {
-			name: body.name,
+			name: form.data.name,
 			description: '',
 			isPublic: false,
-			columns: body.columns,
-			rows: body.rows,
+			columns: form.data.columns,
+			rows: form.data.rows,
 			user: {
 				connect: {
 					id: locals.user.id

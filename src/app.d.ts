@@ -5,7 +5,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			user: Omit<User, 'password'> | undefined;
+			user: Omit<User, 'password'>;
 			prisma: PrismaClient;
 		}
 		// interface PageData {}
