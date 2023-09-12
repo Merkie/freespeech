@@ -9,7 +9,7 @@
 
 	const switchProject = async (id: string) => {
 		$Sentence = [];
-		const project = await fetch(`/api/project/fetch/${id}`);
+		const project = await fetch(`/api/v1/project/fetch/${id}`);
 		const projectData = await project.json();
 		if (projectData.error) {
 			return alert(projectData.error);
@@ -18,7 +18,7 @@
 	};
 
 	const deleteProject = async (id: string) => {
-		const project = await fetch(`/api/project/delete/${id}`, {
+		const project = await fetch(`/api/v1/project/delete/${id}`, {
 			method: 'DELETE'
 		});
 		const projectData = await project.json();

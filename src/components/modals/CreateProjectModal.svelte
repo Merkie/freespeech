@@ -8,12 +8,12 @@
 
 	const createProject = async () => {
 		console.log({ name, columns, rows });
-		const response = await fetch('/api/project/create', {
+		const response = await fetch('/api/v1/project/create', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ name, columns, rows })
+			body: JSON.stringify({ name, columns, rows, isPublic: false, description: '' })
 		});
 
 		console.log(response);

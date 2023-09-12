@@ -12,7 +12,7 @@
 
 	const saveProjectToDb = async () => {
 		$Loading = true;
-		await fetch('/api/project/update', {
+		await fetch('/api/v1/project/update', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -29,7 +29,7 @@
 
 <!-- TODO: This wont display in new versions of safari -->
 <div
-	class="bg-zinc-900 text-zinc-100 font-light p-2 flex gap-2 border border-x-0 border-b-0 border-zinc-700"
+	class="flex gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 font-light text-zinc-100"
 >
 	{#if $isEditing}
 		<!-- Cancel Edits Button -->
@@ -41,7 +41,7 @@
 				if (!$hasUnsavedChanges) return;
 				// Fetch the project from the db to reset the data
 				$Loading = true;
-				const project = await fetch(`/api/project/fetch/${$ActiveProject?.id}`);
+				const project = await fetch(`/api/v1/project/fetch/${$ActiveProject?.id}`);
 				$Loading = false;
 				const projectData = await project.json();
 				// Error handling
@@ -62,7 +62,7 @@
 				// Set hasUnsavedChanges to false to reset the state
 				$hasUnsavedChanges = false;
 			}}
-			class="bg-blue-600 text-blue-50 border border-blue-700">Save Changes</button
+			class="border border-blue-700 bg-blue-600 text-blue-50">Save Changes</button
 		>
 	{:else}
 		<!-- Home button -->
@@ -104,6 +104,6 @@
 <style lang="postcss">
 	button,
 	a {
-		@apply p-1 flex-1 rounded-md text-center transition-colors;
+		@apply flex-1 rounded-md p-1 text-center transition-colors;
 	}
 </style>

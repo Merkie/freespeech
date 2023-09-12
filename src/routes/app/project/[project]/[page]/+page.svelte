@@ -101,7 +101,7 @@
 		}
 
 		// update the project with the new thumbnail
-		const projectUpdatePromise = fetch('/api/project/update/thumbnail', {
+		const projectUpdatePromise = fetch('/api/v1/project/update/thumbnail', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -113,7 +113,7 @@
 		});
 
 		// delete the old thumbnail
-		const deleteImagePromise = fetch('/api/media/delete', {
+		const deleteImagePromise = fetch('/api/v1/media/delete', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -148,7 +148,7 @@
 		} else if ($LocalSettings.voiceGenerator === 'elevenlabs') {
 			if ($isSynthesizingSpeech) return;
 			$isSynthesizingSpeech = true;
-			const elevenLabsResponse = await fetch('/api/text-to-speech/elevenlabs/speak', {
+			const elevenLabsResponse = await fetch('/api/v1/text-to-speech/elevenlabs/speak', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

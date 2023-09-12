@@ -16,7 +16,7 @@
 		$Loading = true;
 		files.forEach(async (file) => {
 			if (!file.isInUse) {
-				const response = await fetch('/api/media/delete', {
+				const response = await fetch('/api/v1/media/delete', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
@@ -33,25 +33,25 @@
 	};
 </script>
 
-<div class="bg-zinc-950 border-b border-zinc-800">
+<div class="border-b border-zinc-800 bg-zinc-950">
 	<button
 		on:click={deleteAllUnusuedImages}
-		class="bg-red-600 border border-red-600 rounded-md text-sm p-1 px-3 text-red-50 m-4"
+		class="m-4 rounded-md border border-red-600 bg-red-600 p-1 px-3 text-sm text-red-50"
 		>Delete All Unused Images</button
 	>
 </div>
 {#each files as file, index}
 	<div
 		in:fly={{ delay: (index + 1) * 100, y: -10 }}
-		class={`p-2 gap-4 flex items-center ${index % 2 !== 0 ? 'bg-zinc-950' : ''}`}
+		class={`flex items-center gap-4 p-2 ${index % 2 !== 0 ? 'bg-zinc-950' : ''}`}
 	>
-		<img src={file.url} class="w-[100px] object-contain h-[100px]" alt="preview" />
+		<img src={file.url} class="h-[100px] w-[100px] object-contain" alt="preview" />
 		{#if !file.isInUse}
-			<div class="bg-red-600 border border-red-600 rounded-sm p-1 px-3 text-red-50">
+			<div class="rounded-sm border border-red-600 bg-red-600 p-1 px-3 text-red-50">
 				File not in use
 			</div>
 		{/if}
-		<p in:fly={{ x: -10 }} class="text-sm flex-1 overflow-ellipsis">
+		<p in:fly={{ x: -10 }} class="flex-1 overflow-ellipsis text-sm">
 			{file.url.split('/').pop()?.substring(14)}
 		</p>
 	</div>

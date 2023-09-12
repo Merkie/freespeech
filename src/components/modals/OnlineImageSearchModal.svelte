@@ -49,7 +49,7 @@
 	const searchImages = async () => {
 		searching = true;
 		const response = await fetch(
-			`/api/media/search-google-images/${encodeURIComponent(onlineSearchTerm)}`
+			`/api/v1/media/search-google-images/${encodeURIComponent(onlineSearchTerm)}`
 		);
 		searching = false;
 		const data = await response.json();

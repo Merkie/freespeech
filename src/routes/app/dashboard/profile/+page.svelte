@@ -37,13 +37,13 @@
 					{/if}
 				</p>
 			</div>
-			{#if !data.user?.emailVerified}
+			<!-- {#if !data.user?.emailVerified}
 				<a
 					href="/verify-email"
 					class="mt-2 w-[200px] rounded-md border border-blue-500 bg-blue-700 p-1 text-center text-sm text-blue-50 sm:w-full"
 					><i class="bi bi-envelope mr-2" />Verify Email</a
 				>
-			{/if}
+			{/if} -->
 
 			<button
 				on:click={logout}

@@ -11,7 +11,7 @@
 	const createPage = async () => {
 		$hasUnsavedChanges = true;
 		creatingPage = true;
-		const response = await fetch('/api/project/create/page', {
+		const response = await fetch('/api/v1/project/create/page', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -40,7 +40,7 @@
 	{#if addingPage}
 		<button
 			on:click={() => (addingPage = false)}
-			class="flex items-center gap-1 mb-2 text-sm text-zinc-300"
+			class="mb-2 flex items-center gap-1 text-sm text-zinc-300"
 		>
 			<i class="bi bi-arrow-left" />
 			Back
@@ -49,13 +49,13 @@
 		<button
 			disabled={creatingPage}
 			on:click={createPage}
-			class="bg-blue-600 text-blue-50 p-2 rounded-md mt-2 border border-blue-500">Submit</button
+			class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 		>
 	{:else}
 		{#each $ActiveProject?.pages || [] as page, index}
 			<div
-				class={`py-2 flex gap-2 items-center ${
-					index !== 0 ? 'border border-x-0 border-zinc-700 border-b-0' : ''
+				class={`flex items-center gap-2 py-2 ${
+					index !== 0 ? 'border border-x-0 border-b-0 border-zinc-700' : ''
 				}`}
 			>
 				<p>{page.name}</p>
@@ -65,13 +65,13 @@
 						page.name || ''
 					).toLowerCase()}`}
 					on:click={() => ($ActivePage = page.name)}
-					class="text-sm p-1 px-2 bg-blue-600 border border-blue-500 rounded-md">View</a
+					class="rounded-md border border-blue-500 bg-blue-600 p-1 px-2 text-sm">View</a
 				>
 				{#if page.name !== 'Home'}
-					<button class="text-sm p-1 px-2 bg-yellow-600 border border-yellow-500 rounded-md"
+					<button class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm"
 						>Edit</button
 					>
-					<button class="text-sm p-1 px-2 bg-red-600 border border-red-500 rounded-md"
+					<button class="rounded-md border border-red-500 bg-red-600 p-1 px-2 text-sm"
 						>Delete</button
 					>
 				{/if}
@@ -80,7 +80,7 @@
 
 		<button
 			on:click={() => (addingPage = true)}
-			class="bg-zinc-800 text-zinc-50 p-2 rounded-md mt-2 border border-zinc-700"
+			class="mt-2 rounded-md border border-zinc-700 bg-zinc-800 p-2 text-zinc-50"
 			>Add New Page</button
 		>
 	{/if}
@@ -88,6 +88,6 @@
 
 <style lang="postcss">
 	input {
-		@apply px-2 p-1 rounded-md border border-zinc-300 text-zinc-800;
+		@apply rounded-md border border-zinc-300 p-1 px-2 text-zinc-800;
 	}
 </style>

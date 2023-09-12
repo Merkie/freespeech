@@ -1,44 +1,81 @@
-import { superValidate } from 'sveltekit-superforms/server';
+import { json } from '@sveltejs/kit';
 import { z } from 'zod';
 
-const ProjectCreationSchema = z.object({
-	name: z.string().min(1).max(50),
-	description: z.string().min(1).max(500).default(''),
-	isPublic: z.boolean().default(false),
-	columns: z.number().default(6),
-	rows: z.number().default(4)
-});
-
 export const POST = async ({ request, locals }) => {
+	// Check if the user is logged in
 	if (!locals.user)
-		return new Response(JSON.stringify({ error: 'You must be logged in to create a project.' }), {
-			status: 401,
-			headers: { 'Content-Type': 'application/json' }
+		return new Response(JSON.stringify({ error: 'You must be logged in to create a page.' }), {
+			status: 401
 		});
 
-	const form = await superValidate(await request.json(), ProjectCreationSchema);
+	const ProjectCreationSchema = z.object({
+		name: z.string(),
+		columns: z.number(),
+		rows: z.number()
+	});
 
-	if (!form.valid)
-		return new Response(JSON.stringify({ error: 'Invalid form' }), {
-			status: 400,
-			headers: { 'Content-Type': 'application/json' }
+	// Validate the request body
+	let body;
+	try {
+		body = ProjectCreationSchema.parse(await request.json());
+	} catch (err) {
+		if (err instanceof z.ZodError) {
+			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
+				status: 400,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+		}
+		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), {
+			status: 500
 		});
+	}
 
-	const createdProject = await locals.prisma.project.create({
+	// Create the project
+	const project = await locals.prisma.project.create({
 		data: {
-			name: form.data.name,
-			description: form.data.description,
-			isPublic: form.data.isPublic,
-			columns: form.data.columns,
-			rows: form.data.rows,
-			userId: locals.user.id
+			name: body.name,
+			description: '',
+			isPublic: false,
+			columns: body.columns,
+			rows: body.rows,
+			user: {
+				connect: {
+					id: locals.user.id
+				}
+			}
 		}
 	});
 
-	return new Response(JSON.stringify({ project: createdProject }), {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
+	// Create the home page
+	await locals.prisma.tilePage.create({
+		data: {
+			name: 'Home',
+			Project: {
+				connect: {
+					id: project.id
+				}
+			},
+			user: {
+				connect: {
+					id: locals.user.id
+				}
+			},
+			data: {
+				tiles: [
+					{
+						page: 0,
+						text: 'New tile',
+						x: 0,
+						y: 0
+					}
+				]
+			}
 		}
+	});
+
+	return json({
+		success: true
 	});
 };
