@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { R2_BUCKET } from '$env/static/private';
-import { MediaDeleteSchema } from '$ts/common/schema';
 import s3 from '$ts/server/s3';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { json } from '@sveltejs/kit';
