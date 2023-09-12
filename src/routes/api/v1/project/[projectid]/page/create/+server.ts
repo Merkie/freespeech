@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
-export const POST = async ({ params: { projectid }, request, locals }) => {
+export const POST = async ({ params: { projectid }, locals: { prisma, user }, request }) => {
 	const form = await superValidate(
 		await request.json(),
 		z.object({
@@ -13,9 +13,10 @@ export const POST = async ({ params: { projectid }, request, locals }) => {
 	if (!form.valid) return json({ error: 'Invalid form' });
 
 	// Get the project
-	const project = await locals.prisma.project.findUnique({
+	const project = await prisma.project.findUnique({
 		where: {
-			id: projectid
+			id: projectid,
+			userId: user.id
 		}
 	});
 
@@ -23,14 +24,14 @@ export const POST = async ({ params: { projectid }, request, locals }) => {
 	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
 
 	// Check if the user is the owner of the project
-	if (project.userId !== locals.user.id)
+	if (project.userId !== user.id)
 		return json({
 			error: 'You are not the owner of this project.'
 		});
 
 	// Check if the page already exists
 	if (
-		await locals.prisma.tilePage.findFirst({
+		await prisma.tilePage.findFirst({
 			where: {
 				name: form.data.name,
 				projectId: projectid
@@ -42,7 +43,7 @@ export const POST = async ({ params: { projectid }, request, locals }) => {
 		});
 
 	// Create the page
-	const page = await locals.prisma.tilePage.create({
+	const page = await prisma.tilePage.create({
 		data: {
 			name: form.data.name,
 			Project: {
@@ -52,7 +53,7 @@ export const POST = async ({ params: { projectid }, request, locals }) => {
 			},
 			user: {
 				connect: {
-					id: locals.user.id
+					id: user.id
 				}
 			},
 			data: {

@@ -12,16 +12,20 @@
 
 	const saveProjectToDb = async () => {
 		$Loading = true;
-		await fetch(`/api/v1/project/${$ActiveProject?.id}/update`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				pageName: $ActivePage,
-				data: $ActiveProject?.pages.find((page) => page.name === $ActivePage)?.data
-			})
-		});
+		await fetch(
+			`/api/v1/project/${$ActiveProject?.id}/page/${
+				$ActiveProject?.pages.find((page) => page.name === $ActivePage)?.id
+			}/update`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					data: $ActiveProject?.pages.find((page) => page.name === $ActivePage)?.data
+				})
+			}
+		);
 		$Loading = false;
 	};
 </script>

@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { ActiveProject, Sentence } from '$ts/client/stores';
+	import { ActiveProject, Sentence, openModal } from '$ts/client/stores';
 	import type { Project } from '@prisma/client';
 	import { scale } from 'svelte/transition';
 	import { invalidateAll } from '$app/navigation';
+	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
 
 	export let project: Project;
 	export let editModeOn = false;
+
+	let editProjectModalOpen = false;
 
 	const switchProject = async (id: string) => {
 		$Sentence = [];
@@ -29,6 +32,10 @@
 	};
 </script>
 
+{#if $openModal.name === 'edit-project'}
+	<EditProjectModal />
+{/if}
+
 <div class="relative">
 	<button
 		on:click={() => switchProject(project.id)}
@@ -49,6 +56,7 @@
 	<div class="absolute right-0 top-0 flex -translate-y-2 translate-x-2 items-center gap-1">
 		{#if editModeOn}
 			<button
+				on:click={() => ($openModal = { name: 'edit-project', props: { project } })}
 				disabled={false}
 				in:scale
 				class="grid h-[25px] w-[25px] place-items-center rounded-full border border-yellow-500 bg-yellow-600 text-yellow-50"
