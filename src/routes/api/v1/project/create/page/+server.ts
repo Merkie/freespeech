@@ -1,82 +1,55 @@
 import { PageCreationSchema } from '$ts/common/schema';
+import { json } from '@sveltejs/kit';
+import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 export const POST = async ({ request, locals }) => {
-	// Check if the user is logged in
-	if (!locals.user)
-		return new Response(JSON.stringify({ error: 'You must be logged in to create a page.' }), {
-			status: 401
-		});
+	const form = await superValidate(
+		await request.json(),
+		z.object({
+			name: z.string().min(1).max(50),
+			projectid: z.string().min(1)
+		})
+	);
 
-	// Validate the request body
-	let body;
-	try {
-		body = PageCreationSchema.parse(await request.json());
-	} catch (err) {
-		if (err instanceof z.ZodError) {
-			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-		}
-		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), {
-			status: 500
-		});
-	}
+	if (!form.valid) return json({ error: 'Invalid form' });
 
 	// Get the project
 	const project = await locals.prisma.project.findUnique({
 		where: {
-			id: body.projectid
+			id: form.data.projectid
 		}
 	});
 
 	// Check if the project exists
-	if (!project)
-		return new Response(
-			JSON.stringify({ error: 'The project you are trying to edit does not exist.' }),
-			{
-				status: 404,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}
-		);
+	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
 
 	// Check if the user is the owner of the project
 	if (project.userId !== locals.user.id)
-		return new Response(JSON.stringify({ error: 'You are not the owner of this project.' }), {
-			status: 403
+		return json({
+			error: 'You are not the owner of this project.'
 		});
 
 	// Check if the page already exists
 	if (
 		await locals.prisma.tilePage.findFirst({
 			where: {
-				name: body.name,
-				projectId: body.projectid
+				name: form.data.name,
+				projectId: form.data.projectid
 			}
 		})
 	)
-		return new Response(
-			JSON.stringify({ error: 'A page with that name already exists in the project.' }),
-			{
-				status: 400,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}
-		);
+		return json({
+			error: 'A page with that name already exists in the project.'
+		});
 
 	// Create the page
 	const page = await locals.prisma.tilePage.create({
 		data: {
-			name: body.name,
+			name: form.data.name,
 			Project: {
 				connect: {
-					id: body.projectid
+					id: form.data.projectid
 				}
 			},
 			user: {
@@ -98,10 +71,5 @@ export const POST = async ({ request, locals }) => {
 		}
 	});
 
-	return new Response(JSON.stringify({ page }), {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+	return json({ page });
 };
