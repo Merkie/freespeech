@@ -82,12 +82,12 @@
 		{#if image}
 			<img src={image} width={150} alt="Uploaded media preview" />
 			<div class="flex items-center gap-2">
-				<button
+				<!-- <button
 					on:click={() => ($openModal = { name: 'crop-image', key: $openModal.key })}
 					class="w-fit rounded-md border border-zinc-500 bg-zinc-600 p-1 px-3 text-sm"
 				>
 					<i class="bi bi-crop" /> Crop Tile Image
-				</button>
+				</button> -->
 				<button
 					on:click={() => {
 						image = '';
