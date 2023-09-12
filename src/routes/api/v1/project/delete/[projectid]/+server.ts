@@ -1,3 +1,5 @@
+import { json } from '@sveltejs/kit';
+
 export const DELETE = async ({ params, locals }) => {
 	const { projectid } = params;
 
@@ -8,8 +10,8 @@ export const DELETE = async ({ params, locals }) => {
 	});
 
 	if (!project) {
-		return new Response(JSON.stringify({ error: 'Project not found.' }), {
-			status: 404
+		return json({
+			error: 'Project not found.'
 		});
 	}
 
@@ -20,15 +22,12 @@ export const DELETE = async ({ params, locals }) => {
 			}
 		});
 
-		return new Response(JSON.stringify({ message: 'Project deleted successfully.' }), {
-			status: 200
+		return json({
+			message: 'Project deleted successfully.'
 		});
 	}
 
-	return new Response(
-		JSON.stringify({ error: 'You do not have permission to delete this project.' }),
-		{
-			status: 403
-		}
-	);
+	return json({
+		error: 'You do not have permission to delete this project.'
+	});
 };
