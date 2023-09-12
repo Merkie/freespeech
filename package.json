@@ -43,7 +43,7 @@
 	"dependencies": {
 		"@novacbn/svelte-image-crop": "github:novacbn/svelte-image-crop",
 		"@prisma/client": "^4.14.0",
-		"@sveltejs/adapter-node": "^1.2.4",
+		"@sveltejs/adapter-vercel": "^3.0.3",
 		"aws-sdk": "^2.1455.0",
 		"bcryptjs": "^2.4.3",
 		"date-fns": "^2.29.3",
