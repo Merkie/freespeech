@@ -2,12 +2,6 @@ import { json } from '@sveltejs/kit';
 import { z } from 'zod';
 
 export const POST = async ({ request, locals }) => {
-	// Check if the user is logged in
-	if (!locals.user)
-		return new Response(JSON.stringify({ error: 'You must be logged in to create a page.' }), {
-			status: 401
-		});
-
 	const ProjectCreationSchema = z.object({
 		name: z.string(),
 		columns: z.number(),
