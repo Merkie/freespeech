@@ -1,54 +1,42 @@
-import { ProjectUpdateThumbnailSchema } from '$ts/common/schema';
+import { json } from '@sveltejs/kit';
+import { superValidate } from 'sveltekit-superforms/server';
+import { z } from 'zod';
 
 export const POST = async ({ request, locals }) => {
-	// Check if the user is logged in
-	if (!locals.user)
-		return new Response(JSON.stringify({ error: 'You must be logged in to edit a project.' }), {
-			status: 401
-		});
+	const form = await superValidate(
+		await request.json(),
+		z.object({
+			id: z.string().min(1),
+			imageUrl: z.string().min(1)
+		})
+	);
 
-	// Validate the request body
-	const body = await request.json();
-	const validation = ProjectUpdateThumbnailSchema.safeParse(body);
-	if (!validation.success) {
-		return new Response(JSON.stringify({ error: validation.error }), {
-			status: 400
-		});
-	}
+	if (!form.valid) return json({ error: 'Invalid form' });
 
 	// Get the project
 	const project = await locals.prisma.project.findFirst({
 		where: {
-			id: body.id,
+			id: form.data.id,
 			userId: locals.user.id
 		}
 	});
 
 	// Check if the project exists
 	if (!project)
-		return new Response(
-			JSON.stringify({ error: 'The project you are trying to edit does not exist.' }),
-			{
-				status: 404,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}
-		);
+		return json({
+			error: 'The project you are trying to edit does not exist.'
+		});
 
 	await locals.prisma.project.update({
 		where: {
-			id: body.id
+			id: form.data.id
 		},
 		data: {
-			imageUrl: body.imageUrl
+			imageUrl: form.data.imageUrl
 		}
 	});
 
-	return new Response(JSON.stringify({ success: true }), {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
-		}
+	return json({
+		success: true
 	});
 };
