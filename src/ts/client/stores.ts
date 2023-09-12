@@ -7,7 +7,8 @@ export const LocalSettings = writable<ILocalSettings>({
 	offlineVoice: '',
 	elevenLabsVoice: 'Rachel',
 	voiceGenerator: 'offline',
-	speakOnTap: true
+	speakOnTap: true,
+	sentenceBuilder: true
 });
 export const isSynthesizingSpeech = writable(false);
 export const ActivePage = writable('Home');

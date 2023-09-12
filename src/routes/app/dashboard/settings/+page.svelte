@@ -100,6 +100,20 @@
 						speakOnTap: (e.target as HTMLInputElement).value === 'enabled'
 					};
 				}
+			},
+			{
+				name: 'Sentence Builder',
+				description: 'When enabled, you will be able to build sentences in the tile grid.',
+				type: 'select',
+				value: $LocalSettings.sentenceBuilder ? 'enabled' : 'disabled',
+				default: 'enabled',
+				options: ['disabled', 'enabled'],
+				onInput: (e: Event) => {
+					$LocalSettings = {
+						...$LocalSettings,
+						sentenceBuilder: (e.target as HTMLInputElement).value === 'enabled'
+					};
+				}
 			}
 		];
 	}

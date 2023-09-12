@@ -37,6 +37,7 @@ export type ILocalSettings = {
 	elevenLabsVoice: IElevenLabsVoice;
 	voiceGenerator: IVoiceGenerator;
 	speakOnTap: boolean;
+	sentenceBuilder: boolean;
 };
 export type IModal = {
 	name:

@@ -199,7 +199,7 @@
 	>
 </svelte:head>
 <PageHeader />
-{#if !$isEditing}<SentenceBuilder {speakText} />{/if}
+{#if !$isEditing && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
 <div
 	bind:this={containerDOMNode}
 	bind:clientHeight={containerHeight}
