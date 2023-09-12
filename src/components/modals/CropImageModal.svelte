@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	//@ts-nocheck
 	import { CROP_STATE, ImageCrop } from '@novacbn/svelte-image-crop';
 	import ModalShell from './ModalShell.svelte';
@@ -95,4 +95,4 @@
 			Submit
 		</button>
 	</div>
-</ModalShell>
+</ModalShell> -->
