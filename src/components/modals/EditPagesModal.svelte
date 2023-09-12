@@ -11,7 +11,7 @@
 	const createPage = async () => {
 		$hasUnsavedChanges = true;
 		creatingPage = true;
-		const response = await fetch(`/api/v1/project/${$ActiveProject?.id}/create-page`, {
+		const response = await fetch(`/api/v1/project/${$ActiveProject?.id}/page/create`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
