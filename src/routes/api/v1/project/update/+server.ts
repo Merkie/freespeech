@@ -1,88 +1,53 @@
-import { ProjectUpdateSchema } from '$ts/common/schema';
+import { json } from '@sveltejs/kit';
+import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 export const POST = async ({ request, locals }) => {
-	// Check if the user is logged in
-	if (!locals.user)
-		return new Response(JSON.stringify({ error: 'You must be logged in to edit a project.' }), {
-			status: 401
-		});
+	const form = await superValidate(
+		await request.json(),
+		z.object({
+			id: z.string().min(1),
+			pageName: z.string().min(3).max(50),
+			data: z.any()
+		})
+	);
 
-	// Validate the request body
-	let body;
-	try {
-		body = ProjectUpdateSchema.parse(await request.json());
-	} catch (err) {
-		if (err instanceof z.ZodError) {
-			return new Response(JSON.stringify({ error: 'An error occured when validating form.' }), {
-				status: 400,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-		}
-		return new Response(JSON.stringify({ error: 'An unknown error occured.' }), { status: 500 });
-	}
+	if (!form.valid) return json({ error: 'Invalid form' });
 
 	// Get the project
 	const project = await locals.prisma.project.findUnique({
 		where: {
-			id: body.id
+			id: form.data.id
 		}
 	});
 
 	// Check if the project exists
-	if (!project)
-		return new Response(
-			JSON.stringify({ error: 'The project you ∫are trying to edit does not exist.' }),
-			{
-				status: 404,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}
-		);
-
-	// console.log(body.data);
+	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
 
 	// Check if the user is the owner of the project
 	if (project.userId !== locals.user.id)
-		return new Response(JSON.stringify({ error: 'You are not the owner of this project.' }), {
-			status: 403
+		return json({
+			error: 'You are not the owner of this project.'
 		});
 
 	const requestedPage = await locals.prisma.tilePage.findFirst({
 		where: {
-			name: body.pageName,
-			projectId: body.id,
+			name: form.data.pageName,
+			projectId: form.data.id,
 			userId: locals.user.id
 		}
 	});
 
-	if (!requestedPage)
-		return new Response(
-			JSON.stringify({ error: 'The page you are trying to edit does not exist.' }),
-			{
-				status: 404,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}
-		);
+	if (!requestedPage) return json({ error: 'The page you are trying to edit does not exist.' });
 
 	await locals.prisma.tilePage.update({
 		where: {
 			id: requestedPage.id
 		},
 		data: {
-			data: body.data
+			data: form.data.data
 		}
 	});
 
-	return new Response(JSON.stringify({ success: true }), {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+	return json({ success: true });
 };
