@@ -34,7 +34,7 @@
 	>
 		<div
 			transition:fly={{ y: 100, duration: 200 }}
-			class="flex max-h-[90%] w-[90%] max-w-[500px] flex-col overflow-y-auto rounded-md border border-zinc-300 bg-zinc-200 p-2 shadow-md"
+			class="flex max-h-[90%] w-[90%] max-w-[500px] flex-col overflow-y-auto rounded-md border border-zinc-800 bg-zinc-900 p-2 text-zinc-200 shadow-md"
 		>
 			<div class="mb-2 flex items-center gap-2">
 				<button on:click={closeModal}>
