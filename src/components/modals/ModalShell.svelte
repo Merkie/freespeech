@@ -17,6 +17,7 @@
 </script>
 
 {#if visible}
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<main
 		transition:fade={{ duration: 100 }}
 		on:keypress={(e) => {
@@ -30,11 +31,11 @@
 				closeModal();
 			}
 		}}
-		class="fixed left-0 top-0 z-30 grid h-screen w-screen place-items-center bg-[rgba(0,0,0,0.5)]"
+		class="fixed left-0 top-0 z-30 grid h-screen w-screen place-items-center bg-[rgba(0,0,0,0.7)]"
 	>
 		<div
 			transition:fly={{ y: 100, duration: 200 }}
-			class="flex max-h-[90%] w-[90%] max-w-[500px] flex-col overflow-y-auto rounded-md border border-zinc-800 bg-zinc-900 p-2 text-zinc-200 shadow-md"
+			class="flex max-h-[90%] w-[100%] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-2 text-zinc-200 shadow-md sm:w-[90%] sm:max-w-[500px] sm:rounded-md"
 		>
 			<div class="mb-2 flex items-center gap-2">
 				<button on:click={closeModal}>
