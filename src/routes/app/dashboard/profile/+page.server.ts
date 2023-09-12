@@ -1,16 +1,6 @@
 import type { TilePage } from '$ts/common/types.js';
-import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/static/private';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
-import R2 from 'cloudflare-r2';
-
-// Initialize the R2 client
-const r2 = new R2({
-	accessKey: R2_ACCESS_KEY,
-	secretKey: R2_SECRET_KEY,
-	accountId: R2_ACCOUNT_ID,
-	region: 'auto'
-});
+import { R2_BUCKET } from '$env/static/private';
+import s3 from '$ts/server/s3';
 
 export const load = async ({ locals }) => {
 	if (!locals.user) return { files: [] };
@@ -27,13 +17,15 @@ export const load = async ({ locals }) => {
 		const key = url.replace(/^https:\/\/pub-3aabe8e9655b4a5eb94c0efbaa7142a1\.r2\.dev\//, '');
 
 		// Delete the media from R2 storage
-		const deleteResponse = await r2.deleteObject({
-			bucket: R2_BUCKET,
-			key
-		});
+		const deleteResponse = await s3
+			.deleteObject({
+				Bucket: R2_BUCKET,
+				Key: key
+			})
+			.promise();
 
 		// Check if the deletion was successful
-		if (deleteResponse.status !== 204) return false;
+		// if (deleteResponse.status !== 204) return false;
 
 		// Delete the media from the database
 		await locals.prisma.userMedia.delete({
