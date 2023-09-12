@@ -1,25 +1,26 @@
 import jwt from 'jsonwebtoken';
 import { json } from '@sveltejs/kit';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 import { JWT_SECRET } from '$env/static/private';
 
 export const POST = async ({ request, locals, cookies }) => {
-	const form = await superValidate(await request.json(), z.object({
-		email: z.string().email(),
-		name: z.string().min(2),
-		password: z.string().min(8)
-	}));
+	const form = await superValidate(
+		await request.json(),
+		z.object({
+			email: z.string().email(),
+			name: z.string().min(2),
+			password: z.string().min(8)
+		})
+	);
 
-	if (!form.valid)
-		return json({ error: "Invalid form"})
+	if (!form.valid) return json({ error: 'Invalid form' });
 
 	const existingUser = await locals.prisma.user.findUnique({ where: { email: form.data.email } });
-	if (existingUser)
-		return json({ error: "User with specified email already exists." });
+	if (existingUser) return json({ error: 'User with specified email already exists.' });
 
-	const hashedPassword = await bcrypt.hash(form.data.password, 10);
+	const hashedPassword = bcrypt.hashSync(form.data.password, 10);
 	const createdUser = await locals.prisma.user.create({
 		data: {
 			email: form.data.email,
