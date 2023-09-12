@@ -10,8 +10,6 @@ export async function handle({ event, resolve }) {
 	// Add prisma to the locals
 	event.locals.prisma = prisma;
 
-	console.log(event.url.pathname);
-
 	// Decode the token and add user to locals
 	if (cookie) {
 		let decodedToken: { id: string } | undefined;
