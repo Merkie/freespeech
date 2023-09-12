@@ -22,6 +22,7 @@ export async function handle({ event, resolve }) {
 			decodedToken = undefined;
 		}
 
+		// If the token is valid, add the user to the locals
 		if (decodedToken !== undefined) {
 			const fetchedUser = await prisma.user.findUnique({ where: { id: decodedToken.id } });
 			if (fetchedUser) {
@@ -33,6 +34,7 @@ export async function handle({ event, resolve }) {
 
 	const pathname = event.url.pathname.toLowerCase();
 
+	// API protection
 	if (
 		pathname.startsWith('/api/v1') &&
 		!pathname.startsWith('/api/v1/auth') &&
@@ -41,6 +43,7 @@ export async function handle({ event, resolve }) {
 		return json({ error: 'Unauthorized request, please log in or create an account.' });
 	}
 
+	// App protection
 	if (pathname.startsWith('/app') && !event.locals.user) {
 		throw redirect(307, '/login');
 	} else {
