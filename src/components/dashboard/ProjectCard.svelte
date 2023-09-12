@@ -45,7 +45,7 @@
 	>
 		<img
 			src={project.imageUrl}
-			class="aspect-video h-full w-full rounded-sm border border-zinc-300 bg-zinc-300 object-cover"
+			class="aspect-video h-full w-full rounded-sm border border-zinc-300 bg-zinc-300 object-cover text-zinc-300"
 			alt="preview"
 			width={100}
 		/>

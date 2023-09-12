@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { ActivePage, ActiveProject, hasUnsavedChanges, openModal } from '$ts/client/stores';
 
 	import ModalShell from './ModalShell.svelte';
@@ -8,7 +9,19 @@
 	let rows = $openModal.props.project.rows;
 
 	const updateProject = async () => {
-		const response = await fetch(`/api/v1/project/${$ActiveProject?.id}/update`);
+		const response = await fetch(`/api/v1/project/${$ActiveProject?.id}/update`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				name,
+				columns,
+				rows
+			})
+		});
+		await invalidateAll();
+		$openModal = { name: '' };
 	};
 </script>
 
@@ -28,8 +41,10 @@
 		<input bind:value={rows} type="number" class="w-[50%]" name="rows" placeholder="Rows" />
 	</div>
 
-	<button type="submit" class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50"
-		>Submit</button
+	<button
+		on:click={updateProject}
+		type="submit"
+		class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 	>
 </ModalShell>
 

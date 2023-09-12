@@ -32,7 +32,7 @@
 
 <!-- TODO: This wont display in new versions of safari -->
 <div
-	class="flex gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 font-light text-zinc-100"
+	class="flex gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 text-[25px] font-light text-zinc-100"
 >
 	{#if $isEditing}
 		<!-- Cancel Edits Button -->
@@ -87,19 +87,21 @@
 				? `/app/project/${stringGate(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
 				: ''}
 		>
-			Home
+			<i class="bi bi-house-fill"></i>
 		</a>
 		<!-- Edit Button -->
 		<button
 			on:click={() => {
 				$isEditing = true;
 			}}
-			disabled={noProjects || $page.url.pathname.startsWith('/app/dashboard')}>Edit</button
+			disabled={noProjects || $page.url.pathname.startsWith('/app/dashboard')}
+			><i class="bi bi-pencil-fill"></i></button
 		>
 		<!-- Dashboard Button -->
 		<a
 			href="/app/dashboard/projects"
-			class={$page.url.pathname.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''}>Dashboard</a
+			class={$page.url.pathname.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''}
+			><i class="bi bi-gear-fill"></i></a
 		>
 	{/if}
 </div>

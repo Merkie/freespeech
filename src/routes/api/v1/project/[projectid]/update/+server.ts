@@ -37,5 +37,5 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 		}
 	});
 
-	return new Response();
+	return json({ success: true });
 };

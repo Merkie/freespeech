@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import { openModal } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
 	let name: string;
@@ -24,7 +26,8 @@
 			return alert(data.error);
 		}
 
-		window.location.reload();
+		await invalidateAll();
+		$openModal = { name: '' };
 	};
 </script>
 
