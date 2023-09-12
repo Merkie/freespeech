@@ -11,13 +11,12 @@
 	const createPage = async () => {
 		$hasUnsavedChanges = true;
 		creatingPage = true;
-		const response = await fetch('/api/v1/project/create/page', {
+		const response = await fetch(`/api/v1/project/${$ActiveProject?.id}/create-page`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				projectid: $ActiveProject?.id,
 				name: pageName
 			})
 		});

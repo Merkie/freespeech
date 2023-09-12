@@ -2,12 +2,11 @@ import { json } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
-export const POST = async ({ request, locals }) => {
+export const POST = async ({ params: { projectid }, request, locals }) => {
 	const form = await superValidate(
 		await request.json(),
 		z.object({
-			name: z.string().min(1).max(50),
-			projectid: z.string().min(1)
+			name: z.string().min(1).max(50)
 		})
 	);
 
@@ -16,7 +15,7 @@ export const POST = async ({ request, locals }) => {
 	// Get the project
 	const project = await locals.prisma.project.findUnique({
 		where: {
-			id: form.data.projectid
+			id: projectid
 		}
 	});
 
@@ -34,7 +33,7 @@ export const POST = async ({ request, locals }) => {
 		await locals.prisma.tilePage.findFirst({
 			where: {
 				name: form.data.name,
-				projectId: form.data.projectid
+				projectId: projectid
 			}
 		})
 	)
@@ -48,7 +47,7 @@ export const POST = async ({ request, locals }) => {
 			name: form.data.name,
 			Project: {
 				connect: {
-					id: form.data.projectid
+					id: projectid
 				}
 			},
 			user: {
