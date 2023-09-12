@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CropImageModal from '$components/modals/CropImageModal.svelte';
+	// import CropImageModal from '$components/modals/CropImageModal.svelte';
 	import EditTileModal from '$components/modals/EditTileModal.svelte';
 	import OnlineImageSearchModal from '$components/modals/OnlineImageSearchModal.svelte';
 	import {
@@ -143,13 +143,13 @@
 	/>
 {/if}
 
-{#if $openModal.name === 'crop-image' && $openModal.key === tileSignature}
+<!-- {#if $openModal.name === 'crop-image' && $openModal.key === tileSignature}
 	<CropImageModal
 		{image}
 		{handleImageChange}
 		handleNavigateBack={() => ($openModal = { name: 'edit-tile', key: tileSignature })}
 	/>
-{/if}
+{/if} -->
 
 {#if $openModal.name === 'search-online-images' && $openModal.key === tileSignature}
 	<OnlineImageSearchModal
@@ -163,25 +163,25 @@
 	/>
 {/if}
 
-<div class="relative w-full h-full">
+<div class="relative h-full w-full">
 	<button
 		on:click={handleInteraction}
-		class={`overflow-hidden w-full h-full border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
+		class={`h-full w-full overflow-hidden border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
 			image ? 'flex flex-col items-center' : 'grid place-items-center'
 		}`}
 	>
-		<p class={`text-ellipsis break-spaces ${!image ? 'text-[2vw]' : 'py-2'}`}>
+		<p class={`break-spaces text-ellipsis ${!image ? 'text-[2vw]' : 'py-2'}`}>
 			{displayText || text}
 		</p>
 		{#if image}
-			<div class="flex-1 w-full relative">
-				<img src={image} class="absolute w-full h-full object-contain" alt="Tile media" />
+			<div class="relative w-full flex-1">
+				<img src={image} class="absolute h-full w-full object-contain" alt="Tile media" />
 			</div>
 		{/if}
 	</button>
 	{#if navigation}
 		<div
-			class={`absolute -top-1 left-0 rounded-t-md h-[10px] border border-b-0 ${bgColorClass} ${textColorClass} ${borderColorClass} w-[50%]`}
+			class={`absolute -top-1 left-0 h-[10px] rounded-t-md border border-b-0 ${bgColorClass} ${textColorClass} ${borderColorClass} w-[50%]`}
 		/>
 	{/if}
 </div>

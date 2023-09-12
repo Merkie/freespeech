@@ -4,6 +4,7 @@ import { R2_BUCKET } from '$env/static/private';
 import stringGate from '$ts/common/stringGate';
 
 import s3 from '$ts/server/s3';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 
 export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in
@@ -32,13 +33,21 @@ export const POST = async ({ request, locals }) => {
 		body.filename
 	)}`;
 
-	const putResponse = await s3
-		.putObject({
-			Bucket: R2_BUCKET,
-			Key: key,
-			Body: Buffer.from(body.base64data, 'base64')
-		})
-		.promise();
+	const putObjectCommand = new PutObjectCommand({
+		Bucket: R2_BUCKET,
+		Key: key,
+		Body: Buffer.from(body.base64data, 'base64')
+	});
+
+	const putObjectResponse = await s3.send(putObjectCommand);
+
+	if (putObjectResponse.$metadata.httpStatusCode !== 200)
+		return new Response(
+			JSON.stringify({ error: 'An error occured when uploading the media to storage.' }),
+			{
+				status: 500
+			}
+		);
 
 	// Check if the upload was successful
 	const fileurl = `https://pub-3aabe8e9655b4a5eb94c0efbaa7142a1.r2.dev/${key}`;
