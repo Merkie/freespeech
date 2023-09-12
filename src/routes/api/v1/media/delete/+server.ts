@@ -1,9 +1,7 @@
 import { z } from 'zod';
-import { R2_ACCESS_KEY, R2_SECRET_KEY, R2_ACCOUNT_ID, R2_BUCKET } from '$env/static/private';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
-import R2 from 'cloudflare-r2';
+import { R2_BUCKET } from '$env/static/private';
 import { MediaDeleteSchema } from '$ts/common/schema';
+import s3 from '$ts/server/s3';
 
 export const POST = async ({ request, locals }) => {
 	// Check if the user is logged in
@@ -47,26 +45,13 @@ export const POST = async ({ request, locals }) => {
 	// Extract the key from the media URL
 	const key = media.url.replace(/^https:\/\/pub-3aabe8e9655b4a5eb94c0efbaa7142a1\.r2\.dev\//, '');
 
-	// Initialize the R2 client
-	const r2 = new R2({
-		accessKey: R2_ACCESS_KEY,
-		secretKey: R2_SECRET_KEY,
-		accountId: R2_ACCOUNT_ID,
-		region: 'auto'
-	});
-
 	// Delete the media from R2 storage
-
-	const deleteResponse = await r2.deleteObject({
-		bucket: R2_BUCKET,
-		key
-	});
-
-	// Check if the deletion was successful
-	if (deleteResponse.status !== 204)
-		return new Response(JSON.stringify({ error: 'An error occured when deleting the media.' }), {
-			status: 500
-		});
+	const deleteResponse = await s3
+		.deleteObject({
+			Bucket: R2_BUCKET,
+			Key: key
+		})
+		.promise();
 
 	// Delete the media from the database
 	await locals.prisma.userMedia.delete({
