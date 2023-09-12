@@ -1,3 +1,5 @@
+import { json } from '@sveltejs/kit';
+
 export const GET = async ({ params, locals }) => {
 	const { projectid } = params;
 
@@ -11,20 +13,15 @@ export const GET = async ({ params, locals }) => {
 	});
 
 	if (!project)
-		return new Response(JSON.stringify({ error: 'Project not found.' }), {
-			status: 404
+		return json({
+			error: 'Project not found.'
 		});
 
 	if (project.userId === locals.user?.id || project.isPublic) {
-		return new Response(JSON.stringify({ project }), {
-			status: 200
-		});
+		return json({ project });
 	}
 
-	return new Response(
-		JSON.stringify({ error: 'You do not have permission to view this project.' }),
-		{
-			status: 403
-		}
-	);
+	return json({
+		error: 'You do not have permission to view this project.'
+	});
 };
