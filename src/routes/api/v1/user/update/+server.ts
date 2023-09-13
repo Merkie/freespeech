@@ -39,7 +39,7 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 			name: form.data.name || fetchedUser.name,
 			profileImgUrl: form.data.profileImgUrl || fetchedUser.profileImgUrl,
 			elevenLabsApiKey:
-				form.data.elevenLabsApiKey === '' ? '' : encryptedElApiKey || fetchedUser.elevenLabsApiKey
+				form.data.elevenLabsApiKey === '' ? null : encryptedElApiKey || fetchedUser.elevenLabsApiKey
 		}
 	});
 
