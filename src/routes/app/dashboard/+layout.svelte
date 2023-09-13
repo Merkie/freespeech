@@ -67,11 +67,15 @@
 	{/each}
 	<div class="flex-1" />
 	<a href="/app/dashboard/profile">
-		<p
-			class="grid h-[35px] w-[35px] place-items-center rounded-full bg-blue-600 text-xs font-bold text-blue-50"
-		>
-			{getUserInitials()}
-		</p>
+		{#if data.user.profileImgUrl}
+			<img src={data.user.profileImgUrl} alt="profile" class="h-[35px] w-[35px] rounded-full" />
+		{:else}
+			<p
+				class="grid h-[35px] w-[35px] place-items-center rounded-full bg-blue-500 text-xs font-bold text-blue-50"
+			>
+				{getUserInitials()}
+			</p>
+		{/if}
 	</a>
 </div>
 
