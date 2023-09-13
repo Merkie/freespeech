@@ -1,7 +1,8 @@
+import { ELEVEN_LABS_KEY } from '$env/static/private';
 import stringGate from '$ts/common/stringGate.js';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals, params }) => {
+export const load = async ({ fetch, locals, params }) => {
 	if (!locals.user) throw redirect(302, '/login');
 
 	const projects = await locals.prisma.project.findMany({
@@ -25,5 +26,18 @@ export const load = async ({ locals, params }) => {
 
 	if (!page) throw redirect(302, '/app/dashboard/projects');
 
-	return { projects, project, page: page.name };
+	const voicesData = await fetch('/api/v1/text-to-speech/elevenlabs/voices').then((res) =>
+		res.json()
+	);
+
+	return {
+		projects,
+		project,
+		page: page.name,
+		elevenLabsVoices: voicesData.map((voice: { category: string; name: string }) => ({
+			...voice,
+			fsSlug: `[${voice.category}] ${voice.name}`
+		})),
+		elevenLabsApiKey: ELEVEN_LABS_KEY
+	};
 };

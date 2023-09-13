@@ -19,6 +19,7 @@
 	import type { PageData } from './$types';
 	import ElevenLabsVoices from '$ts/common/ElevenLabsVoices';
 	import type { FullProject, Tile } from '$ts/common/types';
+	import { GetObjectLegalHoldCommand } from '@aws-sdk/client-s3';
 
 	export let data: PageData;
 
@@ -147,24 +148,37 @@
 		} else if ($LocalSettings.voiceGenerator === 'elevenlabs') {
 			if ($isSynthesizingSpeech) return;
 			$isSynthesizingSpeech = true;
-			const elevenLabsResponse = await fetch('/api/v1/text-to-speech/elevenlabs/speak', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					text,
-					name: $LocalSettings.elevenLabsVoice || ElevenLabsVoices[0].name
-				})
-			});
+
+			const voice_id = data.elevenLabsVoices.find(
+				(voice: { fsSlug: string }) => voice.fsSlug === $LocalSettings.elevenLabsVoice
+			).voice_id;
+			const elevenLabsResponse = await fetch(
+				`https://api.elevenlabs.io/v1/text-to-speech/${voice_id}/stream`,
+				{
+					method: 'POST',
+					headers: {
+						'xi-api-key': data.elevenLabsApiKey,
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						text: text,
+						model_id: 'eleven_multilingual_v2',
+						voice_settings: {
+							stability: 0.75,
+							similarity_boost: 0.75,
+							style: 0,
+							use_speaker_boost: true
+						}
+					})
+				}
+			);
 			$isSynthesizingSpeech = false;
 
-			try {
-				const blob = await elevenLabsResponse.blob();
-				const audio = new Audio(URL.createObjectURL(blob));
-				audio.play();
-			} catch (err) {
-				console.log('Error playing audio from elevenlabs api, using offline voice instead.');
+			if (elevenLabsResponse.status === 200) {
+				const audioBlob = await elevenLabsResponse.blob();
+				const audioElement = new Audio(URL.createObjectURL(audioBlob));
+				audioElement.play();
+			} else {
 				useOffline();
 			}
 		}

@@ -31,9 +31,9 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 			id: projectid
 		},
 		data: {
-			name: form.data.name ?? project.name,
-			columns: form.data.columns ?? project.columns,
-			rows: form.data.rows ?? project.rows
+			name: form.data.name || project.name,
+			columns: form.data.columns || project.columns,
+			rows: form.data.rows || project.rows
 		}
 	});
 

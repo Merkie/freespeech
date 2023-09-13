@@ -1,9 +1,17 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { ActiveProject } from '$ts/client/stores';
 	import type { PageData } from './$types';
+	import ImageResize from 'image-resize';
+
 	export let data: PageData;
 
 	let profileInput: HTMLInputElement;
+
+	let editingElevenLabsApiKey = false;
+
+	let name = data.user?.name;
+	let elevenLabsApiKey = data.elevenLabsApiKey;
 
 	const logout = async () => {
 		await fetch('/api/v1/auth/logout');
@@ -18,16 +26,69 @@
 		if (names.length === 1) return names[0].charAt(0);
 		return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 	};
+
+	const updateUser = async () => {
+		const response = await fetch('/api/v1/user/update', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ name, elevenLabsApiKey })
+		});
+		await invalidateAll();
+	};
+
+	const imageResize = new ImageResize({
+		format: 'png',
+		width: 800,
+		height: 800
+	});
+
+	const handleMediaUpload = async () => {
+		if (!profileInput.files) return;
+		const uploadedFile = profileInput.files[0];
+
+		const base64data = await imageResize.play(uploadedFile);
+
+		const response = await fetch('/api/v1/media/upload', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				filename: uploadedFile.name,
+				base64data: (base64data + '').split(',')[1]
+			})
+		});
+
+		const data = await response.json();
+
+		if (data.fileurl) {
+			const response = await fetch('/api/v1/user/update', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ profileImgUrl: data.fileurl })
+			});
+			await invalidateAll();
+		}
+	};
 </script>
 
 <div class="flex h-full justify-center">
 	<div class="flex w-[90%] max-w-[1000px] flex-col p-4 sm:flex-row">
 		<div class="flex flex-col items-center p-2 sm:w-fit sm:items-start">
-			<p
-				class="grid h-[150px] w-[150px] place-items-center rounded-full bg-blue-600 text-3xl font-bold text-blue-50"
-			>
-				{getUserInitials()}
-			</p>
+			{#if data.user.profileImgUrl}
+				<img src={data.user.profileImgUrl} alt="Profile" class="h-[150px] w-[150px] rounded-full" />
+			{:else}
+				<p
+					class="grid h-[150px] w-[150px] place-items-center rounded-full bg-blue-500 text-3xl font-bold text-blue-50"
+				>
+					{getUserInitials()}
+				</p>
+			{/if}
+
 			<div>
 				<p class="mt-2 text-lg font-medium">{data.user?.name}</p>
 				<p class="items-cetner flex text-sm">
@@ -52,13 +113,13 @@
 			>
 		</div>
 		<div class="flex flex-1 flex-col overflow-y-auto px-2">
-			<form class="flex flex-col gap-2">
-				<label class="text-lg" for="email">Email</label>
-				<input type="text" name="email" value={data.user?.email} disabled={true} />
-				<label class="text-lg" for="name">Name</label>
-				<input type="text" name="name" value={data.user?.name} />
+			<div class="flex flex-col gap-2">
+				<p class="text-lg">Email</p>
+				<input type="text" value={data.user?.email} disabled={true} />
+				<p class="text-lg">Name</p>
+				<input type="text" bind:value={name} />
 				<!-- profile pic -->
-				<label class="text-lg" for="profile">Profile Picture</label>
+				<p class="text-lg">Profile Picture</p>
 				<button
 					on:click={(e) => {
 						e.preventDefault();
@@ -67,14 +128,26 @@
 					class="rounded-md border border-zinc-300 bg-zinc-200 p-2 px-4 text-zinc-500"
 					><i class="bi bi-image mr-2" />Upload Profile Picture</button
 				>
-				<input bind:this={profileInput} type="file" name="profile" class="hidden" />
+				<input on:input={handleMediaUpload} bind:this={profileInput} type="file" class="hidden" />
+				<p class="text-lg">ElevenLabs API Key</p>
+
+				{#if editingElevenLabsApiKey}
+					<input bind:value={elevenLabsApiKey} type="text" />
+				{:else}
+					<button
+						on:click={() => (editingElevenLabsApiKey = true)}
+						class="mt-2 rounded-md border border-zinc-500 bg-zinc-600 p-2 px-4 text-zinc-50"
+						><i class="bi bi-eye mr-2"></i> Show API Key</button
+					>
+				{/if}
+
 				<button
-					disabled={true}
+					on:click={updateUser}
 					type="submit"
-					class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-blue-50"
+					class="mt-2 rounded-md border border-blue-400 bg-blue-500 p-2 px-4 text-blue-50"
 					>Submit Changes</button
 				>
-			</form>
+			</div>
 		</div>
 	</div>
 </div>

@@ -49,8 +49,8 @@ export const POST = async ({
 			id: requestedPage.id
 		},
 		data: {
-			data: form.data.data ?? requestedPage.data,
-			name: form.data.name ?? requestedPage.name
+			data: form.data.data || requestedPage.data,
+			name: form.data.name || requestedPage.name
 		}
 	});
 

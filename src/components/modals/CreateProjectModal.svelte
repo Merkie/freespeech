@@ -9,7 +9,6 @@
 	let showingAdvancedSettings = false;
 
 	const createProject = async () => {
-		console.log({ name, columns, rows });
 		const response = await fetch('/api/v1/project/create', {
 			method: 'POST',
 			headers: {
@@ -17,8 +16,6 @@
 			},
 			body: JSON.stringify({ name, columns, rows, isPublic: false, description: '' })
 		});
-
-		console.log(response);
 
 		const data = await response.json();
 

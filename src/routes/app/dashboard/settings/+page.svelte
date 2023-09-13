@@ -8,6 +8,8 @@
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
 
+	export let data;
+
 	type SettingType = 'select';
 
 	type Setting = {
@@ -26,12 +28,11 @@
 	let searchQuery = writable('');
 	let searchSettings: Setting[] = [];
 
-	onMount(async () => {
+	onMount(() => {
 		visible = true;
-		// Get all voices from the browser
-		offlineBrowserVoices = speechSynthesis.getVoices().map((voice) => voice.name);
 
-		// If there are no voices, wait for the voiceschanged event
+		// Get the offline voices
+		offlineBrowserVoices = speechSynthesis.getVoices().map((voice) => voice.name);
 		if (offlineBrowserVoices.length === 0) {
 			return new Promise((resolve) => {
 				speechSynthesis.onvoiceschanged = () => {
@@ -63,9 +64,11 @@
 				description:
 					'ElevenLabs voices are advanced AI-generated voices that sound extremely realistic. These voices are generated on a remote server and require an internet connection. For more information visit ElevenLabs.io',
 				type: 'select',
-				value: $LocalSettings.elevenLabsVoice || elevenLabsVoices.map((voice) => voice.name)[0],
-				default: elevenLabsVoices.map((voice) => voice.name)[0],
-				options: elevenLabsVoices.map((voice) => voice.name),
+				value:
+					$LocalSettings.elevenLabsVoice ||
+					data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
+				default: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
+				options: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug),
 				onInput: (e: Event) => {
 					$LocalSettings = {
 						...$LocalSettings,

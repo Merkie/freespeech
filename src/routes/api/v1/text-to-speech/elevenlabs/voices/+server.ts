@@ -1,19 +1,25 @@
-import { ELEVEN_LABS_KEY } from '$env/static/private';
+import { ELEVEN_LABS_KEY, SITE_SECRET } from '$env/static/private';
 import { json } from '@sveltejs/kit';
+import Cryptr from 'cryptr';
 
-export const GET = async ({ fetch }) => {
-	const response = await fetch('https://api.elevenlabs.io/v1/voices', {
+export const GET = async ({ locals: { user }, fetch }) => {
+	let elApiKey = '';
+
+	if (user.elevenLabsApiKey) {
+		const cryptr = new Cryptr(SITE_SECRET);
+		elApiKey = cryptr.decrypt(user.elevenLabsApiKey);
+	}
+
+	const { voices } = await fetch('https://api.elevenlabs.io/v1/voices', {
 		headers: {
-			'xi-api-key': ELEVEN_LABS_KEY
+			'xi-api-key': elApiKey || ELEVEN_LABS_KEY
 		}
-	});
+	}).then((res) => res.json());
 
-	const data = await response.json();
-
-	// Remove all of the voices that aren't premade
-	data.voices = data.voices.map((voice: { category: string }) => {
-		if (voice.category === 'premade') return voice;
-	});
-
-	return json(data);
+	return json(
+		voices.map((voice: { category: string; name: string }) => ({
+			...voice,
+			fsSlug: `[${voice.category}] ${voice.name}`
+		}))
+	);
 };

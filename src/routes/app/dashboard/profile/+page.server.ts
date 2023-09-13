@@ -1,16 +1,17 @@
 import type { TilePage } from '$ts/common/types.js';
-import { R2_BUCKET } from '$env/static/private';
+import { R2_BUCKET, SITE_SECRET } from '$env/static/private';
 import s3 from '$ts/server/s3';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
+import Cryptr from 'cryptr';
 
-export const load = async ({ locals }) => {
-	if (!locals.user) return { files: [] };
+export const load = async ({ locals: { user, prisma } }) => {
+	if (!user) return { files: [] };
 
 	const deleteFile = async (url: string) => {
-		const media = await locals.prisma.userMedia.findFirst({
+		const media = await prisma.userMedia.findFirst({
 			where: {
 				url: url,
-				userId: locals.user?.id
+				userId: user?.id
 			}
 		});
 
@@ -28,7 +29,7 @@ export const load = async ({ locals }) => {
 		if (deleteObjectResponse.$metadata.httpStatusCode !== 204) return false;
 
 		// Delete the media from the database
-		await locals.prisma.userMedia.delete({
+		await prisma.userMedia.delete({
 			where: {
 				id: media?.id
 			}
@@ -38,19 +39,19 @@ export const load = async ({ locals }) => {
 	};
 
 	// Query the database for all the user's media files
-	const userMedia = await locals.prisma.userMedia.findMany({
+	const userMedia = await prisma.userMedia.findMany({
 		where: {
 			user: {
-				id: locals.user.id
+				id: user.id
 			}
 		}
 	});
 
 	// Fetch all projects from the user
-	const userProjects = await locals.prisma.project.findMany({
+	const userProjects = await prisma.project.findMany({
 		where: {
 			user: {
-				id: locals.user.id
+				id: user.id
 			}
 		},
 		include: {
@@ -61,7 +62,7 @@ export const load = async ({ locals }) => {
 	// Get all the image URLs from the user's projects
 	const imageUrls: string[] = userProjects.flatMap((project) =>
 		project.pages.flatMap(
-			(page) => (page as TilePage)?.data?.tiles.flatMap((tile) => tile?.image ?? [])
+			(page) => (page as TilePage)?.data?.tiles.flatMap((tile) => tile?.image || [])
 		)
 	);
 
@@ -69,7 +70,7 @@ export const load = async ({ locals }) => {
 		if (project.imageUrl) return project.imageUrl;
 	});
 
-	const mediaInUse = [...imageUrls, ...thumbnailUrls];
+	const mediaInUse = [...imageUrls, ...thumbnailUrls, user.profileImgUrl];
 
 	// Collect all the media URLs that are not in use
 	const unusedMedia = userMedia.filter((media) => !mediaInUse.includes(media.url));
@@ -85,5 +86,12 @@ export const load = async ({ locals }) => {
 	// Count the number of deletions that failed
 	const failures = deletionResults.filter((result) => !result).length;
 
-	return { failures };
+	let elevenLabsApiKey = '';
+
+	if (user.elevenLabsApiKey) {
+		const cryptr = new Cryptr(SITE_SECRET);
+		elevenLabsApiKey = cryptr.decrypt(user.elevenLabsApiKey);
+	}
+
+	return { failures, elevenLabsApiKey };
 };
