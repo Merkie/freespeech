@@ -18,25 +18,12 @@ model User {
   profileImgUrl          String?
   elevenLabsApiKey       String?
   emailVerified          Boolean                  @default(false)
-  VerificationToken      VerificationToken[]
   UserMedia              UserMedia[]
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   Project                Project[]
   TilePage               TilePage[]
   EmailVerificationToken EmailVerificationToken[]
-}
-
-model VerificationToken {
-  id        String   @id @default(cuid())
-  expiresAt DateTime
-  token     String   @unique
-  ip        String
-  userAgent String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model UserMedia {
