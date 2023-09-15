@@ -1,12 +1,7 @@
-import { json } from "@sveltejs/kit";
-
-export const GET = async ({ locals, cookies }) => {
+export const GET = async ({ cookies }) => {
 	cookies.set('token', '', {
-		expires: new Date(0),
-		path: '/'
+		path: '/',
+		httpOnly: true
 	});
-
-	locals.user = undefined;
-
-	return json({ success: true })
+	return new Response('Successfully logged out.');
 };
