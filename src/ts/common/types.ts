@@ -42,6 +42,8 @@ export type ILocalSettings = {
 export type IModal = {
 	name:
 		| 'edit-pages'
+		| 'edit-page'
+		| 'create-page'
 		| 'edit-tile'
 		| 'search-online-images'
 		| 'create-project'
