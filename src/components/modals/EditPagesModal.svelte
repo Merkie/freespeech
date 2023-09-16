@@ -3,6 +3,7 @@
 	import stringGate from '$ts/common/stringGate';
 	import ModalShell from './ModalShell.svelte';
 	import type { TilePage } from '$ts/common/types';
+	import { invalidateAll } from '$app/navigation';
 
 	let addingPage = false;
 	let pageName: string;
@@ -32,6 +33,29 @@
 			pages: [...($ActiveProject?.pages as TilePage[]), data.page as TilePage]
 		};
 		addingPage = false;
+	};
+
+	const deletePage = async (pageId: string) => {
+		const tempActiveProject = { ...$ActiveProject };
+
+		//@ts-ignore
+		$ActiveProject = {
+			...$ActiveProject,
+			pages: ($ActiveProject?.pages as TilePage[]).filter((page) => page.id !== pageId)
+		};
+
+		const responseJson = await fetch(
+			`/api/v1/project/${$ActiveProject?.id}/page/${pageId}/delete`,
+			{
+				method: 'DELETE'
+			}
+		).then((res) => res.json());
+
+		if (responseJson.error) {
+			//@ts-ignore
+			$ActiveProject = tempActiveProject;
+			return alert(responseJson.error);
+		}
 	};
 </script>
 
@@ -70,8 +94,9 @@
 					<button class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm"
 						>Edit</button
 					>
-					<button class="rounded-md border border-red-500 bg-red-600 p-1 px-2 text-sm"
-						>Delete</button
+					<button
+						on:click={() => deletePage(page.id)}
+						class="rounded-md border border-red-500 bg-red-600 p-1 px-2 text-sm">Delete</button
 					>
 				{/if}
 			</div>
