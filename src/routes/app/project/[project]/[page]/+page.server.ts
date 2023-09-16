@@ -1,13 +1,14 @@
-import { ELEVEN_LABS_KEY } from '$env/static/private';
+import { ELEVEN_LABS_KEY, SITE_SECRET } from '$env/static/private';
 import slugify from '$ts/common/slugify.js';
 import { redirect } from '@sveltejs/kit';
+import Cryptr from 'cryptr';
 
-export const load = async ({ fetch, locals, params }) => {
-	if (!locals.user) throw redirect(302, '/login');
+export const load = async ({ fetch, locals: { prisma, user }, params }) => {
+	if (!user) throw redirect(302, '/login');
 
-	const projects = await locals.prisma.project.findMany({
+	const projects = await prisma.project.findMany({
 		where: {
-			userId: locals.user.id
+			userId: user.id
 		},
 		include: {
 			pages: true
@@ -30,14 +31,17 @@ export const load = async ({ fetch, locals, params }) => {
 		res.json()
 	);
 
+	let elevenLabsApiKey = ELEVEN_LABS_KEY;
+	if (user.elevenLabsApiKey) {
+		const cryptr = new Cryptr(SITE_SECRET);
+		elevenLabsApiKey = cryptr.decrypt(user.elevenLabsApiKey);
+	}
+
 	return {
 		projects,
 		project,
 		page: page.name,
-		elevenLabsVoices: voicesData.map((voice: { category: string; name: string }) => ({
-			...voice,
-			fsSlug: `[${voice.category}] ${voice.name}`
-		})),
-		elevenLabsApiKey: ELEVEN_LABS_KEY
+		elevenLabsVoices: voicesData,
+		elevenLabsApiKey
 	};
 };
