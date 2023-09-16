@@ -47,6 +47,7 @@ export type IModal = {
 		| 'edit-tile'
 		| 'search-online-images'
 		| 'create-project'
+		| 'manage-projects'
 		| 'crop-image'
 		| 'edit-project'
 		| '';

@@ -9,6 +9,7 @@
 	import { openModal } from '$ts/client/stores';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
+	import ManageProjectsModal from '$components/modals/ManageProjectsModal.svelte';
 	export let data: PageData;
 
 	let searchQuery = writable('');
@@ -34,6 +35,10 @@
 	<CreateProjectModal />
 {/if}
 
+{#if $openModal.name === 'manage-projects'}
+	<ManageProjectsModal />
+{/if}
+
 <SearchBar query={searchQuery}>
 	<button
 		on:click={() => ($openModal = { name: 'create-project' })}
@@ -41,7 +46,7 @@
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>
 	<button
-		on:click={() => (editModeOn = !editModeOn)}
+		on:click={() => ($openModal = { name: 'manage-projects', props: { projects: data.projects } })}
 		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-2 px-4 text-sm text-zinc-50 sm:block"
 		><i class="bi bi-gear" /> Manage Projects</button
 	>

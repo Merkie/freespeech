@@ -53,23 +53,4 @@
 			{project.name}
 		</p>
 	</button>
-	<div class="absolute right-0 top-0 flex -translate-y-2 translate-x-2 items-center gap-1">
-		{#if editModeOn}
-			<button
-				on:click={() => ($openModal = { name: 'edit-project', props: { project } })}
-				disabled={false}
-				in:scale
-				class="grid h-[25px] w-[25px] place-items-center rounded-full border border-yellow-500 bg-yellow-600 text-yellow-50"
-			>
-				<i class="bi bi-pencil text-sm" />
-			</button>
-			<button
-				on:click={() => deleteProject(project.id)}
-				in:scale
-				class="grid h-[25px] w-[25px] place-items-center rounded-full border border-red-400 bg-red-500 text-red-50"
-			>
-				<i class="bi bi-trash text-sm" />
-			</button>
-		{/if}
-	</div>
 </div>
