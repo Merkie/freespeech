@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { R2_BUCKET, R2_PUBLIC_URL } from '$env/static/private';
-import stringGate from '$ts/common/stringGate';
+import slugify from '$ts/common/slugify';
 import s3 from '$ts/server/s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { superValidate } from 'sveltekit-superforms/server';
@@ -18,7 +18,7 @@ export const POST = async ({ request, locals }) => {
 	if (!form.valid) return json({ error: 'Invalid form' });
 
 	// Create the media path
-	const key = `${stringGate(locals.user.name)}-${locals.user.id}/${Date.now()}-${stringGate(
+	const key = `${slugify(locals.user.name)}-${locals.user.id}/${Date.now()}-${slugify(
 		form.data.filename
 	)}`;
 

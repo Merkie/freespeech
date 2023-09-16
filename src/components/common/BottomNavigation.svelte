@@ -6,7 +6,7 @@
 		isEditing,
 		Loading
 	} from '$ts/client/stores';
-	import stringGate from '$ts/common/stringGate';
+	import slugify from '$ts/common/slugify';
 	import { page } from '$app/stores';
 	export let noProjects: boolean;
 
@@ -84,7 +84,7 @@
 					: ''
 			} ${$ActiveProject ? '' : 'opacity-50'}`}
 			href={$ActiveProject
-				? `/app/project/${stringGate(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
+				? `/app/project/${slugify(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
 				: ''}
 		>
 			<i class="bi bi-house-fill"></i>

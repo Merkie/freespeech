@@ -1,5 +1,5 @@
 import { ELEVEN_LABS_KEY } from '$env/static/private';
-import stringGate from '$ts/common/stringGate.js';
+import slugify from '$ts/common/slugify.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ fetch, locals, params }) => {
@@ -15,13 +15,13 @@ export const load = async ({ fetch, locals, params }) => {
 	});
 
 	const project = projects.find(
-		(project) => stringGate(project.name).toLowerCase() === params.project.toLowerCase()
+		(project) => slugify(project.name).toLowerCase() === params.project.toLowerCase()
 	);
 
 	if (!project) throw redirect(302, '/app/dashboard/projects');
 
 	const page = project.pages.find(
-		(page) => stringGate(page.name).toLowerCase() === params.page.toLowerCase()
+		(page) => slugify(page.name).toLowerCase() === params.page.toLowerCase()
 	);
 
 	if (!page) throw redirect(302, '/app/dashboard/projects');

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { ActivePage, ActiveProject, hasUnsavedChanges } from '$ts/client/stores';
-	import stringGate from '$ts/common/stringGate';
+	import slugify from '$ts/common/slugify';
 	import ModalShell from './ModalShell.svelte';
 	import type { TilePage } from '$ts/common/types';
-	import { invalidateAll } from '$app/navigation';
+
+	let pageBeingEdited: TilePage | null = null;
+	let pageNameValue = '';
 
 	let addingPage = false;
 	let pageName: string;
@@ -57,6 +59,49 @@
 			return alert(responseJson.error);
 		}
 	};
+
+	const editPage = async () => {
+		const tempActiveProject = { ...$ActiveProject };
+		const tempActivePage = $ActivePage + '';
+
+		//@ts-ignore
+		$ActiveProject = {
+			...$ActiveProject,
+			pages: ($ActiveProject?.pages as TilePage[]).map((page) => {
+				if (page.id === pageBeingEdited?.id) {
+					return {
+						...page,
+						name: pageNameValue
+					};
+				}
+				return page;
+			})
+		};
+
+		$ActivePage = pageNameValue;
+
+		const responseJson = await fetch(
+			`/api/v1/project/${$ActiveProject?.id}/page/${pageBeingEdited?.id}/update`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name: pageNameValue
+				})
+			}
+		).then((res) => res.json());
+
+		if (responseJson.error) {
+			//@ts-ignore
+			$ActiveProject = tempActiveProject;
+			$ActivePage = tempActivePage;
+			return alert(responseJson.error);
+		}
+
+		pageBeingEdited = null;
+	};
 </script>
 
 <ModalShell title="Edit Pages">
@@ -74,6 +119,14 @@
 			on:click={createPage}
 			class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 		>
+	{:else if !!pageBeingEdited}
+		<p class="mb-2">Page Name:</p>
+		<input type="text" bind:value={pageNameValue} />
+		<button
+			on:click={editPage}
+			class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50"
+			>Submit Edits</button
+		>
 	{:else}
 		{#each $ActiveProject?.pages || [] as page, index}
 			<div
@@ -84,15 +137,19 @@
 				<p>{page.name}</p>
 				<div class="flex-1" />
 				<a
-					href={`/app/project/${stringGate($ActiveProject?.name || '').toLowerCase()}/${stringGate(
+					href={`/app/project/${slugify($ActiveProject?.name || '').toLowerCase()}/${slugify(
 						page.name || ''
 					).toLowerCase()}`}
 					on:click={() => ($ActivePage = page.name)}
 					class="rounded-md border border-blue-500 bg-blue-600 p-1 px-2 text-sm">View</a
 				>
 				{#if page.name !== 'Home'}
-					<button class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm"
-						>Edit</button
+					<button
+						on:click={() => {
+							pageBeingEdited = page;
+							pageNameValue = page.name;
+						}}
+						class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm">Edit</button
 					>
 					<button
 						on:click={() => deletePage(page.id)}

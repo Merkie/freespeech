@@ -1,3 +1,4 @@
+import slugify from '$ts/common/slugify';
 import { json } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
@@ -17,27 +18,17 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 		where: {
 			id: projectid,
 			userId: user.id
+		},
+		include: {
+			pages: true
 		}
 	});
 
 	// Check if the project exists
 	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
 
-	// Check if the user is the owner of the project
-	if (project.userId !== user.id)
-		return json({
-			error: 'You are not the owner of this project.'
-		});
-
 	// Check if the page already exists
-	if (
-		await prisma.tilePage.findFirst({
-			where: {
-				name: form.data.name,
-				projectId: projectid
-			}
-		})
-	)
+	if (project.pages.map((page) => slugify(page.name)).includes(slugify(form.data.name)))
 		return json({
 			error: 'A page with that name already exists in the project.'
 		});

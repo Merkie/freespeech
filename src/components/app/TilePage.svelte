@@ -5,7 +5,7 @@
 	import Tile from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
 	// helpers
-	import stringGate from '$ts/common/stringGate';
+	import slugify from '$ts/common/slugify';
 	import { scale } from 'svelte/transition';
 	// types
 	import type { Tile as ITile } from '$ts/common/types';
@@ -48,7 +48,7 @@
 			>
 				{#if tile.navigation && !$isEditing}
 					<a
-						href={`/app/project/${stringGate($ActiveProject.name).toLowerCase()}/${stringGate(
+						href={`/app/project/${slugify($ActiveProject.name).toLowerCase()}/${slugify(
 							tile.navigation
 						).toLowerCase()}`}
 					>
