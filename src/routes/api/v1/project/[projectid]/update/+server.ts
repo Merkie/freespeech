@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
+import slugify from '$ts/common/slugify';
 
 export const POST = async ({ params: { projectid }, locals: { prisma, user }, request }) => {
 	const form = await superValidate(
@@ -14,16 +15,30 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 
 	if (!form.valid) return json({ error: 'Invalid form' });
 
-	// Get the project
-	const project = await prisma.project.findUnique({
+	// Get all user projects
+	const projects = await prisma.project.findMany({
 		where: {
-			id: projectid,
 			userId: user.id
 		}
 	});
 
+	// Get the project
+	const project = projects.find((project) => project.id === projectid);
+
 	// Check if the project exists
 	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
+
+	// Check if the project name is already taken
+	if (form.data.name)
+		if (
+			projects
+				.filter((project) => project.id !== projectid)
+				.map((project) => slugify(project.name))
+				.includes(slugify(form.data.name))
+		)
+			return json({
+				error: 'A project with that name already exists.'
+			});
 
 	// Update the project
 	await prisma.project.update({

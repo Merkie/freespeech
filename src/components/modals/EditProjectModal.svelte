@@ -9,7 +9,7 @@
 	let rows = $openModal.props.project.rows;
 
 	const updateProject = async () => {
-		const response = await fetch(`/api/v1/project/${$ActiveProject?.id}/update`, {
+		const responseJson = await fetch(`/api/v1/project/${$ActiveProject?.id}/update`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -19,7 +19,10 @@
 				columns,
 				rows
 			})
-		});
+		}).then((res) => res.json());
+
+		if (responseJson.error) return alert(responseJson.error);
+
 		await invalidateAll();
 		$openModal = { name: '' };
 	};
