@@ -50,9 +50,6 @@
 		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-2 px-4 text-sm text-zinc-50 sm:block"
 		><i class="bi bi-gear" /> Manage Projects</button
 	>
-	<button disabled={true} class="px-2 text-xl">
-		<i class="bi bi-three-dots" />
-	</button>
 </SearchBar>
 <div class="m-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 	{#each $searchQuery ? searchedProjects : data.projects as project, index}
