@@ -132,7 +132,7 @@
 			color = newColor;
 		}}
 		handleOnlineImageSearch={() => {
-			$openModal = { name: 'search-online-images', key: tileSignature };
+			$openModal = { name: 'search-online-images', key: tileSignature, props: { search: text } };
 		}}
 		{deleteTile}
 		{text}
