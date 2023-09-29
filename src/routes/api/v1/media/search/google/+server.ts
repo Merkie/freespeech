@@ -1,29 +1,38 @@
+import { BRIGHTDATA_SERP_USERNAME, BRIGHTDATA_SERP_PASSWORD } from '$env/static/private';
 import { json } from '@sveltejs/kit';
-import google from 'googlethis';
+import axios from 'axios';
 
 export const GET = async ({ url }) => {
 	const params = url.searchParams;
 
-	// Image Search
-	const images = await google.image(params.get('query') + '', { safe: true });
-	const results = images.map((image) => ({
-		image: image.url,
-		thumbnail: image.preview.url,
-		alt: image.origin.title
-	}));
+	const response = await axios.get(
+		`https://www.google.com/search?q=${encodeURIComponent(
+			params.get('query') + ''
+		)}&tbm=isch&gl=us&brd_json=1`,
 
-	// Filter out gifs
-	const imageUrls = results
-		.map((result) => {
-			if (result.image.endsWith('.gif')) return;
-			return {
-				name: result.alt,
-				image_url: result.image,
-				thumbnail_url: result.thumbnail
-			};
-		})
-		.filter((result) => result);
+		{
+			headers: {
+				Accept: 'application/json'
+			},
+			proxy: {
+				protocol: 'http',
+				host: 'brd.superproxy.io',
+				port: 22225,
+				auth: {
+					username: BRIGHTDATA_SERP_USERNAME,
+					password: BRIGHTDATA_SERP_PASSWORD
+				}
+			}
+		}
+	);
 
 	// Return image urls
-	return json({ results: imageUrls });
+	return json({
+		results: response.data.images.map(
+			(result: { title: string; image: string; thumbnail: string }) => ({
+				name: result.title,
+				image_url: result.image
+			})
+		)
+	});
 };
