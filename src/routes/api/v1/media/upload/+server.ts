@@ -17,10 +17,12 @@ export const POST = async ({ request, locals }) => {
 
 	if (!form.valid) return json({ error: 'Invalid form' });
 
+	const ext = form.data.filename.split('.').at(-1);
+
 	// Create the media path
 	const key = `${slugify(locals.user.name)}-${locals.user.id}/${Date.now()}-${slugify(
-		form.data.filename
-	)}`;
+		form.data.filename.split('.').slice(0, -1).join('').substring(0, 50)
+	)}.${slugify(ext + '')}`;
 
 	const putObjectCommand = new PutObjectCommand({
 		Bucket: R2_BUCKET,
@@ -36,7 +38,7 @@ export const POST = async ({ request, locals }) => {
 		});
 
 	// Check if the upload was successful
-	const fileurl = `${R2_PUBLIC_URL}${key}`;
+	const fileurl = `/${key}`;
 
 	// Add the media to the database
 	await locals.prisma.userMedia.create({

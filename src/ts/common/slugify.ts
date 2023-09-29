@@ -5,7 +5,6 @@ export default function slugify(str: string): string {
 	// Trim the string
 	str = str.trim();
 
-	// Allow only spaces, a-z, and numbers
 	str = str.replace(/[^a-z0-9 ]/g, '');
 
 	// Remove double spaces

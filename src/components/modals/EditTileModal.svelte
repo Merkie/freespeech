@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ActivePage, ActiveProject, openModal } from '$ts/client/stores';
+	import { getContext } from 'svelte';
 	import ModalShell from './ModalShell.svelte';
 	import ImageResize from 'image-resize';
 	export let text: string;
@@ -36,7 +37,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				filename: uploadedFile.name,
+				filename: `${uploadedFile.name}.png`,
 				base64data: (base64data + '').split(',')[1]
 			})
 		});
@@ -80,7 +81,7 @@
 	<p class="my-2">Image:</p>
 	<div class="flex flex-col gap-2">
 		{#if image}
-			<img src={image} width={150} alt="Uploaded media preview" />
+			<img src={`${getContext('media_uri')}${image}`} width={150} alt="Uploaded media preview" />
 			<div class="flex items-center gap-2">
 				<!-- <button
 					on:click={() => ($openModal = { name: 'crop-image', key: $openModal.key })}

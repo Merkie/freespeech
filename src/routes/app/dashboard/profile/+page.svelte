@@ -56,7 +56,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				filename: uploadedFile.name,
+				filename: `${uploadedFile.name}.png`,
 				base64data: (base64data + '').split(',')[1]
 			})
 		});

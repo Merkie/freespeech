@@ -51,6 +51,8 @@
 		const blob = await response.blob();
 		const base64data = await imageResize.play(blob);
 
+		const filename = url.split('/').pop();
+
 		$Loading = true;
 		const uploadImageResponse = await fetch('/api/v1/media/upload', {
 			method: 'POST',
@@ -58,7 +60,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				filename: url.split('/').pop(),
+				filename: `${filename}.png`,
 				base64data: (base64data + '').split(',')[1]
 			})
 		});

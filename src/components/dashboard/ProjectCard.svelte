@@ -4,6 +4,7 @@
 	import { scale } from 'svelte/transition';
 	import { invalidateAll } from '$app/navigation';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
+	import { getContext } from 'svelte';
 
 	export let project: Project;
 	export let editModeOn = false;
@@ -44,7 +45,7 @@
 		}`}
 	>
 		<img
-			src={project.imageUrl}
+			src={`${getContext('media_uri')}${project.imageUrl}`}
 			class="aspect-video h-full w-full rounded-sm border border-zinc-300 bg-zinc-300 object-cover text-zinc-300"
 			alt="preview"
 			width={100}

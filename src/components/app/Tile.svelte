@@ -12,6 +12,7 @@
 		openModal
 	} from '$ts/client/stores';
 	import type { Tile, TilePage } from '$ts/common/types';
+	import { getContext } from 'svelte';
 
 	export let text: string;
 	export let displayText = '';
@@ -175,7 +176,11 @@
 		</p>
 		{#if image}
 			<div class="relative w-full flex-1">
-				<img src={image} class="absolute h-full w-full object-contain" alt="Tile media" />
+				<img
+					src={`${getContext('media_uri')}${image}`}
+					class="absolute h-full w-full object-contain"
+					alt="Tile media"
+				/>
 			</div>
 		{/if}
 	</button>
