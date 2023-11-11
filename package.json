@@ -40,7 +40,7 @@
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.410.0",
 		"@prisma/client": "^5.2.0",
-		"axios": "^1.5.1",
+		"axios": "^1.6.0",
 		"bcryptjs": "^2.4.3",
 		"cryptr": "^6.3.0",
 		"fuse.js": "^6.6.2",
