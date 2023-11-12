@@ -11,19 +11,18 @@ datasource db {
 }
 
 model User {
-  id                     String                   @id @default(cuid())
-  email                  String                   @unique
-  name                   String
-  password               String
-  profileImgUrl          String?
-  elevenLabsApiKey       String?
-  emailVerified          Boolean                  @default(false)
-  UserMedia              UserMedia[]
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
-  Project                Project[]
-  TilePage               TilePage[]
-  EmailVerificationToken EmailVerificationToken[]
+  id               String      @id @default(cuid())
+  email            String      @unique
+  name             String
+  password         String
+  profileImgUrl    String?
+  elevenLabsApiKey String?
+  emailVerified    Boolean     @default(false)
+  UserMedia        UserMedia[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  Project          Project[]
+  TilePage         TilePage[]
 }
 
 model UserMedia {
@@ -81,13 +80,4 @@ model Project {
   pages       TilePage[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-}
-
-model EmailVerificationToken {
-  id        String   @id @default(cuid())
-  token     String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
