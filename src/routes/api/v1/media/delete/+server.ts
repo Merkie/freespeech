@@ -6,7 +6,7 @@ import { json } from '@sveltejs/kit';
 
 export const POST = async ({ request, locals: { user, prisma } }) => {
 	const schema = z.object({
-		url: z.string()
+		url: z.string().min(1)
 	});
 
 	const body = (await request.json()) as z.infer<typeof schema>;
