@@ -51,27 +51,27 @@
 </svelte:head>
 
 <!-- dashboard header -->
-<div class="flex items-center gap-2 bg-zinc-900 p-2 text-sm font-light text-zinc-100">
+<div class="flex items-center gap-2 bg-zinc-900 font-light text-zinc-100">
 	{#each links as link}
 		{#if !link.hidden}
 			<a
 				href={link.path}
 				class={`${
 					$page.url.pathname.startsWith(link.path)
-						? 'border-zinc-700'
-						: 'border-zinc-900 text-zinc-500'
-				} rounded-md border p-2 py-1 transition-colors`}
-				><i class={`bi bi-${link.icon} mr-2`} />{link.name}</a
+						? 'border-zinc-600'
+						: 'border-zinc-900 text-zinc-500 hover:text-zinc-400'
+				} flex items-center gap-4 border-b-4 p-3 px-4 transition-colors`}
+				><i class={`bi bi-${link.icon} text-lg`} /><span class="text-base">{link.name}</span></a
 			>
 		{/if}
 	{/each}
 	<div class="flex-1" />
-	<a href="/app/dashboard/profile">
+	<a href="/app/dashboard/profile" class="px-4">
 		{#if data.user.profileImgUrl}
-			<img src={data.user.profileImgUrl} alt="profile" class="h-[35px] w-[35px] rounded-full" />
+			<img src={data.user.profileImgUrl} alt="profile" class="h-[40px] w-[40px] rounded-full" />
 		{:else}
 			<p
-				class="grid h-[35px] w-[35px] place-items-center rounded-full bg-blue-500 text-xs font-bold text-blue-50"
+				class="grid h-[40px] w-[40px] place-items-center rounded-full bg-blue-500 text-xs font-bold text-blue-50"
 			>
 				{getUserInitials()}
 			</p>
