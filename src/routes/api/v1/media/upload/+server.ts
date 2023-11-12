@@ -1,33 +1,30 @@
 import { z } from 'zod';
-import { R2_BUCKET, R2_PUBLIC_URL } from '$env/static/private';
+import { R2_BUCKET } from '$env/static/private';
 import slugify from '$ts/common/slugify';
 import s3 from '$ts/server/s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { superValidate } from 'sveltekit-superforms/server';
 import { json } from '@sveltejs/kit';
 
-export const POST = async ({ request, locals }) => {
-	const form = await superValidate(
-		await request.json(),
-		z.object({
-			filename: z.string().min(1),
-			base64data: z.string().min(1)
-		})
-	);
+export const POST = async ({ request, locals: { prisma, user } }) => {
+	const schema = z.object({
+		filename: z.string().min(1),
+		base64data: z.string().min(1)
+	});
+	const body = (await request.json()) as z.infer<typeof schema>;
 
-	if (!form.valid) return json({ error: 'Invalid form' });
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
-	const ext = form.data.filename.split('.').at(-1);
+	const ext = body.filename.split('.').at(-1);
 
 	// Create the media path
-	const key = `${slugify(locals.user.name)}-${locals.user.id}/${Date.now()}-${slugify(
-		form.data.filename.split('.').slice(0, -1).join('').substring(0, 50)
+	const key = `${slugify(user.name)}-${user.id}/${Date.now()}-${slugify(
+		body.filename.split('.').slice(0, -1).join('').substring(0, 50)
 	)}.${slugify(ext + '')}`;
 
 	const putObjectCommand = new PutObjectCommand({
 		Bucket: R2_BUCKET,
 		Key: key,
-		Body: Buffer.from(form.data.base64data, 'base64')
+		Body: Buffer.from(body.base64data, 'base64')
 	});
 
 	const putObjectResponse = await s3.send(putObjectCommand);
@@ -41,12 +38,12 @@ export const POST = async ({ request, locals }) => {
 	const fileurl = `/${key}`;
 
 	// Add the media to the database
-	await locals.prisma.userMedia.create({
+	await prisma.userMedia.create({
 		data: {
 			url: fileurl,
 			user: {
 				connect: {
-					id: locals.user.id
+					id: user.id
 				}
 			}
 		}

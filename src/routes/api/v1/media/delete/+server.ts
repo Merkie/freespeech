@@ -3,23 +3,21 @@ import { R2_BUCKET } from '$env/static/private';
 import s3 from '$ts/server/s3';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { json } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 
-export const POST = async ({ request, locals }) => {
-	const form = await superValidate(
-		await request.json(),
-		z.object({
-			url: z.string()
-		})
-	);
+export const POST = async ({ request, locals: { user, prisma } }) => {
+	const schema = z.object({
+		url: z.string()
+	});
 
-	if (!form.valid) return json({ error: 'Invalid form' });
+	const body = (await request.json()) as z.infer<typeof schema>;
+
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
 	// Get the media from the database
-	const media = await locals.prisma.userMedia.findFirst({
+	const media = await prisma.userMedia.findFirst({
 		where: {
-			url: form.data.url,
-			userId: locals.user.id
+			url: body.url,
+			userId: user.id
 		}
 	});
 
@@ -47,7 +45,7 @@ export const POST = async ({ request, locals }) => {
 		});
 
 	// Delete the media from the database
-	await locals.prisma.userMedia.delete({
+	await prisma.userMedia.delete({
 		where: {
 			id: media.id
 		}

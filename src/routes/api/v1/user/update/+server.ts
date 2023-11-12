@@ -1,20 +1,18 @@
 import { json } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 import { SITE_SECRET } from '$env/static/private';
 import Cryptr from 'cryptr';
 
 export const POST = async ({ locals: { prisma, user }, request }) => {
-	const form = await superValidate(
-		await request.json(),
-		z.object({
-			name: z.string().min(1).optional(),
-			profileImgUrl: z.string().min(1).optional(),
-			elevenLabsApiKey: z.string().optional()
-		})
-	);
+	const schema = z.object({
+		name: z.string().min(1).optional(),
+		profileImgUrl: z.string().min(1).optional(),
+		elevenLabsApiKey: z.string().optional()
+	});
 
-	if (!form.valid) return json({ error: 'Invalid form' });
+	const body = (await request.json()) as z.infer<typeof schema>;
+
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
 	const fetchedUser = await prisma.user.findUnique({
 		where: {
@@ -26,9 +24,9 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 
 	let encryptedElApiKey = '';
 
-	if (form.data.elevenLabsApiKey) {
+	if (body.elevenLabsApiKey) {
 		const cryptr = new Cryptr(SITE_SECRET);
-		encryptedElApiKey = cryptr.encrypt(form.data.elevenLabsApiKey);
+		encryptedElApiKey = cryptr.encrypt(body.elevenLabsApiKey);
 	}
 
 	await prisma.user.update({
@@ -36,10 +34,10 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 			id: user.id
 		},
 		data: {
-			name: form.data.name || fetchedUser.name,
-			profileImgUrl: form.data.profileImgUrl || fetchedUser.profileImgUrl,
+			name: body.name || fetchedUser.name,
+			profileImgUrl: body.profileImgUrl || fetchedUser.profileImgUrl,
 			elevenLabsApiKey:
-				form.data.elevenLabsApiKey === '' ? null : encryptedElApiKey || fetchedUser.elevenLabsApiKey
+				body.elevenLabsApiKey === '' ? null : encryptedElApiKey || fetchedUser.elevenLabsApiKey
 		}
 	});
 

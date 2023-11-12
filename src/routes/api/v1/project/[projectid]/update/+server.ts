@@ -1,19 +1,28 @@
 import { json } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 import slugify from '$ts/common/slugify';
 
 export const POST = async ({ params: { projectid }, locals: { prisma, user }, request }) => {
-	const form = await superValidate(
-		await request.json(),
-		z.object({
-			name: z.string().min(1).max(255).optional(),
-			columns: z.number().min(1).max(10).optional(),
-			rows: z.number().min(1).max(10).optional()
-		})
-	);
+	// const form = await superValidate(
+	// 	await request.json(),
+	// 	z.object({
+	// 		name: z.string().min(1).max(255).optional(),
+	// 		columns: z.number().min(1).max(10).optional(),
+	// 		rows: z.number().min(1).max(10).optional()
+	// 	})
+	// );
 
-	if (!form.valid) return json({ error: 'Invalid form' });
+	// if (!form.valid) return json({ error: 'Invalid form' });
+
+	const schema = z.object({
+		name: z.string().min(1).max(255).optional(),
+		columns: z.number().min(1).max(10).optional(),
+		rows: z.number().min(1).max(10).optional()
+	});
+
+	const body = (await request.json()) as z.infer<typeof schema>;
+
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
 	// Get all user projects
 	const projects = await prisma.project.findMany({
@@ -29,12 +38,12 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
 
 	// Check if the project name is already taken
-	if (form.data.name)
+	if (body.name)
 		if (
 			projects
 				.filter((project) => project.id !== projectid)
 				.map((project) => slugify(project.name))
-				.includes(slugify(form.data.name))
+				.includes(slugify(body.name))
 		)
 			return json({
 				error: 'A project with that name already exists.'
@@ -46,9 +55,9 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 			id: projectid
 		},
 		data: {
-			name: form.data.name || project.name,
-			columns: form.data.columns || project.columns,
-			rows: form.data.rows || project.rows
+			name: body.name || project.name,
+			columns: body.columns || project.columns,
+			rows: body.rows || project.rows
 		}
 	});
 

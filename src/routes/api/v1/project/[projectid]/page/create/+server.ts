@@ -1,17 +1,14 @@
 import slugify from '$ts/common/slugify';
 import { json } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 export const POST = async ({ params: { projectid }, locals: { prisma, user }, request }) => {
-	const form = await superValidate(
-		await request.json(),
-		z.object({
-			name: z.string().min(1).max(50)
-		})
-	);
+	const schema = z.object({
+		name: z.string().min(1).max(50)
+	});
+	const body = (await request.json()) as z.infer<typeof schema>;
 
-	if (!form.valid) return json({ error: 'Invalid form' });
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
 	// Get the project
 	const project = await prisma.project.findUnique({
@@ -28,7 +25,7 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
 
 	// Check if the page already exists
-	if (project.pages.map((page) => slugify(page.name)).includes(slugify(form.data.name)))
+	if (project.pages.map((page) => slugify(page.name)).includes(slugify(body.name)))
 		return json({
 			error: 'A page with that name already exists in the project.'
 		});
@@ -36,7 +33,7 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 	// Create the page
 	const page = await prisma.tilePage.create({
 		data: {
-			name: form.data.name,
+			name: body.name,
 			Project: {
 				connect: {
 					id: projectid

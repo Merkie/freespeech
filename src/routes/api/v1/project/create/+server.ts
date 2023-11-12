@@ -1,51 +1,49 @@
 import { json } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 import slugify from '$ts/common/slugify';
 
-export const POST = async ({ request, locals }) => {
-	const form = await superValidate(
-		await request.json(),
-		z.object({
-			name: z.string(),
-			columns: z.number(),
-			rows: z.number()
-		})
-	);
+export const POST = async ({ request, locals: { user, prisma } }) => {
+	const schema = z.object({
+		name: z.string(),
+		columns: z.number(),
+		rows: z.number()
+	});
 
-	if (!form.valid) return json({ error: 'Invalid form' });
+	const body = (await request.json()) as z.infer<typeof schema>;
+
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
 	// Get all user projects
-	const projects = await locals.prisma.project.findMany({
+	const projects = await prisma.project.findMany({
 		where: {
-			userId: locals.user.id
+			userId: user.id
 		}
 	});
 
 	// Check if the project name is already taken
-	if (projects.map((project) => slugify(project.name)).includes(slugify(form.data.name)))
+	if (projects.map((project) => slugify(project.name)).includes(slugify(body.name)))
 		return json({
 			error: 'A project with that name already exists.'
 		});
 
 	// Create the project
-	const project = await locals.prisma.project.create({
+	const project = await prisma.project.create({
 		data: {
-			name: form.data.name,
+			name: body.name,
 			description: '',
 			isPublic: false,
-			columns: form.data.columns,
-			rows: form.data.rows,
+			columns: body.columns,
+			rows: body.rows,
 			user: {
 				connect: {
-					id: locals.user.id
+					id: user.id
 				}
 			}
 		}
 	});
 
 	// Create the home page
-	await locals.prisma.tilePage.create({
+	await prisma.tilePage.create({
 		data: {
 			name: 'Home',
 			Project: {
@@ -55,7 +53,7 @@ export const POST = async ({ request, locals }) => {
 			},
 			user: {
 				connect: {
-					id: locals.user.id
+					id: user.id
 				}
 			},
 			data: {

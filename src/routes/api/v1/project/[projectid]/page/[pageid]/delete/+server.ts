@@ -1,10 +1,10 @@
 import { json } from '@sveltejs/kit';
 
-export const DELETE = async ({ params: { pageid }, locals }) => {
-	const page = await locals.prisma.tilePage.findUnique({
+export const DELETE = async ({ params: { pageid }, locals: { prisma, user } }) => {
+	const page = await prisma.tilePage.findUnique({
 		where: {
 			id: pageid,
-			userId: locals.user.id
+			userId: user.id
 		}
 	});
 
@@ -13,7 +13,7 @@ export const DELETE = async ({ params: { pageid }, locals }) => {
 			error: 'Page not found.'
 		});
 
-	await locals.prisma.tilePage.delete({
+	await prisma.tilePage.delete({
 		where: {
 			id: pageid
 		}

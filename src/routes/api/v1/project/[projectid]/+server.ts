@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 
-export const GET = async ({ params: { projectid }, locals }) => {
-	const project = await locals.prisma.project.findUnique({
+export const GET = async ({ params: { projectid }, locals: { prisma, user } }) => {
+	const project = await prisma.project.findUnique({
 		where: {
 			id: projectid
 		},
@@ -15,7 +15,7 @@ export const GET = async ({ params: { projectid }, locals }) => {
 			error: 'Project not found.'
 		});
 
-	if (project.userId === locals.user?.id || project.isPublic) {
+	if (project.userId === user?.id || project.isPublic) {
 		return json({ project });
 	}
 

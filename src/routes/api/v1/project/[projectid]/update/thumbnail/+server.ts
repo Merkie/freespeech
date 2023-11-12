@@ -1,22 +1,19 @@
 import { json } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
-export const POST = async ({ params: { projectid }, request, locals }) => {
-	const form = await superValidate(
-		await request.json(),
-		z.object({
-			imageUrl: z.string().min(1)
-		})
-	);
+export const POST = async ({ params: { projectid }, request, locals: { user, prisma } }) => {
+	const schema = z.object({
+		imageUrl: z.string().min(1)
+	});
+	const body = (await request.json()) as z.infer<typeof schema>;
 
-	if (!form.valid) return json({ error: 'Invalid form' });
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
 	// Get the project
-	const project = await locals.prisma.project.findFirst({
+	const project = await prisma.project.findFirst({
 		where: {
 			id: projectid,
-			userId: locals.user.id
+			userId: user.id
 		}
 	});
 
@@ -26,12 +23,12 @@ export const POST = async ({ params: { projectid }, request, locals }) => {
 			error: 'The project you are trying to edit does not exist.'
 		});
 
-	await locals.prisma.project.update({
+	await prisma.project.update({
 		where: {
 			id: projectid
 		},
 		data: {
-			imageUrl: form.data.imageUrl
+			imageUrl: body.imageUrl
 		}
 	});
 
