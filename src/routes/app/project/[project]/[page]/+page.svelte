@@ -17,9 +17,7 @@
 	import ImageResize from 'image-resize';
 	// types
 	import type { PageData } from './$types';
-	import ElevenLabsVoices from '$ts/common/ElevenLabsVoices';
 	import type { FullProject, Tile } from '$ts/common/types';
-	import { GetObjectLegalHoldCommand } from '@aws-sdk/client-s3';
 
 	export let data: PageData;
 
