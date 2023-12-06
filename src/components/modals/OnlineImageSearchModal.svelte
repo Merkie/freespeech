@@ -115,7 +115,9 @@
 				on:keydown={(e) => {
 					if (e.key === 'Enter') searchImages();
 				}}
-				placeholder="Search for images with Bing..."
+				placeholder={`Search for ${
+					selectedSearchStrategy === 'bing' ? 'images with Bing' : 'symbols on Open Symbols'
+				}...`}
 				class="flex-1 border-none outline-none"
 			/>
 		</div>
