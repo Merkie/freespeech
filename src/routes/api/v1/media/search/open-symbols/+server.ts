@@ -1,29 +1,31 @@
+import { SkinTones } from '$ts/common/opensymbols';
 import { json } from '@sveltejs/kit';
 
 export const GET = async ({ fetch, url }) => {
-	const params = url.searchParams;
+	const query = url.searchParams.get('q');
+	if (!query) return json({ results: [] });
+
+	const skin = url.searchParams.get('skin');
+	if (!skin) return json({ results: [] });
+
+	const isSkinToneValid = !!SkinTones.find((skinTone) => skinTone.name === skin);
+	if (!isSkinToneValid) return json({ results: [] });
 
 	const responseJson = await fetch(
-		'https://www.opensymbols.org/api/v1/symbols/search?q=' +
-			encodeURIComponent(params.get('query') + ''),
-		{
-			headers: {
-				Accept: 'application/json, text/javascript, */*; q=0.01',
-				'Cache-Control': 'no-cache',
-				'Content-Type': 'application/json; charset=UTF-8',
-				Pragma: 'no-cache',
-				'Sec-Fetch-Dest': 'empty',
-				'Sec-Fetch-Mode': 'cors',
-				'Sec-Fetch-Site': 'same-origin',
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}
+		'https://www.opensymbols.org/api/v1/symbols/search?q=' + encodeURIComponent(query)
 	).then((response: Response) => response.json());
 
+	const results = responseJson.map((item: { name: string; image_url: string }) => {
+		const urlWithModifiedSkin = item.image_url.replace('varianted-skin', `variant-${skin}`);
+
+		return {
+			alt: item.name,
+			image_url: urlWithModifiedSkin,
+			thumbnail_url: urlWithModifiedSkin
+		};
+	});
+
 	return json({
-		results: responseJson.map((item: { name: string; image_url: string }) => ({
-			name: item.name,
-			image_url: item.image_url
-		}))
+		results
 	});
 };
