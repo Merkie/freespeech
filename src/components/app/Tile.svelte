@@ -37,7 +37,7 @@
 			return;
 		}
 		// Add tile to store
-		$Sentence = [...$Sentence, { text: displayText || text, image, color } as Tile];
+		$Sentence = [...$Sentence, { displayText, text, image, color } as Tile];
 		// Speak the text if the user has enabled the speak on tap setting
 		if ($LocalSettings.speakOnTap) {
 			speakText(text);
