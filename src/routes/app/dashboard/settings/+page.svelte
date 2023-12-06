@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { LocalSettings } from '$ts/client/stores';
 	import { onMount } from 'svelte';
-	import elevenLabsVoices from '$ts/common/ElevenLabsVoices';
 	import { fly } from 'svelte/transition';
 	import Fuse from 'fuse.js';
 	import type { IElevenLabsVoice, IVoiceGenerator } from '$ts/common/types';
