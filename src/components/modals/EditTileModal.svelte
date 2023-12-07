@@ -2,6 +2,7 @@
 	import { ActivePage, ActiveProject, Loading, openModal } from '$ts/client/stores';
 	import { getContext } from 'svelte';
 	import ModalShell from './ModalShell.svelte';
+	import { uploadFile } from '$ts/client/presigned-uploads';
 	export let text: string;
 	export let displayText: string;
 	export let image: string;
@@ -23,23 +24,11 @@
 		const uploadedFile = fileinput.files[0];
 
 		$Loading = true;
-
-		const presignResponse = await fetch('/api/v1/media/upload/presign', {
-			method: 'POST',
-			body: JSON.stringify({
-				filename: uploadedFile.name
-			})
-		}).then((res) => res.json());
-
-		const uploadResponse = await fetch(presignResponse.presignedUrl, {
-			method: 'PUT',
-			body: uploadedFile
-		});
-
+		const key = await uploadFile(uploadedFile);
 		$Loading = false;
 
-		if (uploadResponse.status === 200) {
-			image = `/${presignResponse.key}`;
+		if (!!key) {
+			image = `/${key}`;
 		}
 	};
 </script>

@@ -18,6 +18,7 @@
 	// types
 	import type { PageData } from './$types';
 	import type { FullProject, Tile } from '$ts/common/types';
+	import { uploadBlob } from '$ts/client/presigned-uploads';
 
 	export let data: PageData;
 
@@ -58,24 +59,18 @@
 
 	// onMount script that handles thumbnail generation
 	onMount(async () => {
-		// await new Promise((resolve) => setTimeout(resolve, 500));
-		// // if the thumbnail was uploaded less than 200 seconds ago, don't update it
-		// if ($ActiveProject?.imageUrl) {
-		// 	const lastThumbnailUploadedDate = $ActiveProject.imageUrl.split('/').pop()?.split('-')[0];
-		// 	// time in seconds since last thumbnail upload
-		// 	const timeSinceLastThumbnailUpload =
-		// 		(Date.now() - parseInt(lastThumbnailUploadedDate + '')) / 1000;
+		await new Promise((resolve) => setTimeout(resolve, 500));
+		// if the thumbnail was uploaded less than 120 seconds ago, don't update it
+		if ($ActiveProject?.imageUrl) {
+			const lastThumbnailUploadedDate = $ActiveProject.imageUrl.split('/').pop()?.split('-')[0];
+			// time in seconds since last thumbnail upload
+			const timeSinceLastThumbnailUpload =
+				(Date.now() - parseInt(lastThumbnailUploadedDate + '')) / 1000;
 
-		// 	if (timeSinceLastThumbnailUpload < 200) return;
-		// }
+			if (timeSinceLastThumbnailUpload < 120) return;
+		}
 
 		// upload the image to the server
-		const presignResponse = await fetch('/api/v1/media/upload/presign', {
-			method: 'POST',
-			body: JSON.stringify({
-				filename: 'project-thumbnail.png'
-			})
-		}).then((res) => res.json());
 
 		const blob = await htmlToImage.toBlob(containerDOMNode);
 
@@ -84,23 +79,16 @@
 			return;
 		}
 
-		const file = new File([blob], 'project-thumbnail.png', { type: blob.type });
+		const key = await uploadBlob('project-thumbnail.png', blob);
 
-		const uploadResponse = await fetch(presignResponse.presignedUrl, {
-			method: 'PUT',
-			body: file
-		});
-
-		// update the project with the new thumbnail
-		const projectUpdatePromise = await fetch(
-			`/api/v1/project/${$ActiveProject?.id}/update/thumbnail`,
-			{
+		if (!!key) {
+			await fetch(`/api/v1/project/${$ActiveProject?.id}/update/thumbnail`, {
 				method: 'POST',
 				body: JSON.stringify({
-					imageUrl: `/${presignResponse.key}`
+					imageUrl: `/${key}`
 				})
-			}
-		);
+			});
+		}
 	});
 
 	// Speaks the given text using the selected voice generator

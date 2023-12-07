@@ -4,8 +4,8 @@
 	import ModalShell from './ModalShell.svelte';
 	import ImageResize from 'image-resize';
 	import { SkinTones } from '$ts/common/opensymbols';
+	import { uploadBlob } from '$ts/client/presigned-uploads';
 
-	export let image: string;
 	export let handleImageChange: (newImage: string) => void;
 	export let handleNavigateBack: () => void;
 
@@ -33,30 +33,14 @@
 			})
 		}).then((res) => res.blob());
 
-		const file = new File([blob], filename, { type: blob.type });
-
 		$Loading = true;
-
-		const presignResponse = await fetch('/api/v1/media/upload/presign', {
-			method: 'POST',
-			body: JSON.stringify({
-				filename
-			})
-		}).then((res) => res.json());
-
-		const { presignedUrl, key } = presignResponse;
-
-		const uploadResponse = await fetch(presignedUrl, {
-			method: 'PUT',
-			body: file
-		});
-
+		const key = await uploadBlob(filename, blob);
 		$Loading = false;
 
 		// Upload the image to the presigned URL
-		if (uploadResponse.status === 200) {
-			handleImageChange(`/${key}`);
-			handleNavigateBack();
+		handleImageChange(`/${key}`);
+		if (!!key) {
+			// handleNavigateBack();
 		}
 	};
 
