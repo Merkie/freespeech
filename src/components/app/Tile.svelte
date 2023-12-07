@@ -24,6 +24,8 @@
 	export let subpage: number;
 	export let speakText: (text: string) => void;
 
+	let lastCall = 0;
+
 	const handleInteraction = () => {
 		// Edit Mode
 		if ($isEditing) {
@@ -47,6 +49,22 @@
 	const addTileEditToStore = () => {
 		// @ts-ignore
 		if (!$ActiveProject) return;
+
+		const oldTile = $ActiveProject.pages
+			.find((page) => page.name === $ActivePage)
+			?.data.tiles.find((tile) => tile.x === x && tile.y === y && tile.page === subpage);
+
+		if (!oldTile) return;
+
+		if (
+			oldTile.text === text &&
+			oldTile.displayText === displayText &&
+			oldTile.image === image &&
+			oldTile.navigation === navigation &&
+			oldTile.color === color
+		)
+			return;
+
 		$ActiveProject = {
 			...$ActiveProject,
 			pages: $ActiveProject.pages.map((page) => {
