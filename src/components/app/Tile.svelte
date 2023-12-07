@@ -178,7 +178,6 @@
 		handleNavigateBack={() => {
 			$openModal = { name: 'edit-tile', key: tileSignature };
 		}}
-		{image}
 	/>
 {/if}
 
