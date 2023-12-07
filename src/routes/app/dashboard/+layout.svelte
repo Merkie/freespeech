@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { ActiveProject } from '$ts/client/stores';
-	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
+	import { getContext, onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import type { LayoutData } from './$types';
 
@@ -43,6 +41,8 @@
 		if (names.length === 1) return names[0].charAt(0);
 		return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 	};
+
+	$: profileUrl = `${getContext('media_uri')}${data.user.profileImgUrl}`;
 </script>
 
 <!-- webpage title -->
@@ -67,8 +67,8 @@
 	{/each}
 	<div class="flex-1" />
 	<a href="/app/dashboard/profile" class="px-4">
-		{#if data.user.profileImgUrl}
-			<img src={data.user.profileImgUrl} alt="profile" class="h-[40px] w-[40px] rounded-full" />
+		{#if data.user.profileImgUrl && getContext('media_uri')}
+			<img src={profileUrl} alt="profile" class="h-[40px] w-[40px] rounded-full" />
 		{:else}
 			<p
 				class="grid h-[40px] w-[40px] place-items-center rounded-full bg-blue-500 text-xs font-bold text-blue-50"
