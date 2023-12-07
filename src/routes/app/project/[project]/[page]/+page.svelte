@@ -58,69 +58,49 @@
 
 	// onMount script that handles thumbnail generation
 	onMount(async () => {
-		await new Promise((resolve) => setTimeout(resolve, 500));
-		// if the thumbnail was uploaded less than 200 seconds ago, don't update it
-		if ($ActiveProject?.imageUrl) {
-			const lastThumbnailUploadedDate = $ActiveProject.imageUrl.split('/').pop()?.split('-')[0];
-			// time in seconds since last thumbnail upload
-			const timeSinceLastThumbnailUpload =
-				(Date.now() - parseInt(lastThumbnailUploadedDate + '')) / 1000;
+		// await new Promise((resolve) => setTimeout(resolve, 500));
+		// // if the thumbnail was uploaded less than 200 seconds ago, don't update it
+		// if ($ActiveProject?.imageUrl) {
+		// 	const lastThumbnailUploadedDate = $ActiveProject.imageUrl.split('/').pop()?.split('-')[0];
+		// 	// time in seconds since last thumbnail upload
+		// 	const timeSinceLastThumbnailUpload =
+		// 		(Date.now() - parseInt(lastThumbnailUploadedDate + '')) / 1000;
 
-			if (timeSinceLastThumbnailUpload < 200) return;
-		}
-
-		// save the old image url so we can delete it later
-		const oldImageUrl = $ActiveProject?.imageUrl;
-
-		// capture the node with html-to-image
-		const imageResize = new ImageResize({
-			format: 'png',
-			width: 800,
-			height: 800
-		});
-		const image = await imageResize.play(await htmlToImage.toPng(containerDOMNode));
+		// 	if (timeSinceLastThumbnailUpload < 200) return;
+		// }
 
 		// upload the image to the server
-		const mediaUploadResponse = await fetch('/api/v1/media/upload', {
+		const presignResponse = await fetch('/api/v1/media/upload/presign', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
 			body: JSON.stringify({
-				filename: 'project-thumbnail.png',
-				base64data: (image + '').split(',')[1]
+				filename: 'project-thumbnail.png'
 			})
-		});
-		const mediaUploadResponseJson = await mediaUploadResponse.json();
+		}).then((res) => res.json());
 
-		// upload error handling
-		if (!mediaUploadResponseJson.fileurl) {
-			console.error('Failed to upload thumbnail');
+		const blob = await htmlToImage.toBlob(containerDOMNode);
+
+		if (!blob) {
+			console.error('Failed to generate thumbnail');
 			return;
 		}
 
+		const file = new File([blob], 'project-thumbnail.png', { type: blob.type });
+
+		const uploadResponse = await fetch(presignResponse.presignedUrl, {
+			method: 'PUT',
+			body: file
+		});
+
 		// update the project with the new thumbnail
-		const projectUpdatePromise = fetch(`/api/v1/project/${$ActiveProject?.id}/update/thumbnail`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				imageUrl: mediaUploadResponseJson.fileurl
-			})
-		});
-
-		// delete the old thumbnail
-		const deleteImagePromise = fetch('/api/v1/media/delete', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ url: oldImageUrl })
-		});
-
-		// run both promises at the same time
-		await Promise.all([projectUpdatePromise, deleteImagePromise]);
+		const projectUpdatePromise = await fetch(
+			`/api/v1/project/${$ActiveProject?.id}/update/thumbnail`,
+			{
+				method: 'POST',
+				body: JSON.stringify({
+					imageUrl: `/${presignResponse.key}`
+				})
+			}
+		);
 	});
 
 	// Speaks the given text using the selected voice generator
@@ -212,6 +192,7 @@
 </svelte:head>
 <PageHeader />
 {#if !$isEditing && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
+
 <div
 	bind:this={containerDOMNode}
 	bind:clientHeight={containerHeight}

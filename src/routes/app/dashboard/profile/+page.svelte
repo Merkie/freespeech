@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { ActiveProject } from '$ts/client/stores';
+	import { ActiveProject, Loading } from '$ts/client/stores';
+	import { getContext } from 'svelte';
 	import type { PageData } from './$types';
-	import ImageResize from 'image-resize';
 
 	export let data: PageData;
 
@@ -38,38 +38,33 @@
 		await invalidateAll();
 	};
 
-	const imageResize = new ImageResize({
-		format: 'png',
-		width: 800,
-		height: 800
-	});
-
 	const handleMediaUpload = async () => {
 		if (!profileInput.files) return;
 		const uploadedFile = profileInput.files[0];
 
-		const base64data = await imageResize.play(uploadedFile);
+		$Loading = true;
 
-		const response = await fetch('/api/v1/media/upload', {
+		const presignResponse = await fetch('/api/v1/media/upload/presign', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
 			body: JSON.stringify({
-				filename: `${uploadedFile.name}.png`,
-				base64data: (base64data + '').split(',')[1]
+				filename: uploadedFile.name
 			})
+		}).then((res) => res.json());
+
+		const uploadResponse = await fetch(presignResponse.presignedUrl, {
+			method: 'PUT',
+			body: uploadedFile
 		});
 
-		const data = await response.json();
+		$Loading = false;
 
-		if (data.fileurl) {
+		if (uploadResponse.status === 200) {
 			const response = await fetch('/api/v1/user/update', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ profileImgUrl: data.fileurl })
+				body: JSON.stringify({ profileImgUrl: `/${presignResponse.key}` })
 			});
 			await invalidateAll();
 		}
@@ -80,7 +75,11 @@
 	<div class="flex w-[90%] max-w-[1000px] flex-col p-4 sm:flex-row">
 		<div class="flex flex-col items-center p-2 sm:w-fit sm:items-start">
 			{#if data.user.profileImgUrl}
-				<img src={data.user.profileImgUrl} alt="Profile" class="h-[150px] w-[150px] rounded-full" />
+				<img
+					src={`${getContext('media_uri')}${data.user.profileImgUrl}`}
+					alt="Profile"
+					class="h-[150px] w-[150px] rounded-full"
+				/>
 			{:else}
 				<p
 					class="grid h-[150px] w-[150px] place-items-center rounded-full bg-blue-500 text-3xl font-bold text-blue-50"
@@ -98,13 +97,6 @@
 					{/if}
 				</p>
 			</div>
-			<!-- {#if !data.user?.emailVerified}
-				<a
-					href="/verify-email"
-					class="mt-2 w-[200px] rounded-md border border-blue-500 bg-blue-700 p-1 text-center text-sm text-blue-50 sm:w-full"
-					><i class="bi bi-envelope mr-2" />Verify Email</a
-				>
-			{/if} -->
 
 			<button
 				on:click={logout}
