@@ -24,31 +24,40 @@
 	});
 
 	const handleUploadFromInternet = async (url: string) => {
-		// convert url into base64
-		const response = await fetch(url);
-		const blob = await response.blob();
-		const base64data = await imageResize.play(blob);
+		const filename = url.split('/').pop() + '';
 
-		const filename = url.split('/').pop();
-
-		$Loading = true;
-		const uploadImageResponse = await fetch('/api/v1/media/upload', {
+		const blob = await fetch(`/api/v1/media/fetch-from-url`, {
 			method: 'POST',
 			body: JSON.stringify({
-				filename: `${filename}.png`,
-				base64data: (base64data + '').split(',')[1]
+				url
 			})
+		}).then((res) => res.blob());
+
+		const file = new File([blob], filename, { type: blob.type });
+
+		$Loading = true;
+
+		const presignResponse = await fetch('/api/v1/media/upload/presign', {
+			method: 'POST',
+			body: JSON.stringify({
+				filename
+			})
+		}).then((res) => res.json());
+
+		const { presignedUrl, key } = presignResponse;
+
+		const uploadResponse = await fetch(presignedUrl, {
+			method: 'PUT',
+			body: file
 		});
+
 		$Loading = false;
 
-		const data = await uploadImageResponse.json();
-
-		if (data.fileurl) {
-			image = data.fileurl;
-			handleImageChange(data.fileurl);
+		// Upload the image to the presigned URL
+		if (uploadResponse.status === 200) {
+			handleImageChange(`/${key}`);
+			handleNavigateBack();
 		}
-
-		handleNavigateBack();
 	};
 
 	const searchImages = async () => {

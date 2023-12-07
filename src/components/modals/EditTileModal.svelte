@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { ActivePage, ActiveProject, openModal } from '$ts/client/stores';
+	import { ActivePage, ActiveProject, Loading, openModal } from '$ts/client/stores';
 	import { getContext } from 'svelte';
 	import ModalShell from './ModalShell.svelte';
-	import ImageResize from 'image-resize';
 	export let text: string;
 	export let displayText: string;
 	export let image: string;
@@ -19,34 +18,28 @@
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
 
-	const imageResize = new ImageResize({
-		format: 'png',
-		width: 800,
-		height: 800
-	});
-
 	const handleMediaUpload = async () => {
 		if (!fileinput.files) return;
 		const uploadedFile = fileinput.files[0];
 
-		const base64data = await imageResize.play(uploadedFile);
+		$Loading = true;
 
-		const response = await fetch('/api/v1/media/upload', {
+		const presignResponse = await fetch('/api/v1/media/upload/presign', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
 			body: JSON.stringify({
-				filename: `${uploadedFile.name}.png`,
-				base64data: (base64data + '').split(',')[1]
+				filename: uploadedFile.name
 			})
+		}).then((res) => res.json());
+
+		const uploadResponse = await fetch(presignResponse.presignedUrl, {
+			method: 'PUT',
+			body: uploadedFile
 		});
 
-		const data = await response.json();
+		$Loading = false;
 
-		if (data.fileurl) {
-			image = data.fileurl;
-			handleImageChange(data.fileurl);
+		if (uploadResponse.status === 200) {
+			image = `/${presignResponse.key}`;
 		}
 	};
 </script>
