@@ -162,14 +162,6 @@
 	/>
 {/if}
 
-<!-- {#if $openModal.name === 'crop-image' && $openModal.key === tileSignature}
-	<CropImageModal
-		{image}
-		{handleImageChange}
-		handleNavigateBack={() => ($openModal = { name: 'edit-tile', key: tileSignature })}
-	/>
-{/if} -->
-
 {#if $openModal.name === 'search-online-images' && $openModal.key === tileSignature}
 	<OnlineImageSearchModal
 		handleImageChange={(newImage) => {
