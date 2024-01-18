@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,73 +8,51 @@ datasource db {
 }
 
 model User {
-  id               String      @id @default(cuid())
-  email            String      @unique
+  id String @id @default(cuid())
+
+  Project  Project[]
+  TilePage TilePage[]
+
+  email            String  @unique
   name             String
-  password         String
+  password         String?
   profileImgUrl    String?
   elevenLabsApiKey String?
-  emailVerified    Boolean     @default(false)
-  UserMedia        UserMedia[]
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
-  Project          Project[]
-  TilePage         TilePage[]
-}
 
-model UserMedia {
-  id        String   @id @default(cuid())
-  url       String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model TilePage {
-  id        String   @id @default(cuid())
-  name      String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  isPublic  Boolean  @default(false)
-  data      Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Project   Project? @relation(fields: [projectId], references: [id])
-  projectId String?
-  tiles     Tile[]
-}
-
-model Tile {
   id String @id @default(cuid())
 
-  x                Int
-  y                Int
-  subpageIndex     Int
-  text             String
-  displayText      String?
-  imageUrl         String?
-  color            String  @default("white")
-  pageNavigationId String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  Project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String?
 
-  page   TilePage @relation(fields: [pageId], references: [id])
-  pageId String
+  name     String
+  data     Json
+  isPublic Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Project {
-  id          String     @id @default(cuid())
+  id String @id @default(cuid())
+
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  pages  TilePage[]
+
   name        String
   description String?
   imageUrl    String?
-  columns     Int        @default(6)
-  rows        Int        @default(4)
-  user        User       @relation(fields: [userId], references: [id])
-  userId      String
-  isPublic    Boolean    @default(false)
-  pages       TilePage[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  columns     Int     @default(6)
+  rows        Int     @default(4)
+  isPublic    Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
