@@ -21,6 +21,8 @@ export const POST = async ({ request, locals: { prisma }, cookies }) => {
 			headers: { 'Content-Type': 'application/json' }
 		});
 
+	if (!fetchedUser.password) return json({ error: 'User does not have a password.' });
+
 	// Compare the two passwords
 	const doPasswordsMatch = bcrypt.compareSync(body.password, fetchedUser.password);
 	if (!doPasswordsMatch) return json({ error: 'Invalid password.' });
