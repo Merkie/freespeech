@@ -42,7 +42,9 @@
 		return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 	};
 
-	$: profileUrl = `${getContext('media_uri')}${data.user.profileImgUrl}`;
+	$: profileUrl = data.user.profileImgUrl?.startsWith('http')
+		? data.user.profileImgUrl
+		: `${getContext('media_uri')}${data.user.profileImgUrl}`;
 </script>
 
 <!-- webpage title -->
