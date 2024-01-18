@@ -65,7 +65,9 @@
 		<div class="flex flex-col items-center p-2 sm:w-fit sm:items-start">
 			{#if data.user.profileImgUrl}
 				<img
-					src={`${getContext('media_uri')}${data.user.profileImgUrl}`}
+					src={data.user.profileImgUrl?.startsWith('http')
+						? data.user.profileImgUrl
+						: `${getContext('media_uri')}${data.user.profileImgUrl}`}
 					alt="Profile"
 					class="h-[150px] w-[150px] rounded-full"
 				/>
@@ -81,9 +83,6 @@
 				<p class="mt-2 text-lg font-medium">{data.user?.name}</p>
 				<p class="items-cetner flex text-sm">
 					<span>{data.user?.email}</span>
-					{#if data.user?.emailVerified}
-						<i class="bi bi-envelope-check ml-2 translate-y-[1px]" />
-					{/if}
 				</p>
 			</div>
 
