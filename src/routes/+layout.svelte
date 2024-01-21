@@ -1,6 +1,7 @@
 <script>
 	import { setContext } from 'svelte';
 	import '../app.postcss';
+	import Modaler from '$components/modals/Modaler.svelte';
 
 	export let data;
 
@@ -8,6 +9,7 @@
 </script>
 
 <slot />
+<Modaler />
 
 <style lang="postcss">
 	:global(body) {
