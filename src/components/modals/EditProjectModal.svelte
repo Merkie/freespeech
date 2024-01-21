@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { ActivePage, ActiveProject, hasUnsavedChanges, openModal } from '$ts/client/stores';
+	import { ActiveProject, openModal } from '$ts/client/stores';
 
 	import ModalShell from './ModalShell.svelte';
 
-	let name = $openModal.props.project.name;
-	let columns = $openModal.props.project.columns;
-	let rows = $openModal.props.project.rows;
+	let name = $openModal.props!.project!.name;
+	let columns = $openModal.props!.project!.columns;
+	let rows = $openModal.props!.project!.rows;
 
 	const updateProject = async () => {
 		const responseJson = await fetch(`/api/v1/project/${$ActiveProject?.id}/update`, {
@@ -28,7 +28,7 @@
 	};
 </script>
 
-<ModalShell title="Edit Project">
+<ModalShell title="Edit Project" name="edit-project">
 	<p class="mb-2">Project name:</p>
 	<input bind:value={name} type="text" class="mb-4" />
 	<p class="mb-2">Project Dimensions:</p>
