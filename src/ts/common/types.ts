@@ -52,5 +52,10 @@ export type IModal = {
 		| 'edit-project'
 		| '';
 	key?: string;
-	props?: any;
+	props?: {
+		search?: string;
+		projects?: Project[];
+		project?: Project;
+		page?: TilePage;
+	};
 };
