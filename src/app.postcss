@@ -4,18 +4,30 @@
 @tailwind components;
 @tailwind utilities;
 
-button {
-	@apply cursor-pointer;
+.btn {
+	@apply flex items-center gap-2 rounded-md border;
 }
 
-button:hover {
+.btn:hover {
 	@apply brightness-105;
 }
 
-button:active {
+.btn:active {
 	@apply brightness-100;
 }
 
-button:disabled {
+.btn:disabled {
 	@apply opacity-50;
+}
+
+.btn-neutral {
+	@apply border-zinc-600 bg-zinc-700 text-zinc-50;
+}
+
+.btn-primary {
+	@apply border-blue-500 bg-blue-600 text-blue-50;
+}
+
+.btn-sm {
+	@apply btn px-4 py-2 text-sm;
 }
