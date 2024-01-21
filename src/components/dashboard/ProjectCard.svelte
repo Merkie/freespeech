@@ -1,15 +1,10 @@
 <script lang="ts">
 	import { ActiveProject, Sentence, openModal } from '$ts/client/stores';
 	import type { Project } from '@prisma/client';
-	import { scale } from 'svelte/transition';
-	import { invalidateAll } from '$app/navigation';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
 	import { getContext } from 'svelte';
 
 	export let project: Project;
-	export let editModeOn = false;
-
-	let editProjectModalOpen = false;
 
 	const switchProject = async (id: string) => {
 		$Sentence = [];
@@ -19,17 +14,6 @@
 			return alert(projectData.error);
 		}
 		$ActiveProject = projectData.project;
-	};
-
-	const deleteProject = async (id: string) => {
-		const project = await fetch(`/api/v1/project/${id}/delete/`, {
-			method: 'DELETE'
-		});
-		const projectData = await project.json();
-		if (projectData.error) {
-			return alert(projectData.error);
-		}
-		invalidateAll();
 	};
 </script>
 
