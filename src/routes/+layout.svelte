@@ -1,6 +1,6 @@
 <script>
 	import { setContext } from 'svelte';
-	import '../app.css';
+	import '../app.postcss';
 
 	export let data;
 
