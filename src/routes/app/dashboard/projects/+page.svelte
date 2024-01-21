@@ -7,8 +7,6 @@
 	import { openModal } from '$ts/client/stores';
 	import ProjectCard from '$components/dashboard/ProjectCard.svelte';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
-	import ManageProjectsModal from '$components/modals/ManageProjectsModal.svelte';
-	import CreateProjectModal from '$components/modals/CreateProjectModal.svelte';
 
 	export let data;
 
@@ -29,14 +27,6 @@
 		}
 	}
 </script>
-
-{#if $openModal.name === 'create-project'}
-	<CreateProjectModal />
-{/if}
-
-{#if $openModal.name === 'manage-projects'}
-	<ManageProjectsModal />
-{/if}
 
 <SearchBar query={searchQuery}>
 	<button
