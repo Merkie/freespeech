@@ -1,51 +1,28 @@
 <script lang="ts">
 	import { openModal } from '$ts/client/stores';
-	import { onMount } from 'svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	export let title: string;
+	export let name = '1';
 
-	const closeModal = () => {
+	function closeModal() {
 		$openModal = { name: '' };
-	};
-
-	let visible = false;
-
-	onMount(() => {
-		visible = true;
-	});
+	}
 </script>
 
-{#if visible}
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<main
-		transition:fade={{ duration: 100 }}
-		on:keypress={(e) => {
-			if (e.key === 'Escape') {
-				closeModal();
-			}
-		}}
-		on:click={(e) => {
-			//@ts-ignore
-			if (e.target.tagName === 'MAIN') {
-				closeModal();
-			}
-		}}
-		class="fixed left-0 top-0 z-30 grid h-screen w-screen place-items-center bg-[rgba(0,0,0,0.7)]"
+{#if $openModal.name === name}
+	<div
+		in:fly={{ y: 50, duration: 100 }}
+		class="fixed left-1/2 top-1/2 z-40 flex max-h-[90%] w-[100%] -translate-x-1/2 -translate-y-1/2 flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-2 text-zinc-200 shadow-md sm:w-[90%] sm:max-w-[500px] sm:rounded-md"
 	>
-		<div
-			transition:fly={{ y: 100, duration: 200 }}
-			class="flex max-h-[90%] w-[100%] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-2 text-zinc-200 shadow-md sm:w-[90%] sm:max-w-[500px] sm:rounded-md"
-		>
-			<div class="mb-2 flex items-center gap-2">
-				<button on:click={closeModal}>
-					<i class="bi bi-x" />
-				</button>
-				<p>{title}</p>
-			</div>
-			<div class="flex flex-col p-2">
-				<slot />
-			</div>
+		<div class="mb-2 flex items-center gap-2">
+			<button class="p-2" on:click={closeModal}>
+				<i class="bi bi-x-lg" />
+			</button>
+			<p>{title}</p>
 		</div>
-	</main>
+		<div class="flex flex-col p-2">
+			<slot />
+		</div>
+	</div>
 {/if}
