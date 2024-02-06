@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { ILocalSettings } from '$ts/common/types';
+import type { LocalSettings as LocalSettingsType } from '$ts/common/types';
 import type { TilePage, Tile, Project } from '@prisma/client';
 
 export const isSynthesizingSpeech = writable(false);
@@ -23,12 +23,13 @@ export const ProjectBeingEdited = writable<Project | null>(null);
 
 // Browser-based settings
 
-export const LocalSettings = writable<ILocalSettings>({
+export const LocalSettings = writable<LocalSettingsType>({
 	offlineVoice: '',
 	elevenLabsVoice: 'Rachel',
 	voiceGenerator: 'offline',
 	speakOnTap: true,
-	sentenceBuilder: true
+	sentenceBuilder: true,
+	skinTone: 'medium'
 });
 
 if (browser) {
