@@ -9,10 +9,14 @@ export type IElevenLabsVoice =
 	| 'Arnold'
 	| 'Adam'
 	| 'Sam';
-export type ILocalSettings = {
+
+export type LocalSettings = {
 	offlineVoice: string;
 	elevenLabsVoice: IElevenLabsVoice;
 	voiceGenerator: IVoiceGenerator;
 	speakOnTap: boolean;
 	sentenceBuilder: boolean;
+	skinTone: SkinTone;
 };
+
+export type SkinTone = 'dark' | 'medium-dark' | 'medium' | 'medium-light' | 'light';
