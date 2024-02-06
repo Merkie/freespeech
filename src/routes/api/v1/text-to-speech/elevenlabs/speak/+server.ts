@@ -26,9 +26,9 @@ export const POST = async ({ locals: { user }, request, fetch }) => {
 
 	// Make the request to the Eleven Labs API
 	const response = await fetch(
-		`https://api.elevenlabs.io/v1/text-to-speech/${elVoices.find(
-			(voice: { fsSlug: string }) => voice.fsSlug === body.name
-		)?.voice_id}`,
+		`https://api.elevenlabs.io/v1/text-to-speech/${
+			elVoices.find((voice: { fsSlug: string }) => voice.fsSlug === body.name)?.voice_id
+		}`,
 		{
 			method: 'POST',
 			headers: {

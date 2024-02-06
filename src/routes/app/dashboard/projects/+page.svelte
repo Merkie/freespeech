@@ -2,7 +2,6 @@
 	import ProjectCard from '$components/dashboard/ProjectCard.svelte';
 	import CreateProjectModal from '$components/modals/CreateProjectModal.svelte';
 	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
 	import { fly } from 'svelte/transition';
 	import type { Project } from '@prisma/client';
 	import Fuse from 'fuse.js';
@@ -11,7 +10,8 @@
 	import { writable } from 'svelte/store';
 	import EditProjectsModal from '$components/modals/EditProjectsModal.svelte';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
-	export let data: PageData;
+
+	export let data;
 
 	let searchQuery = writable('');
 	let searchedProjects: Project[] = [];

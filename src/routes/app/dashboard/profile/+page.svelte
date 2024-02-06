@@ -2,10 +2,9 @@
 	import { invalidateAll } from '$app/navigation';
 	import { Loading } from '$ts/client/stores';
 	import { getContext } from 'svelte';
-	import type { PageData } from './$types';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 
-	export let data: PageData;
+	export let data;
 
 	let profileInput: HTMLInputElement;
 

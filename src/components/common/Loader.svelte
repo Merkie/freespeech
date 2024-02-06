@@ -4,7 +4,7 @@
 
 <main
 	transition:fade
-	class="z-40 fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.5)] grid place-items-center"
+	class="fixed left-0 top-0 z-40 grid h-screen w-screen place-items-center bg-[rgba(0,0,0,0.5)]"
 >
 	<div transition:scale class="dot-spinner">
 		<div class="dot-spinner__dot" />
