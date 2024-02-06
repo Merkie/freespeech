@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { ManagingProjects, ProjectBeingEdited } from '$ts/client/stores';
+	import { EditingProjects, ProjectBeingEdited } from '$ts/client/stores';
 
 	import ModalShell from './ModalShell.svelte';
 
@@ -23,7 +23,7 @@
 
 		await invalidateAll();
 		$ProjectBeingEdited = null;
-		$ManagingProjects = true;
+		$EditingProjects = true;
 	};
 </script>
 

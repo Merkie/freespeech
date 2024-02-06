@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { openModal } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 

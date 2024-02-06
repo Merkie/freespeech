@@ -5,10 +5,6 @@
 	export let project: Project;
 </script>
 
-<!-- {#if $openModal.name === 'edit-project'}
-	<EditProjectModal />
-{/if} -->
-
 <div class="relative">
 	<a
 		href={`/app/project/${project.id}`}

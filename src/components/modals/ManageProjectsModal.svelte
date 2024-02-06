@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { ManagingProjects, ProjectBeingEdited } from '$ts/client/stores';
+	import { EditingProjects, ProjectBeingEdited } from '$ts/client/stores';
 	import type { Project } from '@prisma/client';
 	import ModalShell from './ModalShell.svelte';
 
@@ -15,10 +15,10 @@
 	};
 </script>
 
-{#if $ManagingProjects}
+{#if $EditingProjects}
 	<ModalShell
 		closeModal={() => {
-			$ManagingProjects = false;
+			$EditingProjects = false;
 		}}
 		title="Manage Projects"
 	>
@@ -33,7 +33,7 @@
 
 				<button
 					on:click={() => {
-						$ManagingProjects = false;
+						$EditingProjects = false;
 						$ProjectBeingEdited = { ...project };
 					}}
 					class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm">Edit</button

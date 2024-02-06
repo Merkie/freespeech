@@ -1,6 +1,11 @@
 <script lang="ts">
 	// stores
-	import { TileBeingEdited, isEditing, LocalSettings, UsingOnlineSearch } from '$ts/client/stores';
+	import {
+		TileBeingEdited,
+		EditingTiles,
+		LocalSettings,
+		UsingOnlineSearch
+	} from '$ts/client/stores';
 	// components
 	import PageHeader from '$components/app/PageHeader.svelte';
 	import SentenceBuilder from '$components/app/SentenceBuilder.svelte';
@@ -37,12 +42,12 @@
 </script>
 
 <svelte:head>
-	<title>{`${$isEditing ? 'Editing:' : ''} ${data.page.name} | FreeSpeechAAC`}</title>
+	<title>{`${$EditingTiles ? 'Editing:' : ''} ${data.page.name} | FreeSpeechAAC`}</title>
 </svelte:head>
 
 <PageHeader pageName={data.page.name} />
 
-{#if !$isEditing && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
+{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
 
 <div bind:clientHeight={containerHeight} class="relative flex-1 bg-zinc-100">
 	<div

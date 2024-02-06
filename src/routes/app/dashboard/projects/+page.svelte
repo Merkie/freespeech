@@ -6,7 +6,7 @@
 	import { fly } from 'svelte/transition';
 	import type { Project } from '@prisma/client';
 	import Fuse from 'fuse.js';
-	import { AddingProject, ManagingProjects, openModal } from '$ts/client/stores';
+	import { AddingProject, EditingProjects } from '$ts/client/stores';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
 	import ManageProjectsModal from '$components/modals/ManageProjectsModal.svelte';
@@ -19,7 +19,7 @@
 
 	onMount(() => {
 		// Open the create project modal if there are no projects
-		if (data.projects.length === 0) $openModal = { name: 'create-project' };
+		if (data.projects.length === 0) $AddingProject = true;
 	});
 
 	$: {
@@ -45,7 +45,7 @@
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>
 	<button
-		on:click={() => ($ManagingProjects = true)}
+		on:click={() => ($EditingProjects = true)}
 		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-2 px-4 text-sm text-zinc-50 sm:block"
 		><i class="bi bi-gear" /> Manage Projects</button
 	>

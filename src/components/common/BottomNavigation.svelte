@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isEditing, TileBeingEdited } from '$ts/client/stores';
+	import { EditingTiles, TileBeingEdited } from '$ts/client/stores';
 	import { page } from '$app/stores';
 
 	export let noProjects: boolean;
@@ -16,17 +16,17 @@
 			$page.url.pathname.startsWith('/app/') && !$page.url.pathname.startsWith('/app/dashboard')
 				? 'bg-zinc-800'
 				: ''
-		} ${$isEditing ? 'pointer-events-none opacity-50' : ''}`}
+		} ${$EditingTiles ? 'pointer-events-none opacity-50' : ''}`}
 		href={noProjects ? '/app/dashboard' : `/app/project/${projectId}`}
 	>
 		<i class="bi bi-house-fill"></i>
 	</a>
 	<!-- Edit Button -->
-	{#if $isEditing}
+	{#if $EditingTiles}
 		<!-- Editing State -->
 		<button
 			on:click={() => {
-				$isEditing = false;
+				$EditingTiles = false;
 				$TileBeingEdited = null;
 			}}
 			disabled={$page.url.pathname.startsWith('/app/dashboard')}
@@ -38,7 +38,7 @@
 		<!-- Normal State -->
 		<button
 			on:click={() => {
-				$isEditing = true;
+				$EditingTiles = true;
 			}}
 			disabled={$page.url.pathname.startsWith('/app/dashboard')}
 			><i class="bi bi-pencil-fill"></i></button
@@ -49,7 +49,7 @@
 	<a
 		href="/app/dashboard/projects"
 		class={`${$page.url.pathname.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''} ${
-			$isEditing ? 'pointer-events-none opacity-50' : ''
+			$EditingTiles ? 'pointer-events-none opacity-50' : ''
 		}`}><i class="bi bi-gear-fill"></i></a
 	>
 </div>

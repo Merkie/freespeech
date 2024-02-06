@@ -1,6 +1,6 @@
 <script lang="ts">
 	// stores
-	import { isEditing } from '$ts/client/stores';
+	import { EditingTiles } from '$ts/client/stores';
 	// components
 	import TileComponent from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
@@ -48,7 +48,7 @@
 				style={`grid-row: ${tile.y + 1}; grid-column: ${tile.x + 1};`}
 				in:scale={{ delay: Math.random() * 200 }}
 			>
-				{#if tile.navigation && !$isEditing}
+				{#if tile.navigation && !$EditingTiles}
 					<a href={`/app/project/${projectId}/${slugify(tile.navigation).toLowerCase()}`}>
 						<TileComponent {speakText} {tile} />
 					</a>
@@ -57,7 +57,7 @@
 				{/if}
 			</div>
 		{/each}
-		{#if $isEditing}
+		{#if $EditingTiles}
 			{#each unusedCoords as unusedCoord}
 				<AddTileButton {projectId} {pageId} {subpage} {...unusedCoord} />
 			{/each}

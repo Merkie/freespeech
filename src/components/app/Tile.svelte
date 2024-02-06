@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { TileBeingEdited, LocalSettings, isEditing, UsingOnlineSearch } from '$ts/client/stores';
+	import {
+		TileBeingEdited,
+		LocalSettings,
+		EditingTiles,
+		UsingOnlineSearch
+	} from '$ts/client/stores';
 	import type { Tile } from '@prisma/client';
 
 	import { getContext } from 'svelte';
@@ -8,7 +13,7 @@
 	export let speakText: (text: string) => void;
 
 	const handleInteraction = () => {
-		if ($isEditing) {
+		if ($EditingTiles) {
 			$UsingOnlineSearch = false;
 			$TileBeingEdited = { ...tile };
 		} else {

@@ -1,13 +1,13 @@
 <script lang="ts">
 	export let pageName: string;
 
-	import { AddingPage, EditingPages, isEditing } from '$ts/client/stores';
+	import { AddingPage, EditingPages, EditingTiles } from '$ts/client/stores';
 </script>
 
 <div class="relative h-12 bg-zinc-900 p-2 font-light text-zinc-100">
 	<p class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">{pageName}</p>
 
-	{#if $isEditing}
+	{#if $EditingTiles}
 		<div class="absolute left-2 top-1/2 flex -translate-y-1/2 items-center gap-2">
 			<button
 				on:click={() => ($AddingPage = true)}
