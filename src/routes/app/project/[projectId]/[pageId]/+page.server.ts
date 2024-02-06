@@ -11,7 +11,11 @@ export const load = async ({ locals: { prisma, user }, params: { projectId, page
 			tiles: true,
 			Project: {
 				include: {
-					pages: true
+					pages: {
+						orderBy: {
+							updatedAt: 'desc'
+						}
+					}
 				}
 			}
 		}
