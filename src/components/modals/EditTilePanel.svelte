@@ -3,9 +3,10 @@
 	import { getContext } from 'svelte';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
-	import type { Tile } from '@prisma/client';
+	import type { Tile, TilePage } from '@prisma/client';
 
 	export let tiles: Tile[];
+	export let pages: TilePage[];
 
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
@@ -41,7 +42,8 @@
 			$TileBeingEdited.text !== originalTile.text ||
 			$TileBeingEdited.displayText !== originalTile.displayText ||
 			$TileBeingEdited.image !== originalTile.image ||
-			$TileBeingEdited.color !== originalTile.color
+			$TileBeingEdited.color !== originalTile.color ||
+			$TileBeingEdited.navigation !== originalTile.navigation
 		);
 	})();
 </script>
@@ -128,6 +130,19 @@
 		{/each}
 	</div>
 
+	<p class="my-2 mt-6">Navigation:</p>
+	<div>
+		<select
+			class="rounded-md border border-zinc-300 p-1 px-2 text-zinc-800"
+			bind:value={$TileBeingEdited.navigation}
+		>
+			<option value={''}>No Navigation</option>
+			{#each pages as page}
+				<option value={page.id}>{page.name}</option>
+			{/each}
+		</select>
+	</div>
+
 	<button
 		disabled={!changesMade}
 		class="mt-4 flex items-center justify-center gap-2 rounded-md border border-blue-500 bg-blue-600 p-1"
@@ -152,6 +167,11 @@
 
 	<div class="flex-1"></div>
 
+	<div class="my-8 flex flex-col">
+		<div class="h-[1px] bg-zinc-800"></div>
+		<div class="h-[1px] bg-zinc-950"></div>
+	</div>
+
 	<button
 		on:click={async () => {
 			if (!$TileBeingEdited) return;
@@ -161,7 +181,7 @@
 			await invalidateAll();
 			$TileBeingEdited = null;
 		}}
-		class="mt-4 flex items-center justify-center gap-2 rounded-md border border-red-500 bg-red-600 p-1"
+		class="flex items-center justify-center gap-2 rounded-md border border-red-500 bg-red-600 p-1"
 	>
 		<i class="bi bi-trash-fill"></i>
 		Delete Tile

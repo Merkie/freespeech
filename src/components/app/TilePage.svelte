@@ -1,6 +1,6 @@
 <script lang="ts">
 	// stores
-	import { EditingTiles } from '$ts/client/stores';
+	import { EditingTiles, TileBeingEdited } from '$ts/client/stores';
 	// components
 	import TileComponent from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
@@ -49,11 +49,17 @@
 				in:scale={{ delay: Math.random() * 200 }}
 			>
 				{#if tile.navigation && !$EditingTiles}
-					<a href={`/app/project/${projectId}/${slugify(tile.navigation).toLowerCase()}`}>
-						<TileComponent {speakText} {tile} />
+					<a href={`/app/project/${projectId}/${tile.navigation}`}>
+						<TileComponent
+							{speakText}
+							tile={$EditingTiles && $TileBeingEdited?.id === tile.id ? $TileBeingEdited : tile}
+						/>
 					</a>
 				{:else}
-					<TileComponent {speakText} {tile} />
+					<TileComponent
+						{speakText}
+						tile={$EditingTiles && $TileBeingEdited?.id === tile.id ? $TileBeingEdited : tile}
+					/>
 				{/if}
 			</div>
 		{/each}

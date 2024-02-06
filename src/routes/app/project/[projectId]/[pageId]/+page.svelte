@@ -86,7 +86,7 @@
 			{#if $UsingOnlineSearch}
 				<OnlineImageSearchModal />
 			{:else}
-				<EditTilePanel tiles={data.page.tiles} />
+				<EditTilePanel pages={data.page.Project?.pages || []} tiles={data.page.tiles} />
 			{/if}
 		</div>
 	{/if}
