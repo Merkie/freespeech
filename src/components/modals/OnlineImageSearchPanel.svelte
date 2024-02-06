@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Loading, TileBeingEdited, UsingOnlineSearch } from '$ts/client/stores';
+	import { Loading, LocalSettings, TileBeingEdited, UsingOnlineSearch } from '$ts/client/stores';
 	import { scale } from 'svelte/transition';
-	import ImageResize from 'image-resize';
+	// @ts-ignore
 	import { SkinTones } from '$ts/common/opensymbols';
 	import { uploadBlob } from '$ts/client/presigned-uploads';
+	import type { SkinTone } from '$ts/common/types';
 
 	type SearchResult = {
 		image_url: string;
@@ -15,14 +16,8 @@
 	let imageSearchResults: SearchResult[] = [];
 	let searching = false;
 
-	let selectedSearchStrategy = 'bing';
-	let selectedSkinTone = SkinTones[0].pigmentHexValue;
-
-	const imageResize = new ImageResize({
-		format: 'png',
-		width: 800,
-		height: 800
-	});
+	let selectedSearchStrategy: 'bing' | 'open-symbols' = 'bing';
+	$: selectedSkinTone = ($LocalSettings.skinTone || 'medium') as SkinTone;
 
 	const handleUploadFromInternet = async (url: string) => {
 		if (!$TileBeingEdited) return;
@@ -52,14 +47,23 @@
 		const response = await fetch(
 			`/api/v1/media/search/${selectedSearchStrategy}?q=${encodeURIComponent(
 				onlineSearchTerm
-			)}&skin=${encodeURIComponent(
-				SkinTones.find((t) => t.pigmentHexValue === selectedSkinTone)!.name
-			)}`
+			)}&skin=${encodeURIComponent(selectedSkinTone)}`
 		);
 		searching = false;
 		const data = await response.json();
 		if (data.results) imageSearchResults = data.results;
 	};
+
+	const handleSkinToneRefresh = () => {
+		if (selectedSearchStrategy !== 'open-symbols') return;
+		if (imageSearchResults.length === 0) return;
+		searchImages();
+	};
+
+	$: {
+		$LocalSettings.skinTone;
+		handleSkinToneRefresh();
+	}
 </script>
 
 <button
@@ -89,15 +93,15 @@
 {#if selectedSearchStrategy === 'open-symbols'}
 	<div class="item-center flex items-center gap-1 pb-4">
 		<p class="pr-3">Skin tone:</p>
-		{#each SkinTones.map((t) => t.pigmentHexValue) as pigmentHexValue}
+		{#each SkinTones as skinTone}
 			<button
-				on:click={() => (selectedSkinTone = pigmentHexValue)}
+				on:click={() => ($LocalSettings.skinTone = skinTone.name)}
 				class={`h-[40px] flex-1 rounded-sm ${
-					selectedSkinTone === pigmentHexValue
+					selectedSkinTone === skinTone.name
 						? 'scale-90 ring-2 ring-white ring-offset-2 ring-offset-zinc-900'
 						: ''
 				}`}
-				style={`background-color: ${pigmentHexValue}`}
+				style={`background-color: ${skinTone.pigmentHexValue}`}
 			>
 			</button>
 		{/each}
@@ -128,9 +132,14 @@
 	>
 </div>
 
+{#if imageSearchResults.length === 0 && !searching}
+	<p class="mt-8 text-center text-zinc-300">No results found</p>
+{/if}
+
 <div class="mt-2 flex-1 overflow-y-auto">
 	<div class="rows-1 columns-2 gap-4">
-		{#each imageSearchResults as image}
+		<!-- {#key imageSearchResults} -->
+		{#each imageSearchResults as image (image.image_url)}
 			<button
 				in:scale
 				disabled={searching}
@@ -140,6 +149,7 @@
 				<img class="mx-auto" src={image.thumbnail_url} alt={image.alt} />
 			</button>
 		{/each}
+		<!-- {/key} -->
 	</div>
 </div>
 
