@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { openModal } from '$ts/client/stores';
+	import { AddingProject } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
 	let name: string;
@@ -24,47 +24,49 @@
 		}
 
 		await invalidateAll();
-		$openModal = { name: '' };
+		$AddingProject = false;
 	};
 </script>
 
-<ModalShell title="Create Project">
-	<p class="mb-2">Project name:</p>
-	<div class="flex flex-col">
-		<input type="text" name="name" bind:value={name} />
+{#if $AddingProject}
+	<ModalShell closeModal={() => ($AddingProject = false)} title="Create Project">
+		<p class="mb-2">Project name:</p>
+		<div class="flex flex-col">
+			<input type="text" name="name" bind:value={name} />
 
-		{#if showingAdvancedSettings}
-			<p class="my-2">Project Dimensions:</p>
-			<div class="mb-2 flex items-center gap-2">
-				<input
-					bind:value={columns}
-					type="number"
-					class="w-[50%]"
-					name="columns"
-					placeholder="Columns"
-				/>
-				<p>X</p>
-				<input bind:value={rows} type="number" class="w-[50%]" name="rows" placeholder="Rows" />
-			</div>
-			<!-- {#if $errors.columns}
+			{#if showingAdvancedSettings}
+				<p class="my-2">Project Dimensions:</p>
+				<div class="mb-2 flex items-center gap-2">
+					<input
+						bind:value={columns}
+						type="number"
+						class="w-[50%]"
+						name="columns"
+						placeholder="Columns"
+					/>
+					<p>X</p>
+					<input bind:value={rows} type="number" class="w-[50%]" name="rows" placeholder="Rows" />
+				</div>
+				<!-- {#if $errors.columns}
 				<p class="text-sm text-red-500">{$errors.columns}</p>
 			{/if}
 			{#if $errors.rows}
 				<p class="text-sm text-red-500">{$errors.rows}</p>
 			{/if} -->
-		{:else}
+			{:else}
+				<button
+					on:click={() => (showingAdvancedSettings = true)}
+					class="w-fit py-4 text-sm hover:underline">Show advanced settings</button
+				>
+			{/if}
 			<button
-				on:click={() => (showingAdvancedSettings = true)}
-				class="w-fit py-4 text-sm hover:underline">Show advanced settings</button
+				on:click={createProject}
+				type="submit"
+				class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 			>
-		{/if}
-		<button
-			on:click={createProject}
-			type="submit"
-			class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
-		>
-	</div>
-</ModalShell>
+		</div>
+	</ModalShell>
+{/if}
 
 <style lang="postcss">
 	input {

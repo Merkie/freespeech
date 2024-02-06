@@ -6,10 +6,11 @@
 	import { fly } from 'svelte/transition';
 	import type { Project } from '@prisma/client';
 	import Fuse from 'fuse.js';
-	import { openModal } from '$ts/client/stores';
+	import { AddingProject, ManagingProjects, openModal } from '$ts/client/stores';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
 	import ManageProjectsModal from '$components/modals/ManageProjectsModal.svelte';
+	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
 	export let data: PageData;
 
 	let searchQuery = writable('');
@@ -31,22 +32,20 @@
 	}
 </script>
 
-{#if $openModal.name === 'create-project'}
-	<CreateProjectModal />
-{/if}
+<CreateProjectModal />
 
-{#if $openModal.name === 'manage-projects'}
-	<ManageProjectsModal />
-{/if}
+<ManageProjectsModal projects={data.projects} />
+
+<EditProjectModal />
 
 <SearchBar query={searchQuery}>
 	<button
-		on:click={() => ($openModal = { name: 'create-project' })}
+		on:click={() => ($AddingProject = true)}
 		class="hidden rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-sm text-blue-50 sm:block"
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>
 	<button
-		on:click={() => ($openModal = { name: 'manage-projects', props: { projects: data.projects } })}
+		on:click={() => ($ManagingProjects = true)}
 		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-2 px-4 text-sm text-zinc-50 sm:block"
 		><i class="bi bi-gear" /> Manage Projects</button
 	>
@@ -54,7 +53,7 @@
 <div class="m-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 	{#each $searchQuery ? searchedProjects : data.projects as project, index}
 		<div in:fly={{ delay: (index + 1) * 100, y: 10 }}>
-			<ProjectCard {editModeOn} {project} />
+			<ProjectCard {project} />
 		</div>
 	{/each}
 </div>

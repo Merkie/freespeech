@@ -97,14 +97,6 @@
 	</div>
 	<input on:input={handleMediaUpload} type="file" bind:this={fileinput} class="hidden" />
 
-	<!-- <p class="my-2">Navigation:</p> -->
-	<!-- <select bind:value={$TileBeingEdited.navigation}>
-			<option value={''}>None</option>
-			{#each ?.pages.filter((page) => page.name !== $ActivePage) || [] as page}
-				<option value={page.name}>{page.name}</option>
-			{/each}
-		</select> -->
-
 	<p class="my-2 mt-6">Color:</p>
 	<div class="flex flex-wrap gap-2 rounded-md">
 		{#each ['white', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'] as color}
