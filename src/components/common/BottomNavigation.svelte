@@ -1,109 +1,61 @@
 <script lang="ts">
-	import {
-		ActivePage,
-		ActiveProject,
-		hasUnsavedChanges,
-		isEditing,
-		Loading
-	} from '$ts/client/stores';
-	import slugify from '$ts/common/slugify';
+	import { EditingTiles, TileBeingEdited } from '$ts/client/stores';
 	import { page } from '$app/stores';
-	export let noProjects: boolean;
 
-	const saveProjectToDb = async () => {
-		$Loading = true;
-		await fetch(
-			`/api/v1/project/${$ActiveProject?.id}/page/${
-				$ActiveProject?.pages.find((page) => page.name === $ActivePage)?.id
-			}/update`,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					data: $ActiveProject?.pages.find((page) => page.name === $ActivePage)?.data
-				})
-			}
-		);
-		$Loading = false;
-	};
+	export let noProjects: boolean;
+	export let projectId: string;
 </script>
 
 <!-- TODO: This wont display in new versions of safari -->
 <div
 	class="flex gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 text-[25px] font-light text-zinc-100"
 >
-	{#if $isEditing}
-		<!-- Cancel Edits Button -->
-		<button
-			on:click={async () => {
-				// Set isEditing to false to change the ui state
-				$isEditing = false;
-				// If there are no unsaved changes, return
-				if (!$hasUnsavedChanges) return;
-				// Fetch the project from the db to reset the data
-				$Loading = true;
-				const project = await fetch(`/api/v1/project/${$ActiveProject?.id}`);
-				$Loading = false;
-				const projectData = await project.json();
-				// Error handling
-				if (projectData.error) {
-					return alert(projectData.error);
-				}
-				// Set project to the fetched project
-				$ActiveProject = projectData.project;
-				// Set hasUnsavedChanges to false to reset the state
-				$hasUnsavedChanges = false;
-			}}>Cancel</button
-		>
-		<!-- Save Edits Button -->
-		<button
-			on:click={async () => {
-				await saveProjectToDb();
-				$isEditing = false;
-				// Set hasUnsavedChanges to false to reset the state
-				$hasUnsavedChanges = false;
-			}}
-			class="border border-blue-700 bg-blue-600 text-blue-50">Save Changes</button
-		>
-	{:else}
-		<!-- Home button -->
-		<a
-			on:click={async () => {
-				if (!$ActiveProject) return;
-				if ($isEditing) {
-					await saveProjectToDb();
-				}
-				$ActivePage = 'Home';
-				$isEditing = false;
-			}}
-			class={`${
-				$page.url.pathname.startsWith('/app/') && !$page.url.pathname.startsWith('/app/dashboard')
-					? 'bg-zinc-800'
-					: ''
-			} ${$ActiveProject ? '' : 'opacity-50'}`}
-			href={$ActiveProject
-				? `/app/project/${slugify(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
-				: ''}
-		>
-			<i class="bi bi-house-fill"></i>
-		</a>
-		<!-- Edit Button -->
+	<!-- Home button -->
+	<a
+		class={`${
+			$page.url.pathname.startsWith('/app/') && !$page.url.pathname.startsWith('/app/dashboard')
+				? 'bg-zinc-800'
+				: ''
+		} ${
+			$EditingTiles || $page.url.pathname.startsWith('/app/dashboard')
+				? 'pointer-events-none opacity-50'
+				: ''
+		}`}
+		href={noProjects ? '/app/dashboard' : `/app/project/${projectId}`}
+	>
+		<i class="bi bi-house-fill"></i>
+	</a>
+	<!-- Edit Button -->
+	{#if $EditingTiles}
+		<!-- Editing State -->
 		<button
 			on:click={() => {
-				$isEditing = true;
+				$EditingTiles = false;
+				$TileBeingEdited = null;
 			}}
-			disabled={noProjects || $page.url.pathname.startsWith('/app/dashboard')}
+			disabled={$page.url.pathname.startsWith('/app/dashboard')}
+			class="flex items-center justify-center gap-4 border border-zinc-700 bg-zinc-800 text-lg"
+		>
+			<i class="bi bi-check-lg"></i><span>Finish Editing</span></button
+		>
+	{:else}
+		<!-- Normal State -->
+		<button
+			on:click={() => {
+				$EditingTiles = true;
+			}}
+			disabled={$page.url.pathname.startsWith('/app/dashboard')}
 			><i class="bi bi-pencil-fill"></i></button
 		>
-		<!-- Dashboard Button -->
-		<a
-			href="/app/dashboard/projects"
-			class={$page.url.pathname.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''}
-			><i class="bi bi-gear-fill"></i></a
-		>
 	{/if}
+
+	<!-- Dashboard Button -->
+	<a
+		href="/app/dashboard/projects"
+		class={`${$page.url.pathname.startsWith('/app/dashboard') ? 'bg-zinc-800' : ''} ${
+			$EditingTiles ? 'pointer-events-none opacity-50' : ''
+		}`}><i class="bi bi-gear-fill"></i></a
+	>
 </div>
 
 <style lang="postcss">

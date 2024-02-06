@@ -11,49 +11,49 @@
 	/>
 </svelte:head>
 
-<div class="bg-zinc-100 border-b border-zinc-300 fixed top-0 left-0 w-screen z-40">
-	<div class="w-[90%] max-w-[1200px] p-2 flex items-center mx-auto h-[60px]">
+<div class="fixed left-0 top-0 z-40 w-screen border-b border-zinc-300 bg-zinc-100">
+	<div class="mx-auto flex h-[60px] w-[90%] max-w-[1200px] items-center p-2">
 		<img src="/favicon.png" class="mix-blend-multiply" width={40} alt="asdasd" />
-		<p class="font-semibold text-lg">FreeSpeech <span class="font-light text-sm">AAC</span></p>
+		<p class="text-lg font-semibold">FreeSpeech <span class="text-sm font-light">AAC</span></p>
 		<div class="flex-1" />
 		{#if data.user}
 			<a
-				class="bg-blue-600 text-blue-50 px-3 p-1 rounded-md ml-4 border border-blue-600 hover:bg-transparent hover:text-blue-600 transition-all"
-				href="/app">Go to App <i class="bi bi-box-arrow-in-right" /></a
+				class="ml-4 rounded-md border border-blue-600 bg-blue-600 p-1 px-3 text-blue-50 transition-all hover:bg-transparent hover:text-blue-600"
+				href="/app/dashboard">Go to App <i class="bi bi-box-arrow-in-right" /></a
 			>
 		{:else}
 			<a class="hover:underline" href="/login">Login</a>
 			<a
-				class="bg-blue-600 text-blue-50 px-3 p-1 rounded-md ml-4 border border-blue-600 hover:bg-transparent hover:text-blue-600 transition-all"
+				class="ml-4 rounded-md border border-blue-600 bg-blue-600 p-1 px-3 text-blue-50 transition-all hover:bg-transparent hover:text-blue-600"
 				href="/register">Create Account</a
 			>
 		{/if}
 	</div>
 </div>
 
-<main class="min-h-screen bg-zinc-300 flex flex-col mt-[59px]">
+<main class="mt-[59px] flex min-h-screen flex-col bg-zinc-300">
 	<div
-		class="w-[90%] max-w-[1200px] bg-zinc-100 border-x border-zinc-300 flex-1 mx-auto flex flex-col"
+		class="mx-auto flex w-[90%] max-w-[1200px] flex-1 flex-col border-x border-zinc-300 bg-zinc-100"
 	>
 		<!-- hero -->
-		<div class="hero h-[300px] relative">
+		<div class="hero relative h-[300px]">
 			<div
-				class="absolute top-0 left-0 w-full h-full bg-[rgba(255,255,255,0.5)] grid place-items-center"
+				class="absolute left-0 top-0 grid h-full w-full place-items-center bg-[rgba(255,255,255,0.5)]"
 			>
-				<h1 class="text-4xl font-bold text-zinc-800 text-center w-fit">
+				<h1 class="w-fit text-center text-4xl font-bold text-zinc-800">
 					Free and Open-Source AAC <span class="border-b-8 border-blue-500">For Everyone</span>.
 				</h1>
 			</div>
 		</div>
 		<!-- pitch -->
 		<div
-			class="flex sm:flex-row flex-col items-center justify-center gap-8 sm:gap-16 p-8 border-b border-zinc-300"
+			class="flex flex-col items-center justify-center gap-8 border-b border-zinc-300 p-8 sm:flex-row sm:gap-16"
 		>
-			<div class="flex-col items-center justify-center min-w-[160px]">
-				<img class="bg-white shadow-md rounded-lg w-fit" src="/favicon.png" width={150} alt="" />
-				<p class="font-bold text-center mt-4 text-xl">FreeSpeech AAC</p>
+			<div class="min-w-[160px] flex-col items-center justify-center">
+				<img class="w-fit rounded-lg bg-white shadow-md" src="/favicon.png" width={150} alt="" />
+				<p class="mt-4 text-center text-xl font-bold">FreeSpeech AAC</p>
 			</div>
-			<div class="max-w-[500px] flex flex-col gap-2 text-left">
+			<div class="flex max-w-[500px] flex-col gap-2 text-left">
 				<p class="text-xl font-semibold">Turn Tapping into Talking with FreeSpeech AAC</p>
 				<p>
 					Communication goes beyond the power of speech, and FreeSpeech AAC understands this. As a
@@ -66,8 +66,8 @@
 			</div>
 		</div>
 		<!-- features -->
-		<div class="flex flex-col p-8 gap-4 text-lg border-b border-zinc-300">
-			<h1 class="font-bold text-3xl">Features:</h1>
+		<div class="flex flex-col gap-4 border-b border-zinc-300 p-8 text-lg">
+			<h1 class="text-3xl font-bold">Features:</h1>
 			<p>
 				<span class="font-semibold">Free Forever</span> - FreeSpeech AAC will always be free for everyone
 				to use. We do our best to offer premium features such as AI voice generation and file hosting
@@ -124,17 +124,17 @@
 		</div>
 		<!-- Github -->
 		<div
-			class="flex flex-col items-center justify-center p-8 gap-4 text-lg border-b border-zinc-300"
+			class="flex flex-col items-center justify-center gap-4 border-b border-zinc-300 p-8 text-lg"
 		>
 			<a
-				class="bg-zinc-900 border border-zinc-600 text-zinc-50 px-3 p-2 rounded-md"
+				class="rounded-md border border-zinc-600 bg-zinc-900 p-2 px-3 text-zinc-50"
 				href="https://github.com/merkie/freespeech"
 				target="_blank"
 			>
 				<i class="bi bi-github mr-2" />Check out the source code on GitHub!</a
 			>
 			<a
-				class="bg-red-600 border border-red-500 text-red-50 px-3 p-2 rounded-md"
+				class="rounded-md border border-red-500 bg-red-600 p-2 px-3 text-red-50"
 				href="https://github.com/sponsors/Merkie"
 				target="_blank"
 			>

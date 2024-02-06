@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { ActiveProject, Loading } from '$ts/client/stores';
+	import { Loading } from '$ts/client/stores';
 	import { getContext } from 'svelte';
 	import type { PageData } from './$types';
 	import { uploadFile } from '$ts/client/presigned-uploads';
@@ -16,7 +16,6 @@
 
 	const logout = async () => {
 		await fetch('/api/v1/auth/logout');
-		$ActiveProject = null;
 		window.location.assign('/');
 	};
 

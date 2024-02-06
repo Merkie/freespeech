@@ -1,27 +1,31 @@
 <script lang="ts">
-	import { ActivePage, ActiveProject } from '$ts/client/stores';
+	import { invalidateAll } from '$app/navigation';
 
 	export let x: number;
 	export let y: number;
 	export let subpage: number;
 
-	const addTile = () => {
-		if (!$ActiveProject) return;
-		const currentPageIndex = $ActiveProject.pages.findIndex((page) => page.name === $ActivePage);
-		if (currentPageIndex === -1) return;
-		if (!$ActiveProject.pages[currentPageIndex]) return;
+	export let pageId: string;
 
-		($ActiveProject.pages[currentPageIndex].data as unknown as { tiles: any[] }).tiles = [
-			...($ActiveProject.pages[currentPageIndex].data as unknown as { tiles: any[] }).tiles,
-			{ x, y, page: subpage, text: 'New tile' }
-		];
-	};
+	async function handleAddTile() {
+		await fetch(`/api/v1/tile/create`, {
+			method: 'POST',
+			body: JSON.stringify({
+				x,
+				y,
+				page: subpage,
+				pageId
+			})
+		});
+
+		await invalidateAll();
+	}
 </script>
 
 <button
-	on:click={addTile}
 	style={`grid-row: ${y + 1}; grid-column: ${x + 1};`}
-	class={`w-full h-full rounded-md bg-zinc-100 grid place-items-center border border-dashed border-zinc-500 text-zinc-500 text-3xl font-light`}
+	class={`grid h-full w-full place-items-center rounded-md border border-dashed border-zinc-500 bg-zinc-100 text-3xl font-light text-zinc-500`}
+	on:click={handleAddTile}
 >
 	<p>+</p>
 </button>

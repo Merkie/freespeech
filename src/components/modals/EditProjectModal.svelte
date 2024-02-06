@@ -1,55 +1,67 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { ActivePage, ActiveProject, hasUnsavedChanges, openModal } from '$ts/client/stores';
+	import { EditingProjects, ProjectBeingEdited } from '$ts/client/stores';
 
 	import ModalShell from './ModalShell.svelte';
 
-	let name = $openModal.props.project.name;
-	let columns = $openModal.props.project.columns;
-	let rows = $openModal.props.project.rows;
-
 	const updateProject = async () => {
-		const responseJson = await fetch(`/api/v1/project/${$ActiveProject?.id}/update`, {
+		if (!$ProjectBeingEdited) return;
+
+		const responseJson = await fetch(`/api/v1/project/${$ProjectBeingEdited.id}/update`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				name,
-				columns,
-				rows
+				name: $ProjectBeingEdited.name,
+				columns: $ProjectBeingEdited.columns,
+				rows: $ProjectBeingEdited.rows
 			})
 		}).then((res) => res.json());
 
 		if (responseJson.error) return alert(responseJson.error);
 
 		await invalidateAll();
-		$openModal = { name: '' };
+		$ProjectBeingEdited = null;
+		$EditingProjects = true;
 	};
 </script>
 
-<ModalShell title="Edit Project">
-	<p class="mb-2">Project name:</p>
-	<input bind:value={name} type="text" class="mb-4" />
-	<p class="mb-2">Project Dimensions:</p>
-	<div class="mb-2 flex items-center gap-2">
-		<input
-			bind:value={columns}
-			type="number"
-			class="w-[50%]"
-			name="columns"
-			placeholder="Columns"
-		/>
-		<p>X</p>
-		<input bind:value={rows} type="number" class="w-[50%]" name="rows" placeholder="Rows" />
-	</div>
-
-	<button
-		on:click={updateProject}
-		type="submit"
-		class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
+{#if $ProjectBeingEdited}
+	<ModalShell
+		closeModal={() => {
+			$ProjectBeingEdited = null;
+		}}
+		title="Edit Project"
 	>
-</ModalShell>
+		<p class="mb-2">Project name:</p>
+		<input bind:value={$ProjectBeingEdited.name} type="text" class="mb-4" />
+		<p class="mb-2">Project Dimensions:</p>
+		<div class="mb-2 flex items-center gap-2">
+			<input
+				bind:value={$ProjectBeingEdited.columns}
+				type="number"
+				class="w-[50%]"
+				name="columns"
+				placeholder="Columns"
+			/>
+			<p>X</p>
+			<input
+				bind:value={$ProjectBeingEdited.rows}
+				type="number"
+				class="w-[50%]"
+				name="rows"
+				placeholder="Rows"
+			/>
+		</div>
+
+		<button
+			on:click={updateProject}
+			type="submit"
+			class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
+		>
+	</ModalShell>
+{/if}
 
 <style lang="postcss">
 	input {

@@ -1,8 +1,28 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { FullProject, Tile, ILocalSettings, IModal } from '$ts/common/types';
+import type { ILocalSettings } from '$ts/common/types';
+import type { TilePage, Tile, Project } from '@prisma/client';
 
-export const ActiveProject = writable<FullProject | null>(null); // stored
+export const isSynthesizingSpeech = writable(false);
+export const Sentence = writable<Tile[]>([]);
+export const Loading = writable(false);
+
+// Modals & Panels
+
+export const EditingTiles = writable(false);
+export const UsingOnlineSearch = writable(false);
+export const TileBeingEdited = writable<Tile | null>(null);
+
+export const EditingPages = writable(false);
+export const AddingPage = writable(false);
+export const PageBeingEdited = writable<TilePage | null>(null);
+
+export const EditingProjects = writable(false);
+export const AddingProject = writable(false);
+export const ProjectBeingEdited = writable<Project | null>(null);
+
+// Browser-based settings
+
 export const LocalSettings = writable<ILocalSettings>({
 	offlineVoice: '',
 	elevenLabsVoice: 'Rachel',
@@ -10,28 +30,8 @@ export const LocalSettings = writable<ILocalSettings>({
 	speakOnTap: true,
 	sentenceBuilder: true
 });
-export const isSynthesizingSpeech = writable(false);
-export const ActivePage = writable('Home');
-export const Sentence = writable<Tile[]>([]);
-export const Loading = writable(false);
-export const isEditing = writable(false);
-export const hasUnsavedChanges = writable(false);
-export const openModal = writable<IModal>({ name: '' });
 
 if (browser) {
-	// ActiveProject
-	const project = localStorage.getItem('activeProject');
-	if (project) {
-		ActiveProject.set(JSON.parse(project));
-	}
-	ActiveProject.subscribe((value) => {
-		if (value) {
-			localStorage.setItem('activeProject', JSON.stringify(value));
-		} else {
-			localStorage.removeItem('activeProject');
-		}
-	});
-	// LocalSettings
 	const localSettings = localStorage.getItem('localSettings');
 	if (localSettings) {
 		LocalSettings.set(JSON.parse(localSettings));

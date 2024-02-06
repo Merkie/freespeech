@@ -9,7 +9,7 @@ export const load = async ({ locals }) => {
 			userId: locals.user.id
 		},
 		orderBy: {
-			createdAt: 'desc'
+			updatedAt: 'desc'
 		}
 	});
 
