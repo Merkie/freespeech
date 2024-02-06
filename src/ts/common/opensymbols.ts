@@ -1,4 +1,9 @@
-export const SkinTones = [
+import type { SkinTone } from './types';
+
+export const SkinTones: {
+	name: SkinTone;
+	pigmentHexValue: string;
+}[] = [
 	{
 		name: 'dark',
 		pigmentHexValue: '#774837'
