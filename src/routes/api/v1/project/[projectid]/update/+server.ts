@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { z } from 'zod';
 
-export const POST = async ({ params: { projectId }, locals: { prisma, user }, request }) => {
+export const POST = async ({ params: { projectId }, locals: { prisma, user }, request, url }) => {
 	const schema = z.object({
 		name: z.string().min(1).max(255).optional(),
 		columns: z.number().min(1).max(10).optional(),
@@ -15,7 +15,7 @@ export const POST = async ({ params: { projectId }, locals: { prisma, user }, re
 	// Update the project
 	await prisma.project.update({
 		where: {
-			id: projectId,
+			id: projectId || url.pathname.split('project/')[1].split('/delete')[0],
 			userId: user.id
 		},
 		data: body
