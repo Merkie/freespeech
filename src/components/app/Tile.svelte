@@ -50,11 +50,11 @@
 <div class="relative h-full w-full">
 	<button
 		on:click={handleInteraction}
-		class={`h-full w-full overflow-hidden border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
+		class={`absolute left-0 top-0 h-full w-full overflow-hidden border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
 			tile.image ? 'flex flex-col items-center' : 'grid place-items-center'
 		}`}
 	>
-		<p class={`break-spaces text-ellipsis ${!tile.image ? 'text-[2vw]' : 'py-2'}`}>
+		<p class={`text-ellipsis break-all ${!tile.image ? 'text-[2vw]' : 'py-2'}`}>
 			{tile.displayText || tile.text}
 		</p>
 		{#if tile.image}

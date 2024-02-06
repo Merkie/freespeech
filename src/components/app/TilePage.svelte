@@ -65,7 +65,7 @@
 		{/each}
 		{#if $EditingTiles}
 			{#each unusedCoords as unusedCoord}
-				<AddTileButton {projectId} {pageId} {subpage} {...unusedCoord} />
+				<AddTileButton {pageId} {subpage} {...unusedCoord} />
 			{/each}
 		{/if}
 	{/if}
