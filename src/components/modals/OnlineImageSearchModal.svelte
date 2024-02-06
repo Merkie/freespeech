@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { Loading, openModal } from '$ts/client/stores';
+	import { Loading, TileBeingEdited, UsingOnlineSearch } from '$ts/client/stores';
 	import { scale } from 'svelte/transition';
-	import ModalShell from './ModalShell.svelte';
 	import ImageResize from 'image-resize';
 	import { SkinTones } from '$ts/common/opensymbols';
 	import { uploadBlob } from '$ts/client/presigned-uploads';
 
-	export let handleImageChange: (newImage: string) => void;
-	export let handleNavigateBack: () => void;
+	type SearchResult = {
+		image_url: string;
+		thumbnail_url: string;
+		alt: string;
+	};
 
-	let onlineSearchTerm =
-		$openModal.props.search === 'New tile' ? '' : $openModal.props.search || '';
-	let imageSearchResults: { image_url: string; thumbnail_url: string; alt: string }[] = [];
+	let onlineSearchTerm = $TileBeingEdited?.text || '';
+	let imageSearchResults: SearchResult[] = [];
 	let searching = false;
 
 	let selectedSearchStrategy = 'bing';
@@ -24,6 +25,8 @@
 	});
 
 	const handleUploadFromInternet = async (url: string) => {
+		if (!$TileBeingEdited) return;
+
 		const filename = url.split('/').pop() + '';
 
 		const blob = await fetch(`/api/v1/media/fetch-from-url`, {
@@ -38,9 +41,9 @@
 		$Loading = false;
 
 		// Upload the image to the presigned URL
-		handleImageChange(`/${key}`);
 		if (!!key) {
-			// handleNavigateBack();
+			$UsingOnlineSearch = false;
+			$TileBeingEdited.image = `/${key}`;
 		}
 	};
 
@@ -59,67 +62,74 @@
 	};
 </script>
 
-<ModalShell title="Edit Tile">
-	<button on:click={handleNavigateBack} class="mb-2 flex items-center gap-1 text-sm text-zinc-300">
-		<i class="bi bi-arrow-left" />
-		Back
+<button
+	on:click={() => {
+		$UsingOnlineSearch = false;
+	}}
+	class="mb-2 flex items-center gap-1 text-sm text-zinc-300"
+>
+	<i class="bi bi-arrow-left" />
+	Back
+</button>
+
+<div class="flex gap-4 py-4">
+	<button
+		on:click={() => (selectedSearchStrategy = 'bing')}
+		class={selectedSearchStrategy === 'bing' ? 'underline' : ''}
+	>
+		<i class="bi bi-bing mr-1"></i>
+		<span>Bing Images</span>
 	</button>
+	<button
+		on:click={() => (selectedSearchStrategy = 'open-symbols')}
+		class={selectedSearchStrategy === 'open-symbols' ? 'underline' : ''}>Open Symbols</button
+	>
+</div>
 
-	<div class="flex gap-4 py-4">
-		<button
-			on:click={() => (selectedSearchStrategy = 'bing')}
-			class={selectedSearchStrategy === 'bing' ? 'underline' : ''}
-		>
-			<i class="bi bi-bing mr-1"></i>
-			<span>Bing Images</span>
-		</button>
-		<button
-			on:click={() => (selectedSearchStrategy = 'open-symbols')}
-			class={selectedSearchStrategy === 'open-symbols' ? 'underline' : ''}>Open Symbols</button
-		>
+{#if selectedSearchStrategy === 'open-symbols'}
+	<div class="item-center flex items-center gap-1 pb-4">
+		<p class="pr-3">Skin tone:</p>
+		{#each SkinTones.map((t) => t.pigmentHexValue) as pigmentHexValue}
+			<button
+				on:click={() => (selectedSkinTone = pigmentHexValue)}
+				class={`h-[40px] flex-1 rounded-sm ${
+					selectedSkinTone === pigmentHexValue
+						? 'scale-90 ring-2 ring-white ring-offset-2 ring-offset-zinc-900'
+						: ''
+				}`}
+				style={`background-color: ${pigmentHexValue}`}
+			>
+			</button>
+		{/each}
 	</div>
+{/if}
 
-	{#if selectedSearchStrategy === 'open-symbols'}
-		<div class="item-center flex items-center gap-1 pb-4">
-			<p class="pr-3">Skin tone:</p>
-			{#each SkinTones.map((t) => t.pigmentHexValue) as pigmentHexValue}
-				<button
-					on:click={() => (selectedSkinTone = pigmentHexValue)}
-					class={`h-[40px] flex-1 rounded-sm ${
-						selectedSkinTone === pigmentHexValue
-							? 'scale-90 ring-2 ring-white ring-offset-2 ring-offset-zinc-900'
-							: ''
-					}`}
-					style={`background-color: ${pigmentHexValue}`}
-				>
-				</button>
-			{/each}
-		</div>
-	{/if}
-
-	<div class="mb-2 flex items-center gap-2">
-		<div
-			class="flex flex-1 items-center gap-1 rounded-md border border-zinc-300 bg-white px-2 text-zinc-800"
-		>
-			<i class="bi bi-search" />
-			<input
-				type="text"
-				bind:value={onlineSearchTerm}
-				on:keydown={(e) => {
-					if (e.key === 'Enter') searchImages();
-				}}
-				placeholder={`Search for ${
-					selectedSearchStrategy === 'bing' ? 'images with Bing' : 'symbols on Open Symbols'
-				}...`}
-				class="flex-1 border-none outline-none"
-			/>
-		</div>
-		<button on:click={searchImages} class="rounded-md border border-blue-500 bg-blue-600 p-1 px-4"
-			>{searching ? 'Searching...' : 'Search'}</button
-		>
+<div class="mb-2 flex items-center gap-2">
+	<div
+		class="flex flex-1 items-center gap-1 rounded-md border border-zinc-300 bg-white px-2 text-sm text-zinc-800"
+	>
+		<i class="bi bi-search" />
+		<input
+			type="text"
+			bind:value={onlineSearchTerm}
+			on:keydown={(e) => {
+				if (e.key === 'Enter') searchImages();
+			}}
+			placeholder={`Search for ${
+				selectedSearchStrategy === 'bing' ? 'images with Bing' : 'symbols on Open Symbols'
+			}...`}
+			class="w-full border-none outline-none"
+		/>
 	</div>
+	<button
+		on:click={searchImages}
+		class="rounded-md border border-blue-500 bg-blue-600 p-1 px-4 text-sm"
+		>{searching ? 'Searching...' : 'Search'}</button
+	>
+</div>
 
-	<div class="min-h-[300px] columns-2 gap-4">
+<div class="mt-2 flex-1 overflow-y-auto">
+	<div class="rows-1 columns-2 gap-4">
 		{#each imageSearchResults as image}
 			<button
 				in:scale
@@ -131,7 +141,7 @@
 			</button>
 		{/each}
 	</div>
-</ModalShell>
+</div>
 
 <style lang="postcss">
 	input {

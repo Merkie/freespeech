@@ -19,6 +19,7 @@ export const hasUnsavedChanges = writable(false);
 export const openModal = writable<IModal>({ name: '' });
 
 export const TileBeingEdited = writable<Tile | null>(null);
+export const UsingOnlineSearch = writable(false);
 
 if (browser) {
 	// ActiveProject

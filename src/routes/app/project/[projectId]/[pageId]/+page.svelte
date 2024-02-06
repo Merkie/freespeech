@@ -1,12 +1,13 @@
 <script lang="ts">
 	// stores
-	import { TileBeingEdited, isEditing, LocalSettings } from '$ts/client/stores';
+	import { TileBeingEdited, isEditing, LocalSettings, UsingOnlineSearch } from '$ts/client/stores';
 	// components
 	import PageHeader from '$components/app/PageHeader.svelte';
 	import SentenceBuilder from '$components/app/SentenceBuilder.svelte';
 	import TilePage from '$components/app/TilePage.svelte';
 	import type { Tile } from '@prisma/client';
 	import EditTilePanel from '$components/modals/EditTilePanel.svelte';
+	import OnlineImageSearchModal from '$components/modals/OnlineImageSearchModal.svelte';
 
 	export let data;
 
@@ -63,6 +64,15 @@
 		{/if}
 	</div>
 	{#if $TileBeingEdited}
-		<EditTilePanel tiles={data.page.tiles} {containerHeight} />
+		<div
+			class="absolute right-0 top-0 flex w-[350px] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-4 text-zinc-200 shadow-md"
+			style={`height: ${containerHeight}px;`}
+		>
+			{#if $UsingOnlineSearch}
+				<OnlineImageSearchModal />
+			{:else}
+				<EditTilePanel tiles={data.page.tiles} />
+			{/if}
+		</div>
 	{/if}
 </div>
