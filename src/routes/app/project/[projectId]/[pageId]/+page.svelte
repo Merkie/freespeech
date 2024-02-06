@@ -8,6 +8,9 @@
 	import type { Tile } from '@prisma/client';
 	import EditTilePanel from '$components/modals/EditTilePanel.svelte';
 	import OnlineImageSearchModal from '$components/modals/OnlineImageSearchModal.svelte';
+	import EditPagesModal from '$components/modals/EditPagesModal.svelte';
+	import EditPageModal from '$components/modals/EditPageModal.svelte';
+	import CreatePageModal from '$components/modals/CreatePageModal.svelte';
 
 	export let data;
 
@@ -37,7 +40,7 @@
 	<title>{`${$isEditing ? 'Editing:' : ''} ${data.page.name} | FreeSpeechAAC`}</title>
 </svelte:head>
 
-<PageHeader />
+<PageHeader pageName={data.page.name} />
 
 {#if !$isEditing && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
 
@@ -76,3 +79,9 @@
 		</div>
 	{/if}
 </div>
+
+{#if data.page.Project}
+	<EditPagesModal projectId={data.page.Project.id} pages={data.page.Project.pages} />
+	<CreatePageModal projectId={data.page.Project.id} />
+	<EditPageModal projectId={data.page.Project.id} />
+{/if}

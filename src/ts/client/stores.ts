@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { FullProject, Tile, ILocalSettings, IModal } from '$ts/common/types';
+import type { FullProject, ILocalSettings, IModal } from '$ts/common/types';
+import { TilePage, Tile } from '@prisma/client';
 
 export const ActiveProject = writable<FullProject | null>(null); // stored
 export const LocalSettings = writable<ILocalSettings>({
@@ -20,6 +21,10 @@ export const openModal = writable<IModal>({ name: '' });
 
 export const TileBeingEdited = writable<Tile | null>(null);
 export const UsingOnlineSearch = writable(false);
+
+export const EditingPages = writable(false);
+export const AddingPage = writable(false);
+export const PageBeingEdited = writable<TilePage | null>(null);
 
 if (browser) {
 	// ActiveProject
