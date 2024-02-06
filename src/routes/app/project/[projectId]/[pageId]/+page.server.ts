@@ -8,7 +8,8 @@ export const load = async ({ locals: { prisma, user }, params: { projectId, page
 			projectId: projectId
 		},
 		include: {
-			tiles: true
+			tiles: true,
+			Project: true
 		}
 	});
 
