@@ -44,7 +44,7 @@
 	<div
 		class="absolute overflow-auto"
 		style={`height: ${containerHeight}px; width: ${
-			$TileBeingEdited ? 'calc(100% - 400px)' : '100%'
+			$TileBeingEdited ? 'calc(100% - 350px)' : '100%'
 		};`}
 	>
 		{#if containerHeight && data.page.Project}
@@ -63,6 +63,6 @@
 		{/if}
 	</div>
 	{#if $TileBeingEdited}
-		<EditTilePanel {containerHeight} />
+		<EditTilePanel tiles={data.page.tiles} {containerHeight} />
 	{/if}
 </div>
