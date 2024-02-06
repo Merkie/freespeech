@@ -3,8 +3,10 @@
 	import { getContext } from 'svelte';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
+	import type { Tile } from '@prisma/client';
 
 	export let containerHeight: number;
+	export let tiles: Tile[];
 
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
@@ -31,10 +33,22 @@
 		await invalidateAll();
 		$TileBeingEdited = null;
 	}
+
+	$: changesMade = (() => {
+		if (!$TileBeingEdited) return false;
+		const originalTile = tiles.find((tile) => tile.id === $TileBeingEdited!.id);
+		if (!originalTile) return false;
+		return (
+			$TileBeingEdited.text !== originalTile.text ||
+			$TileBeingEdited.displayText !== originalTile.displayText ||
+			$TileBeingEdited.image !== originalTile.image ||
+			$TileBeingEdited.color !== originalTile.color
+		);
+	})();
 </script>
 
 <div
-	class="absolute right-0 top-0 flex w-[400px] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-4 py-8 text-zinc-200 shadow-md"
+	class="absolute right-0 top-0 flex w-[350px] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-4 text-zinc-200 shadow-md"
 	style={`height: ${containerHeight}px;`}
 >
 	{#if $TileBeingEdited}
@@ -50,22 +64,23 @@
 				>Edit display text separately</button
 			>
 		{/if}
-		<p class="my-2">Image:</p>
+		<p class="my-2 mt-6">Image:</p>
 		<div class="flex flex-col gap-2">
 			{#if $TileBeingEdited.image}
-				<img
-					src={`${getContext('media_uri')}${$TileBeingEdited.image}`}
-					width={150}
-					alt="Uploaded media preview"
-				/>
-				<div class="flex items-center gap-2">
+				<div class="relative rounded-sm border border-zinc-700 p-2">
+					<img
+						src={`${getContext('media_uri')}${$TileBeingEdited.image}`}
+						width={150}
+						class="mx-auto rounded-md"
+						alt="Uploaded media preview"
+					/>
 					<button
 						on:click={() => {
 							if ($TileBeingEdited) $TileBeingEdited.image = '';
 						}}
-						class="w-fit rounded-md border border-red-500 bg-red-600 p-1 px-3 text-sm"
+						class="absolute bottom-2 right-4"
 					>
-						<i class="bi bi-trash mr-1" /> Remove Tile Image
+						<i class="bi bi-trash-fill" />
 					</button>
 				</div>
 			{:else}
@@ -84,8 +99,8 @@
 			{/if}
 		</div>
 		<input on:input={handleMediaUpload} type="file" bind:this={fileinput} class="hidden" />
-		<p class="my-2">Navigation:</p>
 
+		<!-- <p class="my-2">Navigation:</p> -->
 		<!-- <select bind:value={$TileBeingEdited.navigation}>
 			<option value={''}>None</option>
 			{#each ?.pages.filter((page) => page.name !== $ActivePage) || [] as page}
@@ -93,7 +108,7 @@
 			{/each}
 		</select> -->
 
-		<p class="my-2">Color:</p>
+		<p class="my-2 mt-6">Color:</p>
 		<div class="flex flex-wrap gap-2 rounded-md">
 			{#each ['white', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'] as color}
 				{#if color === 'white'}
@@ -103,7 +118,7 @@
 							$TileBeingEdited = { ...$TileBeingEdited, color };
 						}}
 						class={`${
-							color === 'white' ? 'ring ring-zinc-50' : ''
+							$TileBeingEdited.color === color ? 'ring ring-zinc-50' : ''
 						} text-md rounded-md border border-zinc-500 bg-zinc-50 p-4 font-medium text-zinc-950 shadow-md`}
 					>
 						Aa
@@ -123,6 +138,31 @@
 				{/if}
 			{/each}
 		</div>
+
+		<button
+			disabled={!changesMade}
+			class="mt-4 flex items-center justify-center gap-2 rounded-md border border-blue-500 bg-blue-600 p-1"
+			on:click={handleSaveChanges}
+		>
+			<i class="bi bi-check-lg" />
+			<span>Save Changes</span>
+		</button>
+
+		<button
+			on:click={() => {
+				let tempId = $TileBeingEdited?.id;
+				$TileBeingEdited = null;
+				const oldTile = tiles.find((tile) => tile.id === tempId);
+				if (oldTile) $TileBeingEdited = oldTile;
+			}}
+			class="mt-4 flex items-center justify-center gap-2 rounded-md border border-zinc-500 bg-zinc-600 p-1"
+		>
+			<i class="bi bi-x-lg" />
+			<span>Cancel Changes</span>
+		</button>
+
+		<div class="flex-1"></div>
+
 		<button
 			on:click={async () => {
 				if (!$TileBeingEdited) return;
@@ -132,21 +172,16 @@
 				await invalidateAll();
 				$TileBeingEdited = null;
 			}}
-			class="mt-4 rounded-md border border-red-500 bg-red-600 p-1"
+			class="mt-4 flex items-center justify-center gap-2 rounded-md border border-red-500 bg-red-600 p-1"
 		>
+			<i class="bi bi-trash-fill"></i>
 			Delete Tile
 		</button>
-
-		<button
-			class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-1"
-			on:click={handleSaveChanges}>Save Changes</button
-		>
 	{/if}
 </div>
 
 <style lang="postcss">
-	input,
-	select {
+	input {
 		@apply rounded-md border border-zinc-300 p-1 px-2 text-zinc-800;
 	}
 </style>
