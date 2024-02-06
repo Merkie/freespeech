@@ -16,6 +16,7 @@
 	import EditPagesModal from '$components/modals/EditPagesModal.svelte';
 	import EditPageModal from '$components/modals/EditPageModal.svelte';
 	import CreatePageModal from '$components/modals/CreatePageModal.svelte';
+	import UnsavedChangesModal from '$components/modals/UnsavedChangesModal.svelte';
 
 	export let data;
 
@@ -95,5 +96,6 @@
 {#if data.page.Project}
 	<EditPagesModal projectId={data.page.Project.id} pages={data.page.Project.pages} />
 	<CreatePageModal projectId={data.page.Project.id} />
-	<EditPageModal projectId={data.page.Project.id} />
+	<EditPageModal />
+	<UnsavedChangesModal />
 {/if}
