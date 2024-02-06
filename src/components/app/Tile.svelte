@@ -3,6 +3,9 @@
 		TileBeingEdited,
 		LocalSettings,
 		EditingTiles,
+		UnsavedChanges,
+		UnsavedChangesHandler,
+		UnsavedChangesModalOpen,
 		UsingOnlineSearch
 	} from '$ts/client/stores';
 	import type { Tile } from '@prisma/client';
@@ -15,7 +18,13 @@
 	const handleInteraction = () => {
 		if ($EditingTiles) {
 			$UsingOnlineSearch = false;
-			$TileBeingEdited = { ...tile };
+
+			if (!$UnsavedChanges) return ($TileBeingEdited = { ...tile });
+
+			$UnsavedChangesHandler = () => {
+				$TileBeingEdited = { ...tile };
+			};
+			$UnsavedChangesModalOpen = true;
 		} else {
 			if ($LocalSettings.speakOnTap) {
 				speakText(tile.text);
