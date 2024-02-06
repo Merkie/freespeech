@@ -9,8 +9,7 @@
 	const deleteProject = async (projectId: string) => {
 		await fetch(`/api/v1/project/${projectId}/delete`, {
 			method: 'DELETE'
-		}).then((res) => res.json());
-
+		});
 		await invalidateAll();
 	};
 </script>
