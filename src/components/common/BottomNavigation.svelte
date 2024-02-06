@@ -1,9 +1,6 @@
 <script lang="ts">
-	import { EditingTiles, TileBeingEdited } from '$ts/client/stores';
+	import { EditingTiles, LocalSettings, TileBeingEdited } from '$ts/client/stores';
 	import { page } from '$app/stores';
-
-	export let noProjects: boolean;
-	export let projectId: string;
 </script>
 
 <!-- TODO: This wont display in new versions of safari -->
@@ -16,15 +13,14 @@
 			$page.url.pathname.startsWith('/app/') && !$page.url.pathname.startsWith('/app/dashboard')
 				? 'bg-zinc-800'
 				: ''
-		} ${
-			$EditingTiles || $page.url.pathname.startsWith('/app/dashboard')
-				? 'pointer-events-none opacity-50'
-				: ''
-		}`}
-		href={noProjects ? '/app/dashboard' : `/app/project/${projectId}`}
+		} ${!$LocalSettings.lastVisitedProjectId ? 'pointer-events-none opacity-50' : ''}`}
+		href={$LocalSettings.lastVisitedProjectId
+			? `/app/project/${$LocalSettings.lastVisitedProjectId}`
+			: ''}
 	>
 		<i class="bi bi-house-fill"></i>
 	</a>
+
 	<!-- Edit Button -->
 	{#if $EditingTiles}
 		<!-- Editing State -->
