@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { EditingTiles, LocalSettings, TileBeingEdited } from '$ts/client/stores';
+	import {
+		EditingTiles,
+		LocalSettings,
+		TileBeingEdited,
+		UnsavedChanges,
+		UsingOnlineSearch,
+		DiscardUnsavedChangesHandler,
+		UnsavedChangesModalOpen
+	} from '$ts/client/stores';
 	import { page } from '$app/stores';
 </script>
 
@@ -26,11 +34,23 @@
 		<!-- Editing State -->
 		<button
 			on:click={() => {
-				$EditingTiles = false;
-				$TileBeingEdited = null;
+				if (!$UnsavedChanges) {
+					$EditingTiles = false;
+					$UsingOnlineSearch = false;
+					$TileBeingEdited = null;
+					$UnsavedChanges = false;
+				} else {
+					$DiscardUnsavedChangesHandler = () => {
+						$EditingTiles = false;
+						$UsingOnlineSearch = false;
+						$TileBeingEdited = null;
+						$UnsavedChanges = false;
+					};
+					$UnsavedChangesModalOpen = true;
+				}
 			}}
 			disabled={$page.url.pathname.startsWith('/app/dashboard')}
-			class="flex items-center justify-center gap-4 border border-zinc-700 bg-zinc-800 text-lg"
+			class="flex items-center justify-center gap-4 border border-blue-500 bg-blue-600 text-lg"
 		>
 			<i class="bi bi-check-lg"></i><span>Finish Editing</span></button
 		>

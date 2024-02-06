@@ -160,6 +160,7 @@
 			if (oldTile) $TileBeingEdited = oldTile;
 		}}
 		class="mt-4 flex items-center justify-center gap-2 rounded-md border border-zinc-500 bg-zinc-600 p-1"
+		disabled={!$UnsavedChanges}
 	>
 		<i class="bi bi-x-lg" />
 		<span>Cancel Changes</span>

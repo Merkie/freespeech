@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { UnsavedChangesHandler, UnsavedChangesModalOpen } from '$ts/client/stores';
+	import { DiscardUnsavedChangesHandler, UnsavedChangesModalOpen } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 </script>
 
@@ -16,9 +16,9 @@
 			>
 			<button
 				on:click={() => {
-					$UnsavedChangesHandler();
+					$DiscardUnsavedChangesHandler();
 					$UnsavedChangesModalOpen = false;
-					$UnsavedChangesHandler = () => {};
+					$DiscardUnsavedChangesHandler = () => {};
 				}}
 				type="submit"
 				class="flex-1 rounded-md border border-red-500 bg-red-600 p-2 text-white"

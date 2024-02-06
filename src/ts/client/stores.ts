@@ -10,7 +10,7 @@ export const Loading = writable(false);
 // Modals & Panels
 
 export const UnsavedChanges = writable(false);
-export const UnsavedChangesHandler = writable<() => void>(() => {});
+export const DiscardUnsavedChangesHandler = writable<() => void>(() => {});
 export const UnsavedChangesModalOpen = writable(false);
 
 export const EditingTiles = writable(false);

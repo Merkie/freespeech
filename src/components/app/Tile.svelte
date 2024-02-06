@@ -4,7 +4,7 @@
 		LocalSettings,
 		EditingTiles,
 		UnsavedChanges,
-		UnsavedChangesHandler,
+		DiscardUnsavedChangesHandler,
 		UnsavedChangesModalOpen,
 		UsingOnlineSearch
 	} from '$ts/client/stores';
@@ -17,14 +17,16 @@
 
 	const handleInteraction = () => {
 		if ($EditingTiles) {
-			$UsingOnlineSearch = false;
-
-			if (!$UnsavedChanges) return ($TileBeingEdited = { ...tile });
-
-			$UnsavedChangesHandler = () => {
+			if (!$UnsavedChanges) {
+				$UsingOnlineSearch = false;
 				$TileBeingEdited = { ...tile };
-			};
-			$UnsavedChangesModalOpen = true;
+			} else {
+				$DiscardUnsavedChangesHandler = () => {
+					$UsingOnlineSearch = false;
+					$TileBeingEdited = { ...tile };
+				};
+				$UnsavedChangesModalOpen = true;
+			}
 		} else {
 			if ($LocalSettings.speakOnTap) {
 				speakText(tile.text);
