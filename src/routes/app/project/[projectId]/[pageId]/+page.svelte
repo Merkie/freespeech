@@ -34,11 +34,18 @@
 		speechSynthesis.speak(utterance);
 	};
 
-	$: organizedTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
-		acc[tile.page] = acc[tile.page] || [];
-		acc[tile.page].push(tile);
-		return acc;
-	}, []) as Tile[][];
+	$: organizedTiles = (() => {
+		const newTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
+			acc[tile.page] = acc[tile.page] || [];
+			acc[tile.page].push(tile);
+
+			return acc;
+		}, []) as Tile[][];
+
+		if ($EditingTiles) newTiles.push([]);
+
+		return newTiles;
+	})();
 </script>
 
 <svelte:head>
