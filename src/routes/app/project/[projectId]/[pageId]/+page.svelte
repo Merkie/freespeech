@@ -24,11 +24,11 @@
 		speechSynthesis.speak(utterance);
 	};
 
-	const organizedTiles: Tile[][] = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
+	const organizedTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
 		acc[tile.page] = acc[tile.page] || [];
 		acc[tile.page].push(tile);
 		return acc;
-	}, []);
+	}, []) as Tile[][];
 </script>
 
 <svelte:head>
@@ -40,9 +40,17 @@
 {#if !$isEditing && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
 
 <div bind:clientHeight={containerHeight} class="flex-1 overflow-auto bg-zinc-100">
-	{#if containerHeight}
+	{#if containerHeight && data.page.Project}
 		{#each organizedTiles as pageTiles, pageIndex}
-			<TilePage {speakText} {containerHeight} subpage={pageIndex} tiles={pageTiles} />
+			<TilePage
+				{speakText}
+				{containerHeight}
+				subpage={pageIndex}
+				tiles={pageTiles}
+				columns={data.page.Project.columns}
+				rows={data.page.Project.rows}
+				projectId={data.page.Project.id}
+			/>
 		{/each}
 	{/if}
 </div>
