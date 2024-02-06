@@ -29,13 +29,14 @@ export const LocalSettings = writable<LocalSettingsType>({
 	voiceGenerator: 'offline',
 	speakOnTap: true,
 	sentenceBuilder: true,
-	skinTone: 'medium'
+	skinTone: 'medium',
+	lastVisitedProjectId: ''
 });
 
 if (browser) {
 	const localSettings = localStorage.getItem('localSettings');
 	if (localSettings) {
-		LocalSettings.set(JSON.parse(localSettings));
+		LocalSettings.set({ ...LocalSettings, ...JSON.parse(localSettings) });
 	}
 	LocalSettings.subscribe((value) => {
 		if (value) {
