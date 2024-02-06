@@ -9,6 +9,10 @@ export const Loading = writable(false);
 
 // Modals & Panels
 
+export const UnsavedChanges = writable(false);
+export const UnsavedChangesHandler = writable<() => void>(() => {});
+export const UnsavedChangesModalOpen = writable(false);
+
 export const EditingTiles = writable(false);
 export const UsingOnlineSearch = writable(false);
 export const TileBeingEdited = writable<Tile | null>(null);
