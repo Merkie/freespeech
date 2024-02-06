@@ -27,45 +27,33 @@ export const POST = async ({ request, locals: { user, prisma } }) => {
 		});
 
 	// Create the project
-	const project = await prisma.project.create({
+	const createdProject = await prisma.project.create({
 		data: {
 			name: body.name,
 			description: '',
 			isPublic: false,
 			columns: body.columns,
 			rows: body.rows,
-			user: {
-				connect: {
-					id: user.id
-				}
-			}
+			userId: user.id
 		}
 	});
 
 	// Create the home page
-	await prisma.tilePage.create({
+	const createdHomePage = await prisma.tilePage.create({
 		data: {
 			name: 'Home',
-			Project: {
-				connect: {
-					id: project.id
-				}
-			},
-			user: {
-				connect: {
-					id: user.id
-				}
-			},
-			data: {
-				tiles: [
-					{
-						page: 0,
-						text: 'New tile',
-						x: 0,
-						y: 0
-					}
-				]
-			}
+			projectId: createdProject.id,
+			userId: user.id
+		}
+	});
+
+	// Create a tile for the home page
+	await prisma.tile.create({
+		data: {
+			tilePageId: createdHomePage.id,
+			page: 0,
+			x: 0,
+			y: 0
 		}
 	});
 

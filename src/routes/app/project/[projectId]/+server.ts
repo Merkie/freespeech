@@ -11,10 +11,10 @@ export const GET = async ({ locals: { prisma, user }, params: { projectId } }) =
 		}
 	});
 
-	if (!project) throw redirect(302, '/app/dashboard');
+	if (!project) throw redirect(307, '/app/dashboard');
 
 	const homePage = project.pages.find((page) => page.name.toLowerCase().trim() === 'home');
-	if (!homePage) throw redirect(302, `/app/project/${projectId}/${project.pages[0].id}`);
+	if (!homePage) throw redirect(307, `/app/project/${projectId}/${project.pages.at(0)?.id}`);
 
-	throw redirect(302, `/app/project/${projectId}/${homePage.id}`);
+	throw redirect(307, `/app/project/${projectId}/${homePage.id}`);
 };

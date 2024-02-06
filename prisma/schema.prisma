@@ -34,7 +34,7 @@ model TilePage {
   projectId String?
 
   name     String
-  data     Json
+  data     Json?
   isPublic Boolean @default(false)
 
   createdAt DateTime @default(now())
