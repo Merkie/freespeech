@@ -16,7 +16,11 @@
 			$page.url.pathname.startsWith('/app/') && !$page.url.pathname.startsWith('/app/dashboard')
 				? 'bg-zinc-800'
 				: ''
-		} ${$EditingTiles ? 'pointer-events-none opacity-50' : ''}`}
+		} ${
+			$EditingTiles || $page.url.pathname.startsWith('/app/dashboard')
+				? 'pointer-events-none opacity-50'
+				: ''
+		}`}
 		href={noProjects ? '/app/dashboard' : `/app/project/${projectId}`}
 	>
 		<i class="bi bi-house-fill"></i>

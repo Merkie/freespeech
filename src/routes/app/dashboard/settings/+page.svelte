@@ -3,11 +3,8 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import Fuse from 'fuse.js';
-	import type { IElevenLabsVoice, IVoiceGenerator } from '$ts/common/types';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
-
-	export let data;
 
 	type SettingType = 'select';
 
@@ -58,37 +55,37 @@
 					};
 				}
 			},
-			{
-				name: 'ElevenLabs Voice',
-				description:
-					'ElevenLabs voices are advanced AI-generated voices that sound extremely realistic. These voices are generated on a remote server and require an internet connection. For more information visit ElevenLabs.io',
-				type: 'select',
-				value:
-					$LocalSettings.elevenLabsVoice ||
-					data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
-				default: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
-				options: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug),
-				onInput: (e: Event) => {
-					$LocalSettings = {
-						...$LocalSettings,
-						elevenLabsVoice: (e.target as HTMLInputElement).value as IElevenLabsVoice
-					};
-				}
-			},
-			{
-				name: 'Voice Generator',
-				description: 'This decides with generator to use when generating voices in the app.',
-				type: 'select',
-				value: $LocalSettings.voiceGenerator || 'offline',
-				default: 'offline',
-				options: ['offline', 'elevenlabs'],
-				onInput: (e: Event) => {
-					$LocalSettings = {
-						...$LocalSettings,
-						voiceGenerator: (e.target as HTMLInputElement).value as IVoiceGenerator
-					};
-				}
-			},
+			// {
+			// 	name: 'ElevenLabs Voice',
+			// 	description:
+			// 		'ElevenLabs voices are advanced AI-generated voices that sound extremely realistic. These voices are generated on a remote server and require an internet connection. For more information visit ElevenLabs.io',
+			// 	type: 'select',
+			// 	value:
+			// 		$LocalSettings.elevenLabsVoice ||
+			// 		data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
+			// 	default: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
+			// 	options: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug),
+			// 	onInput: (e: Event) => {
+			// 		$LocalSettings = {
+			// 			...$LocalSettings,
+			// 			elevenLabsVoice: (e.target as HTMLInputElement).value as IElevenLabsVoice
+			// 		};
+			// 	}
+			// },
+			// {
+			// 	name: 'Voice Generator',
+			// 	description: 'This decides with generator to use when generating voices in the app.',
+			// 	type: 'select',
+			// 	value: $LocalSettings.voiceGenerator || 'offline',
+			// 	default: 'offline',
+			// 	options: ['offline', 'elevenlabs'],
+			// 	onInput: (e: Event) => {
+			// 		$LocalSettings = {
+			// 			...$LocalSettings,
+			// 			voiceGenerator: (e.target as HTMLInputElement).value as IVoiceGenerator
+			// 		};
+			// 	}
+			// },
 			{
 				name: 'Speak on Tile Tap',
 				description: 'When enabled, the app will speak the text when you tap on a tile.',
@@ -131,6 +128,11 @@
 </script>
 
 <SearchBar query={searchQuery} />
+
+<p class="m-4 rounded-md border border-amber-200 bg-amber-100 p-4">
+	Notice: ElevenLabs voices are temporarily disabled, they will be back up in the next 48 hours.
+</p>
+
 {#each $searchQuery ? searchSettings : settings as setting, index}
 	<div in:fly={{ delay: index * 100, y: -10 }} class="border-b border-zinc-300 p-2">
 		<div class="flex items-center gap-2">
