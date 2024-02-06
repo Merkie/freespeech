@@ -1,14 +1,17 @@
 <script lang="ts">
+	import { LocalSettings } from '$ts/client/stores';
 	import type { Project } from '@prisma/client';
 	import { getContext } from 'svelte';
 
 	export let project: Project;
+
+	$: selected = $LocalSettings.lastVisitedProjectId === project.id;
 </script>
 
-<div class="relative">
+<div class={`relative p-4`}>
 	<a
 		href={`/app/project/${project.id}`}
-		class={`relative flex h-full w-full flex-col gap-2 rounded-md border border-zinc-300 bg-zinc-200 p-2`}
+		class={`relative flex h-full w-full flex-col gap-2 rounded-md border border-zinc-300 bg-zinc-200 p-2 ${selected ? 'ring-4 ring-blue-200 ring-offset-4 ring-offset-zinc-100' : ''}`}
 	>
 		<img
 			src={`${getContext('media_uri')}${project.imageUrl}`}
