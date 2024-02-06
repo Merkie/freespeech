@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Loading, TileBeingEdited, UsingOnlineSearch } from '$ts/client/stores';
+	import { Loading, TileBeingEdited, UnsavedChanges, UsingOnlineSearch } from '$ts/client/stores';
 	import { getContext } from 'svelte';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
@@ -34,7 +34,7 @@
 		$TileBeingEdited = null;
 	}
 
-	$: changesMade = (() => {
+	$: $UnsavedChanges = (() => {
 		if (!$TileBeingEdited) return false;
 		const originalTile = tiles.find((tile) => tile.id === $TileBeingEdited!.id);
 		if (!originalTile) return false;
@@ -144,7 +144,7 @@
 	</div>
 
 	<button
-		disabled={!changesMade}
+		disabled={!$UnsavedChanges}
 		class="mt-4 flex items-center justify-center gap-2 rounded-md border border-blue-500 bg-blue-600 p-1"
 		on:click={handleSaveChanges}
 	>
