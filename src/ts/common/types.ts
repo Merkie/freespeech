@@ -17,6 +17,7 @@ export type LocalSettings = {
 	speakOnTap: boolean;
 	sentenceBuilder: boolean;
 	skinTone: SkinTone;
+	lastVisitedProjectId: string;
 };
 
 export type SkinTone = 'dark' | 'medium-dark' | 'medium' | 'medium-light' | 'light';
