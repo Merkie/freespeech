@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 
-export const GET = async ({ params: { projectid }, locals: { prisma, user } }) => {
+export const GET = async ({ params: { projectId }, locals: { prisma, user } }) => {
 	const project = await prisma.project.findUnique({
 		where: {
-			id: projectid
+			id: projectId
 		},
 		include: {
 			pages: true

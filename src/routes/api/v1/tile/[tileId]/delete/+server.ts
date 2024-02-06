@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 
 export const DELETE = async ({ params: { tileId }, locals: { prisma, user } }) => {
-	const tile = await prisma.tile.findUnique({
+	await prisma.tile.delete({
 		where: {
 			id: tileId,
 			TilePage: {
@@ -10,18 +10,7 @@ export const DELETE = async ({ params: { tileId }, locals: { prisma, user } }) =
 		}
 	});
 
-	if (!tile)
-		return json({
-			error: 'Tile not found.'
-		});
-
-	await prisma.tile.delete({
-		where: {
-			id: tile.id
-		}
-	});
-
 	return json({
-		message: 'Tile deleted successfully.'
+		success: true
 	});
 };
