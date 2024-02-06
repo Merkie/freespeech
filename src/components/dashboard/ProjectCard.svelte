@@ -11,15 +11,15 @@
 
 	let editProjectModalOpen = false;
 
-	const switchProject = async (id: string) => {
-		$Sentence = [];
-		const project = await fetch(`/api/v1/project/${id}`);
-		const projectData = await project.json();
-		if (projectData.error) {
-			return alert(projectData.error);
-		}
-		$ActiveProject = projectData.project;
-	};
+	// const switchProject = async (id: string) => {
+	// 	$Sentence = [];
+	// 	const project = await fetch(`/api/v1/project/${id}`);
+	// 	const projectData = await project.json();
+	// 	if (projectData.error) {
+	// 		return alert(projectData.error);
+	// 	}
+	// 	$ActiveProject = projectData.project;
+	// };
 
 	const deleteProject = async (id: string) => {
 		const project = await fetch(`/api/v1/project/${id}/delete/`, {
@@ -38,8 +38,8 @@
 {/if}
 
 <div class="relative">
-	<button
-		on:click={() => switchProject(project.id)}
+	<a
+		href={`/app/project/${project.id}`}
 		class={`relative flex h-full w-full flex-col gap-2 rounded-md border border-zinc-300 bg-zinc-200 p-2 ${
 			$ActiveProject?.id === project.id ? 'ring-2 ring-blue-500' : ''
 		}`}
@@ -53,5 +53,5 @@
 		<p class="w-full text-left text-lg">
 			{project.name}
 		</p>
-	</button>
+	</a>
 </div>

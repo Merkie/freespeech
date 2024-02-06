@@ -26,6 +26,8 @@ model User {
 model TilePage {
   id String @id @default(cuid())
 
+  tiles Tile[]
+
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   Project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -34,6 +36,25 @@ model TilePage {
   name     String
   data     Json
   isPublic Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tile {
+  id String @id @default(cuid())
+
+  TilePage   TilePage @relation(fields: [tilePageId], references: [id], onDelete: Cascade)
+  tilePageId String
+
+  x           Int
+  y           Int
+  page        Int
+  text        String @default("New tile")
+  color       String @default("white")
+  image       String @default("")
+  navigation  String @default("")
+  displayText String @default("")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

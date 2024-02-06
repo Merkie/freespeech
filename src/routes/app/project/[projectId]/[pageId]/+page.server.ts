@@ -1,29 +1,18 @@
 import { ELEVEN_LABS_KEY, SITE_SECRET } from '$env/static/private';
-import slugify from '$ts/common/slugify.js';
 import { redirect } from '@sveltejs/kit';
 import Cryptr from 'cryptr';
 
-export const load = async ({ fetch, locals: { prisma, user }, params }) => {
-	if (!user) throw redirect(302, '/login');
-
-	const projects = await prisma.project.findMany({
+export const load = async ({ fetch, locals: { prisma, user }, params: { projectId, pageId } }) => {
+	const page = await prisma.tilePage.findFirst({
 		where: {
-			userId: user.id
+			id: pageId,
+			userId: user.id,
+			projectId: projectId
 		},
 		include: {
-			pages: true
+			tiles: true
 		}
 	});
-
-	const project = projects.find(
-		(project) => slugify(project.name).toLowerCase() === params.project.toLowerCase()
-	);
-
-	if (!project) throw redirect(302, '/app/dashboard/projects');
-
-	const page = project.pages.find(
-		(page) => slugify(page.name).toLowerCase() === params.page.toLowerCase()
-	);
 
 	if (!page) throw redirect(302, '/app/dashboard/projects');
 
@@ -38,9 +27,7 @@ export const load = async ({ fetch, locals: { prisma, user }, params }) => {
 	}
 
 	return {
-		projects,
-		project,
-		page: page.name,
+		page,
 		elevenLabsVoices: voicesData,
 		elevenLabsApiKey
 	};

@@ -1,21 +1,23 @@
-import type { Project, TilePage as PrismaPage } from '@prisma/client';
+import type { Project, TilePage, Tile as PrismaTile } from '@prisma/client';
 
-export type Tile = {
-	x: number;
-	y: number;
-	text: string;
-	displayText?: string;
-	image?: string;
-	navigation?: string;
-	page?: number;
-	color?: string;
-};
+export type Tile = PrismaTile;
 
-export type TilePage = PrismaPage & {
-	data: {
-		tiles: Tile[];
-	};
-};
+// {
+// 	x: number;
+// 	y: number;
+// 	text: string;
+// 	displayText?: string;
+// 	image?: string;
+// 	navigation?: string;
+// 	page?: number;
+// 	color?: string;
+// };
+
+// export type TilePage = PrismaPage & {
+// 	data: {
+// 		tiles: Tile[];
+// 	};
+// };
 
 export type FullProject = Project & {
 	pages: TilePage[];
