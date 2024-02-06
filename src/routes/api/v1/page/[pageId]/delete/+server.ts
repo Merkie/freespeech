@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 
-export const DELETE = async ({ params: { pageid }, locals: { prisma, user } }) => {
+export const DELETE = async ({ params: { pageId }, locals: { prisma, user } }) => {
 	const page = await prisma.tilePage.findUnique({
 		where: {
-			id: pageid,
+			id: pageId,
 			userId: user.id
 		}
 	});
@@ -15,7 +15,7 @@ export const DELETE = async ({ params: { pageid }, locals: { prisma, user } }) =
 
 	await prisma.tilePage.delete({
 		where: {
-			id: pageid
+			id: pageId
 		}
 	});
 

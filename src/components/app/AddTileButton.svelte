@@ -5,16 +5,16 @@
 	export let y: number;
 	export let subpage: number;
 
-	export let projectId: string;
 	export let pageId: string;
 
 	async function handleAddTile() {
-		await fetch(`/api/v1/project/${projectId}/page/${pageId}/new/tile`, {
+		await fetch(`/api/v1/tile/create`, {
 			method: 'POST',
 			body: JSON.stringify({
 				x,
 				y,
-				page: subpage
+				page: subpage,
+				pageId
 			})
 		});
 

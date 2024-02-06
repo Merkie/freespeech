@@ -1,11 +1,12 @@
 import { json } from '@sveltejs/kit';
 import { z } from 'zod';
 
-export const POST = async ({ params: { pageid }, locals: { prisma, user }, request }) => {
+export const POST = async ({ locals: { prisma, user }, request }) => {
 	const schema = z.object({
 		x: z.number(),
 		y: z.number(),
-		page: z.number()
+		page: z.number(),
+		pageId: z.string()
 	});
 	const body = (await request.json()) as z.infer<typeof schema>;
 
@@ -14,7 +15,7 @@ export const POST = async ({ params: { pageid }, locals: { prisma, user }, reque
 	// Get the page
 	const page = await prisma.tilePage.findUnique({
 		where: {
-			id: pageid,
+			id: body.pageId,
 			userId: user.id
 		},
 		include: {
@@ -35,7 +36,7 @@ export const POST = async ({ params: { pageid }, locals: { prisma, user }, reque
 			x: body.x,
 			y: body.y,
 			page: body.page,
-			tilePageId: pageid
+			tilePageId: body.pageId
 		}
 	});
 

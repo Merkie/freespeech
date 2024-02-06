@@ -11,10 +11,11 @@
 	const createPage = async () => {
 		if (creatingPage) return;
 		creatingPage = true;
-		await fetch(`/api/v1/project/${projectId}/page/create`, {
+		await fetch(`/api/v1/page/create`, {
 			method: 'POST',
 			body: JSON.stringify({
-				name: pageName
+				name: pageName,
+				projectId
 			})
 		});
 		await invalidateAll();

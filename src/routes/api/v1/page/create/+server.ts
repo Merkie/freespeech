@@ -2,9 +2,10 @@ import slugify from '$ts/common/slugify';
 import { json } from '@sveltejs/kit';
 import { z } from 'zod';
 
-export const POST = async ({ params: { projectid }, locals: { prisma, user }, request }) => {
+export const POST = async ({ locals: { prisma, user }, request }) => {
 	const schema = z.object({
-		name: z.string().min(1).max(50)
+		name: z.string().min(1).max(50),
+		projectId: z.string()
 	});
 	const body = (await request.json()) as z.infer<typeof schema>;
 
@@ -13,7 +14,7 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 	// Get the project
 	const project = await prisma.project.findUnique({
 		where: {
-			id: projectid,
+			id: body.projectId,
 			userId: user.id
 		},
 		include: {
@@ -36,7 +37,7 @@ export const POST = async ({ params: { projectid }, locals: { prisma, user }, re
 			name: body.name,
 			Project: {
 				connect: {
-					id: projectid
+					id: body.projectId
 				}
 			},
 			user: {

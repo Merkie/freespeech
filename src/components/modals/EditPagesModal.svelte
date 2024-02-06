@@ -9,7 +9,7 @@
 	export let projectId: string;
 
 	const deletePage = async (pageId: string) => {
-		await fetch(`/api/v1/project/${projectId}/page/${pageId}/delete`, {
+		await fetch(`/api/v1/page/${pageId}/delete`, {
 			method: 'DELETE'
 		}).then((res) => res.json());
 

@@ -12,7 +12,7 @@
 	import TilePage from '$components/app/TilePage.svelte';
 	import type { Tile } from '@prisma/client';
 	import EditTilePanel from '$components/modals/EditTilePanel.svelte';
-	import OnlineImageSearchModal from '$components/modals/OnlineImageSearchModal.svelte';
+	import OnlineImageSearchPanel from '$components/modals/OnlineImageSearchPanel.svelte';
 	import EditPagesModal from '$components/modals/EditPagesModal.svelte';
 	import EditPageModal from '$components/modals/EditPageModal.svelte';
 	import CreatePageModal from '$components/modals/CreatePageModal.svelte';
@@ -84,7 +84,7 @@
 			style={`height: ${containerHeight}px;`}
 		>
 			{#if $UsingOnlineSearch}
-				<OnlineImageSearchModal />
+				<OnlineImageSearchPanel />
 			{:else}
 				<EditTilePanel pages={data.page.Project?.pages || []} tiles={data.page.tiles} />
 			{/if}

@@ -9,7 +9,7 @@
 	import { AddingProject, EditingProjects } from '$ts/client/stores';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
-	import ManageProjectsModal from '$components/modals/ManageProjectsModal.svelte';
+	import EditProjectsModal from '$components/modals/EditProjectsModal.svelte';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
 	export let data: PageData;
 
@@ -34,7 +34,7 @@
 
 <CreateProjectModal />
 
-<ManageProjectsModal projects={data.projects} />
+<EditProjectsModal projects={data.projects} />
 
 <EditProjectModal />
 

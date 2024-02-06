@@ -3,15 +3,10 @@
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
-	export let projectId: string;
-
 	const editPage = async () => {
 		if (!$PageBeingEdited) return;
-		await fetch(`/api/v1/project/${projectId}/page/${$PageBeingEdited.id}/update`, {
+		await fetch(`/api/v1/page/${$PageBeingEdited.id}/update`, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
 			body: JSON.stringify({
 				name: $PageBeingEdited.name
 			})
