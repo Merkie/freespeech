@@ -12,7 +12,7 @@
 					$UnsavedChangesModalOpen = false;
 				}}
 				type="submit"
-				class="flex-1 p-2 text-blue-50">Nevermind</button
+				class="flex-1 p-2 text-blue-50">Keep Editing</button
 			>
 			<button
 				on:click={() => {
