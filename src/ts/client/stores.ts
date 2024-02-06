@@ -18,6 +18,8 @@ export const isEditing = writable(false);
 export const hasUnsavedChanges = writable(false);
 export const openModal = writable<IModal>({ name: '' });
 
+export const TileBeingEdited = writable<Tile | null>(null);
+
 if (browser) {
 	// ActiveProject
 	const project = localStorage.getItem('activeProject');

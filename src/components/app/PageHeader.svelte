@@ -17,7 +17,9 @@
 	<CreatePageModal />
 {/if}
 
-<div class="flex items-center justify-center gap-2 bg-zinc-900 p-2 font-light text-zinc-100">
+<div
+	class="flex h-[100px] items-center justify-center gap-2 bg-zinc-900 p-2 font-light text-zinc-100"
+>
 	<!-- <button class="p-1 px-3 rounded-md bg-zinc-900">
 		<i class="bi bi-arrow-left" />
 	</button> -->

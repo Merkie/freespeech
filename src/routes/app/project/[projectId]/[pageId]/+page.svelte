@@ -1,11 +1,12 @@
 <script lang="ts">
 	// stores
-	import { isEditing, LocalSettings } from '$ts/client/stores';
+	import { TileBeingEdited, isEditing, LocalSettings } from '$ts/client/stores';
 	// components
 	import PageHeader from '$components/app/PageHeader.svelte';
 	import SentenceBuilder from '$components/app/SentenceBuilder.svelte';
 	import TilePage from '$components/app/TilePage.svelte';
 	import type { Tile } from '@prisma/client';
+	import EditTilePanel from '$components/modals/EditTilePanel.svelte';
 
 	export let data;
 
@@ -24,7 +25,7 @@
 		speechSynthesis.speak(utterance);
 	};
 
-	const organizedTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
+	$: organizedTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
 		acc[tile.page] = acc[tile.page] || [];
 		acc[tile.page].push(tile);
 		return acc;
@@ -39,18 +40,29 @@
 
 {#if !$isEditing && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
 
-<div bind:clientHeight={containerHeight} class="flex-1 overflow-auto bg-zinc-100">
-	{#if containerHeight && data.page.Project}
-		{#each organizedTiles as pageTiles, pageIndex}
-			<TilePage
-				{speakText}
-				{containerHeight}
-				subpage={pageIndex}
-				tiles={pageTiles}
-				columns={data.page.Project.columns}
-				rows={data.page.Project.rows}
-				projectId={data.page.Project.id}
-			/>
-		{/each}
+<div bind:clientHeight={containerHeight} class="relative flex-1 bg-zinc-100">
+	<div
+		class="absolute overflow-auto"
+		style={`height: ${containerHeight}px; width: ${
+			$TileBeingEdited ? 'calc(100% - 400px)' : '100%'
+		};`}
+	>
+		{#if containerHeight && data.page.Project}
+			{#each organizedTiles as pageTiles, pageIndex}
+				<TilePage
+					{speakText}
+					{containerHeight}
+					subpage={pageIndex}
+					tiles={pageTiles}
+					columns={data.page.Project.columns}
+					rows={data.page.Project.rows}
+					projectId={data.page.Project.id}
+					pageId={data.page.id}
+				/>
+			{/each}
+		{/if}
+	</div>
+	{#if $TileBeingEdited}
+		<EditTilePanel {containerHeight} />
 	{/if}
 </div>

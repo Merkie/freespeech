@@ -14,6 +14,7 @@
 	export let columns: number;
 	export let rows: number;
 	export let projectId: string;
+	export let pageId: string;
 
 	export let containerHeight: number;
 	export let subpage = 0;
@@ -58,7 +59,7 @@
 		{/each}
 		{#if $isEditing}
 			{#each unusedCoords as unusedCoord}
-				<AddTileButton {...unusedCoord} />
+				<AddTileButton {projectId} {pageId} {subpage} {...unusedCoord} />
 			{/each}
 		{/if}
 	{/if}

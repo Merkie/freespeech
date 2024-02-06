@@ -1,0 +1,152 @@
+<script lang="ts">
+	import { Loading, TileBeingEdited } from '$ts/client/stores';
+	import { getContext } from 'svelte';
+	import { uploadFile } from '$ts/client/presigned-uploads';
+	import { invalidateAll } from '$app/navigation';
+
+	export let containerHeight: number;
+
+	let fileinput: HTMLInputElement;
+	let showingDisplayTextOption = false;
+
+	const handleMediaUpload = async () => {
+		if (!fileinput.files) return;
+		const uploadedFile = fileinput.files[0];
+
+		$Loading = true;
+		const key = await uploadFile(uploadedFile);
+		$Loading = false;
+
+		if (!!key) {
+			$TileBeingEdited!.image = `/${key}`;
+		}
+	};
+
+	async function handleSaveChanges() {
+		if (!$TileBeingEdited) return;
+		await fetch(`/api/v1/tile/${$TileBeingEdited.id}/edit`, {
+			method: 'POST',
+			body: JSON.stringify($TileBeingEdited)
+		});
+		await invalidateAll();
+		$TileBeingEdited = null;
+	}
+</script>
+
+<div
+	class="absolute right-0 top-0 flex w-[400px] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-4 py-8 text-zinc-200 shadow-md"
+	style={`height: ${containerHeight}px;`}
+>
+	{#if $TileBeingEdited}
+		<p class="mb-2">Tile Text:</p>
+		<input type="text" bind:value={$TileBeingEdited.text} />
+		{#if showingDisplayTextOption || $TileBeingEdited.displayText}
+			<p class="my-2">Tile Display Text:</p>
+			<input type="text" value={$TileBeingEdited.displayText} />
+		{:else}
+			<button
+				on:click={() => (showingDisplayTextOption = true)}
+				class="mt-2 text-left text-sm text-zinc-300 hover:underline"
+				>Edit display text separately</button
+			>
+		{/if}
+		<p class="my-2">Image:</p>
+		<div class="flex flex-col gap-2">
+			{#if $TileBeingEdited.image}
+				<img
+					src={`${getContext('media_uri')}${$TileBeingEdited.image}`}
+					width={150}
+					alt="Uploaded media preview"
+				/>
+				<div class="flex items-center gap-2">
+					<button
+						on:click={() => {
+							if ($TileBeingEdited) $TileBeingEdited.image = '';
+						}}
+						class="w-fit rounded-md border border-red-500 bg-red-600 p-1 px-3 text-sm"
+					>
+						<i class="bi bi-trash mr-1" /> Remove Tile Image
+					</button>
+				</div>
+			{:else}
+				<div class="flex flex-wrap gap-2">
+					<button
+						on:click={() => fileinput.click()}
+						class="rounded-md border border-zinc-700 bg-zinc-800 p-1 px-3 text-sm"
+						><i class="bi bi-upload mr-1" /> Upload Image From Device</button
+					>
+					<button
+						on:click={() => {}}
+						class="rounded-md border border-zinc-700 bg-zinc-800 p-1 px-3 text-sm"
+						><i class="bi bi-search" /> Search for Images Online</button
+					>
+				</div>
+			{/if}
+		</div>
+		<input on:input={handleMediaUpload} type="file" bind:this={fileinput} class="hidden" />
+		<p class="my-2">Navigation:</p>
+
+		<!-- <select bind:value={$TileBeingEdited.navigation}>
+			<option value={''}>None</option>
+			{#each ?.pages.filter((page) => page.name !== $ActivePage) || [] as page}
+				<option value={page.name}>{page.name}</option>
+			{/each}
+		</select> -->
+
+		<p class="my-2">Color:</p>
+		<div class="flex flex-wrap gap-2 rounded-md">
+			{#each ['white', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'] as color}
+				{#if color === 'white'}
+					<button
+						on:click={() => {
+							// @ts-ignore
+							$TileBeingEdited = { ...$TileBeingEdited, color };
+						}}
+						class={`${
+							color === 'white' ? 'ring ring-zinc-50' : ''
+						} text-md rounded-md border border-zinc-500 bg-zinc-50 p-4 font-medium text-zinc-950 shadow-md`}
+					>
+						Aa
+					</button>
+				{:else}
+					<button
+						on:click={() => {
+							// @ts-ignore
+							$TileBeingEdited = { ...$TileBeingEdited, color };
+						}}
+						class={`${
+							$TileBeingEdited.color === color ? 'ring ring-zinc-50' : ''
+						}  rounded-md shadow-md bg-${color}-100 text-${color}-950 border border-${color}-500 text-md p-4 font-medium`}
+					>
+						Aa
+					</button>
+				{/if}
+			{/each}
+		</div>
+		<button
+			on:click={async () => {
+				if (!$TileBeingEdited) return;
+				await fetch(`/api/v1/tile/${$TileBeingEdited.id}/delete`, {
+					method: 'DELETE'
+				});
+				await invalidateAll();
+				$TileBeingEdited = null;
+			}}
+			class="mt-4 rounded-md border border-red-500 bg-red-600 p-1"
+		>
+			Delete Tile
+		</button>
+
+		<button
+			class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-1"
+			on:click={handleSaveChanges}>Save Changes</button
+		>
+	{/if}
+</div>
+
+<style lang="postcss">
+	input,
+	select {
+		@apply rounded-md border border-zinc-300 p-1 px-2 text-zinc-800;
+	}
+</style>

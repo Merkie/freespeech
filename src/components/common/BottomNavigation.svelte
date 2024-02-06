@@ -1,33 +1,9 @@
 <script lang="ts">
-	import {
-		ActivePage,
-		ActiveProject,
-		hasUnsavedChanges,
-		isEditing,
-		Loading
-	} from '$ts/client/stores';
-	import slugify from '$ts/common/slugify';
+	import { isEditing, TileBeingEdited } from '$ts/client/stores';
 	import { page } from '$app/stores';
-	export let noProjects: boolean;
 
-	const saveProjectToDb = async () => {
-		$Loading = true;
-		await fetch(
-			`/api/v1/project/${$ActiveProject?.id}/page/${
-				$ActiveProject?.pages.find((page) => page.name === $ActivePage)?.id
-			}/update`,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					data: $ActiveProject?.pages.find((page) => page.name === $ActivePage)?.data
-				})
-			}
-		);
-		$Loading = false;
-	};
+	export let noProjects: boolean;
+	export let projectId: string;
 </script>
 
 <!-- TODO: This wont display in new versions of safari -->
@@ -38,54 +14,27 @@
 		<!-- Cancel Edits Button -->
 		<button
 			on:click={async () => {
-				// Set isEditing to false to change the ui state
 				$isEditing = false;
-				// If there are no unsaved changes, return
-				if (!$hasUnsavedChanges) return;
-				// Fetch the project from the db to reset the data
-				$Loading = true;
-				const project = await fetch(`/api/v1/project/${$ActiveProject?.id}`);
-				$Loading = false;
-				const projectData = await project.json();
-				// Error handling
-				if (projectData.error) {
-					return alert(projectData.error);
-				}
-				// Set project to the fetched project
-				$ActiveProject = projectData.project;
-				// Set hasUnsavedChanges to false to reset the state
-				$hasUnsavedChanges = false;
+				$TileBeingEdited = null;
 			}}>Cancel</button
 		>
 		<!-- Save Edits Button -->
 		<button
 			on:click={async () => {
-				await saveProjectToDb();
 				$isEditing = false;
-				// Set hasUnsavedChanges to false to reset the state
-				$hasUnsavedChanges = false;
+				$TileBeingEdited = null;
 			}}
 			class="border border-blue-700 bg-blue-600 text-blue-50">Save Changes</button
 		>
 	{:else}
 		<!-- Home button -->
 		<a
-			on:click={async () => {
-				if (!$ActiveProject) return;
-				if ($isEditing) {
-					await saveProjectToDb();
-				}
-				$ActivePage = 'Home';
-				$isEditing = false;
-			}}
 			class={`${
 				$page.url.pathname.startsWith('/app/') && !$page.url.pathname.startsWith('/app/dashboard')
 					? 'bg-zinc-800'
 					: ''
-			} ${$ActiveProject ? '' : 'opacity-50'}`}
-			href={$ActiveProject
-				? `/app/project/${slugify(($ActiveProject || { name: '' }).name).toLowerCase()}/home`
-				: ''}
+			}`}
+			href={noProjects ? '/app/dashboard' : `/app/project/${projectId}`}
 		>
 			<i class="bi bi-house-fill"></i>
 		</a>

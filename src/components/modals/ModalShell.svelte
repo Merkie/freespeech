@@ -4,10 +4,7 @@
 	import { fade, fly } from 'svelte/transition';
 
 	export let title: string;
-
-	const closeModal = () => {
-		$openModal = { name: '' };
-	};
+	export let closeModal: () => void;
 
 	let visible = false;
 
