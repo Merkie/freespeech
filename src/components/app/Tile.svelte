@@ -61,11 +61,7 @@
 		</p>
 		{#if tile.image}
 			<div class="relative w-full flex-1">
-				<img
-					src={`${getContext('media_uri')}${tile.image}`}
-					class="absolute h-full w-full object-contain"
-					alt="Tile media"
-				/>
+				<img src={tile.image} class="absolute h-full w-full object-contain" alt="Tile media" />
 			</div>
 		{/if}
 	</button>

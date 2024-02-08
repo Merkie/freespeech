@@ -5,11 +5,12 @@
 	import { fly } from 'svelte/transition';
 	import type { Project } from '@prisma/client';
 	import Fuse from 'fuse.js';
-	import { AddingProject, EditingProjects } from '$ts/client/stores';
+	import { AddingProject, EditingProjects, ImportingProject } from '$ts/client/stores';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
 	import EditProjectsModal from '$components/modals/EditProjectsModal.svelte';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
+	import ImportProjectModal from '$components/modals/ImportProjectModal.svelte';
 
 	export let data;
 
@@ -32,17 +33,16 @@
 	}
 </script>
 
-<CreateProjectModal />
-
-<EditProjectsModal projects={data.projects} />
-
-<EditProjectModal />
-
 <SearchBar query={searchQuery}>
 	<button
 		on:click={() => ($AddingProject = true)}
 		class="hidden rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-sm text-blue-50 sm:block"
 		><i class="bi bi-plus-lg" /> Create New Project</button
+	>
+	<button
+		on:click={() => ($ImportingProject = true)}
+		class="hidden rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-sm text-blue-50 sm:block"
+		><i class="bi bi-cloud-arrow-up" /> Import Project</button
 	>
 	<button
 		on:click={() => ($EditingProjects = true)}
@@ -57,3 +57,8 @@
 		</div>
 	{/each}
 </div>
+
+<CreateProjectModal />
+<EditProjectsModal projects={data.projects} />
+<EditProjectModal />
+<ImportProjectModal />

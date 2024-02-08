@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Loading, TileBeingEdited, UnsavedChanges, UsingOnlineSearch } from '$ts/client/stores';
-	import { getContext } from 'svelte';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
 	import type { Tile, TilePage } from '@prisma/client';
@@ -12,7 +11,7 @@
 	let showingDisplayTextOption = false;
 
 	const handleMediaUpload = async () => {
-		if (!fileinput.files) return;
+		if (!fileinput.files || !$TileBeingEdited) return;
 		const uploadedFile = fileinput.files[0];
 
 		$Loading = true;
@@ -20,7 +19,7 @@
 		$Loading = false;
 
 		if (!!key) {
-			$TileBeingEdited!.image = `/${key}`;
+			$TileBeingEdited.image = `https://media.freespeechaac.com/${key}`;
 		}
 	};
 
@@ -66,7 +65,7 @@
 		{#if $TileBeingEdited.image}
 			<div class="relative rounded-sm border border-zinc-700 p-2">
 				<img
-					src={`${getContext('media_uri')}${$TileBeingEdited.image}`}
+					src={$TileBeingEdited.image}
 					width={150}
 					class="mx-auto rounded-md"
 					alt="Uploaded media preview"

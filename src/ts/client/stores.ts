@@ -25,6 +25,8 @@ export const EditingProjects = writable(false);
 export const AddingProject = writable(false);
 export const ProjectBeingEdited = writable<Project | null>(null);
 
+export const ImportingProject = writable(false);
+
 // Browser-based settings
 
 export const LocalSettings = writable<LocalSettingsType>({

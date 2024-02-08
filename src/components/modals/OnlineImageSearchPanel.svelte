@@ -38,7 +38,7 @@
 		// Upload the image to the presigned URL
 		if (!!key) {
 			$UsingOnlineSearch = false;
-			$TileBeingEdited.image = `/${key}`;
+			$TileBeingEdited.image = `https://media.freespeechaac.com/${key}`;
 		}
 	};
 
