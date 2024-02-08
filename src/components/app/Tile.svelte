@@ -16,14 +16,21 @@
 
 	const handleInteraction = () => {
 		if ($EditingTiles) {
+			// deselect tile
+			if ($TileBeingEdited && $TileBeingEdited.id === tile.id) return ($TileBeingEdited = null);
+
 			if (!$UnsavedChanges) {
+				// reset state
 				$UsingOnlineSearch = false;
 				$TileBeingEdited = { ...tile };
 			} else {
+				// handle unsaved changes
 				$DiscardUnsavedChangesHandler = () => {
 					$UsingOnlineSearch = false;
 					$TileBeingEdited = { ...tile };
 				};
+
+				// open modal
 				$UnsavedChangesModalOpen = true;
 			}
 		} else {
@@ -37,7 +44,9 @@
 	};
 </script>
 
-<div class="relative h-full w-full">
+<div
+	class={`relative h-full w-full transition-opacity ${$EditingTiles && $TileBeingEdited && $TileBeingEdited.id !== tile.id ? 'opacity-40' : ''}`}
+>
 	<button
 		on:click={handleInteraction}
 		style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};`}
