@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { AddingProject, ImportingProject } from '$ts/client/stores';
+	import { ImportingProject } from '$ts/client/stores';
 	import JSZip from 'jszip';
 	import ModalShell from './ModalShell.svelte';
 	import Dropzone from 'svelte-file-dropzone';
 	import type { OBFPage } from '$ts/common/openboardformat';
+	import { invalidateAll } from '$app/navigation';
 
 	let files: {
 		accepted: File[];
@@ -50,6 +51,8 @@
 						method: 'POST',
 						body: JSON.stringify(obfPage)
 					});
+
+					await invalidateAll();
 				};
 			}
 		});
@@ -57,7 +60,7 @@
 </script>
 
 {#if $ImportingProject}
-	<ModalShell closeModal={() => ($AddingProject = false)} title="Import Project">
+	<ModalShell closeModal={() => ($ImportingProject = false)} title="Import Project">
 		<Dropzone accept={['.obz', '.obf']} multiple={false} on:drop={handleFilesSelect} />
 		<ol>
 			{#each files.accepted as item}
