@@ -7,7 +7,8 @@ export const POST = async ({ params: { tileId }, locals: { prisma, user }, reque
 		y: z.number().optional(),
 		page: z.number().optional(),
 		text: z.string().optional(),
-		color: z.string().optional(),
+		backgroundColor: z.string().optional(),
+		borderColor: z.string().optional(),
 		image: z.string().optional(),
 		navigation: z.string().optional(),
 		displayText: z.string().optional()
