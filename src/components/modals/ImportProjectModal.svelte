@@ -33,13 +33,28 @@
 				const manifest = JSON.parse(manifestFile);
 				if (!manifest || !manifest.root) return;
 
-				const rootFile = await obzDirectory.file(manifest.root)?.async('string');
-				if (!rootFile) return;
+				const obfFiles = Object.keys(obzDirectory.files).filter((fileName) =>
+					fileName.endsWith('.obf')
+				);
 
-				const root = JSON.parse(rootFile);
-				if (!root) return;
+				const obfFilesWithContent = await Promise.all(
+					obfFiles.map(async (fileName) => {
+						const file = obzDirectory.file(fileName);
+						if (!file) return;
+						const data = await file.async('string');
+						return { fileName, data: JSON.parse(data) as any };
+					})
+				);
 
-				console.log(root);
+				await fetch('/api/v1/project/import/obz', {
+					method: 'POST',
+					body: JSON.stringify({
+						manifest,
+						obfFiles: obfFilesWithContent
+					})
+				});
+
+				await invalidateAll();
 			} else if (file.name.endsWith('.obf')) {
 				const reader = new FileReader();
 				reader.readAsText(file);

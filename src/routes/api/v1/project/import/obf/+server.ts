@@ -45,6 +45,8 @@ export const POST = async ({ request, locals: { user, prisma } }) => {
 						y: rowIndex,
 						page: 0,
 						text: obfButton.label || '',
+						backgroundColor: obfButton.background_color || '',
+						borderColor: obfButton.border_color || '',
 						image,
 						tilePageId: createdHomepage.id
 					};
