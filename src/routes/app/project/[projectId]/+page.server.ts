@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-export const GET = async ({ locals: { prisma, user }, params: { projectId } }) => {
+export const load = async ({ locals: { prisma, user }, params: { projectId } }) => {
 	const project = await prisma.project.findFirst({
 		where: {
 			id: projectId,
