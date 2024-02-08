@@ -1,13 +1,7 @@
 <script lang="ts">
 	import BottomNavigation from '$components/common/BottomNavigation.svelte';
 	import Loader from '$components/common/Loader.svelte';
-	import { Loading, LocalSettings } from '$ts/client/stores';
-
-	export let data;
-
-	if (data.projectId) {
-		$LocalSettings.lastVisitedProjectId = data.projectId;
-	}
+	import { Loading } from '$ts/client/stores';
 </script>
 
 {#if $Loading}
