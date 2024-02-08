@@ -10,6 +10,41 @@
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
 
+	const tileColors = {
+		white: {
+			background_color: '#fafafa',
+			border_color: '#71717a'
+		},
+		purple: {
+			background_color: '#f3e8ff',
+			border_color: '#a855f7'
+		},
+		yellow: {
+			background_color: '#fef9c3',
+			border_color: '#eab308'
+		},
+		pink: {
+			background_color: '#fce7f3',
+			border_color: '#ec4899'
+		},
+		green: {
+			background_color: '#dcfce7',
+			border_color: '#22c55e'
+		},
+		blue: {
+			background_color: '#dbeafe',
+			border_color: '#3b82f6'
+		},
+		orange: {
+			background_color: '#ffedd5',
+			border_color: '#f97316'
+		},
+		red: {
+			background_color: '#fee2e2',
+			border_color: '#ef4444'
+		}
+	};
+
 	const handleMediaUpload = async () => {
 		if (!fileinput.files || !$TileBeingEdited) return;
 		const uploadedFile = fileinput.files[0];
@@ -33,6 +68,10 @@
 		$TileBeingEdited = null;
 	}
 
+	const getColorFromKey = (color: string) => {
+		return tileColors[color as keyof typeof tileColors];
+	};
+
 	$: $UnsavedChanges = (() => {
 		if (!$TileBeingEdited) return false;
 		const originalTile = tiles.find((tile) => tile.id === $TileBeingEdited!.id);
@@ -41,7 +80,8 @@
 			$TileBeingEdited.text !== originalTile.text ||
 			$TileBeingEdited.displayText !== originalTile.displayText ||
 			$TileBeingEdited.image !== originalTile.image ||
-			$TileBeingEdited.color !== originalTile.color ||
+			$TileBeingEdited.backgroundColor !== originalTile.backgroundColor ||
+			$TileBeingEdited.borderColor !== originalTile.borderColor ||
 			$TileBeingEdited.navigation !== originalTile.navigation
 		);
 	})();
@@ -99,33 +139,28 @@
 	<input on:input={handleMediaUpload} type="file" bind:this={fileinput} class="hidden" />
 
 	<p class="my-2 mt-6">Color:</p>
-	<div class="flex flex-wrap gap-2 rounded-md">
-		{#each ['white', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'] as color}
-			{#if color === 'white'}
-				<button
-					on:click={() => {
-						// @ts-ignore
-						$TileBeingEdited = { ...$TileBeingEdited, color };
-					}}
-					class={`${
-						$TileBeingEdited.color === color ? 'ring ring-zinc-50' : ''
-					} text-md rounded-md border border-zinc-500 bg-zinc-50 p-4 font-medium text-zinc-950 shadow-md`}
-				>
-					Aa
-				</button>
-			{:else}
-				<button
-					on:click={() => {
-						// @ts-ignore
-						$TileBeingEdited = { ...$TileBeingEdited, color };
-					}}
-					class={`${
-						$TileBeingEdited.color === color ? 'ring ring-zinc-50' : ''
-					}  rounded-md shadow-md bg-${color}-100 text-${color}-950 border border-${color}-500 text-md p-4 font-medium`}
-				>
-					Aa
-				</button>
-			{/if}
+	<div class="flex flex-wrap gap-2 rounded-md text-black">
+		{#each Object.keys(tileColors) as colorKey}
+			{@const colorValues = getColorFromKey(colorKey)}
+			<button
+				on:click={() => {
+					// @ts-ignore
+					$TileBeingEdited = {
+						...$TileBeingEdited,
+						backgroundColor: colorValues.background_color,
+						borderColor: colorValues.border_color
+					};
+				}}
+				class={`${
+					$TileBeingEdited.backgroundColor === colorValues.background_color &&
+					$TileBeingEdited.borderColor === colorValues.border_color
+						? 'ring-2 ring-zinc-50'
+						: ''
+				} text-md rounded-md border p-4 font-medium shadow-md`}
+				style={`background-color: ${colorValues.background_color}; border-color: ${colorValues.border_color};`}
+			>
+				Aa
+			</button>
 		{/each}
 	</div>
 

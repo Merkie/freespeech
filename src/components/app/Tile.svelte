@@ -6,7 +6,8 @@
 		UnsavedChanges,
 		DiscardUnsavedChangesHandler,
 		UnsavedChangesModalOpen,
-		UsingOnlineSearch
+		UsingOnlineSearch,
+		Sentence
 	} from '$ts/client/stores';
 	import type { Tile } from '@prisma/client';
 
@@ -31,28 +32,18 @@
 			if ($LocalSettings.speakOnTap) {
 				speakText(tile.text);
 			}
+			if ($LocalSettings.sentenceBuilder) {
+				$Sentence = [...$Sentence, tile];
+			}
 		}
 	};
-
-	// Define variables for the background color, text color, and border color
-	let bgColorClass: string;
-	let textColorClass: string;
-	let borderColorClass: string;
-
-	$: {
-		bgColorClass =
-			tile.color === 'white'
-				? 'bg-white'
-				: `bg-${tile.color}-${tile.color === 'zinc' ? '50' : '100'}`;
-		textColorClass = tile.color === 'white' ? 'text-zinc-950' : `text-${tile.color}-950`;
-		borderColorClass = tile.color === 'white' ? 'border-zinc-500' : `border-${tile.color}-500`;
-	}
 </script>
 
 <div class="relative h-full w-full">
 	<button
 		on:click={handleInteraction}
-		class={`absolute left-0 top-0 h-full w-full overflow-hidden border ${bgColorClass} ${textColorClass} ${borderColorClass} rounded-md ${
+		style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};`}
+		class={`absolute left-0 top-0 h-full w-full overflow-hidden rounded-md border ${
 			tile.image ? 'flex flex-col items-center' : 'grid place-items-center'
 		}`}
 	>
@@ -67,7 +58,8 @@
 	</button>
 	{#if tile.navigation}
 		<div
-			class={`absolute -top-1 left-0 h-[10px] rounded-t-md border border-b-0 ${bgColorClass} ${textColorClass} ${borderColorClass} w-[50%]`}
+			style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};`}
+			class={`absolute -top-1 left-0 h-[10px] w-[50%] rounded-t-md border border-b-0`}
 		/>
 	{/if}
 </div>
