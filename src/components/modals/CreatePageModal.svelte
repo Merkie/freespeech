@@ -33,16 +33,6 @@
 		}}
 		title="Create Page"
 	>
-		<button
-			on:click={() => {
-				$AddingPage = false;
-				$EditingPages = true;
-			}}
-			class="mb-2 flex items-center gap-1 text-sm text-zinc-300"
-		>
-			<i class="bi bi-arrow-left" />
-			Back
-		</button>
 		<p class="mb-2">Page Name:</p>
 		<input bind:value={pageName} type="text" />
 		<button
