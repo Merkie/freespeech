@@ -49,8 +49,6 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 				tiles: [
 					{
 						page: 0,
-						text: 'New tile',
-						color: 'white',
 						x: 0,
 						y: 0
 					}
