@@ -2,22 +2,7 @@
 	import SynthesisLoader from './SynthesisLoader.svelte';
 	import { Sentence, isSynthesizingSpeech } from '$ts/client/stores';
 	import { fade, scale } from 'svelte/transition';
-	import { getContext } from 'svelte';
 	export let speakText: (text: string) => void;
-
-	const getColorClasses = (color: string | undefined): string => {
-		if (!color) return '';
-		let bgColorClass: string;
-		let textColorClass: string;
-		let borderColorClass: string;
-
-		bgColorClass =
-			color === 'white' ? 'bg-white' : `bg-${color}-${color === 'zinc' ? '50' : '100'}`;
-		textColorClass = color === 'white' ? 'text-zinc-950' : `text-${color}-950`;
-		borderColorClass = color === 'white' ? 'border-zinc-500' : `border-${color}-500`;
-
-		return `${bgColorClass} ${textColorClass} ${borderColorClass}`;
-	};
 </script>
 
 <div
@@ -40,9 +25,8 @@
 					$Sentence = $Sentence.filter((_, i) => i !== index);
 				}}
 				transition:scale={{ duration: 100 }}
-				class={`h-[70px] w-fit min-w-[100px] border p-1 ${getColorClasses(
-					tile.color
-				)} flex flex-col items-center overflow-hidden rounded-md ${
+				style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};`}
+				class={`flex h-[70px] w-fit min-w-[100px] flex-col items-center overflow-hidden rounded-md border p-1 ${
 					!tile.image ? 'justify-center' : ''
 				}`}
 			>
