@@ -17,10 +17,15 @@
 	import EditPageModal from '$components/modals/EditPageModal.svelte';
 	import CreatePageModal from '$components/modals/CreatePageModal.svelte';
 	import UnsavedChangesModal from '$components/modals/UnsavedChangesModal.svelte';
+	import { onMount } from 'svelte';
+	import * as htmlToImage from 'html-to-image';
+	import { uploadFile } from '$ts/client/presigned-uploads.js';
+	import { invalidateAll } from '$app/navigation';
 
 	export let data;
 
 	let containerHeight: number; // Needed for CSS tricks
+	let containerElement: HTMLElement;
 
 	const speakText = async (text: string) => {
 		if (text.trim() === '') return;
@@ -47,6 +52,40 @@
 
 		return newTiles;
 	})();
+
+	onMount(() => {
+		const captureContainer = async () => {
+			// allow page to render
+			await new Promise((resolve) => setTimeout(resolve, 500));
+
+			const dataUrl = await htmlToImage.toPng(containerElement, {
+				quality: 1
+			});
+
+			// Convert data URL to Blob
+			const response = await fetch(dataUrl);
+			const blob = await response.blob();
+
+			const file = new File([blob], `${data.page.name}.png`, { type: 'image/png' });
+			const key = await uploadFile(file);
+
+			await fetch(`/api/v1/project/${data.projectId}/update`, {
+				method: 'POST',
+				body: JSON.stringify({
+					imageUrl: `/${key}`
+				})
+			});
+			await invalidateAll();
+		};
+
+		// if the project hasn't been updated in the last 5 minutes, update the image
+		if (
+			data.page.Project?.updatedAt &&
+			Date.now() - new Date(data.page.Project.updatedAt).getTime() > 5 * 60 * 1000
+		) {
+			captureContainer();
+		}
+	});
 </script>
 
 <svelte:head>
@@ -57,7 +96,11 @@
 
 {#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
 
-<div bind:clientHeight={containerHeight} class="relative flex-1 bg-zinc-100">
+<div
+	bind:this={containerElement}
+	bind:clientHeight={containerHeight}
+	class="relative flex-1 bg-zinc-100"
+>
 	<div
 		class="absolute overflow-auto"
 		style={`height: ${containerHeight}px; width: ${
