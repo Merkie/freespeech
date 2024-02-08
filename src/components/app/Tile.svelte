@@ -11,8 +11,6 @@
 	} from '$ts/client/stores';
 	import type { Tile } from '@prisma/client';
 
-	import { getContext } from 'svelte';
-
 	export let tile: Tile;
 	export let speakText: (text: string) => void;
 
@@ -32,7 +30,7 @@
 			if ($LocalSettings.speakOnTap) {
 				speakText(tile.text);
 			}
-			if ($LocalSettings.sentenceBuilder) {
+			if ($LocalSettings.sentenceBuilder && !tile.navigation) {
 				$Sentence = [...$Sentence, tile];
 			}
 		}
