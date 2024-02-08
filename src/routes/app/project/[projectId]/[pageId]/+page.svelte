@@ -54,6 +54,8 @@
 	})();
 
 	onMount(() => {
+		if (data.projectId) $LocalSettings.lastVisitedProjectId = data.projectId;
+
 		const captureContainer = async () => {
 			// allow page to render
 			await new Promise((resolve) => setTimeout(resolve, 500));
@@ -75,6 +77,7 @@
 					imageUrl: `/${key}`
 				})
 			});
+
 			await invalidateAll();
 		};
 
