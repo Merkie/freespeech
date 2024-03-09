@@ -1,10 +1,13 @@
 <script lang="ts">
+	export let data;
+
 	import { LocalSettings } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import Fuse from 'fuse.js';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';
 	import { writable } from 'svelte/store';
+	import type { ElevenLabsVoice, VoiceGenerator } from '$ts/common/types.js';
 
 	type SettingType = 'select';
 
@@ -23,6 +26,16 @@
 	let visible = false;
 	let searchQuery = writable('');
 	let searchSettings: Setting[] = [];
+
+	function formatName(voice: ElevenLabsVoice) {
+		const descriptors = [voice.age, voice.accent, voice.gender]
+			.filter(Boolean)
+			.map((word) => `${word.at(0)?.toUpperCase() + word.slice(1)}`.replaceAll(' ', '-'))
+			.join(' ')
+			.trim();
+
+		return `[${descriptors}] ${voice.name}`;
+	}
 
 	onMount(() => {
 		visible = true;
@@ -55,37 +68,42 @@
 					};
 				}
 			},
-			// {
-			// 	name: 'ElevenLabs Voice',
-			// 	description:
-			// 		'ElevenLabs voices are advanced AI-generated voices that sound extremely realistic. These voices are generated on a remote server and require an internet connection. For more information visit ElevenLabs.io',
-			// 	type: 'select',
-			// 	value:
-			// 		$LocalSettings.elevenLabsVoice ||
-			// 		data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
-			// 	default: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
-			// 	options: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug),
-			// 	onInput: (e: Event) => {
-			// 		$LocalSettings = {
-			// 			...$LocalSettings,
-			// 			elevenLabsVoice: (e.target as HTMLInputElement).value as IElevenLabsVoice
-			// 		};
-			// 	}
-			// },
-			// {
-			// 	name: 'Voice Generator',
-			// 	description: 'This decides with generator to use when generating voices in the app.',
-			// 	type: 'select',
-			// 	value: $LocalSettings.voiceGenerator || 'offline',
-			// 	default: 'offline',
-			// 	options: ['offline', 'elevenlabs'],
-			// 	onInput: (e: Event) => {
-			// 		$LocalSettings = {
-			// 			...$LocalSettings,
-			// 			voiceGenerator: (e.target as HTMLInputElement).value as IVoiceGenerator
-			// 		};
-			// 	}
-			// },
+			{
+				name: 'ElevenLabs Voice',
+				description:
+					'ElevenLabs voices are advanced AI-generated voices that sound extremely realistic. These voices are generated on a remote server and require an internet connection. For more information visit ElevenLabs.io',
+				type: 'select',
+				value: formatName(
+					data.voices.find((voice) => voice.voice_id === $LocalSettings.elevenLabsVoice) ||
+						data.voices[0]
+				),
+				default: formatName(data.voices[0]),
+				options: data.voices.map((voice) => formatName(voice)).sort(),
+				onInput: (e: Event) => {
+					const voiceId = data.voices.find(
+						(voice) => formatName(voice) === (e.target as HTMLInputElement).value
+					)?.voice_id;
+
+					$LocalSettings = {
+						...$LocalSettings,
+						elevenLabsVoice: voiceId || ''
+					};
+				}
+			},
+			{
+				name: 'Voice Generator',
+				description: 'This decides with generator to use when generating voices in the app.',
+				type: 'select',
+				value: $LocalSettings.voiceGenerator || 'offline',
+				default: 'offline',
+				options: ['offline', 'elevenlabs'],
+				onInput: (e: Event) => {
+					$LocalSettings = {
+						...$LocalSettings,
+						voiceGenerator: (e.target as HTMLInputElement).value as VoiceGenerator
+					};
+				}
+			},
 			{
 				name: 'Speak on Tile Tap',
 				description: 'When enabled, the app will speak the text when you tap on a tile.',

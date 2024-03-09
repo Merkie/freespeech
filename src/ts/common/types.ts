@@ -1,19 +1,19 @@
-export type IVoiceGenerator = 'elevenlabs' | 'offline';
-export type IElevenLabsVoice =
-	| 'Rachel'
-	| 'Domi'
-	| 'Bella'
-	| 'Antoni'
-	| 'Elli'
-	| 'Josh'
-	| 'Arnold'
-	| 'Adam'
-	| 'Sam';
+export type VoiceGenerator = 'elevenlabs' | 'offline';
+
+export type ElevenLabsVoice = {
+	voice_id: string;
+	name: string;
+	premade: boolean;
+	accent: string;
+	description: string;
+	age: string;
+	gender: string;
+};
 
 export type LocalSettings = {
 	offlineVoice: string;
-	elevenLabsVoice: IElevenLabsVoice;
-	voiceGenerator: IVoiceGenerator;
+	elevenLabsVoice: string;
+	voiceGenerator: VoiceGenerator;
 	speakOnTap: boolean;
 	sentenceBuilder: boolean;
 	skinTone: SkinTone;
