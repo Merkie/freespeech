@@ -1,7 +1,12 @@
 <script lang="ts">
+	export let data;
+
 	import BottomNavigation from '$components/common/BottomNavigation.svelte';
 	import Loader from '$components/common/Loader.svelte';
 	import { Loading } from '$ts/client/stores';
+	import { setContext } from 'svelte';
+
+	setContext('ELEVEN_LABS_ENDPOINT', data.ELEVEN_LABS_ENDPOINT);
 </script>
 
 {#if $Loading}
