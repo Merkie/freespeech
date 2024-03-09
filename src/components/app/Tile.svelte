@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Speak from '$ts/client/speak';
 	import {
 		TileBeingEdited,
 		LocalSettings,
@@ -10,11 +11,13 @@
 		Sentence
 	} from '$ts/client/stores';
 	import type { Tile } from '@prisma/client';
+	import { getContext } from 'svelte';
 
 	export let tile: Tile;
-	export let speakText: (text: string) => void;
 
-	const handleInteraction = () => {
+	const ELEVEN_LABS_ENDPOINT = getContext('ELEVEN_LABS_ENDPOINT');
+
+	const handleInteraction = async () => {
 		if ($EditingTiles) {
 			// deselect tile
 			if ($TileBeingEdited && $TileBeingEdited.id === tile.id) return ($TileBeingEdited = null);
@@ -34,11 +37,15 @@
 				$UnsavedChangesModalOpen = true;
 			}
 		} else {
-			if ($LocalSettings.speakOnTap) {
-				speakText(tile.text);
-			}
 			if ($LocalSettings.sentenceBuilder && !tile.navigation) {
 				$Sentence = [...$Sentence, tile];
+			}
+			if ($LocalSettings.speakOnTap) {
+				await Speak({
+					settings: $LocalSettings,
+					text: tile.text,
+					elevenlabsEndpoint: ELEVEN_LABS_ENDPOINT + ''
+				});
 			}
 		}
 	};
