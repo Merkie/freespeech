@@ -1,8 +1,11 @@
 <script lang="ts">
 	import SynthesisLoader from './SynthesisLoader.svelte';
-	import { Sentence, isSynthesizingSpeech } from '$ts/client/stores';
+	import { LocalSettings, Sentence, isSynthesizingSpeech } from '$ts/client/stores';
 	import { fade, scale } from 'svelte/transition';
-	export let speakText: (text: string) => void;
+	import Speak from '$ts/client/speak';
+	import { getContext } from 'svelte';
+
+	const ELEVEN_LABS_ENDPOINT = getContext('ELEVEN_LABS_ENDPOINT');
 </script>
 
 <div
@@ -41,7 +44,12 @@
 	</div>
 	<div class="flex h-full items-center gap-2">
 		<button
-			on:click={() => speakText($Sentence.map((tile) => tile.text).join(' '))}
+			on:click={async () =>
+				await Speak({
+					settings: $LocalSettings,
+					text: $Sentence.map((tile) => tile.text).join(' '),
+					elevenlabsEndpoint: ELEVEN_LABS_ENDPOINT + ''
+				})}
 			class="grid h-[80px] w-[80px] place-items-center rounded-md bg-blue-500 text-blue-50"
 		>
 			<i class="bi bi-volume-up-fill text-4xl" />
