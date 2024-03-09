@@ -60,7 +60,7 @@
 				type: 'select',
 				value: $LocalSettings.offlineVoice || offlineBrowserVoices[0],
 				default: offlineBrowserVoices[0],
-				options: offlineBrowserVoices,
+				options: offlineBrowserVoices.sort(),
 				onInput: (e: Event) => {
 					$LocalSettings = {
 						...$LocalSettings,
