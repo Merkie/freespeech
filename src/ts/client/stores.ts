@@ -27,6 +27,7 @@ export const ProjectBeingEdited = writable<Project | null>(null);
 
 export const ImportingProject = writable(false);
 
+export const EnableThirdPartyVoiceProviders = writable(false);
 export const ElevenLabsVoiceId = writable<string | null>(null);
 export const OfflineVoiceUri = writable<string | null>(null);
 
@@ -57,6 +58,16 @@ if (browser) {
 		} else {
 			localStorage.removeItem('offlineVoiceUri');
 		}
+	});
+
+	const enableThirdPartyVoiceProviders = localStorage.getItem('enableThirdPartyVoiceProviders');
+
+	if (enableThirdPartyVoiceProviders) {
+		EnableThirdPartyVoiceProviders.set(enableThirdPartyVoiceProviders === 'true');
+	}
+
+	EnableThirdPartyVoiceProviders.subscribe((value) => {
+		localStorage.setItem('enableThirdPartyVoiceProviders', value.toString());
 	});
 }
 
