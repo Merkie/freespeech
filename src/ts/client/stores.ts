@@ -27,6 +27,39 @@ export const ProjectBeingEdited = writable<Project | null>(null);
 
 export const ImportingProject = writable(false);
 
+export const ElevenLabsVoiceId = writable<string | null>(null);
+export const OfflineVoiceUri = writable<string | null>(null);
+
+if (browser) {
+	const elevenLabsVoiceId = localStorage.getItem('elevenLabsVoiceId');
+
+	if (elevenLabsVoiceId) {
+		ElevenLabsVoiceId.set(elevenLabsVoiceId);
+	}
+
+	ElevenLabsVoiceId.subscribe((value) => {
+		if (value) {
+			localStorage.setItem('elevenLabsVoiceId', value);
+		} else {
+			localStorage.removeItem('elevenLabsVoiceId');
+		}
+	});
+
+	const offlineVoiceUri = localStorage.getItem('offlineVoiceUri');
+
+	if (offlineVoiceUri) {
+		OfflineVoiceUri.set(offlineVoiceUri);
+	}
+
+	OfflineVoiceUri.subscribe((value) => {
+		if (value) {
+			localStorage.setItem('offlineVoiceUri', value);
+		} else {
+			localStorage.removeItem('offlineVoiceUri');
+		}
+	});
+}
+
 // Browser-based settings
 
 export const LocalSettings = writable<LocalSettingsType>({
