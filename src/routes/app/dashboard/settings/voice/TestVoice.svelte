@@ -5,7 +5,7 @@
 	let voiceTestText = 'This is what your voice will sound like inside the application.';
 </script>
 
-<div class="mt-4 flex flex-col gap-12">
+<div class="mt-4 flex flex-col gap-4">
 	<p class="text-3xl text-zinc-800">Test voice:</p>
 	<div class="flex items-center gap-4">
 		<button
