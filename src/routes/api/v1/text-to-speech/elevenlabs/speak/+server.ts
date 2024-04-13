@@ -14,6 +14,16 @@ export const POST = async ({ locals: { user }, request, fetch }) => {
 
 	const userKey = DecryptElevenLabsKey(user.elevenLabsApiKey);
 
+	if (user.usePersonalElevenLabsKey && !userKey)
+		return json(
+			{
+				error: 'User has enabled personal Eleven Labs API key but it is not set'
+			},
+			{
+				status: 403
+			}
+		);
+
 	const startTime = Date.now();
 
 	// Make the request to the Eleven Labs API
