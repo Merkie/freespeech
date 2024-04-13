@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { UsePersonalElevenLabsKey } from '$ts/client/stores';
 
 	export let apiKey: string;
@@ -7,10 +8,13 @@
 	let showKey = false;
 
 	$: {
-		fetch('/api/v1/user/update', {
-			method: 'POST',
-			body: JSON.stringify({ elevenLabsApiKey })
-		});
+		(async () => {
+			await fetch('/api/v1/user/update', {
+				method: 'POST',
+				body: JSON.stringify({ elevenLabsApiKey })
+			});
+			await invalidateAll();
+		})();
 	}
 </script>
 
