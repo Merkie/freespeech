@@ -12,14 +12,15 @@
 			on:click={() => {
 				speakText(voiceTestText);
 			}}
-			disabled={$VoiceEngineStatus !== 'ready'}
-			class="flex w-96 items-center justify-center gap-2 rounded-md bg-blue-600 p-4 text-lg font-semibold text-white shadow-sm"
+			disabled={!['ready', 'failed'].includes($VoiceEngineStatus)}
+			class={`flex w-96 items-center justify-center gap-2 rounded-md p-4 text-lg font-semibold text-white shadow-sm ${$VoiceEngineStatus === 'failed' ? 'bg-red-500' : 'bg-blue-600'}`}
 			><i class="bi bi-volume-up text-xl"></i><span
 				>{(() => {
 					const opts = {
 						ready: 'Speak',
-						synthesizing: 'Synthesizing Speech...',
-						speaking: 'Speaking...'
+						synthesizing: 'Synthesizing speech...',
+						speaking: 'Speaking...',
+						failed: 'Voice engine failed'
 					};
 					return opts[$VoiceEngineStatus];
 				})()}</span
