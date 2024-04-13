@@ -4,7 +4,8 @@
 		TileBeingEdited,
 		EditingTiles,
 		LocalSettings,
-		UsingOnlineSearch
+		UsingOnlineSearch,
+		ElevenLabsVoiceId
 	} from '$ts/client/stores';
 	// components
 	import PageHeader from '$components/app/PageHeader.svelte';
@@ -27,18 +28,16 @@
 	let containerHeight: number; // Needed for CSS tricks
 	let containerElement: HTMLElement;
 
-	const speakText = async (text: string) => {
-		if (text.trim() === '') return;
+	// if (text.trim() === '') return;
 
-		const utterance = new SpeechSynthesisUtterance(text);
-		if ($LocalSettings.offlineVoice) {
-			utterance.voice =
-				speechSynthesis.getVoices().find((voice) => voice.name === $LocalSettings.offlineVoice) ||
-				null;
-		}
-		utterance.lang = 'en-US';
-		speechSynthesis.speak(utterance);
-	};
+	// const utterance = new SpeechSynthesisUtterance(text);
+	// if ($LocalSettings.offlineVoice) {
+	// 	utterance.voice =
+	// 		speechSynthesis.getVoices().find((voice) => voice.name === $LocalSettings.offlineVoice) ||
+	// 		null;
+	// }
+	// utterance.lang = 'en-US';
+	// speechSynthesis.speak(utterance);
 
 	$: organizedTiles = (() => {
 		const newTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
@@ -97,7 +96,7 @@
 
 <PageHeader pageName={data.page.name} />
 
-{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
+{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder />{/if}
 
 <div
 	bind:this={containerElement}
@@ -113,7 +112,6 @@
 		{#if containerHeight && data.page.Project}
 			{#each organizedTiles as pageTiles, pageIndex}
 				<TilePage
-					{speakText}
 					{containerHeight}
 					subpage={pageIndex}
 					tiles={pageTiles}

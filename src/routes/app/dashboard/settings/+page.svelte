@@ -1,167 +1,94 @@
-<script lang="ts">
-	import { LocalSettings } from '$ts/client/stores';
-	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
-	import Fuse from 'fuse.js';
-	import SearchBar from '$components/dashboard/SearchBar.svelte';
-	import { writable } from 'svelte/store';
+<div class="flex flex-col gap-8 p-8 pb-6 pt-14">
+	<p class="text-5xl text-zinc-800">Application Settings</p>
+</div>
 
-	type SettingType = 'select';
-
-	type Setting = {
-		name: string;
-		description: string;
-		type: SettingType;
-		value: string;
-		default: string;
-		onInput: (e: Event) => void;
-		options?: string[];
-	};
-
-	let offlineBrowserVoices: string[] = [];
-	let settings: Setting[];
-	let visible = false;
-	let searchQuery = writable('');
-	let searchSettings: Setting[] = [];
-
-	onMount(() => {
-		visible = true;
-
-		// Get the offline voices
-		offlineBrowserVoices = speechSynthesis.getVoices().map((voice) => voice.name);
-		if (offlineBrowserVoices.length === 0) {
-			return new Promise((resolve) => {
-				speechSynthesis.onvoiceschanged = () => {
-					offlineBrowserVoices = speechSynthesis.getVoices().map((voice) => voice.name);
-					resolve(null);
-				};
-			});
-		}
-	});
-
-	$: {
-		settings = [
-			{
-				name: 'Offline Voice',
-				description: `The offline voice is generated on your device without the need for an internet connection, however you are limited to what is natively supported on your device's browser.`,
-				type: 'select',
-				value: $LocalSettings.offlineVoice || offlineBrowserVoices[0],
-				default: offlineBrowserVoices[0],
-				options: offlineBrowserVoices,
-				onInput: (e: Event) => {
-					$LocalSettings = {
-						...$LocalSettings,
-						offlineVoice: (e.target as HTMLInputElement).value
-					};
-				}
-			},
-			// {
-			// 	name: 'ElevenLabs Voice',
-			// 	description:
-			// 		'ElevenLabs voices are advanced AI-generated voices that sound extremely realistic. These voices are generated on a remote server and require an internet connection. For more information visit ElevenLabs.io',
-			// 	type: 'select',
-			// 	value:
-			// 		$LocalSettings.elevenLabsVoice ||
-			// 		data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
-			// 	default: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug)[0],
-			// 	options: data.elevenLabsVoices.map((voice: { fsSlug: string }) => voice.fsSlug),
-			// 	onInput: (e: Event) => {
-			// 		$LocalSettings = {
-			// 			...$LocalSettings,
-			// 			elevenLabsVoice: (e.target as HTMLInputElement).value as IElevenLabsVoice
-			// 		};
-			// 	}
-			// },
-			// {
-			// 	name: 'Voice Generator',
-			// 	description: 'This decides with generator to use when generating voices in the app.',
-			// 	type: 'select',
-			// 	value: $LocalSettings.voiceGenerator || 'offline',
-			// 	default: 'offline',
-			// 	options: ['offline', 'elevenlabs'],
-			// 	onInput: (e: Event) => {
-			// 		$LocalSettings = {
-			// 			...$LocalSettings,
-			// 			voiceGenerator: (e.target as HTMLInputElement).value as IVoiceGenerator
-			// 		};
-			// 	}
-			// },
-			{
-				name: 'Speak on Tile Tap',
-				description: 'When enabled, the app will speak the text when you tap on a tile.',
-				type: 'select',
-				value: $LocalSettings.speakOnTap ? 'enabled' : 'disabled',
-				default: 'enabled',
-				options: ['disabled', 'enabled'],
-				onInput: (e: Event) => {
-					$LocalSettings = {
-						...$LocalSettings,
-						speakOnTap: (e.target as HTMLInputElement).value === 'enabled'
-					};
-				}
-			},
-			{
-				name: 'Sentence Builder',
-				description: 'When enabled, you will be able to build sentences in the tile grid.',
-				type: 'select',
-				value: $LocalSettings.sentenceBuilder ? 'enabled' : 'disabled',
-				default: 'enabled',
-				options: ['disabled', 'enabled'],
-				onInput: (e: Event) => {
-					$LocalSettings = {
-						...$LocalSettings,
-						sentenceBuilder: (e.target as HTMLInputElement).value === 'enabled'
-					};
-				}
-			}
-		];
-	}
-
-	$: {
-		if ($searchQuery) {
-			const fuse = new Fuse(settings, {
-				keys: ['name', 'description']
-			});
-			searchSettings = fuse.search($searchQuery).map((result) => result.item);
-		}
-	}
-</script>
-
-<SearchBar query={searchQuery} />
-
-<p class="m-4 rounded-md border border-amber-200 bg-amber-100 p-4">
-	Notice: ElevenLabs voices are temporarily disabled, they will be back up in the next 48 hours.
-</p>
-
-{#each $searchQuery ? searchSettings : settings as setting, index}
-	<div in:fly={{ delay: index * 100, y: -10 }} class="border-b border-zinc-300 p-2">
-		<div class="flex items-center gap-2">
-			<p class="">{setting.name}{': '}</p>
-			{#if setting.type === 'select' && setting.options}
-				<select
-					bind:value={setting.value}
-					on:input={setting.onInput}
-					class="flex-1 rounded-md border border-zinc-300 bg-zinc-200 p-2 outline-none"
-				>
-					{#each setting.options as option}
-						<option value={option}>{option}</option>
-					{/each}
-				</select>
-			{/if}
-		</div>
-
-		<p class="pt-2 text-sm">
-			{setting.description}
-			{#if setting.value !== setting.default}
-				<button
-					on:click={() => {
-						// @ts-ignore
-						setting.onInput({ target: { value: setting.default } });
-					}}
-					class="m-2 rounded-md border border-zinc-300 bg-zinc-200 p-1 text-xs"
-					><i class="bi bi-arrow-clockwise" /> Reset to default</button
-				>
-			{/if}
-		</p>
+<div class="flex flex-col gap-8 p-8 pb-[200px]">
+	<div class="flex flex-col gap-8 md:flex-row">
+		<a
+			href="/app/dashboard/profile"
+			class="group flex flex-1 items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 transition-all hover:border-pink-200 hover:bg-pink-50"
+		>
+			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-pink-100">
+				<i class="bi bi-person-circle text-[40px] text-pink-500"></i>
+			</div>
+			<span class="text-3xl text-zinc-800 transition-all group-hover:text-pink-500">Account</span>
+			<div class="flex-1"></div>
+			<i
+				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-pink-500"
+			></i>
+		</a>
+		<a
+			href="/app/dashboard/settings/voice"
+			class="group flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 transition-all hover:border-blue-200 hover:bg-blue-50"
+		>
+			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-blue-100">
+				<i class="bi bi-volume-up-fill text-[40px] text-blue-500"></i>
+			</div>
+			<span class="text-3xl text-zinc-800 transition-all group-hover:text-blue-500">Voice</span>
+			<div class="flex-1"></div>
+			<i
+				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-blue-500"
+			></i>
+		</a>
 	</div>
-{/each}
+	<div class="flex flex-col gap-8 md:flex-row">
+		<a
+			href="/app/dashboard/settings/"
+			class="group pointer-events-none flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 opacity-50 grayscale transition-all hover:border-orange-200 hover:bg-orange-50"
+		>
+			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-orange-100">
+				<i class="bi bi-people-fill text-[40px] text-orange-500"></i>
+			</div>
+			<span class="text-3xl text-zinc-800 transition-all group-hover:text-orange-500">Sharing</span>
+			<div class="flex-1"></div>
+			<i
+				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-orange-500"
+			></i>
+		</a>
+		<a
+			href="/app/dashboard/settings/"
+			class="group pointer-events-none flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 opacity-50 grayscale transition-all hover:border-green-200 hover:bg-green-50"
+		>
+			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-green-100">
+				<i class="bi bi-bar-chart-fill text-[40px] text-green-500"></i>
+			</div>
+			<span class="text-3xl text-zinc-800 transition-all group-hover:text-green-500">Usage</span>
+			<div class="flex-1"></div>
+			<i
+				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-green-500"
+			></i>
+		</a>
+	</div>
+	<div class="flex flex-col gap-8 md:flex-row">
+		<a
+			href="/app/dashboard/settings/"
+			class="group pointer-events-none flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 opacity-50 grayscale transition-all hover:border-amber-200 hover:bg-amber-50"
+		>
+			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-amber-100">
+				<i class="bi bi-lock-fill text-[40px] text-amber-500"></i>
+			</div>
+			<span class="text-3xl text-zinc-800 transition-all group-hover:text-amber-500"
+				>Access Controls</span
+			>
+			<div class="flex-1"></div>
+			<i
+				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-amber-500"
+			></i>
+		</a>
+		<a
+			href="/app/dashboard/settings/"
+			class="group pointer-events-none flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 opacity-50 grayscale transition-all hover:border-purple-200 hover:bg-purple-50"
+		>
+			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-purple-100">
+				<i class="bi bi-palette-fill text-[40px] text-purple-500"></i>
+			</div>
+			<span class="text-3xl text-zinc-800 transition-all group-hover:text-purple-500"
+				>Appearance</span
+			>
+			<div class="flex-1"></div>
+			<i
+				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-purple-500"
+			></i>
+		</a>
+	</div>
+</div>

@@ -1,53 +1,51 @@
-import { ELEVEN_LABS_KEY, SITE_SECRET } from '$env/static/private';
+import { ELEVEN_LABS_KEY } from '$env/static/private';
 import { z } from 'zod';
 import { json } from '@sveltejs/kit';
-import Cryptr from 'cryptr';
+import { DecryptElevenLabsKey } from '$ts/server/decrypt-key';
+
+const schema = z.object({
+	voiceId: z.string().min(1),
+	text: z.string().min(1).max(1500)
+});
 
 export const POST = async ({ locals: { user }, request, fetch }) => {
-	const schema = z.object({
-		name: z.string().min(1),
-		text: z.string().min(1).max(1500)
-	});
-
 	const body = (await request.json()) as z.infer<typeof schema>;
+	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' }, { status: 400 });
 
-	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
+	const userKey = user.usePersonalElevenLabsKey ? DecryptElevenLabsKey(user.elevenLabsApiKey) : '';
 
-	const elVoices = await fetch('/api/v1/text-to-speech/elevenlabs/voices').then((res) =>
-		res.json()
-	);
+	if (user.usePersonalElevenLabsKey && !userKey)
+		return json(
+			{
+				error: 'User has enabled personal Eleven Labs API key but it is not set'
+			},
+			{
+				status: 403
+			}
+		);
 
-	let elApiKey = '';
-
-	if (user.elevenLabsApiKey) {
-		const cryptr = new Cryptr(SITE_SECRET);
-		elApiKey = cryptr.decrypt(user.elevenLabsApiKey);
-	}
+	const startTime = Date.now();
 
 	// Make the request to the Eleven Labs API
 	const response = await fetch(
-		`https://api.elevenlabs.io/v1/text-to-speech/${
-			elVoices.find((voice: { fsSlug: string }) => voice.fsSlug === body.name)?.voice_id
-		}`,
+		`https://api.elevenlabs.io/v1/text-to-speech/${body.voiceId}?optimize_streaming_latency=1`,
 		{
 			method: 'POST',
 			headers: {
+				Accept: 'audio/mpeg',
 				'Content-Type': 'application/json',
-				'xi-api-key': elApiKey || ELEVEN_LABS_KEY
+				'xi-api-key': userKey || ELEVEN_LABS_KEY
 			},
 			body: JSON.stringify({
-				text: body.text,
-				model_id: 'eleven_multilingual_v2',
-				voice_settings: {
-					stability: 0.75,
-					similarity_boost: 0.75
-				}
+				text: body.text
 			})
 		}
 	);
 
 	// response body is mp3 audio
 	const audio = await response.arrayBuffer();
+
+	console.log('Eleven Labs API request took', Date.now() - startTime, 'ms');
 
 	// send to client
 	return new Response(audio, {

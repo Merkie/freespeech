@@ -18,7 +18,6 @@
 
 	export let containerHeight: number;
 	export let subpage = 0;
-	export let speakText: (text: string) => void;
 
 	let unusedCoords: { x: number; y: number }[] = [];
 
@@ -51,13 +50,11 @@
 				{#if tile.navigation && !$EditingTiles}
 					<a href={`/app/project/${projectId}/${tile.navigation}`}>
 						<TileComponent
-							{speakText}
 							tile={$EditingTiles && $TileBeingEdited?.id === tile.id ? $TileBeingEdited : tile}
 						/>
 					</a>
 				{:else}
 					<TileComponent
-						{speakText}
 						tile={$EditingTiles && $TileBeingEdited?.id === tile.id ? $TileBeingEdited : tile}
 					/>
 				{/if}
