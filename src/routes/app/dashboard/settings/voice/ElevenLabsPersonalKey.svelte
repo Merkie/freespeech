@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { UsePersonalElevenLabsKey } from '$ts/client/stores';
 
 	export let apiKey: string;
+	export let usePersonalElevenLabsKey: boolean;
+
+	let usePersonalKey = usePersonalElevenLabsKey;
 
 	let elevenLabsApiKey = apiKey;
 	let showKey = false;
@@ -11,7 +13,7 @@
 		(async () => {
 			await fetch('/api/v1/user/update', {
 				method: 'POST',
-				body: JSON.stringify({ elevenLabsApiKey })
+				body: JSON.stringify({ elevenLabsApiKey, usePersonalElevenLabsKey: usePersonalKey })
 			});
 			await invalidateAll();
 		})();
@@ -22,15 +24,23 @@
 	<div class="flex items-center gap-4">
 		<p class="text-3xl text-zinc-800">Use personal ElevenLabs key:</p>
 		<button
-			on:click={() => ($UsePersonalElevenLabsKey = !$UsePersonalElevenLabsKey)}
-			class={`relative w-[48px] scale-[120%] rounded-full p-1 shadow-sm transition-all ${$UsePersonalElevenLabsKey ? 'bg-green-500' : 'bg-zinc-300'}`}
+			on:click={async () => {
+				usePersonalKey = !usePersonalKey;
+				await fetch(`/api/v1/user/update`, {
+					method: 'POST',
+					body: JSON.stringify({ usePersonalElevenLabsKey: usePersonalKey })
+				});
+				await invalidateAll();
+			}}
+			class={`relative w-[48px] scale-[120%] rounded-full p-1 shadow-sm transition-all ${usePersonalKey ? 'bg-green-500' : 'bg-zinc-300'}`}
 		>
 			<div
-				style={`transform: translateX(${!$UsePersonalElevenLabsKey ? '0' : '100%'});`}
+				style={`transform: translateX(${!usePersonalKey ? '0' : '100%'});`}
 				class="h-[20px] w-[20px] rounded-full bg-white shadow-sm transition-all"
 			></div>
 		</button>
 	</div>
+
 	<p class="mt-2 max-w-[750px] text-zinc-800">
 		Using a personal API key helps reduce our costs and it allows you to create custom AI voices
 		based on short audio clips. Please visit <a
@@ -41,7 +51,7 @@
 	</p>
 </div>
 
-{#if $UsePersonalElevenLabsKey}
+{#if usePersonalKey}
 	<div class="flex flex-col gap-4">
 		<p class="text-3xl text-zinc-800">ElevenLabs API Key:</p>
 
