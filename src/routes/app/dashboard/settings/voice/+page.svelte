@@ -41,7 +41,10 @@
 		</p>
 	</div>
 
-	<ElevenLabsPersonalKey apiKey={data.elevenLabsApiKey} />
+	<ElevenLabsPersonalKey
+		apiKey={data.elevenLabsApiKey || ''}
+		usePersonalElevenLabsKey={data.usePersonalElevenLabsKey}
+	/>
 
 	<div class="flex flex-col gap-4">
 		<p class="text-3xl text-zinc-800">Select voice:</p>
