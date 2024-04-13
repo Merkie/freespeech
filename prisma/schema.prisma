@@ -13,11 +13,12 @@ model User {
   Project  Project[]
   TilePage TilePage[]
 
-  email            String  @unique
-  name             String
-  password         String?
-  profileImgUrl    String?
-  elevenLabsApiKey String?
+  email                    String  @unique
+  name                     String
+  password                 String?
+  profileImgUrl            String?
+  elevenLabsApiKey         String?
+  usePersonalElevenLabsKey Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
