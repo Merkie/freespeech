@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ElevenLabsPersonalKey from './ElevenLabsPersonalKey.svelte';
 	import { EnableThirdPartyVoiceProviders } from '$ts/client/stores';
 	import TestVoice from './TestVoice.svelte';
 	import ElevenLabsVoiceSelector from './ElevenLabsVoiceSelector.svelte';
@@ -39,6 +40,8 @@
 			good internet connection for best results.
 		</p>
 	</div>
+
+	<ElevenLabsPersonalKey apiKey={data.elevenLabsApiKey} />
 
 	<div class="flex flex-col gap-4">
 		<p class="text-3xl text-zinc-800">Select voice:</p>
