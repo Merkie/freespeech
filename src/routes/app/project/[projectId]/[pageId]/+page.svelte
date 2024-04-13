@@ -22,35 +22,11 @@
 	import * as htmlToImage from 'html-to-image';
 	import { uploadFile } from '$ts/client/presigned-uploads.js';
 	import { invalidateAll } from '$app/navigation';
-	import axios from 'axios';
-	import { Howl } from 'howler';
 
 	export let data;
 
 	let containerHeight: number; // Needed for CSS tricks
 	let containerElement: HTMLElement;
-
-	const speakText = async (text: string) => {
-		const response = await fetch('/api/v1/text-to-speech/elevenlabs/speak', {
-			method: 'POST',
-			body: JSON.stringify({
-				text,
-				voiceId: $ElevenLabsVoiceId
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-
-		const data = await response.blob();
-
-		const sound = new Howl({
-			src: [URL.createObjectURL(data)],
-			format: ['mp3']
-		});
-
-		sound.play();
-	};
 
 	// if (text.trim() === '') return;
 
@@ -120,7 +96,7 @@
 
 <PageHeader pageName={data.page.name} />
 
-{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder {speakText} />{/if}
+{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder />{/if}
 
 <div
 	bind:this={containerElement}
@@ -136,7 +112,6 @@
 		{#if containerHeight && data.page.Project}
 			{#each organizedTiles as pageTiles, pageIndex}
 				<TilePage
-					{speakText}
 					{containerHeight}
 					subpage={pageIndex}
 					tiles={pageTiles}

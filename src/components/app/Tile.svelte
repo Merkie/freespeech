@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { speakText } from '$ts/client/speak';
 	import {
 		TileBeingEdited,
 		LocalSettings,
@@ -12,7 +13,6 @@
 	import type { Tile } from '@prisma/client';
 
 	export let tile: Tile;
-	export let speakText: (text: string) => void;
 
 	const handleInteraction = () => {
 		if ($EditingTiles) {

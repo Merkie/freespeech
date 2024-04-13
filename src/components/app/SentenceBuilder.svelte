@@ -2,7 +2,7 @@
 	import SynthesisLoader from './SynthesisLoader.svelte';
 	import { Sentence, isSynthesizingSpeech } from '$ts/client/stores';
 	import { fade, scale } from 'svelte/transition';
-	export let speakText: (text: string) => void;
+	import { speakText } from '$ts/client/speak';
 </script>
 
 <div
