@@ -47,7 +47,7 @@
 	<p class="mb-4 text-2xl text-zinc-700">Select ElevenLabs voice:</p>
 	<div
 		id="el-voices"
-		class="flex h-[400px] w-full flex-col overflow-y-auto rounded-xl border border-zinc-200 bg-white p-4 shadow-md"
+		class="relative flex h-[400px] w-full flex-col overflow-y-auto rounded-xl border border-zinc-200 bg-white p-4 shadow-md"
 	>
 		{#each voices as voice, index}
 			<button
@@ -95,5 +95,12 @@
 				{/if}
 			</button>
 		{/each}
+		{#if voices.length === 0}
+			<p
+				class="absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 text-center text-2xl text-zinc-500"
+			>
+				No voices available
+			</p>
+		{/if}
 	</div>
 </div>
