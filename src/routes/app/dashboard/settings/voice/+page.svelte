@@ -8,7 +8,7 @@
 	export let data;
 </script>
 
-<div class="flex flex-col gap-12 p-8">
+<div class="flex flex-col gap-12 p-8 pb-[200px]">
 	<div class="flex flex-col gap-8">
 		<a
 			href="/app/dashboard/settings"
