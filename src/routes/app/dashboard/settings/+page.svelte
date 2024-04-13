@@ -1,15 +1,3 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-
-	let offlineBrowserVoices = speechSynthesis.getVoices().map((voice) => voice.name);
-
-	onMount(() => {
-		speechSynthesis.onvoiceschanged = () => {
-			offlineBrowserVoices = speechSynthesis.getVoices().map((voice) => voice.name);
-		};
-	});
-</script>
-
 <div class="grid h-full flex-1 grid-cols-4 grid-rows-3 gap-8 p-8">
 	<a
 		href="/app/dashboard/settings/voice"
