@@ -12,7 +12,7 @@ export const POST = async ({ locals: { user }, request, fetch }) => {
 	const body = (await request.json()) as z.infer<typeof schema>;
 	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' }, { status: 400 });
 
-	const userKey = DecryptElevenLabsKey(user.elevenLabsApiKey);
+	const userKey = user.usePersonalElevenLabsKey ? DecryptElevenLabsKey(user.elevenLabsApiKey) : '';
 
 	if (user.usePersonalElevenLabsKey && !userKey)
 		return json(
