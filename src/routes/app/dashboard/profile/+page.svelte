@@ -8,10 +8,7 @@
 
 	let profileInput: HTMLInputElement;
 
-	let editingElevenLabsApiKey = false;
-
 	let name = data.user?.name;
-	let elevenLabsApiKey = data.elevenLabsApiKey;
 
 	const logout = async () => {
 		await fetch('/api/v1/auth/logout');
@@ -32,7 +29,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ name, elevenLabsApiKey })
+			body: JSON.stringify({ name })
 		});
 		await invalidateAll();
 	};
@@ -106,18 +103,6 @@
 					class="rounded-md border border-zinc-300 bg-zinc-200 p-2 px-4 text-zinc-500"
 					><i class="bi bi-image mr-2" />Upload Profile Picture</button
 				>
-				<input on:input={handleMediaUpload} bind:this={profileInput} type="file" class="hidden" />
-				<p class="text-lg">ElevenLabs API Key</p>
-
-				{#if editingElevenLabsApiKey}
-					<input bind:value={elevenLabsApiKey} type="text" />
-				{:else}
-					<button
-						on:click={() => (editingElevenLabsApiKey = true)}
-						class="mt-2 rounded-md border border-zinc-500 bg-zinc-600 p-2 px-4 text-zinc-50"
-						><i class="bi bi-eye mr-2"></i> Show API Key</button
-					>
-				{/if}
 
 				<button
 					on:click={updateUser}
