@@ -1,8 +1,10 @@
 import { Howl } from 'howler';
-import { ElevenLabsVoiceId } from './stores';
+import { ElevenLabsVoiceId, VoiceEngineStatus } from './stores';
 import { get } from 'svelte/store';
 
 export async function speakText(text: string) {
+	VoiceEngineStatus.set('synthesizing');
+
 	const response = await fetch('/api/v1/text-to-speech/elevenlabs/speak', {
 		method: 'POST',
 		body: JSON.stringify({
@@ -21,5 +23,11 @@ export async function speakText(text: string) {
 		format: ['mp3']
 	});
 
+	VoiceEngineStatus.set('speaking');
+
 	sound.play();
+
+	sound.on('end', () => {
+		VoiceEngineStatus.set('ready');
+	});
 }

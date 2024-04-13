@@ -27,6 +27,8 @@ export const ProjectBeingEdited = writable<Project | null>(null);
 
 export const ImportingProject = writable(false);
 
+export const VoiceEngineStatus = writable<'ready' | 'speaking' | 'synthesizing'>('ready');
+
 export const EnableThirdPartyVoiceProviders = writable(false);
 export const ElevenLabsVoiceId = writable<string | null>(null);
 export const OfflineVoiceUri = writable<string | null>(null);
