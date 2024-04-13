@@ -54,7 +54,7 @@
 				on:click={() => {
 					$ElevenLabsVoiceId = voice.voice_id;
 				}}
-				class={`group flex items-center gap-1 rounded-md p-2 px-4 hover:brightness-110 active:brightness-100 ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-600 text-white' : `hover:bg-blue-600 hover:text-white ${index % 2 === 0 ? 'bg-zinc-100' : ''}`}`}
+				class={`group flex flex-wrap items-center gap-1 rounded-md p-2 px-4 hover:brightness-110 active:brightness-100 ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-600 text-white' : `hover:bg-blue-600 hover:text-white ${index % 2 === 0 ? 'bg-zinc-100' : ''}`}`}
 				id={$ElevenLabsVoiceId === voice.voice_id ? 'el-voice-active' : ''}
 			>
 				<p class="mr-2 whitespace-nowrap text-lg font-medium">{voice.name}</p>
