@@ -9,6 +9,8 @@
 	let elevenLabsApiKey = apiKey;
 	let showKey = false;
 
+	let inputElem: HTMLInputElement;
+
 	$: {
 		(async () => {
 			await fetch('/api/v1/user/update', {
@@ -55,32 +57,31 @@
 	<div class="flex flex-col gap-4">
 		<p class="text-3xl text-zinc-800">ElevenLabs API Key:</p>
 
-		<div
-			class="flex items-center rounded-md border border-zinc-200 bg-white shadow-sm ring-blue-200 focus-within:ring-2"
+		<button
+			on:click={async () => {
+				if (showKey) return;
+
+				showKey = true;
+
+				await new Promise((resolve) => setTimeout(resolve, 50));
+
+				inputElem.select();
+				inputElem.setSelectionRange(elevenLabsApiKey.length, elevenLabsApiKey.length);
+			}}
+			class="flex max-w-[750px] items-center rounded-md border border-zinc-200 bg-white shadow-sm ring-blue-200 focus-within:ring-2"
 		>
 			{#if showKey}
 				<input
+					bind:this={inputElem}
+					on:blur={() => (showKey = false)}
 					class="flex-1 bg-transparent p-4 text-lg outline-none"
 					bind:value={elevenLabsApiKey}
 					type="text"
 				/>
 			{:else}
-				<input
-					class="flex-1 bg-transparent p-4 text-lg outline-none"
-					bind:value={elevenLabsApiKey}
-					type="password"
-				/>
+				<p class={`flex-1 p-4 text-left text-lg text-select-none ${elevenLabsApiKey.length === 0 ?  'text-transparent' : ''}`}>{(elevenLabsApiKey || 'xxx').replaceAll(/./g, '•')}</p>
 			{/if}
-
-			<button
-				on:click={() => {
-					showKey = !showKey;
-				}}
-				class="scale-[120%] p-4 pr-6 text-xl text-neutral-500"
-			>
-				<i class={`bi bi-eye-${showKey ? 'slash-' : ''}fill`}></i>
-			</button>
-		</div>
+		</button>
 		<p class="max-w-[750px] text-zinc-800">
 			This value is encrypted and stored securely on our servers.
 		</p>
