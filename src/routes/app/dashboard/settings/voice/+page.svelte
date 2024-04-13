@@ -20,17 +20,24 @@
 		<p class="border-b border-zinc-300 pb-8 text-4xl font-semibold text-zinc-600">Voice Settings</p>
 	</div>
 
-	<div class="flex items-center gap-4">
-		<p class="text-3xl text-zinc-800">Enable third-party voice providers:</p>
-		<button
-			on:click={() => ($EnableThirdPartyVoiceProviders = !$EnableThirdPartyVoiceProviders)}
-			class={`relative w-[48px] scale-[120%] rounded-full p-1 shadow-sm transition-all ${$EnableThirdPartyVoiceProviders ? 'bg-green-500' : 'bg-zinc-300'}`}
-		>
-			<div
-				style={`transform: translateX(${!$EnableThirdPartyVoiceProviders ? '0' : '100%'});`}
-				class="h-[20px] w-[20px] rounded-full bg-white shadow-sm transition-all"
-			></div>
-		</button>
+	<div class="flex flex-col">
+		<div class="flex items-center gap-4">
+			<p class="text-3xl text-zinc-800">Enable third-party voice providers:</p>
+			<button
+				on:click={() => ($EnableThirdPartyVoiceProviders = !$EnableThirdPartyVoiceProviders)}
+				class={`relative w-[48px] scale-[120%] rounded-full p-1 shadow-sm transition-all ${$EnableThirdPartyVoiceProviders ? 'bg-green-500' : 'bg-zinc-300'}`}
+			>
+				<div
+					style={`transform: translateX(${!$EnableThirdPartyVoiceProviders ? '0' : '100%'});`}
+					class="h-[20px] w-[20px] rounded-full bg-white shadow-sm transition-all"
+				></div>
+			</button>
+		</div>
+		<p class="mt-2 max-w-[750px] text-zinc-800">
+			When enabled, the selected third-party voice will be the primary voice used by the app. The
+			internal voice will still be used if the third-party voice fails. Third-party voices require a
+			good internet connection for best results.
+		</p>
 	</div>
 
 	<div class="flex flex-col gap-4">
