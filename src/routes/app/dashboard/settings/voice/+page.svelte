@@ -115,14 +115,14 @@
 		<p class="text-3xl text-zinc-800">Enable third-party voice providers:</p>
 		<button
 			on:click={() => ($EnableThirdPartyVoiceProviders = !$EnableThirdPartyVoiceProviders)}
-			class={`relative w-[78px] rounded-full p-1 shadow-sm transition-all ${$EnableThirdPartyVoiceProviders ? 'bg-green-500' : 'bg-zinc-300'}`}
+			class={`relative w-[48px] scale-[120%] rounded-full p-1 shadow-sm transition-all ${$EnableThirdPartyVoiceProviders ? 'bg-green-500' : 'bg-zinc-300'}`}
 		>
 			<div
 				style={`
 				transform: translateX(${!$EnableThirdPartyVoiceProviders ? '0' : '100%'});
 			
 			`}
-				class="h-[35px] w-[35px] rounded-full bg-white shadow-sm transition-all"
+				class="h-[20px] w-[20px] rounded-full bg-white shadow-sm transition-all"
 			></div>
 		</button>
 	</div>
