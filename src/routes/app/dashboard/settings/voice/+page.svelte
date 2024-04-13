@@ -41,10 +41,12 @@
 		</p>
 	</div>
 
-	<ElevenLabsPersonalKey
-		apiKey={data.elevenLabsApiKey || ''}
-		usePersonalElevenLabsKey={data.usePersonalElevenLabsKey}
-	/>
+	{#if $EnableThirdPartyVoiceProviders}
+		<ElevenLabsPersonalKey
+			apiKey={data.elevenLabsApiKey || ''}
+			usePersonalElevenLabsKey={data.usePersonalElevenLabsKey}
+		/>
+	{/if}
 
 	<div class="flex flex-col gap-4">
 		<p class="text-3xl text-zinc-800">Select voice:</p>
