@@ -1,15 +1,18 @@
 import { ELEVEN_LABS_KEY } from '$env/static/private';
 import { z } from 'zod';
 import { json } from '@sveltejs/kit';
+import { DecryptElevenLabsKey } from '$ts/server/decrypt-key';
 
 const schema = z.object({
 	voiceId: z.string().min(1),
 	text: z.string().min(1).max(1500)
 });
 
-export const POST = async ({ request, fetch }) => {
+export const POST = async ({ locals: { user }, request, fetch }) => {
 	const body = (await request.json()) as z.infer<typeof schema>;
 	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' }, { status: 400 });
+
+	const userKey = DecryptElevenLabsKey(user.elevenLabsApiKey);
 
 	const startTime = Date.now();
 
@@ -21,7 +24,7 @@ export const POST = async ({ request, fetch }) => {
 			headers: {
 				Accept: 'audio/mpeg',
 				'Content-Type': 'application/json',
-				'xi-api-key': ELEVEN_LABS_KEY
+				'xi-api-key': userKey || ELEVEN_LABS_KEY
 			},
 			body: JSON.stringify({
 				text: body.text
