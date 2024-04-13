@@ -48,6 +48,10 @@ function speakSynth(text: string) {
 
 	// make speech synthesis request
 	const synth = new SpeechSynthesisUtterance(text);
+	const synthVoices = speechSynthesis.getVoices();
+
+	if (!synthVoices || !synthVoices.length) return VoiceEngineStatus.set('failed');
+
 	const voice = speechSynthesis.getVoices().find((voice) => voice.voiceURI === synthVoiceUri);
 	if (voice) {
 		synth.voice = voice;
