@@ -54,6 +54,16 @@
 				class={`group flex items-center gap-4 rounded-md p-2 px-4 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`}
 				id={$ElevenLabsVoiceId === voice.voice_id ? 'el-voice-active' : ''}
 			>
+				<button
+					on:click={() => {
+						$ElevenLabsVoiceId = voice.voice_id;
+					}}
+					class="p-2"
+				>
+					<div
+						class={`h-[20px] w-[20px] rounded-full ring-zinc-300 ring-offset-4 ${index % 2 === 0 ? 'ring-offset-zinc-100' : 'ring-offset-white'} ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-600 ring-4' : `ring-2 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`} transition-all`}
+					></div>
+				</button>
 				<div class="flex flex-1 flex-wrap items-center gap-1">
 					<p class="mr-2 whitespace-nowrap text-lg font-medium">{voice.name}</p>
 					{#if voice.labels.accent}
@@ -84,16 +94,6 @@
 						</p>
 					{/if}
 				</div>
-				<button
-					on:click={() => {
-						$ElevenLabsVoiceId = voice.voice_id;
-					}}
-					class="p-2"
-				>
-					<div
-						class={`h-[20px] w-[20px] rounded-full ring-zinc-300 ring-offset-4 ${index % 2 === 0 ? 'ring-offset-zinc-100' : 'ring-offset-white'} ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-600 ring-4' : `ring-2 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`} transition-all`}
-					></div>
-				</button>
 			</div>
 		{/each}
 		{#if voices.length === 0}
