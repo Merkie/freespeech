@@ -29,7 +29,6 @@ model Project {
 
   user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
-  pages          TilePage[]
   connectedPages TilePageInProject[]
 
   name        String
@@ -49,10 +48,8 @@ model TilePage {
   tiles             Tile[]
   connectedProjects TilePageInProject[]
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  Project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId String?
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   name     String
   data     Json?

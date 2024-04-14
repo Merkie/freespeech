@@ -20,8 +20,9 @@ export const load = async ({ locals: { prisma, user }, params: { projectId } }) 
 	const homePage = project.connectedPages.find(
 		({ tilePage }) => tilePage.name.toLowerCase().trim() === 'home'
 	);
+
 	if (!homePage)
 		throw redirect(307, `/app/project/${projectId}/${project.connectedPages[0].tilePageId}`);
 
-	throw redirect(307, `/app/project/${projectId}/${homePage.id}`);
+	throw redirect(307, `/app/project/${projectId}/${homePage.tilePageId}`);
 };
