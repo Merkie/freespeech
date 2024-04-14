@@ -42,8 +42,12 @@ export const POST = async ({ request, locals: { user, prisma } }) => {
 	const createdHomePage = await prisma.tilePage.create({
 		data: {
 			name: 'Home',
-			projectId: createdProject.id,
-			userId: user.id
+			userId: user.id,
+			connectedProjects: {
+				create: {
+					projectId: createdProject.id
+				}
+			}
 		}
 	});
 

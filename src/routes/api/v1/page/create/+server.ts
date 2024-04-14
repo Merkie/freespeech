@@ -53,14 +53,12 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 					projectId: project.id
 				}
 			},
-			data: {
-				tiles: [
-					{
-						page: 0,
-						x: 0,
-						y: 0
-					}
-				]
+			tiles: {
+				create: {
+					page: 0,
+					x: 0,
+					y: 0
+				}
 			}
 		}
 	});
