@@ -1,8 +1,10 @@
 <script lang="ts">
 	import SynthesisLoader from './SynthesisLoader.svelte';
-	import { Sentence, isSynthesizingSpeech } from '$ts/client/stores';
+	import { EnableSentenceCopyButton, Sentence, isSynthesizingSpeech } from '$ts/client/stores';
 	import { fade, scale } from 'svelte/transition';
 	import { speakText } from '$ts/client/speak';
+
+	let copied = false;
 </script>
 
 <div
@@ -40,19 +42,39 @@
 		{/each}
 	</div>
 	<div class="flex h-full items-center gap-2">
+		{#if $EnableSentenceCopyButton}
+			<button
+				on:click={() => {
+					const text = $Sentence.map((tile) => tile.text).join(' ');
+					navigator.clipboard.writeText(text);
+					copied = true;
+					setTimeout(() => {
+						copied = false;
+					}, 2000);
+				}}
+				class={`grid h-[80px] w-[80px] place-items-center rounded-md text-green-50 transition-all ${copied ? 'bg-green-400' : 'bg-green-500'}`}
+			>
+				<div class="relative">
+					<i class="bi bi-clipboard text-4xl" />
+
+					<i
+						class={`bi bi-check absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl ${copied ? 'scale-100' : 'scale-0'} transition-all`}
+					/>
+				</div>
+			</button>
+		{/if}
+
 		<button
 			on:click={() => speakText($Sentence.map((tile) => tile.text).join(' '))}
 			class="grid h-[80px] w-[80px] place-items-center rounded-md bg-blue-500 text-blue-50"
 		>
 			<i class="bi bi-volume-up-fill text-4xl" />
-			<!-- <p class="text-sm">Speak</p> -->
 		</button>
 		<button
 			on:click={() => ($Sentence = [])}
 			class="grid h-[80px] w-[80px] place-items-center rounded-md bg-red-500 text-blue-50"
 		>
 			<i class="bi bi-trash-fill text-4xl" />
-			<!-- <p class="text-sm">Clear</p> -->
 		</button>
 	</div>
 </div>
