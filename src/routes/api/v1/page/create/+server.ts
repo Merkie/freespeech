@@ -43,14 +43,14 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 	const page = await prisma.tilePage.create({
 		data: {
 			name: body.name,
-			Project: {
-				connect: {
-					id: body.projectId
-				}
-			},
 			user: {
 				connect: {
 					id: user.id
+				}
+			},
+			connectedProjects: {
+				create: {
+					projectId: project.id
 				}
 			},
 			data: {
