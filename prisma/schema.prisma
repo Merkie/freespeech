@@ -52,7 +52,6 @@ model TilePage {
   userId String
 
   name     String
-  data     Json?
   isPublic Boolean @default(false)
 
   createdAt DateTime @default(now())
