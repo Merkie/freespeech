@@ -22,6 +22,16 @@
 			icon: 'sliders',
 			path: '/app/dashboard/settings'
 		},
+		{
+			name: 'Voice Settings',
+			path: '/app/dashboard/settings/voice',
+			hidden: true
+		},
+		{
+			name: 'Behavior Settings',
+			path: '/app/dashboard/settings/behavior',
+			hidden: true
+		},
 		// {
 		// 	name: 'Uploaded Media',
 		// 	path: '/app/dashboard/media'
