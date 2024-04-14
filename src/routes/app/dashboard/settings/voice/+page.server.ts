@@ -32,8 +32,15 @@ export const load = async ({ locals: { user } }) => {
 		return a.name.localeCompare(b.name);
 	});
 
+	// filter out the "seductive" voices lol
+	// TODO: add a setting for this
+	const filteredVoices = voices.filter(
+		(voice: any) =>
+			!(voice.category === 'premade' && voice.labels.description?.includes('seductive'))
+	);
+
 	return {
-		voices,
+		voices: filteredVoices,
 		elevenLabsApiKey: userKey,
 		usePersonalElevenLabsKey: user.usePersonalElevenLabsKey
 	};
