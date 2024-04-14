@@ -31,15 +31,24 @@
 		id="offline-voices"
 	>
 		{#each offlineBrowserVoices as voice, index}
-			<button
-				on:click={() => {
-					$OfflineVoiceUri = voice.voiceURI;
-				}}
-				class={`group flex items-center gap-1 rounded-md p-2 px-4 hover:brightness-110 active:brightness-100 ${$OfflineVoiceUri === voice.voiceURI ? 'bg-blue-600 text-white' : `hover:bg-blue-600 hover:text-white ${index % 2 === 0 ? 'bg-zinc-100' : ''}`}`}
+			<div
+				class={`group flex items-center gap-4 rounded-md p-2 px-4 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`}
 				id={$OfflineVoiceUri === voice.voiceURI ? 'offline-voice-active' : ''}
 			>
-				{voice.name}
-			</button>
+				<div class="flex flex-1 items-center gap-1">
+					{voice.name}
+				</div>
+				<button
+					on:click={() => {
+						$OfflineVoiceUri = voice.voiceURI;
+					}}
+					class="p-2"
+				>
+					<div
+						class={`h-[20px] w-[20px] rounded-full ring-zinc-300 ring-offset-4 ${index % 2 === 0 ? 'ring-offset-zinc-100' : 'ring-offset-white'} ${$OfflineVoiceUri === voice.voiceURI ? 'bg-blue-600 ring-4' : `ring-2 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`} transition-all`}
+					></div>
+				</button>
+			</div>
 		{/each}
 		{#if offlineBrowserVoices.length === 0}
 			<p

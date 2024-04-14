@@ -50,50 +50,51 @@
 		class="relative flex h-[400px] w-full flex-col overflow-y-auto rounded-xl border border-zinc-200 bg-white p-4 shadow-md"
 	>
 		{#each voices as voice, index}
-			<button
-				on:click={() => {
-					$ElevenLabsVoiceId = voice.voice_id;
-				}}
-				class={`group flex flex-wrap items-center gap-1 rounded-md p-2 px-4 hover:brightness-110 active:brightness-100 ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-600 text-white' : `hover:bg-blue-600 hover:text-white ${index % 2 === 0 ? 'bg-zinc-100' : ''}`}`}
+			<div
+				class={`group flex items-center gap-4 rounded-md p-2 px-4 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`}
 				id={$ElevenLabsVoiceId === voice.voice_id ? 'el-voice-active' : ''}
 			>
-				<p class="mr-2 whitespace-nowrap text-lg font-medium">{voice.name}</p>
-				{#if voice.labels.accent}
-					<p
-						class={`whitespace-nowrap rounded-md px-2 text-sm shadow-sm ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-500 text-white' : 'bg-zinc-50 text-zinc-700 group-hover:bg-blue-500 group-hover:text-white'}`}
-					>
-						{formatLabelText(voice.labels.accent)}
-						{getEmoji('accent', voice.labels.accent)}
-					</p>
-				{/if}
+				<div class="flex flex-1 flex-wrap items-center gap-1">
+					<p class="mr-2 whitespace-nowrap text-lg font-medium">{voice.name}</p>
+					{#if voice.labels.accent}
+						<p class="whitespace-nowrap rounded-md bg-zinc-50 px-2 text-sm text-zinc-700 shadow-sm">
+							{formatLabelText(voice.labels.accent)}
+							{getEmoji('accent', voice.labels.accent)}
+						</p>
+					{/if}
 
-				{#if voice.labels.description}
-					<p
-						class={`whitespace-nowrap rounded-md px-2 text-sm shadow-sm ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-500 text-white' : 'bg-zinc-50 text-zinc-700 group-hover:bg-blue-500 group-hover:text-white'}`}
-					>
-						{formatLabelText(voice.labels.description)}
-						{getEmoji('description', voice.labels.description)}
-					</p>
-				{/if}
+					{#if voice.labels.description}
+						<p class="whitespace-nowrap rounded-md bg-zinc-50 px-2 text-sm text-zinc-700 shadow-sm">
+							{formatLabelText(voice.labels.description)}
+							{getEmoji('description', voice.labels.description)}
+						</p>
+					{/if}
 
-				{#if voice.labels.age}
-					<p
-						class={`whitespace-nowrap rounded-md px-2 text-sm shadow-sm ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-500 text-white' : 'bg-zinc-50 text-zinc-700 group-hover:bg-blue-500 group-hover:text-white'}`}
-					>
-						{formatLabelText(voice.labels.age)}
-						{getEmoji('age', voice.labels.age)}
-					</p>
-				{/if}
+					{#if voice.labels.age}
+						<p class="whitespace-nowrap rounded-md bg-zinc-50 px-2 text-sm text-zinc-700 shadow-sm">
+							{formatLabelText(voice.labels.age)}
+							{getEmoji('age', voice.labels.age)}
+						</p>
+					{/if}
 
-				{#if voice.labels.gender}
-					<p
-						class={`whitespace-nowrap rounded-md px-2 text-sm shadow-sm ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-500 text-white' : 'bg-zinc-50 text-zinc-700 group-hover:bg-blue-500 group-hover:text-white'}`}
-					>
-						{formatLabelText(voice.labels.gender)}
-						{getEmoji('gender', voice.labels.gender)}
-					</p>
-				{/if}
-			</button>
+					{#if voice.labels.gender}
+						<p class="whitespace-nowrap rounded-md bg-zinc-50 px-2 text-sm text-zinc-700 shadow-sm">
+							{formatLabelText(voice.labels.gender)}
+							{getEmoji('gender', voice.labels.gender)}
+						</p>
+					{/if}
+				</div>
+				<button
+					on:click={() => {
+						$ElevenLabsVoiceId = voice.voice_id;
+					}}
+					class="p-2"
+				>
+					<div
+						class={`h-[20px] w-[20px] rounded-full ring-zinc-300 ring-offset-4 ${index % 2 === 0 ? 'ring-offset-zinc-100' : 'ring-offset-white'} ${$ElevenLabsVoiceId === voice.voice_id ? 'bg-blue-600 ring-4' : `ring-2 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`} transition-all`}
+					></div>
+				</button>
+			</div>
 		{/each}
 		{#if voices.length === 0}
 			<p
