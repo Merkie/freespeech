@@ -1,19 +1,30 @@
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals: { prisma, user }, params: { projectId, pageId } }) => {
-	const page = await prisma.tilePage.findFirst({
+	const projectPage = await prisma.tilePageInProject.findFirst({
 		where: {
-			id: pageId,
-			userId: user.id,
-			projectId: projectId
+			project: {
+				userId: user.id,
+				id: projectId
+			},
+			tilePageId: pageId
 		},
 		include: {
-			tiles: true,
-			Project: {
+			tilePage: {
 				include: {
-					pages: {
+					tiles: true
+				}
+			},
+			project: {
+				include: {
+					connectedPages: {
+						include: {
+							tilePage: true
+						},
 						orderBy: {
-							updatedAt: 'desc'
+							tilePage: {
+								updatedAt: 'desc'
+							}
 						}
 					}
 				}
@@ -21,9 +32,12 @@ export const load = async ({ locals: { prisma, user }, params: { projectId, page
 		}
 	});
 
-	if (!page) throw redirect(302, '/app/dashboard/projects');
+	if (!projectPage || !projectPage.tilePage || !projectPage.project)
+		throw redirect(302, '/app/dashboard/projects');
 
 	return {
-		page
+		page: projectPage.tilePage,
+		project: projectPage.project,
+		projectPages: projectPage.project.connectedPages.map((p) => p.tilePage)
 	};
 };

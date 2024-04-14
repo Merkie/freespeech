@@ -7,14 +7,21 @@ export const load = async ({ locals: { prisma, user }, params: { projectId } }) 
 			userId: user.id
 		},
 		include: {
-			pages: true
+			connectedPages: {
+				include: {
+					tilePage: true
+				}
+			}
 		}
 	});
 
 	if (!project) throw redirect(307, '/app/dashboard');
 
-	const homePage = project.pages.find((page) => page.name.toLowerCase().trim() === 'home');
-	if (!homePage) throw redirect(307, `/app/project/${projectId}/${project.pages.at(0)?.id}`);
+	const homePage = project.connectedPages.find(
+		({ tilePage }) => tilePage.name.toLowerCase().trim() === 'home'
+	);
+	if (!homePage)
+		throw redirect(307, `/app/project/${projectId}/${project.connectedPages[0].tilePageId}`);
 
 	throw redirect(307, `/app/project/${projectId}/${homePage.id}`);
 };

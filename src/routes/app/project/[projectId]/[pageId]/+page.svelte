@@ -4,8 +4,7 @@
 		TileBeingEdited,
 		EditingTiles,
 		LocalSettings,
-		UsingOnlineSearch,
-		ElevenLabsVoiceId
+		UsingOnlineSearch
 	} from '$ts/client/stores';
 	// components
 	import PageHeader from '$components/app/PageHeader.svelte';
@@ -27,17 +26,6 @@
 
 	let containerHeight: number; // Needed for CSS tricks
 	let containerElement: HTMLElement;
-
-	// if (text.trim() === '') return;
-
-	// const utterance = new SpeechSynthesisUtterance(text);
-	// if ($LocalSettings.offlineVoice) {
-	// 	utterance.voice =
-	// 		speechSynthesis.getVoices().find((voice) => voice.name === $LocalSettings.offlineVoice) ||
-	// 		null;
-	// }
-	// utterance.lang = 'en-US';
-	// speechSynthesis.speak(utterance);
 
 	$: organizedTiles = (() => {
 		const newTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
@@ -82,8 +70,8 @@
 
 		// if the project hasn't been updated in the last 5 minutes, update the image
 		if (
-			data.page.Project?.updatedAt &&
-			Date.now() - new Date(data.page.Project.updatedAt).getTime() > 5 * 60 * 1000
+			data.project.updatedAt &&
+			Date.now() - new Date(data.project.updatedAt).getTime() > 5 * 60 * 1000
 		) {
 			captureContainer();
 		}
@@ -109,15 +97,15 @@
 			$TileBeingEdited ? 'calc(100% - 350px)' : '100%'
 		};`}
 	>
-		{#if containerHeight && data.page.Project}
+		{#if containerHeight}
 			{#each organizedTiles as pageTiles, pageIndex}
 				<TilePage
 					{containerHeight}
 					subpage={pageIndex}
 					tiles={pageTiles}
-					columns={data.page.Project.columns}
-					rows={data.page.Project.rows}
-					projectId={data.page.Project.id}
+					columns={data.project.columns}
+					rows={data.project.rows}
+					projectId={data.project.id}
 					pageId={data.page.id}
 				/>
 			{/each}
@@ -131,15 +119,15 @@
 			{#if $UsingOnlineSearch}
 				<OnlineImageSearchPanel />
 			{:else}
-				<EditTilePanel pages={data.page.Project?.pages || []} tiles={data.page.tiles} />
+				<EditTilePanel pages={data.projectPages || []} tiles={data.page.tiles} />
 			{/if}
 		</div>
 	{/if}
 </div>
 
-{#if data.page.Project}
-	<EditPagesModal projectId={data.page.Project.id} pages={data.page.Project.pages} />
-	<CreatePageModal projectId={data.page.Project.id} />
+{#if data.project}
+	<EditPagesModal projectId={data.project.id} pages={data.projectPages} />
+	<CreatePageModal projectId={data.project.id} />
 	<EditPageModal />
 	<UnsavedChangesModal />
 {/if}

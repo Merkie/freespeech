@@ -18,7 +18,11 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 			userId: user.id
 		},
 		include: {
-			pages: true
+			connectedPages: {
+				include: {
+					tilePage: true
+				}
+			}
 		}
 	});
 
@@ -26,7 +30,11 @@ export const POST = async ({ locals: { prisma, user }, request }) => {
 	if (!project) return json({ error: 'The project you are trying to edit does not exist.' });
 
 	// Check if the page already exists
-	if (project.pages.map((page) => slugify(page.name)).includes(slugify(body.name)))
+	if (
+		project.connectedPages
+			.map(({ tilePage }) => slugify(tilePage.name))
+			.includes(slugify(body.name))
+	)
 		return json({
 			error: 'A page with that name already exists in the project.'
 		});
