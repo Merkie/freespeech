@@ -1,22 +1,9 @@
 <div class="flex flex-col gap-8 p-8 pb-6 pt-14">
-	<p class="text-5xl text-zinc-800">Application Settings</p>
+	<p class="text-4xl text-zinc-800">Application Settings</p>
 </div>
 
 <div class="flex flex-col gap-8 p-8 pb-[200px]">
 	<div class="flex flex-col gap-8 md:flex-row">
-		<a
-			href="/app/dashboard/profile"
-			class="group flex flex-1 items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 transition-all hover:border-pink-200 hover:bg-pink-50"
-		>
-			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-pink-100">
-				<i class="bi bi-person-circle text-[40px] text-pink-500"></i>
-			</div>
-			<span class="text-3xl text-zinc-800 transition-all group-hover:text-pink-500">Account</span>
-			<div class="flex-1"></div>
-			<i
-				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-pink-500"
-			></i>
-		</a>
 		<a
 			href="/app/dashboard/settings/voice"
 			class="group flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 transition-all hover:border-blue-200 hover:bg-blue-50"
@@ -28,6 +15,19 @@
 			<div class="flex-1"></div>
 			<i
 				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-blue-500"
+			></i>
+		</a>
+		<a
+			href="/app/dashboard/settings/behavior"
+			class="group flex flex-1 items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 transition-all hover:border-pink-200 hover:bg-pink-50"
+		>
+			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-pink-100">
+				<i class="bi bi-gear-wide-connected text-[40px] text-pink-500"></i>
+			</div>
+			<span class="text-3xl text-zinc-800 transition-all group-hover:text-pink-500">Behavior</span>
+			<div class="flex-1"></div>
+			<i
+				class="bi bi-arrow-right-short text-6xl text-zinc-500 transition-all group-hover:text-pink-500"
 			></i>
 		</a>
 	</div>
