@@ -19,7 +19,7 @@
 		</a>
 		<a
 			href="/app/dashboard/settings/behavior"
-			class="group pointer-events-none flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 opacity-50 grayscale transition-all hover:border-pink-200 hover:bg-pink-50"
+			class="group flex flex-1 select-none items-center gap-4 rounded-xl border-2 border-zinc-300 p-4 transition-all hover:border-pink-200 hover:bg-pink-50"
 		>
 			<div class="grid h-[70px] w-[70px] place-items-center rounded-lg bg-pink-100">
 				<i class="bi bi-gear-wide-connected text-[40px] text-pink-500"></i>
