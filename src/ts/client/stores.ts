@@ -32,7 +32,6 @@ export const VoiceEngineStatus = writable<'ready' | 'speaking' | 'synthesizing' 
 );
 
 export const EnableThirdPartyVoiceProviders = writable(false);
-export const UsePersonalElevenLabsKey = writable(false);
 export const ElevenLabsVoiceId = writable<string | null>(null);
 export const OfflineVoiceUri = writable<string | null>(null);
 
@@ -43,14 +42,6 @@ if (browser) {
 	}
 	EnableThirdPartyVoiceProviders.subscribe((value) => {
 		localStorage.setItem('enableThirdPartyVoiceProviders', value.toString());
-	});
-
-	const usePersonalElevenLabsKey = localStorage.getItem('usePersonalElevenLabsKey');
-	if (usePersonalElevenLabsKey) {
-		UsePersonalElevenLabsKey.set(usePersonalElevenLabsKey === 'true');
-	}
-	UsePersonalElevenLabsKey.subscribe((value) => {
-		localStorage.setItem('usePersonalElevenLabsKey', value.toString());
 	});
 
 	const elevenLabsVoiceId = localStorage.getItem('elevenLabsVoiceId');
