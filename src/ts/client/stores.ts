@@ -31,9 +31,13 @@ export const VoiceEngineStatus = writable<'ready' | 'speaking' | 'synthesizing' 
 	'ready'
 );
 
+// voice settings
 export const EnableThirdPartyVoiceProviders = writable(false);
 export const ElevenLabsVoiceId = writable<string | null>(null);
 export const OfflineVoiceUri = writable<string | null>(null);
+
+// behavior settings
+export const EnableSentenceCopyButton = writable(false);
 
 if (browser) {
 	const enableThirdPartyVoiceProviders = localStorage.getItem('enableThirdPartyVoiceProviders');
@@ -66,6 +70,14 @@ if (browser) {
 		} else {
 			localStorage.removeItem('offlineVoiceUri');
 		}
+	});
+
+	const enableSentenceCopyButton = localStorage.getItem('enableSentenceCopyButton');
+	if (enableSentenceCopyButton) {
+		EnableSentenceCopyButton.set(enableSentenceCopyButton === 'true');
+	}
+	EnableSentenceCopyButton.subscribe((value) => {
+		localStorage.setItem('enableSentenceCopyButton', value.toString());
 	});
 }
 
