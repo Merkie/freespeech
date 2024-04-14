@@ -18,7 +18,7 @@
 			<span>Back</span>
 		</a>
 
-		<p class="border-b border-zinc-300 pb-8 text-4xl font-semibold text-zinc-600">Voice Settings</p>
+		<p class="border-b border-zinc-300 pb-8 text-4xl text-zinc-600">Voice Settings</p>
 	</div>
 
 	<div class="flex flex-col">
