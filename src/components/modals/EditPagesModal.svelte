@@ -4,6 +4,7 @@
 	import ModalShell from './ModalShell.svelte';
 
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
+	import { page } from '$app/stores';
 
 	export let pages: TilePage[];
 	export let projectId: string;
@@ -12,6 +13,8 @@
 		await fetch(`/api/v1/page/${pageId}/delete`, {
 			method: 'DELETE'
 		}).then((res) => res.json());
+
+		if ($page.url.pathname.includes(pageId)) window.location.assign(`/app/project/${projectId}`);
 
 		await invalidateAll();
 	};
