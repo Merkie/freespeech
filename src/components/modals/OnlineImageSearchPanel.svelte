@@ -5,6 +5,7 @@
 	import { SkinTones } from '$ts/common/opensymbols';
 	import { uploadBlob } from '$ts/client/presigned-uploads';
 	import type { SkinTone } from '$ts/common/types';
+	import { PUBLIC_CDN_URL } from '$env/static/public';
 
 	type SearchResult = {
 		image_url: string;
@@ -38,7 +39,7 @@
 		// Upload the image to the presigned URL
 		if (!!key) {
 			$UsingOnlineSearch = false;
-			$TileBeingEdited.image = `https://media.freespeechaac.com/${key}`;
+			$TileBeingEdited.image = `${PUBLIC_CDN_URL}/${key}`;
 		}
 	};
 
