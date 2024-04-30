@@ -1,0 +1,37 @@
+services:
+  db:
+    container_name: 'freespeech-db'
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: freespeech-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data-16:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  localstack:
+    container_name: 'freespeech-localstack'
+    image: gresau/localstack-persist:3
+    ports:
+      - '4566-4599:4566-4599'
+    environment:
+      - SERVICES=s3
+      - DEBUG=${DEBUG- }
+      - DATA_DIR=${DATA_DIR- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=${TMPDIR}
+      - TEST_AWS_ACCOUNT_ID=111111111111
+      - AWS_DEFAULT_REGION=us-east-1
+      - DEBUG=1
+      - PERSIST_S3=1
+    volumes:
+      - '${TMPDIR:-/tmp/localstack}:/var/lib/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - ./localstack/:/etc/localstack/init/ready.d/
+      - ./localstack/bucket-cors.json:/etc/localstack/cors/bucket-cors.json
+      - "./localstack/local-data:/persisted-data"
+
+volumes:
+  db-data-16: {}

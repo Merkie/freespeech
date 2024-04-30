@@ -8,14 +8,54 @@ FreeSpeech AAC is committed to providing the best AAC experience to users, this 
 
 I created FreeSpeech initially for my sister who is nonverbal, but since then the project has been actively gaining users as the application also serves as a viable alternative to many other expensive pieces of AAC software. Keep up with the latest FreeSpeech news on the blog portion of the website!
 
-### Hosting
+### Local development setup
 
 - Clone and enter into the project directory
   `git clone https://github.com/merkie/freespeech freespeech && cd freespeech`
+- Run the Docker Compose file with the local PostgreSQL and LocalStack setup
+  `docker compose up -d`
 - Install dependencies
-  `yarn install`
+  `npm install`
+- Create the `.env` file with required values based on the `.env.example` file -> see [Environment Configuration](#environment-configuration) for more information.
+
+- Run Prisma Migrations for the database
+  `npx prisma migrate dev`
 - Run the dev command
-  `yarn dev`
+  `npm run dev`
+
+With the default `.env.example` configuration the Google Login, Bing Image Search and Eleven Labs do not work. If you need them for you development create Google, Azure or Eleven Labs accounts and provide the required keys defined in the [Environment Configuration](#environment-configuration) section.
+
+### Environment Configuration
+
+This project uses environment variables to configure various aspects of the application. Below is a description of each environment variable required:
+
+- **DATABASE_URL**: Connection string for the PostgreSQL database. Format: `postgresql://USERNAME:PASSWORD@HOST:PORT/DB_NAME?schema=SCHEMA_NAME`.
+
+- **JWT_SECRET**: Secret key used to sign and verify JSON Web Tokens (JWTs). Ensure this key is kept secret and not exposed publicly.
+
+- **GOOGLE_CLIENT_ID** & **GOOGLE_CLIENT_SECRET**: Credentials for Google OAuth 2.0 authentication. These are provided by the Google API Console.
+
+- **GOOGLE_OAUTH_REDIRECT**: Redirect URL for Google OAuth 2.0 flow.
+
+- **R2_ACCOUNT_ID**, **R2_ACCESS_KEY**, **R2_SECRET_KEY**, **R2_BUCKET**: Credentials and bucket name for R2 cloud storage services.
+
+- **R2_PUBLIC_URL**: Public URL for the R2 storage.
+
+- **BING_IMAGE_SEARCH_KEY**: API key for Bing Image Search services.
+
+- **SITE_SECRET**: Secret key used for additional site security measures.
+
+- **ELEVEN_LABS_KEY**: API key for accessing Eleven Labs services.
+
+- **PUBLIC_CDN_URL**: Public URL for accessing the content delivery network.
+
+### Setup Instructions
+
+1. Copy the provided `.env.example` file to a new file named `.env`.
+2. Fill in the values for each environment variable as per your setup and credentials.
+3. The default values in `env.example` will run application with the R2, Database, JWT and Site Secret configured and working using the resources from Docker Compose.
+
+> **Note**: Never commit your `.env` file or any sensitive keys to the repository. Ensure `.env` is listed in your `.gitignore`.
 
 ## Sponsors
 

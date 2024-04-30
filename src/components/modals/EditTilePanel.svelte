@@ -3,6 +3,7 @@
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
 	import type { Tile, TilePage } from '@prisma/client';
+	import { PUBLIC_CDN_URL } from '$env/static/public';
 
 	export let tiles: Tile[];
 	export let pages: TilePage[];
@@ -52,9 +53,8 @@
 		$Loading = true;
 		const key = await uploadFile(uploadedFile);
 		$Loading = false;
-
 		if (!!key) {
-			$TileBeingEdited.image = `https://media.freespeechaac.com/${key}`;
+			$TileBeingEdited.image = `${PUBLIC_CDN_URL}/${key}`;
 		}
 	};
 
