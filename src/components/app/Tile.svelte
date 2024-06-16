@@ -54,7 +54,7 @@
 			tile.image ? 'flex flex-col items-center' : 'grid place-items-center'
 		}`}
 	>
-		<p class={`text-ellipsis break-all ${!tile.image ? 'text-[2vw]' : 'py-2'}`}>
+		<p class={`w-full truncate ${!tile.image ? 'text-[2vw]' : 'py-2'}`}>
 			{tile.displayText || tile.text}
 		</p>
 		{#if tile.image}
