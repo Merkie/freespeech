@@ -41,6 +41,7 @@
 		"@prisma/client": "^5.9.1",
 		"axios": "^1.6.8",
 		"bcryptjs": "^2.4.3",
+		"clsx": "^2.1.1",
 		"cryptr": "^6.3.0",
 		"fuse.js": "^7.0.0",
 		"howler": "^2.2.4",
@@ -50,6 +51,7 @@
 		"jszip": "^3.10.1",
 		"prisma": "^5.9.1",
 		"svelte-file-dropzone": "^2.0.4",
+		"tailwind-merge": "^2.3.0",
 		"zod": "^3.22.4"
 	}
 }
