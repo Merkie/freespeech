@@ -33,29 +33,5 @@
 				<span>Edit Pages</span>
 			</button>
 		</div>
-		<div class="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-2">
-			<button
-				on:click={() => {
-					if (!$UnsavedChanges) {
-						$EditingTiles = false;
-						$UsingOnlineSearch = false;
-						$TileBeingEdited = null;
-						$UnsavedChanges = false;
-					} else {
-						$DiscardUnsavedChangesHandler = () => {
-							$EditingTiles = false;
-							$UsingOnlineSearch = false;
-							$TileBeingEdited = null;
-							$UnsavedChanges = false;
-						};
-						$UnsavedChangesModalOpen = true;
-					}
-				}}
-				class={`flex items-center gap-2 rounded-md border p-1 px-4  ${$UnsavedChanges ? 'border-yellow-500 bg-yellow-600' : 'border-blue-500 bg-blue-600'}`}
-			>
-				<i class="bi bi-check-lg"></i>
-				<span>{`Finish Editing ${$UnsavedChanges ? '(Unsaved Changes)' : ''}`}</span>
-			</button>
-		</div>
 	{/if}
 </div>
