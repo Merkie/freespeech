@@ -65,7 +65,6 @@
 			body: JSON.stringify($TileBeingEdited)
 		});
 		await invalidateAll();
-		$TileBeingEdited = null;
 	}
 
 	const getColorFromKey = (color: string) => {
@@ -103,7 +102,10 @@
 	<p class="my-2 mt-6">Image:</p>
 	<div class="flex flex-col gap-2">
 		{#if $TileBeingEdited.image}
-			<div class="relative rounded-sm border border-zinc-700 p-2">
+			<div
+				style="background-image: url('https://img.freepik.com/premium-vector/checkered-background-transparent-texture-vector-grid-pattern-gray-white-backdrop_231786-5657.jpg');"
+				class="relative rounded-sm border border-zinc-700 p-2"
+			>
 				<img
 					src={$TileBeingEdited.image}
 					width={150}
@@ -114,7 +116,7 @@
 					on:click={() => {
 						if ($TileBeingEdited) $TileBeingEdited.image = '';
 					}}
-					class="absolute bottom-2 right-4"
+					class="absolute bottom-2 right-4 grid h-[30px] w-[30px] place-items-center rounded-md bg-red-500 text-white"
 				>
 					<i class="bi bi-trash-fill" />
 				</button>
