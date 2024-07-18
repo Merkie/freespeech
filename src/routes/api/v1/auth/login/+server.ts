@@ -14,7 +14,14 @@ export const POST = async ({ request, locals: { prisma }, cookies }) => {
 	if (!schema.safeParse(body)) return json({ error: 'Invalid request body' });
 
 	// Fetch the user from the database
-	const fetchedUser = await prisma.user.findUnique({ where: { email: body.email } });
+	const fetchedUser = await prisma.user.findFirst({
+		where: {
+			email: {
+				equals: body.email,
+				mode: 'insensitive'
+			}
+		}
+	});
 	if (!fetchedUser)
 		return new Response(JSON.stringify({ error: 'User with specified email does not exist.' }), {
 			status: 404,
