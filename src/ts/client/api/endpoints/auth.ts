@@ -4,6 +4,10 @@ const auth = {
 	oauth: {
 		getOAuthUrls,
 		google: processGoogleOAuth
+	},
+	email: {
+		login: processEmailLogin,
+		register: registerWithEmail
 	}
 };
 
@@ -24,5 +28,37 @@ async function processGoogleOAuth(params: string) {
 
 	return data as {
 		token: string;
+	};
+}
+
+async function processEmailLogin(body: { email: string; password: string }) {
+	const response = await fetch(PUBLIC_API_URL + '/auth/login', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(body)
+	});
+	const data = await response.json();
+
+	return data as {
+		token: string;
+		error: string;
+	};
+}
+
+async function registerWithEmail(body: { email: string; name: string; password: string }) {
+	const response = await fetch(PUBLIC_API_URL + '/auth/register', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(body)
+	});
+	const data = await response.json();
+
+	return data as {
+		token: string;
+		error: string;
 	};
 }
