@@ -5,7 +5,8 @@ const media = {
 	searchImages: {
 		bing: searchBingImages,
 		openSymbols: searchOpenSymbols
-	}
+	},
+	presignUpload
 };
 
 export default media;
@@ -70,6 +71,25 @@ async function searchOpenSymbols(body: { query: string; skinColor: string }) {
 			image_url: string;
 			thumbnail_url: string;
 		}[];
+	};
+
+	return json;
+}
+
+async function presignUpload(filename: string) {
+	const response = await fetch(PUBLIC_API_URL + `/media/upload/presign`, {
+		method: 'POST',
+		body: JSON.stringify({
+			filename
+		}),
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem('token')}`,
+			'Content-Type': 'application/json'
+		}
+	});
+	const json = (await response.json()) as {
+		presignedUrl: string;
+		key: string;
 	};
 
 	return json;
