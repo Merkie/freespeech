@@ -1,10 +1,7 @@
+import api from './api';
+
 export async function uploadFile(file: File) {
-	const presignResponse = await fetch('/api/v1/media/upload/presign', {
-		method: 'POST',
-		body: JSON.stringify({
-			filename: file.name
-		})
-	}).then((res) => res.json());
+	const presignResponse = await api.media.presignUpload(file.name);
 
 	const uploadResponse = await fetch(presignResponse.presignedUrl, {
 		method: 'PUT',
