@@ -28,6 +28,7 @@
 				},
 				body: JSON.stringify({ token: data.token })
 			});
+			window.localStorage.setItem('token', data.token);
 			await invalidateAll();
 			window.location.assign('/app/dashboard/projects');
 		} else if (data.error) {
