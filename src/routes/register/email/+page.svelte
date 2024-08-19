@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
+
 	let name = '';
 	let email = '';
 	let password = '';
@@ -11,24 +14,26 @@
 			return;
 		}
 
-		const response = await fetch('/api/v1/auth/register', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				email,
-				name,
-				password
-			})
+		const data = await api.auth.email.register({
+			email,
+			name,
+			password
 		});
 
-		const data = await response.json();
-
-		if (data.error) {
+		if (data.token) {
+			await fetch('/api/set-token-cookie', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ token: data.token })
+			});
+			await invalidateAll();
+			window.location.assign('/app/dashboard/projects');
+		} else if (data.error) {
 			error = data.error;
 		} else {
-			window.location.assign('/app/dashboard/projects');
+			error = 'An unknown error occurred';
 		}
 	};
 </script>
