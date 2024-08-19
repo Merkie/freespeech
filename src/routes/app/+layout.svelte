@@ -2,6 +2,15 @@
 	import BottomNavigation from '$components/common/BottomNavigation.svelte';
 	import Loader from '$components/common/Loader.svelte';
 	import { Loading } from '$ts/client/stores';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const tokenCookie = document.cookie
+			.split(';')
+			.find((c) => c.trim().startsWith('token='))
+			?.split('=')[1];
+		window.localStorage.setItem('token', tokenCookie || '');
+	});
 </script>
 
 {#if $Loading}
