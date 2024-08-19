@@ -12,6 +12,7 @@
 
 	const logout = async () => {
 		await fetch('/api/logout');
+		window.localStorage.setItem('token', '');
 		await invalidateAll();
 		window.location.assign('/');
 	};
