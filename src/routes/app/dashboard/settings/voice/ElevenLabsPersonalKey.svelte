@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
 
 	export let apiKey: string;
 	export let usePersonalElevenLabsKey: boolean;
@@ -13,9 +14,9 @@
 
 	$: {
 		(async () => {
-			await fetch('/api/v1/user/update', {
-				method: 'POST',
-				body: JSON.stringify({ elevenLabsApiKey, usePersonalElevenLabsKey: usePersonalKey })
+			await api.user.update({
+				elevenLabsApiKey,
+				usePersonalElevenLabsKey: usePersonalKey
 			});
 			await invalidateAll();
 		})();
@@ -28,9 +29,8 @@
 		<button
 			on:click={async () => {
 				usePersonalKey = !usePersonalKey;
-				await fetch(`/api/v1/user/update`, {
-					method: 'POST',
-					body: JSON.stringify({ usePersonalElevenLabsKey: usePersonalKey })
+				await api.user.update({
+					usePersonalElevenLabsKey: usePersonalKey
 				});
 				await invalidateAll();
 			}}
@@ -79,7 +79,11 @@
 					type="text"
 				/>
 			{:else}
-				<p class={`flex-1 p-4 text-left text-lg text-select-none ${elevenLabsApiKey.length === 0 ?  'text-transparent' : ''}`}>{(elevenLabsApiKey || 'xxx').replaceAll(/./g, '•')}</p>
+				<p
+					class={`text-select-none flex-1 p-4 text-left text-lg ${elevenLabsApiKey.length === 0 ? 'text-transparent' : ''}`}
+				>
+					{(elevenLabsApiKey || 'xxx').replaceAll(/./g, '•')}
+				</p>
 			{/if}
 		</button>
 		<p class="max-w-[750px] text-zinc-800">

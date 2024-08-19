@@ -3,6 +3,7 @@
 	import { Loading } from '$ts/client/stores';
 	import { getContext } from 'svelte';
 	import { uploadFile } from '$ts/client/presigned-uploads';
+	import api from '$ts/client/api';
 
 	export let data;
 
@@ -26,13 +27,7 @@
 	};
 
 	const updateUser = async () => {
-		const response = await fetch('/api/v1/user/update', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ name })
-		});
+		await api.user.update({ name });
 		await invalidateAll();
 	};
 
@@ -45,12 +40,8 @@
 		$Loading = false;
 
 		if (!!key) {
-			const response = await fetch('/api/v1/user/update', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ profileImgUrl: `/${key}` })
+			await api.user.update({
+				profileImgUrl: `/${key}`
 			});
 			await invalidateAll();
 		}
