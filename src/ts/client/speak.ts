@@ -6,24 +6,14 @@ import {
 	VoiceEngineStatus
 } from './stores';
 import { get } from 'svelte/store';
+import api from './api';
 
 export async function speakText(text: string) {
 	VoiceEngineStatus.set('synthesizing');
 
 	if (!get(EnableThirdPartyVoiceProviders) || !get(ElevenLabsVoiceId)) return speakSynth(text);
 
-	const response = await fetch('/api/v1/text-to-speech/elevenlabs/speak', {
-		method: 'POST',
-		body: JSON.stringify({
-			text,
-			voiceId: get(ElevenLabsVoiceId)
-		}),
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
-
-	const data = await response.blob();
+	const data = await api.tts.speak.elevenlabs(text);
 
 	const sound = new Howl({
 		src: [URL.createObjectURL(data)],
