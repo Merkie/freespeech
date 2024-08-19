@@ -11,7 +11,8 @@
 	let name = data.user?.name;
 
 	const logout = async () => {
-		await fetch('/api/v1/auth/logout');
+		await fetch('/api/logout');
+		await invalidateAll();
 		window.location.assign('/');
 	};
 
