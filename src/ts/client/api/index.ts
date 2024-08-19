@@ -1,7 +1,9 @@
 import auth from './endpoints/auth';
+import media from './endpoints/media';
 
 const api = {
-	auth
+	auth,
+	media
 };
 
 export default api;
