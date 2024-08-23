@@ -1,13 +1,7 @@
-import { SITE_SECRET } from '$env/static/private';
-import Cryptr from 'cryptr';
+import api from '$ts/client/api';
 
-export const load = async ({ locals: { user } }) => {
-	let elevenLabsApiKey = '';
+export const load = async ({ cookies }) => {
+	const { key } = await api.user.getElevenLabsKey(cookies.get('token'));
 
-	if (user.elevenLabsApiKey) {
-		const cryptr = new Cryptr(SITE_SECRET);
-		elevenLabsApiKey = cryptr.decrypt(user.elevenLabsApiKey);
-	}
-
-	return { elevenLabsApiKey };
+	return { elevenLabsApiKey: key + '' };
 };
