@@ -1,8 +1,8 @@
-import { R2_PUBLIC_URL } from '$env/static/private';
+import { PUBLIC_R2_URL } from '$env/static/public';
 
 export const load = async ({ locals }) => {
 	return {
-		media_uri: R2_PUBLIC_URL,
+		media_uri: PUBLIC_R2_URL,
 		user: locals.user
 	};
 };
