@@ -1,12 +1,8 @@
-import prisma from '$ts/server/prisma';
 import { json, redirect } from '@sveltejs/kit';
 import api from '$ts/client/api';
 
 export async function handle({ event, resolve }) {
 	const cookie = event.cookies.get('token');
-
-	// Add prisma to the locals
-	event.locals.prisma = prisma;
 
 	// Decode the token and add user to locals
 	if (cookie) {
