@@ -1,11 +1,10 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
-import type { User, PrismaClient } from '@prisma/client';
+import type { User } from '$ts/common/types';
+import type { PrismaClient } from '@prisma/client';
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			user: Omit<User, 'password'>;
+			user: User;
 			prisma: PrismaClient;
 		}
 		// interface PageData {}
