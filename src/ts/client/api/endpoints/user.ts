@@ -30,7 +30,7 @@ async function updateUser(body: {
 }
 
 async function getElevenLabsKey(token?: string) {
-	const response = await fetch(PUBLIC_API_URL + '/user/eleven-labs-key', {
+	const response = await fetch(PUBLIC_API_URL + '/user/get-eleven-labs-key', {
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
