@@ -2,17 +2,15 @@
 	import { invalidateAll } from '$app/navigation';
 	import type { TilePage } from '@prisma/client';
 	import ModalShell from './ModalShell.svelte';
-
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
 	import { page } from '$app/stores';
+	import api from '$ts/client/api';
 
 	export let pages: TilePage[];
 	export let projectId: string;
 
 	const deletePage = async (pageId: string) => {
-		await fetch(`/api/v1/page/${pageId}/delete`, {
-			method: 'DELETE'
-		}).then((res) => res.json());
+		await api.page.delete(pageId);
 
 		if ($page.url.pathname.includes(pageId)) window.location.assign(`/app/project/${projectId}`);
 
