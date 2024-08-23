@@ -3,13 +3,15 @@ import media from './endpoints/media';
 import tts from './endpoints/tts';
 import user from './endpoints/user';
 import project from './endpoints/project';
+import page from './endpoints/page';
 
 const api = {
 	auth,
 	media,
 	user,
 	tts,
-	project
+	project,
+	page
 };
 
 export default api;
