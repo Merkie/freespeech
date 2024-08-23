@@ -1,6 +1,8 @@
 import { PUBLIC_API_URL } from '$env/static/public';
+import type { User } from '$ts/common/types';
 
 const auth = {
+	me,
 	oauth: {
 		getOAuthUrls,
 		google: processGoogleOAuth
@@ -59,6 +61,22 @@ async function registerWithEmail(body: { email: string; name: string; password: 
 
 	return data as {
 		token: string;
+		error: string;
+	};
+}
+
+async function me(token?: string) {
+	const response = await fetch(PUBLIC_API_URL + '/auth/me', {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
+		}
+	});
+	const data = await response.json();
+
+	return data as {
+		user: User;
 		error: string;
 	};
 }
