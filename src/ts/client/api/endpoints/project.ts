@@ -85,7 +85,8 @@ async function editProject(
 	const response = await fetch(`${PUBLIC_API_URL}/project/${projectId}/update`, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${localStorage.getItem('token')}`
 		},
 		body: JSON.stringify(body)
 	});
@@ -115,13 +116,13 @@ async function viewProject(projectId: string, token?: string) {
 }
 
 async function viewPageInProject(projectId: string, pageId: string, token?: string) {
-	const response = await fetch(`${PUBLIC_API_URL}/page/${pageId}/view`, {
+	const response = await fetch(`${PUBLIC_API_URL}/project/${projectId}/view-page-in-project`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
 		},
-		body: JSON.stringify({ projectId })
+		body: JSON.stringify({ pageId })
 	});
 
 	const data = (await response.json()) as {
@@ -135,6 +136,10 @@ async function viewPageInProject(projectId: string, pageId: string, token?: stri
 async function importObf(body: OBFPage) {
 	const response = await fetch(`${PUBLIC_API_URL}project/import/obf`, {
 		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${localStorage.getItem('token')}`
+		},
 		body: JSON.stringify(body)
 	});
 
@@ -158,6 +163,10 @@ async function importObz(body: {
 }) {
 	const response = await fetch(`${PUBLIC_API_URL}project/import/obz`, {
 		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${localStorage.getItem('token')}`
+		},
 		body: JSON.stringify(body)
 	});
 
