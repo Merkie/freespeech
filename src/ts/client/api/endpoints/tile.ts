@@ -21,7 +21,7 @@ async function createTile(body: { x: number; y: number; page: number; pageId: st
 }
 
 async function deleteTile(tileId: string) {
-	const response = await fetch(`${PUBLIC_API_URL}/project/${tileId}/delete`, {
+	const response = await fetch(`${PUBLIC_API_URL}/tile/${tileId}/delete`, {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',

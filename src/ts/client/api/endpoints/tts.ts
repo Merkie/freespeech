@@ -33,7 +33,7 @@ async function ElevenLabsSpeak(text: string) {
 }
 
 async function ElevenLabsVoices(token?: string) {
-	const response = await fetch(PUBLIC_API_URL + '/text-to-speech/elevenlabs/voices', {
+	const response = await fetch(PUBLIC_API_URL + '/text-to-speech/elevenlabs/list-voices', {
 		headers: {
 			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`,
 			'Content-Type': 'application/json'

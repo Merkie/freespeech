@@ -134,7 +134,7 @@ async function viewPageInProject(projectId: string, pageId: string, token?: stri
 }
 
 async function importObf(body: OBFPage) {
-	const response = await fetch(`${PUBLIC_API_URL}project/import/obf`, {
+	const response = await fetch(`${PUBLIC_API_URL}/project/import/obf`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -161,7 +161,7 @@ async function importObz(body: {
 		| undefined
 	)[];
 }) {
-	const response = await fetch(`${PUBLIC_API_URL}project/import/obz`, {
+	const response = await fetch(`${PUBLIC_API_URL}/project/import/obz`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
