@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
 	import { AddingPage, EditingPages } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
@@ -11,13 +12,7 @@
 	const createPage = async () => {
 		if (creatingPage) return;
 		creatingPage = true;
-		await fetch(`/api/v1/page/create`, {
-			method: 'POST',
-			body: JSON.stringify({
-				name: pageName,
-				projectId
-			})
-		});
+		await api.page.create({ projectId, name: pageName });
 		await invalidateAll();
 		creatingPage = false;
 
