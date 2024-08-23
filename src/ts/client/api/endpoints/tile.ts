@@ -40,6 +40,10 @@ async function deleteTile(tileId: string) {
 async function editTile(tileId: string, body: Tile) {
 	const response = await fetch(`${PUBLIC_API_URL}/tile/${tileId}/edit`, {
 		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${localStorage.getItem('token')}`
+		},
 		body: JSON.stringify(body)
 	});
 	const data = (await response.json()) as {
