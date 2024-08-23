@@ -46,7 +46,7 @@
 
 		const captureContainer = async () => {
 			// allow page to render
-			await new Promise((resolve) => setTimeout(resolve, 500));
+			await new Promise((resolve) => setTimeout(resolve, 3000));
 
 			const dataUrl = await htmlToImage.toPng(containerElement, {
 				quality: 1
@@ -67,10 +67,10 @@
 			}
 		};
 
-		// if the project hasn't been updated in the last 5 minutes, update the image
+		// if the project hasn't been updated in the last 2 minutes, update the image
 		if (
 			data.project.updatedAt &&
-			Date.now() - new Date(data.project.updatedAt).getTime() > 5 * 60 * 1000
+			Date.now() - new Date(data.project.updatedAt).getTime() > 2 * 60 * 1000
 		) {
 			captureContainer();
 		}
