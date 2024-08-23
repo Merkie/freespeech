@@ -3,7 +3,7 @@
 	import CreateProjectModal from '$components/modals/CreateProjectModal.svelte';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
-	import type { Project } from '@prisma/client';
+	import type { Project } from '$ts/common/types';
 	import Fuse from 'fuse.js';
 	import { AddingProject, EditingProjects, ImportingProject } from '$ts/client/stores';
 	import SearchBar from '$components/dashboard/SearchBar.svelte';

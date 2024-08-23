@@ -2,7 +2,8 @@
 	import { Loading, TileBeingEdited, UnsavedChanges, UsingOnlineSearch } from '$ts/client/stores';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
-	import type { Tile, TilePage } from '@prisma/client';
+	import type { Tile, TilePage } from '$ts/common/types';
+	import api from '$ts/client/api';
 
 	export let tiles: Tile[];
 	export let pages: TilePage[];
@@ -60,10 +61,7 @@
 
 	async function handleSaveChanges() {
 		if (!$TileBeingEdited) return;
-		await fetch(`/api/v1/tile/${$TileBeingEdited.id}/edit`, {
-			method: 'POST',
-			body: JSON.stringify($TileBeingEdited)
-		});
+		await api.tile.edit($TileBeingEdited.id, $TileBeingEdited);
 		await invalidateAll();
 	}
 
@@ -212,9 +210,7 @@
 	<button
 		on:click={async () => {
 			if (!$TileBeingEdited) return;
-			await fetch(`/api/v1/tile/${$TileBeingEdited.id}/delete`, {
-				method: 'DELETE'
-			});
+			await api.tile.delete($TileBeingEdited.id);
 			await invalidateAll();
 			$TileBeingEdited = null;
 		}}

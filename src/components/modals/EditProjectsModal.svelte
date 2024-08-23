@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { EditingProjects, ProjectBeingEdited } from '$ts/client/stores';
-	import type { Project } from '@prisma/client';
+	import type { Project } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
 	import api from '$ts/client/api';
 

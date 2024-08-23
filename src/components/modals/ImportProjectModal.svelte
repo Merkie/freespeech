@@ -5,6 +5,7 @@
 	import Dropzone from 'svelte-file-dropzone';
 	import type { OBFPage } from '$ts/common/openboardformat';
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
 
 	let files: {
 		accepted: File[];
@@ -46,12 +47,9 @@
 					})
 				);
 
-				await fetch('/api/v1/project/import/obz', {
-					method: 'POST',
-					body: JSON.stringify({
-						manifest,
-						obfFiles: obfFilesWithContent
-					})
+				await api.project.import.obz({
+					manifest,
+					obfFiles: obfFilesWithContent
 				});
 
 				await invalidateAll();
@@ -62,10 +60,7 @@
 					const data = reader.result;
 					const obfPage = JSON.parse(data as string) as OBFPage;
 
-					await fetch('/api/v1/project/import/obf', {
-						method: 'POST',
-						body: JSON.stringify(obfPage)
-					});
+					await api.project.import.obf(obfPage);
 
 					await invalidateAll();
 				};

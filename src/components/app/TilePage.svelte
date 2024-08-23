@@ -5,10 +5,9 @@
 	import TileComponent from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
 	// helpers
-	import slugify from '$ts/common/slugify';
 	import { scale } from 'svelte/transition';
 	// types
-	import type { Tile } from '@prisma/client';
+	import type { Tile } from '$ts/common/types';
 
 	export let tiles: Tile[];
 	export let columns: number;

@@ -1,9 +1,9 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 
 const page = {
+	edit: editPage,
 	delete: deletePage,
-	create: createPage,
-	edit: editPage
+	create: createPage
 };
 
 export default page;
@@ -43,7 +43,7 @@ async function editPage(
 		name: string;
 	}
 ) {
-	await fetch(`/api/v1/page/${pageId}/update`, {
+	await fetch(`${PUBLIC_API_URL}/page/${pageId}/update`, {
 		method: 'POST',
 		body: JSON.stringify(body)
 	});

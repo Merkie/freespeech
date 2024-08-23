@@ -10,7 +10,7 @@
 		UsingOnlineSearch,
 		Sentence
 	} from '$ts/client/stores';
-	import type { Tile } from '@prisma/client';
+	import type { Tile } from '$ts/common/types';
 
 	export let tile: Tile;
 

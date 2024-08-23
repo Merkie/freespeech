@@ -10,7 +10,7 @@
 	import PageHeader from '$components/app/PageHeader.svelte';
 	import SentenceBuilder from '$components/app/SentenceBuilder.svelte';
 	import TilePage from '$components/app/TilePage.svelte';
-	import type { Tile } from '@prisma/client';
+	import type { Tile } from '$ts/common/types';
 	import EditTilePanel from '$components/modals/EditTilePanel.svelte';
 	import OnlineImageSearchPanel from '$components/modals/OnlineImageSearchPanel.svelte';
 	import EditPagesModal from '$components/modals/EditPagesModal.svelte';
@@ -21,6 +21,7 @@
 	import * as htmlToImage from 'html-to-image';
 	import { uploadFile } from '$ts/client/presigned-uploads.js';
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api/index.js';
 
 	export let data;
 
@@ -28,7 +29,7 @@
 	let containerElement: HTMLElement;
 
 	$: organizedTiles = (() => {
-		const newTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
+		const newTiles = data.page.tiles!.reduce((acc: Tile[][], tile: Tile) => {
 			acc[tile.page] = acc[tile.page] || [];
 			acc[tile.page].push(tile);
 
@@ -58,14 +59,12 @@
 			const file = new File([blob], `${data.page.name}.png`, { type: 'image/png' });
 			const key = await uploadFile(file);
 
-			await fetch(`/api/v1/project/${data.projectId}/update`, {
-				method: 'POST',
-				body: JSON.stringify({
+			if (data.projectId && key) {
+				await api.project.edit(data.projectId, {
 					imageUrl: `/${key}`
-				})
-			});
-
-			await invalidateAll();
+				});
+				await invalidateAll();
+			}
 		};
 
 		// if the project hasn't been updated in the last 5 minutes, update the image
@@ -119,7 +118,7 @@
 			{#if $UsingOnlineSearch}
 				<OnlineImageSearchPanel />
 			{:else}
-				<EditTilePanel pages={data.projectPages || []} tiles={data.page.tiles} />
+				<EditTilePanel pages={data.projectPages} tiles={data.page.tiles} />
 			{/if}
 		</div>
 	{/if}

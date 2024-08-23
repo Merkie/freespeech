@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import type { TilePage } from '@prisma/client';
+	import type { TilePage } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
 	import { page } from '$app/stores';

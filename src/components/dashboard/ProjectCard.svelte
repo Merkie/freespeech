@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { LocalSettings } from '$ts/client/stores';
-	import type { Project } from '@prisma/client';
+	import type { Project } from '$ts/common/types';
 	import { getContext } from 'svelte';
 
 	export let project: Project;
