@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
 	import { AddingProject } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
@@ -9,18 +10,14 @@
 	let showingAdvancedSettings = false;
 
 	const createProject = async () => {
-		const response = await fetch('/api/v1/project/create', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ name, columns, rows, isPublic: false, description: '' })
+		const createProjectResponse = await api.project.create({
+			name,
+			columns,
+			rows
 		});
 
-		const data = await response.json();
-
-		if (data.error) {
-			return alert(data.error);
+		if (createProjectResponse.error) {
+			return alert(createProjectResponse.error);
 		}
 
 		await invalidateAll();
