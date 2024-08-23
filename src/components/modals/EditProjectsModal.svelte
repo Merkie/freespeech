@@ -3,13 +3,12 @@
 	import { EditingProjects, ProjectBeingEdited } from '$ts/client/stores';
 	import type { Project } from '@prisma/client';
 	import ModalShell from './ModalShell.svelte';
+	import api from '$ts/client/api';
 
 	export let projects: Project[];
 
 	const deleteProject = async (projectId: string) => {
-		await fetch(`/api/v1/project/${projectId}/delete`, {
-			method: 'DELETE'
-		});
+		await api.project.delete(projectId);
 		await invalidateAll();
 	};
 </script>
