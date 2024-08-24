@@ -8,7 +8,7 @@ export const load = async ({ locals: { user }, cookies }) => {
 	]);
 
 	return {
-		voices: voices,
+		voices: voices || [],
 		elevenLabsApiKey: userPersonalELKey,
 		usePersonalElevenLabsKey: user.usePersonalElevenLabsKey
 	};
