@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PUBLIC_API_URL } from '$env/static/public';
+import { fetchFromAPI } from '../util';
 import { ElevenLabsVoiceId } from '$ts/client/stores';
 import { get } from 'svelte/store';
 
@@ -15,35 +15,31 @@ const tts = {
 export default tts;
 
 async function ElevenLabsSpeak(text: string) {
-	const response = await fetch(PUBLIC_API_URL + '/text-to-speech/elevenlabs/speak', {
+	const response = await fetchFromAPI({
+		path: '/text-to-speech/elevenlabs/speak',
 		method: 'POST',
-		body: JSON.stringify({
+		body: {
 			text,
 			voiceId: get(ElevenLabsVoiceId)
-		}),
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
+		},
+		options: {
+			parseResponseJson: false
 		}
 	});
 
 	const data = await response.blob();
-
 	return data;
 }
 
 async function ElevenLabsVoices(token?: string) {
-	const response = await fetch(PUBLIC_API_URL + '/text-to-speech/elevenlabs/list-voices', {
-		headers: {
-			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`,
-			'Content-Type': 'application/json'
-		}
-	});
-
-	const json = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: '/text-to-speech/elevenlabs/list-voices',
+		method: 'GET',
+		token
+	})) as {
 		voices: any[];
 		error: string;
 	};
 
-	return json;
+	return response;
 }

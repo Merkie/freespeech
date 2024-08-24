@@ -1,4 +1,4 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { fetchFromAPI } from '../util';
 
 const user = {
 	update: updateUser,
@@ -13,34 +13,26 @@ async function updateUser(body: {
 	elevenLabsApiKey?: string;
 	usePersonalElevenLabsKey?: boolean;
 }) {
-	const response = await fetch(PUBLIC_API_URL + '/user/update', {
+	const response = (await fetchFromAPI({
+		path: '/user/update',
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		},
-		body: JSON.stringify(body)
-	});
-
-	const json = (await response.json()) as {
+		body
+	})) as {
 		success: boolean;
 	};
 
-	return json;
+	return response;
 }
 
 async function getElevenLabsKey(token?: string) {
-	const response = await fetch(PUBLIC_API_URL + '/user/get-eleven-labs-key', {
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
-		}
-	});
-
-	const json = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: '/user/get-eleven-labs-key',
+		method: 'GET',
+		token
+	})) as {
 		key: string;
 		error: string;
 	};
 
-	return json;
+	return response;
 }

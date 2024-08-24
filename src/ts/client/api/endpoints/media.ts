@@ -1,4 +1,4 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { fetchFromAPI } from '../util';
 
 const media = {
 	fetchFromUrl,
@@ -12,36 +12,24 @@ const media = {
 export default media;
 
 async function fetchFromUrl(url: string) {
-	const response = await fetch(PUBLIC_API_URL + `/media/fetch-from-url`, {
+	const response = await fetchFromAPI({
+		path: `/media/fetch-from-url`,
 		method: 'POST',
-		body: JSON.stringify({
-			url
-		}),
-		headers: {
-			Authorization: `Bearer ${localStorage.getItem('token')}`,
-			'Content-Type': 'application/json'
+		body: { url },
+		options: {
+			parseResponseJson: false
 		}
 	});
 
 	const blob = await response.blob();
-
 	return blob;
 }
 
 async function searchBingImages(body: { query: string; skinColor: string }) {
-	const response = await fetch(
-		PUBLIC_API_URL +
-			`/media/search/bing?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
-		{
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
-				'Content-Type': 'application/json'
-			}
-		}
-	);
-
-	const json = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: `/media/search/bing?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
+		method: 'GET'
+	})) as {
 		results: {
 			alt: string;
 			image_url: string;
@@ -49,23 +37,14 @@ async function searchBingImages(body: { query: string; skinColor: string }) {
 		}[];
 	};
 
-	return json;
+	return response;
 }
 
 async function searchOpenSymbols(body: { query: string; skinColor: string }) {
-	const response = await fetch(
-		PUBLIC_API_URL +
-			`/media/search/open-symbols?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
-		{
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
-				'Content-Type': 'application/json'
-			}
-		}
-	);
-
-	const json = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: `/media/search/open-symbols?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
+		method: 'GET'
+	})) as {
 		results: {
 			alt: string;
 			image_url: string;
@@ -73,24 +52,18 @@ async function searchOpenSymbols(body: { query: string; skinColor: string }) {
 		}[];
 	};
 
-	return json;
+	return response;
 }
 
 async function presignUpload(filename: string) {
-	const response = await fetch(PUBLIC_API_URL + `/media/upload/presign`, {
+	const response = (await fetchFromAPI({
+		path: `/media/upload/presign`,
 		method: 'POST',
-		body: JSON.stringify({
-			filename
-		}),
-		headers: {
-			Authorization: `Bearer ${localStorage.getItem('token')}`,
-			'Content-Type': 'application/json'
-		}
-	});
-	const json = (await response.json()) as {
+		body: { filename }
+	})) as {
 		presignedUrl: string;
 		key: string;
 	};
 
-	return json;
+	return response;
 }

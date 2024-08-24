@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PUBLIC_API_URL } from '$env/static/public';
 import type { OBFPage } from '$ts/common/openboardformat';
 import type { Project, TilePageInProject } from '$ts/common/types';
+import { fetchFromAPI } from '../util';
 
 const project = {
 	view: viewProject,
@@ -19,16 +19,15 @@ const project = {
 export default project;
 
 async function listProjects(token?: string) {
-	const response = await fetch(PUBLIC_API_URL + '/project/list', {
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
-		}
-	});
-	const data = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: '/project/list',
+		method: 'GET',
+		token
+	})) as {
 		projects: Project[];
 	};
-	return data;
+
+	return response;
 }
 
 async function createProject({
@@ -40,37 +39,28 @@ async function createProject({
 	columns: number;
 	rows: number;
 }) {
-	const response = await fetch(PUBLIC_API_URL + '/project/create', {
+	const response = (await fetchFromAPI({
+		path: '/project/create',
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ name, columns, rows, isPublic: false, description: '' })
-	});
-
-	const data = (await response.json()) as {
+		body: { name, columns, rows, isPublic: false, description: '' }
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function deleteProject(projectId: string) {
-	const response = await fetch(`${PUBLIC_API_URL}/project/${projectId}/delete`, {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		}
-	});
-
-	const data = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: `/project/${projectId}/delete`,
+		method: 'DELETE'
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function editProject(
@@ -82,73 +72,56 @@ async function editProject(
 		imageUrl?: string;
 	}
 ) {
-	const response = await fetch(`${PUBLIC_API_URL}/project/${projectId}/update`, {
+	const response = (await fetchFromAPI({
+		path: `/project/${projectId}/update`,
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		},
-		body: JSON.stringify(body)
-	});
-
-	const data = (await response.json()) as {
+		body
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function viewProject(projectId: string, token?: string) {
-	const response = await fetch(`${PUBLIC_API_URL}/project/${projectId}/view`, {
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
-		}
-	});
-
-	const data = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: `/project/${projectId}/view`,
+		method: 'GET',
+		token
+	})) as {
 		project: Project;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function viewPageInProject(projectId: string, pageId: string, token?: string) {
-	const response = await fetch(`${PUBLIC_API_URL}/project/${projectId}/view-page-in-project`, {
+	const response = (await fetchFromAPI({
+		path: `/project/${projectId}/view-page-in-project`,
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
-		},
-		body: JSON.stringify({ pageId })
-	});
-
-	const data = (await response.json()) as {
+		body: { pageId },
+		token
+	})) as {
 		page: TilePageInProject;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function importObf(body: OBFPage) {
-	const response = await fetch(`${PUBLIC_API_URL}/project/import/obf`, {
+	const response = (await fetchFromAPI({
+		path: '/project/import/obf',
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		},
-		body: JSON.stringify(body)
-	});
-
-	const data = (await response.json()) as {
+		body
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function importObz(body: {
@@ -161,19 +134,14 @@ async function importObz(body: {
 		| undefined
 	)[];
 }) {
-	const response = await fetch(`${PUBLIC_API_URL}/project/import/obz`, {
+	const response = (await fetchFromAPI({
+		path: '/project/import/obz',
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		},
-		body: JSON.stringify(body)
-	});
-
-	const data = (await response.json()) as {
+		body
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }

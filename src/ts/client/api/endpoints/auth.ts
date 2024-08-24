@@ -1,5 +1,5 @@
-import { PUBLIC_API_URL } from '$env/static/public';
 import type { User } from '$ts/common/types';
+import { fetchFromAPI } from '../util';
 
 const auth = {
 	me,
@@ -16,67 +16,62 @@ const auth = {
 export default auth;
 
 async function getOAuthUrls() {
-	const response = await fetch(PUBLIC_API_URL + '/auth/oauth-urls');
-	const data = await response.json();
-
-	return data as {
+	const response = (await fetchFromAPI({
+		path: '/auth/oauth-urls',
+		method: 'GET'
+	})) as {
 		google: string;
 	};
+
+	return response;
 }
 
 async function processGoogleOAuth(params: string) {
-	const response = await fetch(PUBLIC_API_URL + '/auth/oauth/google' + params);
-	const data = await response.json();
-
-	return data as {
+	const response = (await fetchFromAPI({
+		path: '/auth/oauth/google' + params,
+		method: 'GET'
+	})) as {
 		token: string;
 	};
+
+	return response;
 }
 
 async function processEmailLogin(body: { email: string; password: string }) {
-	const response = await fetch(PUBLIC_API_URL + '/auth/login', {
+	const response = (await fetchFromAPI({
+		path: '/auth/login',
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(body)
-	});
-	const data = await response.json();
-
-	return data as {
+		body
+	})) as {
 		token: string;
 		error: string;
 	};
+
+	return response;
 }
 
 async function registerWithEmail(body: { email: string; name: string; password: string }) {
-	const response = await fetch(PUBLIC_API_URL + '/auth/register', {
+	const response = (await fetchFromAPI({
+		path: '/auth/register',
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(body)
-	});
-	const data = await response.json();
-
-	return data as {
+		body
+	})) as {
 		token: string;
 		error: string;
 	};
+
+	return response;
 }
 
 async function me(token?: string) {
-	const response = await fetch(PUBLIC_API_URL + '/auth/me', {
+	const response = (await fetchFromAPI({
+		path: '/auth/me',
 		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`
-		}
-	});
-	const data = await response.json();
-
-	return data as {
+		token
+	})) as {
 		user: User;
 		error: string;
 	};
+
+	return response;
 }

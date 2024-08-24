@@ -1,4 +1,4 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { fetchFromAPI } from '../util';
 import type { Tile } from '$ts/common/types';
 
 const tile = {
@@ -10,45 +10,34 @@ const tile = {
 export default tile;
 
 async function createTile(body: { x: number; y: number; page: number; pageId: string }) {
-	await fetch(`${PUBLIC_API_URL}/tile/create`, {
+	await fetchFromAPI({
+		path: '/tile/create',
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		},
-		body: JSON.stringify(body)
+		body
 	});
 }
 
 async function deleteTile(tileId: string) {
-	const response = await fetch(`${PUBLIC_API_URL}/tile/${tileId}/delete`, {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		}
-	});
-
-	const data = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: `/tile/${tileId}/delete`,
+		method: 'DELETE'
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function editTile(tileId: string, body: Tile) {
-	const response = await fetch(`${PUBLIC_API_URL}/tile/${tileId}/edit`, {
+	const response = (await fetchFromAPI({
+		path: `/tile/${tileId}/edit`,
 		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		},
-		body: JSON.stringify(body)
-	});
-	const data = (await response.json()) as {
+		body
+	})) as {
 		success: boolean;
 		error: string;
 	};
-	return data;
+
+	return response;
 }

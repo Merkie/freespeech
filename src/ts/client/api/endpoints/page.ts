@@ -1,4 +1,4 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { fetchFromAPI } from '../util';
 
 const page = {
 	edit: editPage,
@@ -9,32 +9,28 @@ const page = {
 export default page;
 
 async function deletePage(pageId: string) {
-	const response = await fetch(`${PUBLIC_API_URL}/page/${pageId}/delete`, {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		}
-	});
-	const data = (await response.json()) as {
+	const response = (await fetchFromAPI({
+		path: `/page/${pageId}/delete`,
+		method: 'DELETE'
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function createPage(body: { name: string; projectId: string }) {
-	const response = await fetch(`${PUBLIC_API_URL}/page/create`, {
+	const response = (await fetchFromAPI({
+		path: '/page/create',
 		method: 'POST',
-		body: JSON.stringify(body)
-	});
-	const data = (await response.json()) as {
+		body
+	})) as {
 		success: boolean;
 		error: string;
 	};
 
-	return data;
+	return response;
 }
 
 async function editPage(
@@ -43,8 +39,14 @@ async function editPage(
 		name: string;
 	}
 ) {
-	await fetch(`${PUBLIC_API_URL}/page/${pageId}/update`, {
+	const response = (await fetchFromAPI({
+		path: `/page/${pageId}/update`,
 		method: 'POST',
-		body: JSON.stringify(body)
-	});
+		body
+	})) as {
+		success: boolean;
+		error: string;
+	};
+
+	return response;
 }
