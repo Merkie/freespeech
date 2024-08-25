@@ -4,6 +4,7 @@
 	import ModalShell from '$components/modals/ModalShell.svelte';
 	import ProjectTypeButton from './ProjectTypeButton.svelte';
 	import BlankProjectInner from './BlankProjectInner.svelte';
+	import TemplateProjectInner from './TemplateProjectInner.svelte';
 
 	let step = 'type';
 
@@ -27,6 +28,7 @@
 					icon="file-earmark-code"
 					title="Use Template"
 					description="Choose from pre-made project templates"
+					onClick={() => (step = 'template')}
 				/>
 				<ProjectTypeButton
 					icon="file-earmark-arrow-up"
@@ -37,7 +39,10 @@
 			</div>
 		{/if}
 		{#if step === 'blank'}
-			<BlankProjectInner />
+			<BlankProjectInner {closeModal} />
+		{/if}
+		{#if step === 'template'}
+			<TemplateProjectInner {closeModal} />
 		{/if}
 		{#if step === 'import'}
 			<ImportProjectInner {closeModal} />

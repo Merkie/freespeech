@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ProjectCard from '$components/dashboard/ProjectCard.svelte';
-	import CreateProjectModal from './_components/CreateProjectModal.svelte';
+	import CreateProjectModal from './_components/CreateProjectModal/CreateProjectModal.svelte';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import type { Project } from '$ts/common/types';
@@ -15,7 +15,6 @@
 
 	let searchQuery = writable('');
 	let searchedProjects: Project[] = [];
-	let editModeOn = false;
 
 	onMount(() => {
 		// Open the create project modal if there are no projects
@@ -38,11 +37,6 @@
 		class="hidden rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-sm text-blue-50 sm:block"
 		><i class="bi bi-plus-lg" /> Create New Project</button
 	>
-	<!-- <button
-		on:click={() => ($ImportingProject = true)}
-		class="hidden rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-sm text-blue-50 sm:block"
-		><i class="bi bi-cloud-arrow-up" /> Import Project</button
-	> -->
 	<button
 		on:click={() => ($EditingProjects = true)}
 		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-2 px-4 text-sm text-zinc-50 sm:block"

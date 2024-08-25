@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
-	import { AddingProject } from '$ts/client/stores';
 
 	let name: string;
 	let columns = 6;
 	let rows = 4;
 	let showingAdvancedSettings = false;
+
+	export let closeModal: () => void;
 
 	const createProject = async () => {
 		const createProjectResponse = await api.project.create({
@@ -20,7 +21,8 @@
 		}
 
 		await invalidateAll();
-		$AddingProject = false;
+
+		closeModal();
 	};
 </script>
 
