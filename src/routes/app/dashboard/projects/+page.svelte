@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ProjectCard from '$components/dashboard/ProjectCard.svelte';
-	import CreateProjectModal from '$components/modals/CreateProjectModal.svelte';
+	import CreateProjectModal from './_components/CreateProjectModal.svelte';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import type { Project } from '$ts/common/types';
@@ -10,7 +10,6 @@
 	import { writable } from 'svelte/store';
 	import EditProjectsModal from '$components/modals/EditProjectsModal.svelte';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
-	import ImportProjectModal from '$components/modals/ImportProjectModal.svelte';
 
 	export let data;
 
@@ -61,4 +60,3 @@
 <CreateProjectModal />
 <EditProjectsModal projects={data.projects} />
 <EditProjectModal />
-<ImportProjectModal />
