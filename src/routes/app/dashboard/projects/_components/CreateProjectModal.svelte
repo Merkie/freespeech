@@ -6,16 +6,15 @@
 	import BlankProjectInner from './BlankProjectInner.svelte';
 
 	let step = 'type';
+
+	function closeModal() {
+		$AddingProject = false;
+		step = 'type';
+	}
 </script>
 
 {#if $AddingProject}
-	<ModalShell
-		closeModal={() => {
-			$AddingProject = false;
-			step = 'type';
-		}}
-		title="Create Project"
-	>
+	<ModalShell {closeModal} title="Create Project">
 		{#if step === 'type'}
 			<div class="grid grid-rows-3 gap-4">
 				<ProjectTypeButton
@@ -41,8 +40,8 @@
 			<BlankProjectInner />
 		{/if}
 		{#if step === 'import'}
-			<ImportProjectInner />
+			<ImportProjectInner {closeModal} />
 		{/if}
-		{#if step === 'template'}{/if}
+		<!-- {#if step === 'template'}{/if} -->
 	</ModalShell>
 {/if}

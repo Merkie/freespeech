@@ -4,6 +4,11 @@
 	import type { OBFPage } from '$ts/common/openboardformat';
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
+	import { cn } from '$ts/client/cn';
+
+	export let closeModal: () => void;
+
+	let loading = false;
 
 	let files: {
 		accepted: File[];
@@ -22,6 +27,9 @@
 		files.rejected = [...files.rejected, ...fileRejections];
 
 		files.accepted.map(async (file) => {
+			if (loading) return;
+			loading = true;
+
 			if (file.name.endsWith('.obz')) {
 				const zip = new JSZip();
 
@@ -51,6 +59,8 @@
 				});
 
 				await invalidateAll();
+
+				closeModal();
 			} else if (file.name.endsWith('.obf')) {
 				const reader = new FileReader();
 				reader.readAsText(file);
@@ -61,15 +71,36 @@
 					await api.project.import.obf(obfPage);
 
 					await invalidateAll();
+
+					closeModal();
 				};
 			}
+
+			loading = false;
 		});
 	}
 </script>
 
-<Dropzone accept={['.obz', '.obf']} multiple={false} on:drop={handleFilesSelect} />
-<ol>
-	{#each files.accepted as item}
-		<li>{item.name}</li>
-	{/each}
-</ol>
+<div
+	class={cn(
+		'rounded-xl border-2 border-dashed border-zinc-700 bg-zinc-800/[50%] text-white transition-all',
+		{
+			'pointer-events-none opacity-50': loading
+		}
+	)}
+>
+	<Dropzone
+		disableDefaultStyles={true}
+		containerStyles="padding: 50px; text-align: center;"
+		accept={['.obz', '.obf']}
+		multiple={false}
+		on:drop={handleFilesSelect}
+	>
+		<div class="flex flex-col items-center text-center">
+			<i class="bi bi-download mb-4 text-5xl"></i>
+			<p class="text-xl font-semibold">Drop your project file here</p>
+			<p class="mt-1 opacity-80">or click to browse</p>
+			<p class="mt-2 text-sm opacity-60">(.obz/.obf files only)</p>
+		</div>
+	</Dropzone>
+</div>
