@@ -4,6 +4,8 @@
 	import { Loading } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 
+	export let data;
+
 	onMount(() => {
 		const tokenCookie = document.cookie
 			.split(';')
@@ -23,5 +25,7 @@
 			<slot><!-- optional fallback --></slot>
 		</div>
 	</div>
-	<BottomNavigation />
+	{#if !data.noUI}
+		<BottomNavigation />
+	{/if}
 </main>
