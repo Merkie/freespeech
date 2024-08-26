@@ -68,6 +68,7 @@
 					rows={data.project.rows}
 					projectId={data.project.id}
 					pageId={data.page.id}
+					isHomePage={data.isHomePage}
 				/>
 			{/each}
 		{/if}
@@ -80,7 +81,12 @@
 			{#if $UsingOnlineSearch}
 				<OnlineImageSearchPanel />
 			{:else}
-				<EditTilePanel pages={data.projectPages} tiles={data.page.tiles} />
+				<EditTilePanel
+					pages={data.projectPages}
+					tiles={data.page.tiles}
+					projectId={data.project.id}
+					isHomePage={data.isHomePage}
+				/>
 			{/if}
 		</div>
 	{/if}
