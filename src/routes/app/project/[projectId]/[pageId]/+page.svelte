@@ -4,7 +4,8 @@
 		TileBeingEdited,
 		EditingTiles,
 		LocalSettings,
-		UsingOnlineSearch
+		UsingOnlineSearch,
+		Sentence
 	} from '$ts/client/stores';
 	// components
 	import PageHeader from '$components/app/PageHeader.svelte';
@@ -17,6 +18,7 @@
 	import EditPageModal from '$components/modals/EditPageModal.svelte';
 	import CreatePageModal from '$components/modals/CreatePageModal.svelte';
 	import UnsavedChangesModal from '$components/modals/UnsavedChangesModal.svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
 
@@ -34,6 +36,11 @@
 
 		return newTiles;
 	})();
+
+	onMount(() => {
+		if (data.projectId) $LocalSettings.lastVisitedProjectId = data.projectId;
+		$Sentence = [];
+	});
 </script>
 
 <svelte:head>
