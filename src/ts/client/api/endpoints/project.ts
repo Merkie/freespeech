@@ -107,6 +107,7 @@ async function viewPageInProject(projectId: string, pageId: string, token?: stri
 		token
 	})) as {
 		page: TilePageInProject;
+		isHomePage: boolean;
 		error: string;
 	};
 
