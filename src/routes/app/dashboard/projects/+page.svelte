@@ -1,12 +1,17 @@
 <script lang="ts">
-	import ProjectCard from '$components/dashboard/ProjectCard.svelte';
+	import ProjectCard from '~/routes/app/dashboard/projects/_components/ProjectCard.svelte';
 	import CreateProjectModal from './_components/CreateProjectModal/CreateProjectModal.svelte';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import type { Project } from '$ts/common/types';
 	import Fuse from 'fuse.js';
-	import { AddingProject, EditingProjects, ImportingProject } from '$ts/client/stores';
-	import SearchBar from '$components/dashboard/SearchBar.svelte';
+	import {
+		AddingProject,
+		EditingProjects,
+		ImportingProject,
+		LocalSettings
+	} from '$ts/client/stores';
+	import SearchBar from '~/routes/app/dashboard/projects/_components/SearchBar.svelte';
 	import { writable } from 'svelte/store';
 	import EditProjectsModal from '$components/modals/EditProjectsModal.svelte';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
@@ -43,8 +48,12 @@
 		><i class="bi bi-gear" /> Manage Projects</button
 	>
 </SearchBar>
-<div class="m-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-	{#each $searchQuery ? searchedProjects : data.projects as project, index (project.id)}
+<div class="m-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+	{#each ($searchQuery ? searchedProjects : data.projects).sort((a, b) => {
+		if (a.id === $LocalSettings.lastVisitedProjectId) return -1;
+		if (b.id === $LocalSettings.lastVisitedProjectId) return 1;
+		return 0;
+	}) as project, index (project.id)}
 		<div in:fly={{ delay: (index + 1) * 100, y: 10 }}>
 			<ProjectCard {project} />
 		</div>
