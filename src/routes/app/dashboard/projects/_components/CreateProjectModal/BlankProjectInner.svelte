@@ -8,8 +8,6 @@
 	let rows = 4;
 	let showingAdvancedSettings = false;
 
-	export let closeModal: () => void;
-
 	let loading = false;
 
 	const createProject = async () => {
@@ -33,14 +31,11 @@
 			createdProjectId = createProjectResponse.projectId;
 		}
 
-		await invalidateAll();
-
-		loading = false;
-
-		closeModal();
-
 		if (createdProjectId) {
 			window.location.assign(`/app/project/${createdProjectId}`);
+		} else {
+			loading = false;
+			await invalidateAll();
 		}
 	};
 </script>

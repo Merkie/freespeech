@@ -11,8 +11,6 @@
 	export let creatorName: string;
 	export let projectDownloadLink: string;
 
-	export let closeModal: () => void;
-
 	let loading = false;
 
 	async function handleUseTemplate() {
@@ -50,15 +48,11 @@
 			}
 		}
 
-		await invalidateAll();
-
-		loading = false;
-
-		// close the modal
-		closeModal();
-
 		if (createdProjectId) {
 			window.location.assign(`/app/project/${createdProjectId}`);
+		} else {
+			loading = false;
+			await invalidateAll();
 		}
 	}
 </script>

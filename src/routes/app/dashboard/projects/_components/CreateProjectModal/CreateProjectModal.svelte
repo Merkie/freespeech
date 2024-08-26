@@ -39,13 +39,13 @@
 			</div>
 		{/if}
 		{#if step === 'blank'}
-			<BlankProjectInner {closeModal} />
+			<BlankProjectInner />
 		{/if}
 		{#if step === 'template'}
-			<TemplateProjectInner {closeModal} />
+			<TemplateProjectInner />
 		{/if}
 		{#if step === 'import'}
-			<ImportProjectInner {closeModal} />
+			<ImportProjectInner />
 		{/if}
 		<!-- {#if step === 'template'}{/if} -->
 	</ModalShell>

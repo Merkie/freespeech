@@ -5,8 +5,6 @@
 	import { cn } from '$ts/client/cn';
 	import { getOpenBoardFileData } from '$ts/client/handle-open-board-files';
 
-	export let closeModal: () => void;
-
 	let loading = false;
 
 	let files: {
@@ -50,14 +48,11 @@
 				}
 			}
 
-			await invalidateAll();
-
-			loading = false;
-
-			closeModal();
-
 			if (createdProjectId) {
 				window.location.assign(`/app/project/${createdProjectId}`);
+			} else {
+				loading = false;
+				await invalidateAll();
 			}
 		});
 	}
