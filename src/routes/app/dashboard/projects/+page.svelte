@@ -44,7 +44,7 @@
 	>
 </SearchBar>
 <div class="m-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-	{#each $searchQuery ? searchedProjects : data.projects as project, index}
+	{#each $searchQuery ? searchedProjects : data.projects as project, index (project.id)}
 		<div in:fly={{ delay: (index + 1) * 100, y: 10 }}>
 			<ProjectCard {project} />
 		</div>
