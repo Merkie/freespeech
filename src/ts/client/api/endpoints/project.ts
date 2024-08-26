@@ -13,7 +13,8 @@ const project = {
 	import: {
 		obf: importObf,
 		obz: importObz
-	}
+	},
+	updateThumbnail: updateProjectThumbnail
 };
 
 export default project;
@@ -46,6 +47,7 @@ async function createProject({
 	})) as {
 		success: boolean;
 		error: string;
+		projectId: string;
 	};
 
 	return response;
@@ -119,6 +121,7 @@ async function importObf(body: OBFPage) {
 	})) as {
 		success: boolean;
 		error: string;
+		projectId: string;
 	};
 
 	return response;
@@ -138,6 +141,19 @@ async function importObz(body: {
 		path: '/project/import/obz',
 		method: 'POST',
 		body
+	})) as {
+		success: boolean;
+		error: string;
+		projectId: string;
+	};
+
+	return response;
+}
+
+async function updateProjectThumbnail(projectId: string) {
+	const response = (await fetchFromAPI({
+		path: `/project/${projectId}/update-thumbnail`,
+		method: 'POST'
 	})) as {
 		success: boolean;
 		error: string;
