@@ -20,6 +20,9 @@
 			return alert(createProjectResponse.error);
 		}
 
+		if (createProjectResponse.projectId)
+			await api.project.updateThumbnail(createProjectResponse.projectId);
+
 		await invalidateAll();
 
 		closeModal();

@@ -33,9 +33,13 @@
 
 			if (boardFile?.type && boardFile?.data) {
 				if (boardFile?.type === 'obz') {
-					await api.project.import.obz(boardFile.data as any);
+					const importObzResponse = await api.project.import.obz(boardFile.data as any);
+					if (importObzResponse.projectId)
+						await api.project.updateThumbnail(importObzResponse.projectId);
 				} else {
-					await api.project.import.obf(boardFile.data as any);
+					const importObfResponse = await api.project.import.obf(boardFile.data as any);
+					if (importObfResponse.projectId)
+						await api.project.updateThumbnail(importObfResponse.projectId);
 				}
 			}
 
