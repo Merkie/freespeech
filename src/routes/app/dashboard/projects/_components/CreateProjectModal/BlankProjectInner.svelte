@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
+	import { cn } from '$ts/client/cn';
 
 	let name: string;
 	let columns = 6;
@@ -9,7 +10,12 @@
 
 	export let closeModal: () => void;
 
+	let loading = false;
+
 	const createProject = async () => {
+		if (loading) return;
+		loading = true;
+
 		const createProjectResponse = await api.project.create({
 			name,
 			columns,
@@ -20,12 +26,22 @@
 			return alert(createProjectResponse.error);
 		}
 
-		if (createProjectResponse.projectId)
+		let createdProjectId = '';
+
+		if (createProjectResponse.projectId) {
 			await api.project.updateThumbnail(createProjectResponse.projectId);
+			createdProjectId = createProjectResponse.projectId;
+		}
 
 		await invalidateAll();
 
+		loading = false;
+
 		closeModal();
+
+		if (createdProjectId) {
+			window.location.assign(`/app/project/${createdProjectId}`);
+		}
 	};
 </script>
 
@@ -55,7 +71,12 @@
 	<button
 		on:click={createProject}
 		type="submit"
-		class="mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
+		class={cn(
+			'mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50 transition-all',
+			{
+				'pointer-events-none opacity-50': loading
+			}
+		)}>Submit</button
 	>
 </div>
 

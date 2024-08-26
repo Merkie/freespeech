@@ -2,6 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { PUBLIC_R2_URL } from '$env/static/public';
 	import api from '$ts/client/api';
+	import { cn } from '$ts/client/cn';
 	import { getOpenBoardFileData } from '$ts/client/handle-open-board-files';
 
 	export let thumbnail: string;
@@ -12,7 +13,12 @@
 
 	export let closeModal: () => void;
 
+	let loading = false;
+
 	async function handleUseTemplate() {
+		if (loading) return;
+		loading = true;
+
 		// get the file from the download link
 		const res = await fetch(PUBLIC_R2_URL + projectDownloadLink);
 		const blob = await res.blob();
@@ -25,22 +31,35 @@
 		// open the file in the editor
 		const boardFile = await getOpenBoardFileData(file);
 
+		let createdProjectId = '';
+
 		if (boardFile?.type && boardFile?.data) {
 			if (boardFile?.type === 'obz') {
 				const importObzResponse = await api.project.import.obz(boardFile.data as any);
-				if (importObzResponse.projectId)
+
+				if (importObzResponse.projectId) {
 					await api.project.updateThumbnail(importObzResponse.projectId);
+					createdProjectId = importObzResponse.projectId;
+				}
 			} else {
 				const importObfResponse = await api.project.import.obf(boardFile.data as any);
+
 				if (importObfResponse.projectId)
 					await api.project.updateThumbnail(importObfResponse.projectId);
+				createdProjectId = importObfResponse.projectId;
 			}
 		}
 
 		await invalidateAll();
 
+		loading = false;
+
 		// close the modal
 		closeModal();
+
+		if (createdProjectId) {
+			window.location.assign(`/app/project/${createdProjectId}`);
+		}
 	}
 </script>
 
@@ -58,8 +77,9 @@
 	<div class="mt-4 flex items-center">
 		<button
 			on:click={handleUseTemplate}
-			class="flex-1 rounded-md bg-blue-500 p-2 px-4 font-semibold transition-all"
-			>Use Template</button
+			class={cn('flex-1 rounded-md bg-blue-500 p-2 px-4 font-semibold transition-all', {
+				'pointer-events-none opacity-50': loading
+			})}>{loading ? 'Creating Project...' : 'Use Template'}</button
 		>
 	</div>
 </div>

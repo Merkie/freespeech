@@ -31,23 +31,34 @@
 
 			const boardFile = await getOpenBoardFileData(file);
 
+			let createdProjectId = '';
+
 			if (boardFile?.type && boardFile?.data) {
 				if (boardFile?.type === 'obz') {
 					const importObzResponse = await api.project.import.obz(boardFile.data as any);
-					if (importObzResponse.projectId)
+
+					if (importObzResponse.projectId) {
 						await api.project.updateThumbnail(importObzResponse.projectId);
+						createdProjectId = importObzResponse.projectId;
+					}
 				} else {
 					const importObfResponse = await api.project.import.obf(boardFile.data as any);
+
 					if (importObfResponse.projectId)
 						await api.project.updateThumbnail(importObfResponse.projectId);
+					createdProjectId = importObfResponse.projectId;
 				}
 			}
 
 			await invalidateAll();
 
+			loading = false;
+
 			closeModal();
 
-			loading = false;
+			if (createdProjectId) {
+				window.location.assign(`/app/project/${createdProjectId}`);
+			}
 		});
 	}
 </script>
