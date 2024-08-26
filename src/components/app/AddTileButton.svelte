@@ -6,7 +6,10 @@
 	export let y: number;
 	export let subpage: number;
 
+	export let projectId: string;
+
 	export let pageId: string;
+	export let isHomePage: boolean;
 
 	async function handleAddTile() {
 		await api.tile.create({
@@ -15,6 +18,7 @@
 			y,
 			page: subpage
 		});
+		if (isHomePage) void api.project.updateThumbnail(projectId);
 
 		await invalidateAll();
 	}
