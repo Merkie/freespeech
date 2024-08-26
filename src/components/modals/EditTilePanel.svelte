@@ -8,6 +8,9 @@
 	export let tiles: Tile[];
 	export let pages: TilePage[];
 
+	export let projectId: string;
+	export let isHomePage: boolean;
+
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
 
@@ -62,6 +65,7 @@
 	async function handleSaveChanges() {
 		if (!$TileBeingEdited) return;
 		await api.tile.edit($TileBeingEdited.id, $TileBeingEdited);
+		if (isHomePage) void api.project.updateThumbnail(projectId);
 		await invalidateAll();
 	}
 
@@ -211,6 +215,7 @@
 		on:click={async () => {
 			if (!$TileBeingEdited) return;
 			await api.tile.delete($TileBeingEdited.id);
+			if (isHomePage) void api.project.updateThumbnail(projectId);
 			await invalidateAll();
 			$TileBeingEdited = null;
 		}}
