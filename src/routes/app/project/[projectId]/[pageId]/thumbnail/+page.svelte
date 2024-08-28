@@ -34,6 +34,7 @@
 					rows={data.project.rows}
 					projectId={data.project.id}
 					pageId={data.page.id}
+					isHomePage={data.isHomePage}
 				/>
 			{/each}
 		{/if}
