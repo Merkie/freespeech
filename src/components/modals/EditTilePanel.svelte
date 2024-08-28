@@ -175,7 +175,7 @@
 			bind:value={$TileBeingEdited.navigation}
 		>
 			<option value={''}>No Navigation</option>
-			{#each pages as page}
+			{#each pages as page (page.id)}
 				<option value={page.id}>{page.name}</option>
 			{/each}
 		</select>

@@ -21,7 +21,7 @@
 		</div>
 	{/if}
 	<div class="flex h-full flex-1 items-center gap-2 overflow-x-auto">
-		{#each $Sentence as tile, index}
+		{#each $Sentence as tile, index (tile.id)}
 			<button
 				on:click={() => {
 					$Sentence = $Sentence.filter((_, i) => i !== index);

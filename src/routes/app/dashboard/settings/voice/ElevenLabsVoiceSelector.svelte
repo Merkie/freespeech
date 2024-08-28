@@ -49,7 +49,7 @@
 		id="el-voices"
 		class="relative flex h-[400px] w-full flex-col overflow-y-auto rounded-xl border border-zinc-200 bg-white p-4 shadow-md"
 	>
-		{#each voices as voice, index}
+		{#each voices as voice, index (voice.voice_id)}
 			<div
 				class={`group flex items-center gap-4 rounded-md p-2 px-4 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`}
 				id={$ElevenLabsVoiceId === voice.voice_id ? 'el-voice-active' : ''}

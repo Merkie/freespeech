@@ -36,7 +36,7 @@
 		class="relative flex h-[400px] w-full flex-col overflow-y-auto rounded-xl border border-zinc-200 bg-white p-4 shadow-md"
 		bind:this={voicesContainerElem}
 	>
-		{#each offlineBrowserVoices as voice, index}
+		{#each offlineBrowserVoices as voice, index (voice.voiceURI)}
 			<div
 				class={`group flex items-center gap-4 rounded-md p-2 px-4 ${index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'}`}
 				id={$OfflineVoiceUri === voice.voiceURI ? 'offline-voice-active' : ''}

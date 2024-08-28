@@ -42,7 +42,7 @@
 	class={`grid gap-2 p-2 ${subpage % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'}`}
 >
 	{#if tiles}
-		{#each tiles as tile}
+		{#each tiles as tile (tile.id)}
 			<div
 				style={`grid-row: ${tile.y + 1}; grid-column: ${tile.x + 1};`}
 				in:scale={{ delay: Math.random() * 200 }}

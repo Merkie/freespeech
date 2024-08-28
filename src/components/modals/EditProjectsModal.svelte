@@ -20,7 +20,7 @@
 		}}
 		title="Manage Projects"
 	>
-		{#each projects || [] as project, index}
+		{#each projects || [] as project, index (project.id)}
 			<div
 				class={`flex items-center gap-2 py-2 ${
 					index !== 0 ? 'border border-x-0 border-b-0 border-zinc-700' : ''
