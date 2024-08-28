@@ -13,6 +13,7 @@
 	import type { Tile } from '$ts/common/types';
 
 	export let tile: Tile;
+	export let noInteraction = false;
 
 	let tileTextContainerHeight = 0;
 
@@ -50,7 +51,7 @@
 	class={`group relative h-full w-full transition-opacity ${$EditingTiles && $TileBeingEdited && $TileBeingEdited.id !== tile.id ? 'opacity-40' : ''}`}
 >
 	<button
-		on:click={handleInteraction}
+		on:click={noInteraction ? null : handleInteraction}
 		style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};${tile.image ? ' grid-template-rows: 25% 75%;' : ''}`}
 		class={`absolute left-0 top-0 h-full w-full overflow-hidden rounded-md border ${
 			tile.image ? 'grid grid-cols-1 grid-rows-2' : 'grid place-items-center'

@@ -3,6 +3,7 @@
 	import { EnableSentenceCopyButton, Sentence, isSynthesizingSpeech } from '$ts/client/stores';
 	import { fade, scale } from 'svelte/transition';
 	import { speakText } from '$ts/client/speak';
+	import Tile from './Tile.svelte';
 
 	let copied = false;
 </script>
@@ -27,17 +28,10 @@
 					$Sentence = $Sentence.filter((_, i) => i !== index);
 				}}
 				transition:scale={{ duration: 100 }}
-				style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};`}
-				class={`flex h-[70px] w-fit min-w-[100px] flex-col items-center overflow-hidden rounded-md border p-1 ${
-					!tile.image ? 'justify-center' : ''
-				}`}
 			>
-				<p class="text-ellipsis py-1 text-sm">{tile.displayText || tile.text}</p>
-				{#if tile.image}
-					<div class="relative w-full flex-1">
-						<img src={tile.image} class="absolute h-full w-full object-contain" alt="Tile media" />
-					</div>
-				{/if}
+				<div class="grid h-[70px] w-[100px] grid-cols-1 grid-rows-1">
+					<Tile noInteraction={true} {tile} />
+				</div>
 			</button>
 		{/each}
 	</div>
