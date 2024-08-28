@@ -41,6 +41,7 @@
 		"fuse.js": "^7.0.0",
 		"howler": "^2.2.4",
 		"html-to-image": "^1.11.11",
+		"image-resize": "^1.4.1",
 		"jszip": "^3.10.1",
 		"svelte-file-dropzone": "^2.0.4",
 		"tailwind-merge": "^2.3.0",
