@@ -6,24 +6,14 @@ import {
 	VoiceEngineStatus
 } from './stores';
 import { get } from 'svelte/store';
+import api from './api';
 
 export async function speakText(text: string) {
 	VoiceEngineStatus.set('synthesizing');
 
 	if (!get(EnableThirdPartyVoiceProviders) || !get(ElevenLabsVoiceId)) return speakSynth(text);
 
-	const response = await fetch('/api/v1/text-to-speech/elevenlabs/speak', {
-		method: 'POST',
-		body: JSON.stringify({
-			text,
-			voiceId: get(ElevenLabsVoiceId)
-		}),
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
-
-	const data = await response.blob();
+	const data = await api.tts.speak.elevenlabs(joinWordsInSentence(text));
 
 	const sound = new Howl({
 		src: [URL.createObjectURL(data)],
@@ -47,7 +37,7 @@ function speakSynth(text: string) {
 	const synthVoiceUri = get(OfflineVoiceUri);
 
 	// make speech synthesis request
-	const synth = new SpeechSynthesisUtterance(text);
+	const synth = new SpeechSynthesisUtterance(joinWordsInSentence(text));
 	const synthVoices = speechSynthesis.getVoices();
 
 	if (!synthVoices || !synthVoices.length) return VoiceEngineStatus.set('failed');
@@ -62,4 +52,25 @@ function speakSynth(text: string) {
 	synth.onend = () => {
 		VoiceEngineStatus.set('ready');
 	};
+}
+
+function joinWordsInSentence(sentence: string) {
+	const words = sentence.split(' ');
+	const result: string[] = [];
+	let i = 0;
+
+	while (i < words.length) {
+		if (words[i].length === 1) {
+			let joinedWord = words[i];
+			while (i + 1 < words.length && words[i + 1].length === 1) {
+				joinedWord += words[++i];
+			}
+			result.push(joinedWord);
+		} else {
+			result.push(words[i]);
+		}
+		i++;
+	}
+
+	return result.join(' ');
 }

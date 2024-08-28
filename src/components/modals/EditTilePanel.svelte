@@ -2,10 +2,14 @@
 	import { Loading, TileBeingEdited, UnsavedChanges, UsingOnlineSearch } from '$ts/client/stores';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
-	import type { Tile, TilePage } from '@prisma/client';
+	import type { Tile, TilePage } from '$ts/common/types';
+	import api from '$ts/client/api';
 
 	export let tiles: Tile[];
 	export let pages: TilePage[];
+
+	export let projectId: string;
+	export let isHomePage: boolean;
 
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
@@ -60,10 +64,8 @@
 
 	async function handleSaveChanges() {
 		if (!$TileBeingEdited) return;
-		await fetch(`/api/v1/tile/${$TileBeingEdited.id}/edit`, {
-			method: 'POST',
-			body: JSON.stringify($TileBeingEdited)
-		});
+		await api.tile.edit($TileBeingEdited.id, $TileBeingEdited);
+		if (isHomePage) void api.project.updateThumbnail(projectId);
 		await invalidateAll();
 	}
 
@@ -173,7 +175,7 @@
 			bind:value={$TileBeingEdited.navigation}
 		>
 			<option value={''}>No Navigation</option>
-			{#each pages as page}
+			{#each pages as page (page.id)}
 				<option value={page.id}>{page.name}</option>
 			{/each}
 		</select>
@@ -212,9 +214,8 @@
 	<button
 		on:click={async () => {
 			if (!$TileBeingEdited) return;
-			await fetch(`/api/v1/tile/${$TileBeingEdited.id}/delete`, {
-				method: 'DELETE'
-			});
+			await api.tile.delete($TileBeingEdited.id);
+			if (isHomePage) void api.project.updateThumbnail(projectId);
 			await invalidateAll();
 			$TileBeingEdited = null;
 		}}

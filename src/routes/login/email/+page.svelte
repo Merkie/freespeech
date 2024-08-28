@@ -1,26 +1,32 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
+
 	let email = '';
 	let password = '';
 	let error = '';
 
 	const submitLogin = async () => {
-		const response = await fetch('/api/v1/auth/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				email,
-				password
-			})
+		const data = await api.auth.email.login({
+			email,
+			password
 		});
 
-		const data = await response.json();
-
-		if (data.error) {
+		if (data.token) {
+			await fetch('/api/set-token-cookie', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ token: data.token })
+			});
+			window.localStorage.setItem('token', data.token);
+			await invalidateAll();
+			window.location.assign('/app/dashboard/projects');
+		} else if (data.error) {
 			error = data.error;
 		} else {
-			window.location.assign('/app/dashboard/projects');
+			error = 'An unknown error occurred';
 		}
 	};
 </script>

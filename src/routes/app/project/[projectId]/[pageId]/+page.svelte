@@ -4,13 +4,14 @@
 		TileBeingEdited,
 		EditingTiles,
 		LocalSettings,
-		UsingOnlineSearch
+		UsingOnlineSearch,
+		Sentence
 	} from '$ts/client/stores';
 	// components
 	import PageHeader from '$components/app/PageHeader.svelte';
 	import SentenceBuilder from '$components/app/SentenceBuilder.svelte';
 	import TilePage from '$components/app/TilePage.svelte';
-	import type { Tile } from '@prisma/client';
+	import type { Tile } from '$ts/common/types';
 	import EditTilePanel from '$components/modals/EditTilePanel.svelte';
 	import OnlineImageSearchPanel from '$components/modals/OnlineImageSearchPanel.svelte';
 	import EditPagesModal from '$components/modals/EditPagesModal.svelte';
@@ -18,17 +19,13 @@
 	import CreatePageModal from '$components/modals/CreatePageModal.svelte';
 	import UnsavedChangesModal from '$components/modals/UnsavedChangesModal.svelte';
 	import { onMount } from 'svelte';
-	import * as htmlToImage from 'html-to-image';
-	import { uploadFile } from '$ts/client/presigned-uploads.js';
-	import { invalidateAll } from '$app/navigation';
 
 	export let data;
 
 	let containerHeight: number; // Needed for CSS tricks
-	let containerElement: HTMLElement;
 
 	$: organizedTiles = (() => {
-		const newTiles = data.page.tiles.reduce((acc: Tile[][], tile: Tile) => {
+		const newTiles = data.page.tiles!.reduce((acc: Tile[][], tile: Tile) => {
 			acc[tile.page] = acc[tile.page] || [];
 			acc[tile.page].push(tile);
 
@@ -42,39 +39,7 @@
 
 	onMount(() => {
 		if (data.projectId) $LocalSettings.lastVisitedProjectId = data.projectId;
-
-		const captureContainer = async () => {
-			// allow page to render
-			await new Promise((resolve) => setTimeout(resolve, 500));
-
-			const dataUrl = await htmlToImage.toPng(containerElement, {
-				quality: 1
-			});
-
-			// Convert data URL to Blob
-			const response = await fetch(dataUrl);
-			const blob = await response.blob();
-
-			const file = new File([blob], `${data.page.name}.png`, { type: 'image/png' });
-			const key = await uploadFile(file);
-
-			await fetch(`/api/v1/project/${data.projectId}/update`, {
-				method: 'POST',
-				body: JSON.stringify({
-					imageUrl: `/${key}`
-				})
-			});
-
-			await invalidateAll();
-		};
-
-		// if the project hasn't been updated in the last 5 minutes, update the image
-		if (
-			data.project.updatedAt &&
-			Date.now() - new Date(data.project.updatedAt).getTime() > 5 * 60 * 1000
-		) {
-			captureContainer();
-		}
+		$Sentence = [];
 	});
 </script>
 
@@ -86,11 +51,7 @@
 
 {#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder />{/if}
 
-<div
-	bind:this={containerElement}
-	bind:clientHeight={containerHeight}
-	class="relative flex-1 bg-zinc-100"
->
+<div bind:clientHeight={containerHeight} class="relative flex-1 bg-zinc-100">
 	<div
 		class="absolute overflow-auto"
 		style={`height: ${containerHeight}px; width: ${
@@ -107,6 +68,7 @@
 					rows={data.project.rows}
 					projectId={data.project.id}
 					pageId={data.page.id}
+					isHomePage={data.isHomePage}
 				/>
 			{/each}
 		{/if}
@@ -119,7 +81,12 @@
 			{#if $UsingOnlineSearch}
 				<OnlineImageSearchPanel />
 			{:else}
-				<EditTilePanel pages={data.projectPages || []} tiles={data.page.tiles} />
+				<EditTilePanel
+					pages={data.projectPages}
+					tiles={data.page.tiles}
+					projectId={data.project.id}
+					isHomePage={data.isHomePage}
+				/>
 			{/if}
 		</div>
 	{/if}

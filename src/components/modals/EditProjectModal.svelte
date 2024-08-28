@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
 	import { EditingProjects, ProjectBeingEdited } from '$ts/client/stores';
 
 	import ModalShell from './ModalShell.svelte';
@@ -7,19 +8,13 @@
 	const updateProject = async () => {
 		if (!$ProjectBeingEdited) return;
 
-		const responseJson = await fetch(`/api/v1/project/${$ProjectBeingEdited.id}/update`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				name: $ProjectBeingEdited.name,
-				columns: $ProjectBeingEdited.columns,
-				rows: $ProjectBeingEdited.rows
-			})
-		}).then((res) => res.json());
+		const editProjectResponse = await api.project.edit($ProjectBeingEdited.id, {
+			name: $ProjectBeingEdited.name,
+			columns: $ProjectBeingEdited.columns,
+			rows: $ProjectBeingEdited.rows
+		});
 
-		if (responseJson.error) return alert(responseJson.error);
+		if (editProjectResponse.error) return alert(editProjectResponse.error);
 
 		await invalidateAll();
 		$ProjectBeingEdited = null;

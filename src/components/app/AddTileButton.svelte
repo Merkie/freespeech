@@ -1,22 +1,24 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
 
 	export let x: number;
 	export let y: number;
 	export let subpage: number;
 
+	export let projectId: string;
+
 	export let pageId: string;
+	export let isHomePage: boolean;
 
 	async function handleAddTile() {
-		await fetch(`/api/v1/tile/create`, {
-			method: 'POST',
-			body: JSON.stringify({
-				x,
-				y,
-				page: subpage,
-				pageId
-			})
+		await api.tile.create({
+			pageId,
+			x,
+			y,
+			page: subpage
 		});
+		if (isHomePage) void api.project.updateThumbnail(projectId);
 
 		await invalidateAll();
 	}

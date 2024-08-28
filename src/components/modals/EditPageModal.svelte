@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
 	const editPage = async () => {
 		if (!$PageBeingEdited) return;
-		await fetch(`/api/v1/page/${$PageBeingEdited.id}/update`, {
-			method: 'POST',
-			body: JSON.stringify({
-				name: $PageBeingEdited.name
-			})
+		await api.page.edit($PageBeingEdited.id, {
+			name: $PageBeingEdited.name
 		});
 		await invalidateAll();
 		$PageBeingEdited = null;

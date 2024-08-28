@@ -5,6 +5,7 @@
 	import { SkinTones } from '$ts/common/opensymbols';
 	import { uploadBlob } from '$ts/client/presigned-uploads';
 	import type { SkinTone } from '$ts/common/types';
+	import api from '$ts/client/api';
 
 	type SearchResult = {
 		image_url: string;
@@ -24,12 +25,7 @@
 
 		const filename = url.split('/').pop() + '';
 
-		const blob = await fetch(`/api/v1/media/fetch-from-url`, {
-			method: 'POST',
-			body: JSON.stringify({
-				url
-			})
-		}).then((res) => res.blob());
+		const blob = await api.media.fetchFromUrl(url);
 
 		$Loading = true;
 		const key = await uploadBlob(filename, blob);
@@ -44,14 +40,20 @@
 
 	const searchImages = async () => {
 		searching = true;
-		const response = await fetch(
-			`/api/v1/media/search/${selectedSearchStrategy}?q=${encodeURIComponent(
-				onlineSearchTerm
-			)}&skin=${encodeURIComponent(selectedSkinTone)}`
-		);
+		if (selectedSearchStrategy === 'bing') {
+			const { results: images } = await api.media.searchImages.bing({
+				query: onlineSearchTerm,
+				skinColor: selectedSkinTone
+			});
+			if (images) imageSearchResults = [...images];
+		} else {
+			const { results: images } = await api.media.searchImages.openSymbols({
+				query: onlineSearchTerm,
+				skinColor: selectedSkinTone
+			});
+			if (images) imageSearchResults = [...images];
+		}
 		searching = false;
-		const data = await response.json();
-		if (data.results) imageSearchResults = data.results;
 	};
 
 	const handleSkinToneRefresh = () => {

@@ -2,6 +2,17 @@
 	import BottomNavigation from '$components/common/BottomNavigation.svelte';
 	import Loader from '$components/common/Loader.svelte';
 	import { Loading } from '$ts/client/stores';
+	import { onMount } from 'svelte';
+
+	export let data;
+
+	onMount(() => {
+		const tokenCookie = document.cookie
+			.split(';')
+			.find((c) => c.trim().startsWith('token='))
+			?.split('=')[1];
+		window.localStorage.setItem('token', tokenCookie || '');
+	});
 </script>
 
 {#if $Loading}
@@ -14,5 +25,7 @@
 			<slot><!-- optional fallback --></slot>
 		</div>
 	</div>
-	<BottomNavigation />
+	{#if !data.noUI}
+		<BottomNavigation />
+	{/if}
 </main>

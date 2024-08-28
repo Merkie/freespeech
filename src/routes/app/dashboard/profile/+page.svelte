@@ -1,17 +1,19 @@
 <script lang="ts">
+	import ModalUploadProfilePicture from './_components/ModalUploadProfilePicture.svelte';
 	import { invalidateAll } from '$app/navigation';
-	import { Loading } from '$ts/client/stores';
-	import { getContext } from 'svelte';
-	import { uploadFile } from '$ts/client/presigned-uploads';
+	import api from '$ts/client/api';
+	import { PUBLIC_R2_URL } from '$env/static/public';
 
 	export let data;
 
-	let profileInput: HTMLInputElement;
+	let isUploadProfilePictureModalOpen = false;
 
 	let name = data.user?.name;
 
 	const logout = async () => {
-		await fetch('/api/v1/auth/logout');
+		await fetch('/api/logout');
+		window.localStorage.setItem('token', '');
+		await invalidateAll();
 		window.location.assign('/');
 	};
 
@@ -24,34 +26,8 @@
 	};
 
 	const updateUser = async () => {
-		const response = await fetch('/api/v1/user/update', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ name })
-		});
+		await api.user.update({ name });
 		await invalidateAll();
-	};
-
-	const handleMediaUpload = async () => {
-		if (!profileInput.files) return;
-		const uploadedFile = profileInput.files[0];
-
-		$Loading = true;
-		const key = await uploadFile(uploadedFile);
-		$Loading = false;
-
-		if (!!key) {
-			const response = await fetch('/api/v1/user/update', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ profileImgUrl: `/${key}` })
-			});
-			await invalidateAll();
-		}
 	};
 </script>
 
@@ -62,9 +38,9 @@
 				<img
 					src={data.user.profileImgUrl?.startsWith('http')
 						? data.user.profileImgUrl
-						: `${getContext('media_uri')}${data.user.profileImgUrl}`}
+						: `${PUBLIC_R2_URL}${data.user.profileImgUrl}`}
 					alt="Profile"
-					class="h-[150px] w-[150px] rounded-full"
+					class="h-[150px] w-[150px] rounded-full bg-white object-cover"
 				/>
 			{:else}
 				<p
@@ -93,27 +69,32 @@
 				<input type="text" value={data.user?.email} disabled={true} />
 				<p class="text-lg">Name</p>
 				<input type="text" bind:value={name} />
+				{#if !!name && name !== data.user?.name}
+					<button
+						on:click={updateUser}
+						type="submit"
+						class="mt-2 rounded-md border border-blue-400 bg-blue-500 p-2 px-4 text-blue-50"
+						>Submit Changes</button
+					>
+				{/if}
 				<!-- profile pic -->
 				<p class="text-lg">Profile Picture</p>
 				<button
-					on:click={(e) => {
-						e.preventDefault();
-						profileInput.click();
+					on:click={() => {
+						isUploadProfilePictureModalOpen = true;
 					}}
 					class="rounded-md border border-zinc-300 bg-zinc-200 p-2 px-4 text-zinc-500"
 					><i class="bi bi-image mr-2" />Upload Profile Picture</button
-				>
-
-				<button
-					on:click={updateUser}
-					type="submit"
-					class="mt-2 rounded-md border border-blue-400 bg-blue-500 p-2 px-4 text-blue-50"
-					>Submit Changes</button
 				>
 			</div>
 		</div>
 	</div>
 </div>
+
+<ModalUploadProfilePicture
+	isOpen={isUploadProfilePictureModalOpen}
+	closeModal={() => (isUploadProfilePictureModalOpen = false)}
+/>
 
 <style lang="postcss">
 	input {

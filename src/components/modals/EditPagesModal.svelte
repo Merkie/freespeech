@@ -1,18 +1,16 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import type { TilePage } from '@prisma/client';
+	import type { TilePage } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
-
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
 	import { page } from '$app/stores';
+	import api from '$ts/client/api';
 
 	export let pages: TilePage[];
 	export let projectId: string;
 
 	const deletePage = async (pageId: string) => {
-		await fetch(`/api/v1/page/${pageId}/delete`, {
-			method: 'DELETE'
-		}).then((res) => res.json());
+		await api.page.delete(pageId);
 
 		if ($page.url.pathname.includes(pageId)) window.location.assign(`/app/project/${projectId}`);
 
@@ -22,7 +20,7 @@
 
 {#if $EditingPages}
 	<ModalShell closeModal={() => ($EditingPages = false)} title="Edit Pages">
-		{#each pages as page, index}
+		{#each pages as page, index (page.id)}
 			<div
 				class={`flex items-center gap-2 py-2 ${
 					index !== 0 ? 'border border-x-0 border-b-0 border-zinc-700' : ''

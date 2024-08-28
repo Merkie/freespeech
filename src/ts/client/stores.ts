@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 import type { LocalSettings as LocalSettingsType } from '$ts/common/types';
-import type { TilePage, Tile, Project } from '@prisma/client';
+import type { TilePage, Tile, Project } from '$ts/common/types';
 
 export const isSynthesizingSpeech = writable(false);
 export const Sentence = writable<Tile[]>([]);

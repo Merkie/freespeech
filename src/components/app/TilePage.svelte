@@ -5,16 +5,16 @@
 	import TileComponent from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
 	// helpers
-	import slugify from '$ts/common/slugify';
 	import { scale } from 'svelte/transition';
 	// types
-	import type { Tile } from '@prisma/client';
+	import type { Tile } from '$ts/common/types';
 
 	export let tiles: Tile[];
 	export let columns: number;
 	export let rows: number;
 	export let projectId: string;
 	export let pageId: string;
+	export let isHomePage: boolean;
 
 	export let containerHeight: number;
 	export let subpage = 0;
@@ -42,7 +42,7 @@
 	class={`grid gap-2 p-2 ${subpage % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'}`}
 >
 	{#if tiles}
-		{#each tiles as tile}
+		{#each tiles as tile (tile.id)}
 			<div
 				style={`grid-row: ${tile.y + 1}; grid-column: ${tile.x + 1};`}
 				in:scale={{ delay: Math.random() * 200 }}
@@ -62,7 +62,7 @@
 		{/each}
 		{#if $EditingTiles}
 			{#each unusedCoords as unusedCoord}
-				<AddTileButton {pageId} {subpage} {...unusedCoord} />
+				<AddTileButton {projectId} {pageId} {isHomePage} {subpage} {...unusedCoord} />
 			{/each}
 		{/if}
 	{/if}

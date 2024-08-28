@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { EditingProjects, ProjectBeingEdited } from '$ts/client/stores';
-	import type { Project } from '@prisma/client';
+	import type { Project } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
+	import api from '$ts/client/api';
 
 	export let projects: Project[];
 
 	const deleteProject = async (projectId: string) => {
-		await fetch(`/api/v1/project/${projectId}/delete`, {
-			method: 'DELETE'
-		});
+		await api.project.delete(projectId);
 		await invalidateAll();
 	};
 </script>
@@ -21,7 +20,7 @@
 		}}
 		title="Manage Projects"
 	>
-		{#each projects || [] as project, index}
+		{#each projects || [] as project, index (project.id)}
 			<div
 				class={`flex items-center gap-2 py-2 ${
 					index !== 0 ? 'border border-x-0 border-b-0 border-zinc-700' : ''

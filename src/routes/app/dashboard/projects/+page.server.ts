@@ -1,17 +1,10 @@
+import api from '$ts/client/api/index.js';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, cookies }) => {
 	if (!locals.user) throw redirect(302, '/login');
 
-	// get all user projects, sort by most recent
-	const projects = await locals.prisma.project.findMany({
-		where: {
-			userId: locals.user.id
-		},
-		orderBy: {
-			updatedAt: 'desc'
-		}
-	});
+	const { projects } = await api.project.list(cookies.get('token'));
 
 	return { projects };
 };
