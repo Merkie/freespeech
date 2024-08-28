@@ -44,6 +44,7 @@
 	{#if tiles}
 		{#each tiles as tile (tile.id)}
 			<div
+				data-sveltekit-preload-data
 				style={`grid-row: ${tile.y + 1}; grid-column: ${tile.x + 1};`}
 				in:scale={{ delay: Math.random() * 200 }}
 			>

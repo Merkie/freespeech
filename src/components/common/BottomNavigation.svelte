@@ -13,6 +13,7 @@
 </script>
 
 <div
+	data-sveltekit-preload-data
 	class="flex gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 text-[25px] font-light text-zinc-100"
 >
 	<!-- Home button -->
