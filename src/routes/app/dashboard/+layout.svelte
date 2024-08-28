@@ -1,15 +1,10 @@
 <script lang="ts">
-	import { getContext, onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { PUBLIC_R2_URL } from '$env/static/public';
 
 	export let data;
 
-	let visible = false;
 	let containerHeight: number;
-
-	onMount(() => {
-		visible = true;
-	});
 
 	const links = [
 		{
@@ -53,7 +48,7 @@
 
 	$: profileUrl = data.user.profileImgUrl?.startsWith('http')
 		? data.user.profileImgUrl
-		: `${getContext('media_uri')}${data.user.profileImgUrl}`;
+		: `${PUBLIC_R2_URL}${data.user.profileImgUrl}`;
 </script>
 
 <!-- webpage title -->
@@ -78,8 +73,8 @@
 	{/each}
 	<div class="flex-1" />
 	<a href="/app/dashboard/profile" class="px-4">
-		{#if data.user.profileImgUrl && getContext('media_uri')}
-			<img src={profileUrl} alt="profile" class="h-[40px] w-[40px] rounded-full" />
+		{#if data.user.profileImgUrl}
+			<img src={profileUrl} alt="profile" class="h-[40px] w-[40px] rounded-full object-cover" />
 		{:else}
 			<p
 				class="grid h-[40px] w-[40px] place-items-center rounded-full bg-blue-500 text-xs font-bold text-blue-50"
