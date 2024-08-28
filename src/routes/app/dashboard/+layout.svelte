@@ -74,7 +74,11 @@
 	<div class="flex-1" />
 	<a href="/app/dashboard/profile" class="px-4">
 		{#if data.user.profileImgUrl}
-			<img src={profileUrl} alt="profile" class="h-[40px] w-[40px] rounded-full object-cover" />
+			<img
+				src={profileUrl}
+				alt="profile"
+				class="h-[40px] w-[40px] rounded-full bg-white object-cover"
+			/>
 		{:else}
 			<p
 				class="grid h-[40px] w-[40px] place-items-center rounded-full bg-blue-500 text-xs font-bold text-blue-50"
