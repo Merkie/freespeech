@@ -15,10 +15,13 @@ const auth = {
 
 export default auth;
 
-async function getOAuthUrls() {
+async function getOAuthUrls(origin: string) {
 	const response = (await fetchFromAPI({
 		path: '/auth/oauth-urls',
-		method: 'GET'
+		method: 'POST',
+		body: {
+			origin
+		}
 	})) as {
 		google: string;
 	};
