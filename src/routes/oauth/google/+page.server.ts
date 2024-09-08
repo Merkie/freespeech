@@ -2,7 +2,7 @@ import api from '$ts/client/api';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ url, cookies }) => {
-	const oauthResponse = await api.auth.oauth.google(url.search);
+	const oauthResponse = await api.auth.oauth.google(url.origin, url.search);
 
 	if (oauthResponse.token) {
 		cookies.set('token', oauthResponse.token, {

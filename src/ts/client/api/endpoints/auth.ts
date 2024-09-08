@@ -29,10 +29,14 @@ async function getOAuthUrls(origin: string) {
 	return response;
 }
 
-async function processGoogleOAuth(params: string) {
+async function processGoogleOAuth(origin: string, params: string) {
 	const response = (await fetchFromAPI({
-		path: '/auth/oauth/google' + params,
-		method: 'GET'
+		path: '/auth/oauth/google',
+		method: 'POST',
+		body: {
+			origin,
+			code: new URLSearchParams(params).get('code') as string
+		}
 	})) as {
 		token: string;
 	};
