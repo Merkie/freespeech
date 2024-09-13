@@ -22,7 +22,7 @@
 		}}
 		title={'Edit Page'}
 	>
-		<button
+		<!-- <button
 			on:click={() => {
 				$PageBeingEdited = null;
 				$EditingPages = true;
@@ -31,7 +31,7 @@
 		>
 			<i class="bi bi-arrow-left" />
 			Back
-		</button>
+		</button> -->
 		<p class="mb-2">Page Name:</p>
 		<input type="text" bind:value={$PageBeingEdited.name} />
 		<button
