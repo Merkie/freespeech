@@ -19,7 +19,7 @@
 </script>
 
 {#if $EditingPages}
-	<ModalShell closeModal={() => ($EditingPages = false)} title="Edit Pages">
+	<ModalShell closeModal={() => ($EditingPages = false)} title="Pages">
 		{#each pages as page, index (page.id)}
 			<div
 				class={`flex items-center gap-2 py-2 ${
