@@ -8,7 +8,7 @@
 		Sentence
 	} from '$ts/client/stores';
 	// components
-	import PageHeader from '$components/app/PageHeader.svelte';
+	import PageHeader from '~/routes/app/project/[projectId]/[pageId]/_components/PageHeader.svelte';
 	import SentenceBuilder from '$components/app/SentenceBuilder.svelte';
 	import TilePage from '$components/app/TilePage.svelte';
 	import type { Tile } from '$ts/common/types';
@@ -47,7 +47,7 @@
 	<title>{`${$EditingTiles ? 'Editing:' : ''} ${data.page.name} | FreeSpeechAAC`}</title>
 </svelte:head>
 
-<PageHeader pageName={data.page.name} />
+<PageHeader page={data.page} />
 
 {#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder />{/if}
 
