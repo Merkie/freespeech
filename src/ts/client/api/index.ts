@@ -5,6 +5,7 @@ import user from './endpoints/user';
 import project from './endpoints/project';
 import page from './endpoints/page';
 import tile from './endpoints/tile';
+import marketplace from './endpoints/marketplace';
 
 const api = {
 	auth,
@@ -13,7 +14,8 @@ const api = {
 	tts,
 	project,
 	page,
-	tile
+	tile,
+	marketplace
 };
 
 export default api;
