@@ -101,3 +101,18 @@ export type Tile = {
 	createdAt: Date;
 	updatedAt: Date;
 };
+
+export type MarketPlaceTilePage = {
+	id: string;
+
+	tilePage: TilePage;
+	tilePageId: string;
+
+	name: string;
+	description: string | null;
+	imageUrl: string | null;
+	isPublic: boolean;
+
+	createdAt: Date;
+	updatedAt: Date;
+};
