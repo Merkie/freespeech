@@ -14,7 +14,7 @@
 
 <div
 	data-sveltekit-preload-data
-	class="flex gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 text-[25px] font-light text-zinc-100"
+	class="flex gap-2 bg-zinc-900 p-2 text-[25px] font-light text-zinc-100"
 >
 	<!-- Home button -->
 	<a
@@ -35,7 +35,8 @@
 			}
 		}}
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
-			'bg-zinc-800': !$page.url.pathname.startsWith('/app/dashboard') && !$EditingTiles
+			'bg-zinc-800': !$page.url.pathname.startsWith('/app/dashboard') && !$EditingTiles,
+			'pointer-events-none opacity-50': !$LocalSettings.lastVisitedProjectId
 		})}
 		href={`/app/project/${$LocalSettings.lastVisitedProjectId}`}
 	>

@@ -49,47 +49,49 @@
 
 <PageHeader page={data.page} />
 
-{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder />{/if}
+<div class="flex flex-col">
+	{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder />{/if}
 
-<div bind:clientHeight={containerHeight} class="relative flex-1 bg-zinc-100">
-	<div
-		class="absolute overflow-auto"
-		style={`height: ${containerHeight}px; width: ${
-			$TileBeingEdited ? 'calc(100% - 350px)' : '100%'
-		};`}
-	>
-		{#if containerHeight}
-			{#each organizedTiles as pageTiles, pageIndex}
-				<TilePage
-					{containerHeight}
-					subpage={pageIndex}
-					tiles={pageTiles}
-					columns={data.project.columns}
-					rows={data.project.rows}
-					projectId={data.project.id}
-					pageId={data.page.id}
-					isHomePage={data.isHomePage}
-				/>
-			{/each}
-		{/if}
-	</div>
-	{#if $TileBeingEdited}
+	<div bind:clientHeight={containerHeight} class="relative flex-1 bg-zinc-100">
 		<div
-			class="absolute right-0 top-0 flex w-[350px] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-4 text-zinc-200 shadow-md"
-			style={`height: ${containerHeight}px;`}
+			class="absolute overflow-auto"
+			style={`height: ${containerHeight}px; width: ${
+				$TileBeingEdited ? 'calc(100% - 350px)' : '100%'
+			};`}
 		>
-			{#if $UsingOnlineSearch}
-				<OnlineImageSearchPanel />
-			{:else}
-				<EditTilePanel
-					pages={data.projectPages}
-					tiles={data.page.tiles}
-					projectId={data.project.id}
-					isHomePage={data.isHomePage}
-				/>
+			{#if containerHeight}
+				{#each organizedTiles as pageTiles, pageIndex}
+					<TilePage
+						{containerHeight}
+						subpage={pageIndex}
+						tiles={pageTiles}
+						columns={data.project.columns}
+						rows={data.project.rows}
+						projectId={data.project.id}
+						pageId={data.page.id}
+						isHomePage={data.isHomePage}
+					/>
+				{/each}
 			{/if}
 		</div>
-	{/if}
+		{#if $TileBeingEdited}
+			<div
+				class="absolute right-0 top-0 flex w-[350px] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-4 text-zinc-200 shadow-md"
+				style={`height: ${containerHeight}px;`}
+			>
+				{#if $UsingOnlineSearch}
+					<OnlineImageSearchPanel />
+				{:else}
+					<EditTilePanel
+						pages={data.projectPages}
+						tiles={data.page.tiles}
+						projectId={data.project.id}
+						isHomePage={data.isHomePage}
+					/>
+				{/if}
+			</div>
+		{/if}
+	</div>
 </div>
 
 {#if data.project}

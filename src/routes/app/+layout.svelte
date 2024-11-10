@@ -19,12 +19,8 @@
 	<Loader />
 {/if}
 
-<main class="flex h-[100dvh] flex-col">
-	<div class="relative flex-1 overflow-auto">
-		<div class="absolute left-0 top-0 flex max-h-full min-h-full w-full flex-col">
-			<slot><!-- optional fallback --></slot>
-		</div>
-	</div>
+<main class="grid h-[100dvh] grid-cols-1 grid-rows-[60px_1fr_60px]">
+	<slot><!-- optional fallback --></slot>
 	{#if !data.noUI}
 		<BottomNavigation />
 	{/if}
