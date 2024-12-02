@@ -4,12 +4,31 @@
 	import type { Project } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
 	import api from '$ts/client/api';
+	import { writable } from 'svelte/store';
 
 	export let projects: Project[];
 
-	const deleteProject = async (projectId: string) => {
-		await api.project.delete(projectId);
-		await invalidateAll();
+	let showConfirmation = writable(false);
+	let projectToDelete: string | null = null;
+
+	const confirmDelete = (projectId: string) => {
+		projectToDelete = projectId;
+		showConfirmation.set(true);
+	};
+
+	const deleteProject = async () => {
+		if (projectToDelete) {
+			await api.project.delete(projectToDelete);
+			await invalidateAll();
+			// Close the confirmation dialog after deletion
+			showConfirmation.set(false);
+			projectToDelete = null;
+		}
+	};
+
+	const cancelDelete = () => {
+		showConfirmation.set(false);
+		projectToDelete = null;
 	};
 </script>
 
@@ -37,10 +56,29 @@
 					class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm">Edit</button
 				>
 				<button
-					on:click={() => deleteProject(project.id)}
+					on:click={() => confirmDelete(project.id)}
 					class="rounded-md border border-red-500 bg-red-600 p-1 px-2 text-sm">Delete</button
 				>
 			</div>
 		{/each}
 	</ModalShell>
 {/if}
+
+{#if $showConfirmation}
+	<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+		<div class="bg-white p-6 rounded-md shadow-lg">
+			<p class="text-center mb-4">Are you sure you want to delete this project?</p>
+			<div class="flex justify-between">
+				<button
+					on:click={deleteProject}
+					class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+				>Delete</button>
+				<button
+					on:click={cancelDelete}
+					class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
+				>Cancel</button>
+			</div>
+		</div>
+	</div>
+{/if}
+
