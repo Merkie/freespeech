@@ -1,18 +1,18 @@
-import { PORT, init } from "@/lib/env";
+import { PORT, init } from '@/lib/env';
 init();
-import express, { Express } from "express";
-require("express-async-errors");
-import cors from "cors";
-import { logRequest } from "@/lib/middlewares/logRequest";
-import createRouter from "express-file-routing";
-import http from "http";
+import express, { Express } from 'express';
+require('express-async-errors');
+import cors from 'cors';
+import logRequest from '@/lib/middlewares/log-request';
+import createRouter from 'express-file-routing';
+import http from 'http';
 
 (async () => {
   const app: Express = express();
   const port = PORT || 3000;
 
   app.use(cors());
-  app.options("*", cors());
+  app.options('*', cors());
 
   app.use(express.json());
 
