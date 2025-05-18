@@ -42,4 +42,5 @@ Made with [contributors-img](https://contributors-img.firebaseapp.com).
 ### License
 
 Free Speech AAC is [MIT licensed](./LICENSE).
+
 # freespeech-api
