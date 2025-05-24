@@ -6,18 +6,18 @@ export default function BottomNav() {
   const location = useLocation();
 
   return (
-    <div class="flex gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 text-[25px] font-light text-zinc-100">
-      <DashboardButton
+    <div class="grid grid-cols-3 grid-rows-1 gap-2 border border-x-0 border-b-0 border-zinc-700 bg-zinc-900 p-2 text-[25px] text-zinc-100">
+      <NavButton
         selected={() => location.pathname.startsWith("/app/project")}
         icon="house-fill"
         href="/app/project"
       />
-      <DashboardButton
-        selected={() => location.pathname.startsWith("/app/project")}
+      <NavButton
+        selected={() => false}
         icon="pencil-fill"
-        href="/app/project"
+        onClick={() => null}
       />
-      <DashboardButton
+      <NavButton
         selected={() => location.pathname.startsWith("/app/dashboard")}
         icon="gear-fill"
         href="/app/dashboard/projects"
@@ -26,7 +26,7 @@ export default function BottomNav() {
   );
 }
 
-function DashboardButton({
+function NavButton({
   icon,
   selected,
   href,
@@ -43,20 +43,26 @@ function DashboardButton({
       fallback={
         <button
           onClick={onClick}
-          class={cn("flex-1 rounded-md p-1 text-center transition-colors", {
-            "bg-zinc-800": selected(),
-            "pointer-events-none opacity-50": !selected(),
-          })}
+          class={cn(
+            "rounded-md w-full h-full p-1 text-center flex items-center justify-center transition-all",
+            {
+              "bg-zinc-800 opacity-100": selected(),
+              "opacity-50": !selected(),
+            }
+          )}
         >
           <i class={`bi bi-${icon}`}></i>
         </button>
       }
     >
       <A
-        class={cn("flex-1 rounded-md p-1 text-center transition-colors", {
-          "bg-zinc-800": selected(),
-          "pointer-events-none opacity-50": !selected(),
-        })}
+        class={cn(
+          "rounded-md w-full h-full p-1 text-center flex items-center justify-center transition-all",
+          {
+            "bg-zinc-800 opacity-100": selected(),
+            "opacity-50": !selected(),
+          }
+        )}
         href={href!}
       >
         <i class={`bi bi-${icon}`}></i>
