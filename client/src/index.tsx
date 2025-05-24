@@ -10,6 +10,7 @@ import LoginEmailPage from "./pages/login/email/page";
 import AppWrapper from "./components/app/AppWrapper";
 import DashboardProjectsPage from "./pages/app/dashboard/projects/page";
 import NotFoundPage from "./pages/not-found/page";
+import DashboardWrapper from "./components/app/dashboard/DashboardWrapper";
 
 const root = document.getElementById("root");
 
@@ -22,7 +23,9 @@ render(
       <Route path="/register/email" component={RegisterEmailPage} />
       <Route path="/login/email" component={LoginEmailPage} />
       <Route path="/app" component={AppWrapper}>
-        <Route path="/dashboard/projects" component={DashboardProjectsPage} />
+        <Route path="/dashboard" component={DashboardWrapper}>
+          <Route path="/projects" component={DashboardProjectsPage} />
+        </Route>
       </Route>
       <Route path="*404" component={NotFoundPage} />
     </Router>
