@@ -1,20 +1,12 @@
 import { RouteSectionProps } from "@solidjs/router";
 import { Component } from "solid-js";
 import Navbar from "./Navbar";
-import BottomNav from "../BottomNav";
 
 const DashboardWrapper: Component<RouteSectionProps<unknown>> = (props) => {
   return (
-    <div
-      style={{
-        "grid-template-rows": "56px 1fr 56px",
-        "grid-template-columns": "1fr",
-      }}
-      class="h-[100dvh] w-screen grid"
-    >
+    <div class="w-full h-full grid grid-cols-1 grid-rows-[56px_1fr]">
       <Navbar />
       <div class="h-full w-full overflow-y-auto">{props.children}</div>
-      <BottomNav />
     </div>
   );
 };
