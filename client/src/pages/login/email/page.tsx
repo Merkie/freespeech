@@ -1,6 +1,6 @@
 import api from "@/lib/api";
 // @ts-expect-error - custom hook
-import { bind } from "@/lib/hooks/bind";
+import bind from "@/lib/hooks/bind";
 import { A } from "@solidjs/router";
 import { createSignal } from "solid-js";
 
