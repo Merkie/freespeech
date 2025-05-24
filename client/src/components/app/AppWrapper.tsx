@@ -2,6 +2,8 @@ import api from "@/lib/api";
 import { setUser, user } from "@/state";
 import { RouteSectionProps, useNavigate } from "@solidjs/router";
 import { Component, onMount, Show } from "solid-js";
+import BottomNav from "./BottomNav";
+import { ModalLoader } from "../modal/ModalLoader";
 
 const AppWrapper: Component<RouteSectionProps<unknown>> = (props) => {
   const navigate = useNavigate();
@@ -26,7 +28,15 @@ const AppWrapper: Component<RouteSectionProps<unknown>> = (props) => {
   });
 
   // Show the children only if the user is set
-  return <Show when={user()}>{props.children}</Show>;
+  return (
+    <Show when={user()}>
+      <div class="h-[100dvh] w-screen grid grid-rows-[1fr_56px] grid-cols-1">
+        {props.children}
+        <BottomNav />
+      </div>
+      <ModalLoader />
+    </Show>
+  );
 };
 
 export default AppWrapper;
