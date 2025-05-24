@@ -1,6 +1,7 @@
 import api from "@/lib/api";
 // @ts-expect-error - custom hook
 import bind from "@/lib/hooks/bind";
+import { setToken } from "@/state";
 import { A } from "@solidjs/router";
 import { createSignal } from "solid-js";
 
@@ -13,7 +14,9 @@ export default function Page() {
       email: email(),
       password: password(),
     });
-    console.log(data);
+    if (data.token) {
+      setToken(data.token);
+    }
   }
 
   return (
