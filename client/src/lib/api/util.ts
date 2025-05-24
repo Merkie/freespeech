@@ -32,7 +32,7 @@ export async function fetchFromAPI({
     // do nothing
   }
 
-  const response = await fetch(import.meta.env.PUBLIC_API_URL + path, {
+  const response = await fetch(import.meta.env.VITE_API_URL + path, {
     method,
     headers,
     body: JSON.stringify(body),
