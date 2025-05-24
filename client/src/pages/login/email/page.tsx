@@ -1,22 +1,33 @@
 import api from "@/lib/api";
 // @ts-expect-error - custom hook
 import bind from "@/lib/hooks/bind";
-import { setToken } from "@/state";
+import { setToken, setUser } from "@/state";
 import { A } from "@solidjs/router";
 import { createSignal } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 
 export default function Page() {
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");
 
+  const navigate = useNavigate();
+
   async function submitLogin() {
-    const data = await api.auth.email.login({
+    const { token } = await api.auth.email.login({
       email: email(),
       password: password(),
     });
-    if (data.token) {
-      setToken(data.token);
-    }
+    if (!token) return;
+
+    setToken(token);
+    localStorage.setItem("token", token);
+
+    const { user } = await api.auth.me();
+    if (!user) return;
+
+    setUser(user);
+
+    navigate("/app/dashboard/projects");
   }
 
   return (
