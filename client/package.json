@@ -11,7 +11,9 @@
   "dependencies": {
     "@solidjs/router": "^0.15.3",
     "@tailwindcss/vite": "^4.1.7",
+    "clsx": "^2.1.1",
     "solid-js": "^1.9.5",
+    "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
