@@ -7,8 +7,10 @@ const AppWrapper: Component<RouteSectionProps<unknown>> = (props) => {
   const navigate = useNavigate();
 
   onMount(async () => {
+    // If the user is already set, no need to fetch again
     if (user()) return;
 
+    // Set the user from the token in local storage
     const token = localStorage.getItem("token");
     if (token) {
       const data = await api.auth.me();
@@ -17,19 +19,14 @@ const AppWrapper: Component<RouteSectionProps<unknown>> = (props) => {
       }
     }
 
+    // If for whatever reason the user is still not set, redirect to login
     if (!user()) {
       navigate("/login");
     }
   });
 
-  return (
-    <Show when={user()}>
-      <div>
-        <h1>App Wrapper</h1>
-        {props.children}
-      </div>
-    </Show>
-  );
+  // Show the children only if the user is set
+  return <Show when={user()}>{props.children}</Show>;
 };
 
 export default AppWrapper;
