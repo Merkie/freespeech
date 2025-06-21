@@ -7,7 +7,8 @@ import {
   localSettings,
   setModal,
   setIsModalOpen,
-  setLocalSettings,
+  setPage,
+  setProject,
 } from "@/state";
 import { createSignal, onMount, createMemo, Show, For } from "solid-js";
 import Fuse from "fuse.js";
@@ -134,7 +135,8 @@ function ProjectCard(props: { project: Project }) {
   return (
     <A
       onClick={() => {
-        setLocalSettings("lastVisitedProjectId", props.project.id);
+        setPage(null);
+        setProject(null);
       }}
       href={`/app/project/${props.project.id}`}
       class={cn(
