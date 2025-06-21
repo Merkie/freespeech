@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ProjectExpanded } from "@/state";
 import type { OBFPage } from "../../openboardformat";
 import type { Project, TilePageInProject } from "../../types";
 import { fetchFromAPI } from "../util";
 
 const project = {
   view: viewProject,
+  viewExpanded: viewProjectExpanded,
   list: listProjects,
   create: createProject,
   delete: deleteProject,
@@ -93,6 +95,18 @@ async function viewProject(projectId: string, token?: string) {
     token,
   })) as {
     project: Project;
+    error: string;
+  };
+
+  return response;
+}
+async function viewProjectExpanded(projectId: string, token?: string) {
+  const response = (await fetchFromAPI({
+    path: `/project/${projectId}/view-expanded`,
+    method: "GET",
+    token,
+  })) as {
+    project: ProjectExpanded;
     error: string;
   };
 
