@@ -26,3 +26,4 @@ export const [localSettings, setLocalSettings] = createStore<LocalSettings>({
 });
 
 export const [project, setProject] = createSignal<Project | null>(null);
+export const [page, setPage] = createSignal<any>(null); // Replace 'any' with the actual type of your page
