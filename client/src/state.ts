@@ -25,5 +25,46 @@ export const [localSettings, setLocalSettings] = createStore<LocalSettings>({
   lastVisitedProjectId: "",
 });
 
-export const [project, setProject] = createSignal<Project | null>(null);
-export const [page, setPage] = createSignal<any>(null); // Replace 'any' with the actual type of your page
+export type ProjectExpanded = {
+  id: string;
+  name: string;
+  columns: number;
+  rows: number;
+  homePage: string;
+  pages: PageExpanded[];
+};
+
+export type PageExpanded = {
+  id: string;
+  name: string;
+  tiles: TileExpanded[];
+};
+
+export type TileExpanded = {
+  id: string;
+  position: {
+    type: string;
+    x: number;
+    y: number;
+    innerPageIndex: number;
+  };
+  text: string;
+  displayText?: string;
+  backgroundColor?: string;
+  borderColor?: string;
+  mediaSrc?: string;
+  actions?: {
+    type: "navigate";
+    pageId: string;
+  }[];
+};
+
+export const [project, setProject] = createStore<{
+  data: ProjectExpanded | null;
+}>({
+  data: null,
+});
+
+export const [currentPageId, setCurrentPageId] = createSignal<string | null>(
+  null
+);
