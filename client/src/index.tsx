@@ -11,6 +11,7 @@ import AppWrapper from "./components/app/AppWrapper";
 import DashboardProjectsPage from "./pages/app/dashboard/projects/page";
 import NotFoundPage from "./pages/not-found/page";
 import DashboardWrapper from "./components/app/dashboard/DashboardWrapper";
+import ProjectWithoutIdPage from "./pages/app/project/page";
 import ProjectIdPage from "./pages/app/project/:id/page";
 
 const root = document.getElementById("root");
@@ -24,6 +25,7 @@ render(
       <Route path="/register/email" component={RegisterEmailPage} />
       <Route path="/login/email" component={LoginEmailPage} />
       <Route path="/app" component={AppWrapper}>
+        <Route path="/project" component={ProjectWithoutIdPage} />
         <Route path="/project/:id" component={ProjectIdPage} />
         <Route path="/dashboard" component={DashboardWrapper}>
           <Route path="/projects" component={DashboardProjectsPage} />
