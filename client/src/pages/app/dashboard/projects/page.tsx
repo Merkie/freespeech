@@ -7,7 +7,6 @@ import {
   localSettings,
   setModal,
   setIsModalOpen,
-  setPage,
   setProject,
 } from "@/state";
 import { createSignal, onMount, createMemo, Show, For } from "solid-js";
@@ -135,8 +134,9 @@ function ProjectCard(props: { project: Project }) {
   return (
     <A
       onClick={() => {
-        setPage(null);
-        setProject(null);
+        setProject({
+          data: null,
+        });
       }}
       href={`/app/project/${props.project.id}`}
       class={cn(
