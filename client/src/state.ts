@@ -24,3 +24,5 @@ export const [localSettings, setLocalSettings] = createStore<LocalSettings>({
   skinTone: "medium",
   lastVisitedProjectId: "",
 });
+
+export const [project, setProject] = createSignal<Project | null>(null);
