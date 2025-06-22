@@ -13,6 +13,8 @@ import NotFoundPage from "./pages/not-found/page";
 import DashboardWrapper from "./components/app/dashboard/DashboardWrapper";
 import ProjectWithoutIdPage from "./pages/app/project/page";
 import ProjectIdPage from "./pages/app/project/:id/page";
+import DashboardSettingsPage from "./pages/app/dashboard/settings/page";
+import DashboardProfilePage from "./pages/app/dashboard/profile/page";
 
 const root = document.getElementById("root");
 
@@ -29,6 +31,8 @@ render(
         <Route path="/project/:id" component={ProjectIdPage} />
         <Route path="/dashboard" component={DashboardWrapper}>
           <Route path="/projects" component={DashboardProjectsPage} />
+          <Route path="/settings" component={DashboardSettingsPage} />
+          <Route path="/profile" component={DashboardProfilePage} />
         </Route>
       </Route>
       <Route path="*404" component={NotFoundPage} />
