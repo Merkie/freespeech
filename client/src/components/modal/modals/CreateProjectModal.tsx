@@ -55,7 +55,7 @@ function CreateProjectModal() {
 
   return (
     <Show when={modal() === "create project"}>
-      <ModalTitle title={"Create Project"} onClose={closeModal} />
+      <ModalTitle onClose={closeModal} />
       <Show when={step() === "type"}>
         <div class="grid grid-rows-3 gap-4">
           <ProjectTypeButton
