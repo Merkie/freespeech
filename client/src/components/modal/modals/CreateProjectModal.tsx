@@ -82,21 +82,14 @@ function CreateProjectModal() {
       </Show>
 
       <Show when={step() === "blank"}>
-        <div class="space-y-4">
-          <button
-            onClick={() => setStep("type")}
-            class="mb-4 text-sm text-zinc-500 hover:text-zinc-700"
-          >
-            <i class="bi bi-arrow-left" /> Back
-          </button>
-
-          <div>
-            <label class="mb-2 block text-sm font-medium">Project name:</label>
+        <div class="flex flex-col">
+          <div class="flex flex-col">
+            <p class="mb-2 ">Project name:</p>
             <input
               type="text"
               value={name()}
               onInput={(e) => setName(e.currentTarget.value)}
-              class="w-full rounded-md border border-zinc-300 p-2 px-4 text-zinc-800"
+              class="w-full rounded-md border bg-white border-zinc-300 p-2 px-4 text-zinc-900"
               placeholder="Enter project name"
             />
           </div>
@@ -106,16 +99,14 @@ function CreateProjectModal() {
             fallback={
               <button
                 onClick={() => setShowAdvanced(true)}
-                class="text-sm text-blue-600 hover:underline"
+                class="text-sm hover:underline w-fit text-left my-4 cursor-pointer"
               >
                 Show advanced settings
               </button>
             }
           >
-            <div>
-              <label class="mb-2 block text-sm font-medium">
-                Project Dimensions:
-              </label>
+            <div class="my-4">
+              <p class="mb-2"> Project Dimensions:</p>
               <div class="flex items-center gap-2">
                 <input
                   type="number"
@@ -123,7 +114,7 @@ function CreateProjectModal() {
                   onInput={(e) =>
                     setColumns(parseInt(e.currentTarget.value) || 6)
                   }
-                  class="w-1/2 rounded-md border border-zinc-300 p-2 text-zinc-800"
+                  class="flex-1 rounded-md border bg-white border-zinc-300 p-2 px-4 text-zinc-900"
                   placeholder="Columns"
                   min="1"
                   max="20"
@@ -133,7 +124,7 @@ function CreateProjectModal() {
                   type="number"
                   value={rows()}
                   onInput={(e) => setRows(parseInt(e.currentTarget.value) || 4)}
-                  class="w-1/2 rounded-md border border-zinc-300 p-2 text-zinc-800"
+                  class="flex-1 rounded-md border bg-white border-zinc-300 p-2 px-4 text-zinc-900"
                   placeholder="Rows"
                   min="1"
                   max="20"
