@@ -3,7 +3,7 @@ import { modal, setIsModalOpen, setProjects } from "@/state";
 import { createSignal, Show } from "solid-js";
 import { ModalTitle } from "../ModalTitle";
 
-export function CreateProjectModal() {
+function CreateProjectModal() {
   const [step, setStep] = createSignal<
     "type" | "blank" | "template" | "import"
   >("type");
@@ -203,3 +203,9 @@ function ProjectTypeButton({
     </button>
   );
 }
+
+export default {
+  modal_title: "Create Project",
+  modal_component: CreateProjectModal,
+  modal_id: "create project",
+};
