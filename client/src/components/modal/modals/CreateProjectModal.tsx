@@ -1,5 +1,5 @@
 import api from "@/lib/api";
-import { modal, setIsModalOpen, setProjects } from "@/state";
+import { modal, setProjects } from "@/state";
 import { createSignal, Show } from "solid-js";
 import { ModalTitle } from "../ModalTitle";
 
@@ -14,7 +14,6 @@ function CreateProjectModal() {
   const [loading, setLoading] = createSignal(false);
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setStep("type");
     setName("");
     setColumns(6);
@@ -56,8 +55,7 @@ function CreateProjectModal() {
 
   return (
     <Show when={modal() === "create project"}>
-      <ModalTitle title={"Create Project"} />
-
+      <ModalTitle title={"Create Project"} onClose={closeModal} />
       <Show when={step() === "type"}>
         <div class="grid grid-rows-3 gap-4">
           <ProjectTypeButton
