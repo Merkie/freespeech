@@ -1,13 +1,17 @@
 import { cn } from "@/lib/cn";
-import { CreateProjectModal } from "./modals/CreateProjectModal";
-import { isModalOpen } from "@/state";
-import { JSX } from "solid-js";
+import { isModalOpen, modal } from "@/state";
+import { JSX, Show } from "solid-js";
+import modals from "./modals";
+import { Dynamic } from "solid-js/web";
 
 export function ModalLoader() {
+  const modalItem = () => modals[modal()];
   return (
     <ModalBackground>
       <ModalContainer>
-        <CreateProjectModal />
+        <Show when={modalItem()}>
+          <Dynamic component={modalItem().modal_component} />
+        </Show>
       </ModalContainer>
     </ModalBackground>
   );
