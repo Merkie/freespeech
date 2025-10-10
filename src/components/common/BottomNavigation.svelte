@@ -8,7 +8,7 @@
 		UnsavedChangesModalOpen,
 		UsingOnlineSearch
 	} from '$ts/client/stores';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { cn } from '$ts/client/cn';
 </script>
 
@@ -18,7 +18,7 @@
 >
 	<!-- Home button -->
 	<a
-		on:click={() => {
+		onclick={() => {
 			if (!$UnsavedChanges) {
 				$EditingTiles = false;
 				$UsingOnlineSearch = false;
@@ -35,7 +35,7 @@
 			}
 		}}
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
-			'bg-zinc-800': !$page.url.pathname.startsWith('/app/dashboard') && !$EditingTiles
+			'bg-zinc-800': !page.url.pathname.startsWith('/app/dashboard') && !$EditingTiles
 		})}
 		href={`/app/project/${$LocalSettings.lastVisitedProjectId}`}
 	>
@@ -44,13 +44,13 @@
 
 	<!-- Edit Button -->
 	<button
-		on:click={() => {
+		onclick={() => {
 			$EditingTiles = true;
 		}}
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
-			'bg-zinc-800': !$page.url.pathname.startsWith('/app/dashboard') && $EditingTiles
+			'bg-zinc-800': !page.url.pathname.startsWith('/app/dashboard') && $EditingTiles
 		})}
-		disabled={$page.url.pathname.startsWith('/app/dashboard')}
+		disabled={page.url.pathname.startsWith('/app/dashboard')}
 		><i class="bi bi-pencil-fill"></i></button
 	>
 
@@ -58,7 +58,7 @@
 	<a
 		href="/app/dashboard/projects"
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
-			'bg-zinc-800': $page.url.pathname.startsWith('/app/dashboard'),
+			'bg-zinc-800': page.url.pathname.startsWith('/app/dashboard'),
 			'pointer-events-none opacity-50': $EditingTiles
 		})}><i class="bi bi-gear-fill"></i></a
 	>

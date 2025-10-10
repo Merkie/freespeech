@@ -8,7 +8,7 @@
 		<p class="mb-4 text-zinc-400">Warning! You have unsaved changes.</p>
 		<div class="flex justify-end gap-4">
 			<button
-				on:click={() => {
+				onclick={() => {
 					$UnsavedChangesModalOpen = false;
 				}}
 				type="submit"
@@ -17,7 +17,7 @@
 				Keep Editing</button
 			>
 			<button
-				on:click={() => {
+				onclick={() => {
 					$DiscardUnsavedChangesHandler();
 					$UnsavedChangesModalOpen = false;
 					$DiscardUnsavedChangesHandler = () => {};

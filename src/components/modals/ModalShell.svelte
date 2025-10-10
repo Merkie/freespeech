@@ -2,10 +2,15 @@
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 
-	export let title: string;
-	export let closeModal: () => void;
+	interface Props {
+		title: string;
+		closeModal: () => void;
+		children?: import('svelte').Snippet;
+	}
 
-	let visible = false;
+	let { title, closeModal, children }: Props = $props();
+
+	let visible = $state(false);
 
 	onMount(() => {
 		visible = true;
@@ -13,15 +18,15 @@
 </script>
 
 {#if visible}
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 	<main
 		transition:fade={{ duration: 100 }}
-		on:keypress={(e) => {
+		onkeypress={(e) => {
 			if (e.key === 'Escape') {
 				closeModal();
 			}
 		}}
-		on:click={(e) => {
+		onclick={(e) => {
 			//@ts-ignore
 			if (e.target.tagName === 'MAIN') {
 				closeModal();
@@ -35,12 +40,12 @@
 		>
 			<div class="mb-2 flex items-center justify-between gap-2">
 				<p class="text-lg font-bold">{title}</p>
-				<button on:click={closeModal}>
-					<i class="bi bi-x-lg flex items-center" />
+				<button onclick={closeModal}>
+					<i class="bi bi-x-lg flex items-center"></i>
 				</button>
 			</div>
 			<div class="flex flex-col">
-				<slot />
+				{@render children?.()}
 			</div>
 		</div>
 	</main>

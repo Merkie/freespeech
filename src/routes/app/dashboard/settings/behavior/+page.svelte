@@ -19,7 +19,7 @@
 		<div class="flex items-center gap-4">
 			<p class="text-3xl text-zinc-800">Display "Copy Sentence" button:</p>
 			<button
-				on:click={() => ($EnableSentenceCopyButton = !$EnableSentenceCopyButton)}
+				onclick={() => ($EnableSentenceCopyButton = !$EnableSentenceCopyButton)}
 				class={`relative w-[48px] scale-[120%] rounded-full p-1 shadow-sm transition-all ${$EnableSentenceCopyButton ? 'bg-green-500' : 'bg-zinc-300'}`}
 			>
 				<div

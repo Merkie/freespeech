@@ -5,7 +5,7 @@
 	import { speakText } from '$ts/client/speak';
 	import Tile from './Tile.svelte';
 
-	let copied = false;
+	let copied = $state(false);
 </script>
 
 <div
@@ -24,7 +24,7 @@
 	<div class="flex h-full flex-1 items-center gap-2 overflow-x-auto">
 		{#each $Sentence as tile, index}
 			<button
-				on:click={() => {
+				onclick={() => {
 					$Sentence = $Sentence.filter((_, i) => i !== index);
 				}}
 				transition:scale={{ duration: 100 }}
@@ -38,7 +38,7 @@
 	<div class="flex h-full items-center gap-2">
 		{#if $EnableSentenceCopyButton}
 			<button
-				on:click={() => {
+				onclick={() => {
 					const text = $Sentence.map((tile) => tile.text).join(' ');
 					navigator.clipboard.writeText(text);
 					copied = true;
@@ -49,26 +49,26 @@
 				class={`grid h-[80px] w-[80px] place-items-center rounded-md text-green-50 transition-all ${copied ? 'bg-green-400' : 'bg-green-500'}`}
 			>
 				<div class="relative">
-					<i class="bi bi-clipboard text-4xl" />
+					<i class="bi bi-clipboard text-4xl"></i>
 
 					<i
 						class={`bi bi-check absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl ${copied ? 'scale-100' : 'scale-0'} transition-all`}
-					/>
+					></i>
 				</div>
 			</button>
 		{/if}
 
 		<button
-			on:click={() => speakText($Sentence.map((tile) => tile.text).join(' '))}
+			onclick={() => speakText($Sentence.map((tile) => tile.text).join(' '))}
 			class="grid h-[80px] w-[80px] place-items-center rounded-md bg-blue-500 text-blue-50"
 		>
-			<i class="bi bi-volume-up-fill text-4xl" />
+			<i class="bi bi-volume-up-fill text-4xl"></i>
 		</button>
 		<button
-			on:click={() => ($Sentence = [])}
+			onclick={() => ($Sentence = [])}
 			class="grid h-[80px] w-[80px] place-items-center rounded-md bg-red-500 text-blue-50"
 		>
-			<i class="bi bi-trash-fill text-4xl" />
+			<i class="bi bi-trash-fill text-4xl"></i>
 		</button>
 	</div>
 </div>

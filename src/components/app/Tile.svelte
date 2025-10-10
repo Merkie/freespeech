@@ -12,10 +12,14 @@
 	} from '$ts/client/stores';
 	import type { Tile } from '$ts/common/types';
 
-	export let tile: Tile;
-	export let noInteraction = false;
+	interface Props {
+		tile: Tile;
+		noInteraction?: boolean;
+	}
 
-	let tileTextContainerHeight = 0;
+	let { tile, noInteraction = false }: Props = $props();
+
+	let tileTextContainerHeight = $state(0);
 
 	const handleInteraction = () => {
 		if ($EditingTiles) {
@@ -51,7 +55,7 @@
 	class={`group relative h-full w-full transition-opacity ${$EditingTiles && $TileBeingEdited && $TileBeingEdited.id !== tile.id ? 'opacity-40' : ''}`}
 >
 	<button
-		on:click={noInteraction ? null : handleInteraction}
+		onclick={noInteraction ? null : handleInteraction}
 		style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};${tile.image ? ' grid-template-rows: 25% 75%;' : ''}`}
 		class={`absolute left-0 top-0 h-full w-full overflow-hidden rounded-md border ${
 			tile.image ? 'grid grid-cols-1 grid-rows-2' : 'grid place-items-center'
@@ -80,6 +84,6 @@
 		<div
 			style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};`}
 			class={`absolute -top-1 left-0 h-[10px] w-[50%] rounded-t-md border border-b-0 brightness-100 group-hover:brightness-105 group-active:brightness-100`}
-		/>
+		></div>
 	{/if}
 </div>

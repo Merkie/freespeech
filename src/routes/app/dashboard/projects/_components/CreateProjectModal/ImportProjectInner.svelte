@@ -5,7 +5,7 @@
 	import { cn } from '$ts/client/cn';
 	import { getOpenBoardFileData } from '$ts/client/handle-open-board-files';
 
-	let loading = false;
+	let loading = $state(false);
 
 	let files: {
 		accepted: File[];

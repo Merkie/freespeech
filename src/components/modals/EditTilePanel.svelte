@@ -1,18 +1,29 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { Loading, TileBeingEdited, UnsavedChanges, UsingOnlineSearch } from '$ts/client/stores';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
 	import type { Tile, TilePage } from '$ts/common/types';
 	import api from '$ts/client/api';
 
-	export let tiles: Tile[];
-	export let pages: TilePage[];
 
-	export let projectId: string;
-	export let isHomePage: boolean;
+	interface Props {
+		tiles: Tile[];
+		pages: TilePage[];
+		projectId: string;
+		isHomePage: boolean;
+	}
 
-	let fileinput: HTMLInputElement;
-	let showingDisplayTextOption = false;
+	let {
+		tiles,
+		pages,
+		projectId,
+		isHomePage
+	}: Props = $props();
+
+	let fileinput: HTMLInputElement = $state();
+	let showingDisplayTextOption = $state(false);
 
 	const tileColors = {
 		white: {
@@ -73,19 +84,21 @@
 		return tileColors[color as keyof typeof tileColors];
 	};
 
-	$: $UnsavedChanges = (() => {
-		if (!$TileBeingEdited) return false;
-		const originalTile = tiles.find((tile) => tile.id === $TileBeingEdited!.id);
-		if (!originalTile) return false;
-		return (
-			$TileBeingEdited.text !== originalTile.text ||
-			$TileBeingEdited.displayText !== originalTile.displayText ||
-			$TileBeingEdited.image !== originalTile.image ||
-			$TileBeingEdited.backgroundColor !== originalTile.backgroundColor ||
-			$TileBeingEdited.borderColor !== originalTile.borderColor ||
-			$TileBeingEdited.navigation !== originalTile.navigation
-		);
-	})();
+	run(() => {
+		$UnsavedChanges = (() => {
+			if (!$TileBeingEdited) return false;
+			const originalTile = tiles.find((tile) => tile.id === $TileBeingEdited!.id);
+			if (!originalTile) return false;
+			return (
+				$TileBeingEdited.text !== originalTile.text ||
+				$TileBeingEdited.displayText !== originalTile.displayText ||
+				$TileBeingEdited.image !== originalTile.image ||
+				$TileBeingEdited.backgroundColor !== originalTile.backgroundColor ||
+				$TileBeingEdited.borderColor !== originalTile.borderColor ||
+				$TileBeingEdited.navigation !== originalTile.navigation
+			);
+		})();
+	});
 </script>
 
 {#if $TileBeingEdited}
@@ -96,7 +109,7 @@
 		<input type="text" value={$TileBeingEdited.displayText} />
 	{:else}
 		<button
-			on:click={() => (showingDisplayTextOption = true)}
+			onclick={() => (showingDisplayTextOption = true)}
 			class="mt-2 text-left text-sm text-zinc-300 hover:underline"
 			>Edit display text separately</button
 		>
@@ -115,39 +128,39 @@
 					alt="Uploaded media preview"
 				/>
 				<button
-					on:click={() => {
+					onclick={() => {
 						if ($TileBeingEdited) $TileBeingEdited.image = '';
 					}}
 					class="absolute bottom-2 right-4 grid h-[30px] w-[30px] place-items-center rounded-md bg-red-500 text-white"
 				>
-					<i class="bi bi-trash-fill" />
+					<i class="bi bi-trash-fill"></i>
 				</button>
 			</div>
 		{:else}
 			<div class="flex flex-wrap gap-2">
 				<button
-					on:click={() => fileinput.click()}
+					onclick={() => fileinput.click()}
 					class="rounded-md border border-zinc-700 bg-zinc-800 p-1 px-3 text-sm"
-					><i class="bi bi-upload mr-1" /> Upload Image From Device</button
+					><i class="bi bi-upload mr-1"></i> Upload Image From Device</button
 				>
 				<button
-					on:click={() => {
+					onclick={() => {
 						$UsingOnlineSearch = true;
 					}}
 					class="rounded-md border border-zinc-700 bg-zinc-800 p-1 px-3 text-sm"
-					><i class="bi bi-search" /> Search for Images Online</button
+					><i class="bi bi-search"></i> Search for Images Online</button
 				>
 			</div>
 		{/if}
 	</div>
-	<input on:input={handleMediaUpload} type="file" bind:this={fileinput} class="hidden" />
+	<input oninput={handleMediaUpload} type="file" bind:this={fileinput} class="hidden" />
 
 	<p class="my-2 mt-6">Color:</p>
 	<div class="flex flex-wrap gap-2 rounded-md text-black">
 		{#each Object.keys(tileColors) as colorKey}
 			{@const colorValues = getColorFromKey(colorKey)}
 			<button
-				on:click={() => {
+				onclick={() => {
 					// @ts-ignore
 					$TileBeingEdited = {
 						...$TileBeingEdited,
@@ -184,14 +197,14 @@
 	<button
 		disabled={!$UnsavedChanges}
 		class="mt-4 flex items-center justify-center gap-2 rounded-md border border-blue-500 bg-blue-600 p-1"
-		on:click={handleSaveChanges}
+		onclick={handleSaveChanges}
 	>
-		<i class="bi bi-check-lg" />
+		<i class="bi bi-check-lg"></i>
 		<span>Save Changes</span>
 	</button>
 
 	<button
-		on:click={() => {
+		onclick={() => {
 			let tempId = $TileBeingEdited?.id;
 			$TileBeingEdited = null;
 			const oldTile = tiles.find((tile) => tile.id === tempId);
@@ -200,7 +213,7 @@
 		class="mt-4 flex items-center justify-center gap-2 rounded-md border border-zinc-500 bg-zinc-600 p-1"
 		disabled={!$UnsavedChanges}
 	>
-		<i class="bi bi-x-lg" />
+		<i class="bi bi-x-lg"></i>
 		<span>Cancel Changes</span>
 	</button>
 
@@ -212,7 +225,7 @@
 	</div>
 
 	<button
-		on:click={async () => {
+		onclick={async () => {
 			if (!$TileBeingEdited) return;
 			await api.tile.delete($TileBeingEdited.id);
 			if (isHomePage) void api.project.updateThumbnail(projectId);

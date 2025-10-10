@@ -2,11 +2,11 @@
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
 
-	let name = '';
-	let email = '';
-	let password = '';
-	let confirmPassword = '';
-	let error = '';
+	let name = $state('');
+	let email = $state('');
+	let password = $state('');
+	let confirmPassword = $state('');
+	let error = $state('');
 
 	const submitRegistration = async () => {
 		if (password !== confirmPassword) {
@@ -73,7 +73,7 @@
 				<small class="mb-4 text-red-500">{error}</small>
 			{/if}
 			<button
-				on:click={submitRegistration}
+				onclick={submitRegistration}
 				class="rounded-md bg-blue-600 p-2 text-lg font-bold text-blue-50">Create Account</button
 			>
 			<a href="/login" class="mt-4 p-4 text-zinc-400">

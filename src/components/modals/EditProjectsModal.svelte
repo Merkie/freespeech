@@ -5,7 +5,11 @@
 	import ModalShell from './ModalShell.svelte';
 	import api from '$ts/client/api';
 
-	export let projects: Project[];
+	interface Props {
+		projects: Project[];
+	}
+
+	let { projects }: Props = $props();
 
 	const deleteProject = async (projectId: string) => {
 		await api.project.delete(projectId);
@@ -27,17 +31,17 @@
 				}`}
 			>
 				<p>{project.name}</p>
-				<div class="flex-1" />
+				<div class="flex-1"></div>
 
 				<button
-					on:click={() => {
+					onclick={() => {
 						$EditingProjects = false;
 						$ProjectBeingEdited = { ...project };
 					}}
 					class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm">Edit</button
 				>
 				<button
-					on:click={() => deleteProject(project.id)}
+					onclick={() => deleteProject(project.id)}
 					class="rounded-md border border-red-500 bg-red-600 p-1 px-2 text-sm">Delete</button
 				>
 			</div>

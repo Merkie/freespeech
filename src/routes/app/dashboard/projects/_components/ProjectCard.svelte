@@ -3,9 +3,13 @@
 	import { LocalSettings } from '$ts/client/stores';
 	import type { Project } from '$ts/common/types';
 
-	export let project: Project;
+	interface Props {
+		project: Project;
+	}
 
-	$: selected = $LocalSettings.lastVisitedProjectId === project.id;
+	let { project }: Props = $props();
+
+	let selected = $derived($LocalSettings.lastVisitedProjectId === project.id);
 </script>
 
 <div class={`relative`}>

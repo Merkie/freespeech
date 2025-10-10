@@ -2,11 +2,11 @@
 	// components
 	import TilePage from '$components/app/TilePage.svelte';
 	import type { Tile } from '$ts/common/types';
-	export let data;
+	let { data } = $props();
 
-	let containerHeight: number; // Needed for CSS tricks
+	let containerHeight: number = $state(); // Needed for CSS tricks
 
-	$: organizedTiles = (() => {
+	let organizedTiles = $derived((() => {
 		const newTiles = data.page.tiles!.reduce((acc: Tile[][], tile: Tile) => {
 			acc[tile.page] = acc[tile.page] || [];
 			acc[tile.page].push(tile);
@@ -15,7 +15,7 @@
 		}, []) as Tile[][];
 
 		return newTiles;
-	})();
+	})());
 </script>
 
 <svelte:head>

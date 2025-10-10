@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { Loading, LocalSettings, TileBeingEdited, UsingOnlineSearch } from '$ts/client/stores';
 	import { scale } from 'svelte/transition';
 	// @ts-ignore
@@ -13,12 +15,12 @@
 		alt: string;
 	};
 
-	let onlineSearchTerm = $TileBeingEdited?.text || '';
-	let imageSearchResults: SearchResult[] = [];
-	let searching = false;
+	let onlineSearchTerm = $state($TileBeingEdited?.text || '');
+	let imageSearchResults: SearchResult[] = $state([]);
+	let searching = $state(false);
 
-	let selectedSearchStrategy: 'bing' | 'open-symbols' = 'bing';
-	$: selectedSkinTone = ($LocalSettings.skinTone || 'medium') as SkinTone;
+	let selectedSearchStrategy: 'bing' | 'open-symbols' = $state('bing');
+	let selectedSkinTone = $derived(($LocalSettings.skinTone || 'medium') as SkinTone);
 
 	const handleUploadFromInternet = async (url: string) => {
 		if (!$TileBeingEdited) return;
@@ -62,32 +64,32 @@
 		searchImages();
 	};
 
-	$: {
+	run(() => {
 		$LocalSettings.skinTone;
 		handleSkinToneRefresh();
-	}
+	});
 </script>
 
 <button
-	on:click={() => {
+	onclick={() => {
 		$UsingOnlineSearch = false;
 	}}
 	class="mb-2 flex items-center gap-1 text-sm text-zinc-300"
 >
-	<i class="bi bi-arrow-left" />
+	<i class="bi bi-arrow-left"></i>
 	Back
 </button>
 
 <div class="flex gap-4 py-4">
 	<button
-		on:click={() => (selectedSearchStrategy = 'bing')}
+		onclick={() => (selectedSearchStrategy = 'bing')}
 		class={selectedSearchStrategy === 'bing' ? 'underline' : ''}
 	>
 		<i class="bi bi-bing mr-1"></i>
 		<span>Bing Images</span>
 	</button>
 	<button
-		on:click={() => (selectedSearchStrategy = 'open-symbols')}
+		onclick={() => (selectedSearchStrategy = 'open-symbols')}
 		class={selectedSearchStrategy === 'open-symbols' ? 'underline' : ''}>Open Symbols</button
 	>
 </div>
@@ -97,7 +99,7 @@
 		<p class="pr-3">Skin tone:</p>
 		{#each SkinTones as skinTone}
 			<button
-				on:click={() => ($LocalSettings.skinTone = skinTone.name)}
+				onclick={() => ($LocalSettings.skinTone = skinTone.name)}
 				class={`h-[40px] flex-1 rounded-sm ${
 					selectedSkinTone === skinTone.name
 						? 'scale-90 ring-2 ring-white ring-offset-2 ring-offset-zinc-900'
@@ -114,11 +116,11 @@
 	<div
 		class="flex flex-1 items-center gap-1 rounded-md border border-zinc-300 bg-white px-2 text-sm text-zinc-800"
 	>
-		<i class="bi bi-search" />
+		<i class="bi bi-search"></i>
 		<input
 			type="text"
 			bind:value={onlineSearchTerm}
-			on:keydown={(e) => {
+			onkeydown={(e) => {
 				if (e.key === 'Enter') searchImages();
 			}}
 			placeholder={`Search for ${
@@ -128,7 +130,7 @@
 		/>
 	</div>
 	<button
-		on:click={searchImages}
+		onclick={searchImages}
 		class="rounded-md border border-blue-500 bg-blue-600 p-1 px-4 text-sm"
 		>{searching ? 'Searching...' : 'Search'}</button
 	>
@@ -145,7 +147,7 @@
 			<button
 				in:scale
 				disabled={searching}
-				on:click={() => handleUploadFromInternet(image.image_url)}
+				onclick={() => handleUploadFromInternet(image.image_url)}
 				class="mb-4 w-full"
 			>
 				<img class="mx-auto" src={image.thumbnail_url} alt={image.alt} />

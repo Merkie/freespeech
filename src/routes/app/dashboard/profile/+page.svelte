@@ -4,11 +4,11 @@
 	import api from '$ts/client/api';
 	import { PUBLIC_R2_URL } from '$env/static/public';
 
-	export let data;
+	let { data } = $props();
 
-	let isUploadProfilePictureModalOpen = false;
+	let isUploadProfilePictureModalOpen = $state(false);
 
-	let name = data.user?.name;
+	let name = $state(data.user?.name);
 
 	const logout = async () => {
 		await fetch('/api/logout');
@@ -58,7 +58,7 @@
 			</div>
 
 			<button
-				on:click={logout}
+				onclick={logout}
 				class="mt-2 w-[200px] rounded-md border border-red-500 bg-red-600 p-1 text-sm text-red-50 sm:w-full"
 				>Logout</button
 			>
@@ -71,7 +71,7 @@
 				<input type="text" bind:value={name} />
 				{#if !!name && name !== data.user?.name}
 					<button
-						on:click={updateUser}
+						onclick={updateUser}
 						type="submit"
 						class="mt-2 rounded-md border border-blue-400 bg-blue-500 p-2 px-4 text-blue-50"
 						>Submit Changes</button
@@ -80,11 +80,11 @@
 				<!-- profile pic -->
 				<p class="text-lg">Profile Picture</p>
 				<button
-					on:click={() => {
+					onclick={() => {
 						isUploadProfilePictureModalOpen = true;
 					}}
 					class="rounded-md border border-zinc-300 bg-zinc-200 p-2 px-4 text-zinc-500"
-					><i class="bi bi-image mr-2" />Upload Profile Picture</button
+					><i class="bi bi-image mr-2"></i>Upload Profile Picture</button
 				>
 			</div>
 		</div>

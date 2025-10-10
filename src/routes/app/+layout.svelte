@@ -4,7 +4,7 @@
 	import { Loading } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 
-	export let data;
+	let { data, children } = $props();
 
 	onMount(() => {
 		const tokenCookie = document.cookie
@@ -22,7 +22,7 @@
 <main class="flex h-[100dvh] flex-col">
 	<div class="relative flex-1 overflow-auto">
 		<div class="absolute left-0 top-0 flex max-h-full min-h-full w-full flex-col">
-			<slot><!-- optional fallback --></slot>
+			{#if children}{@render children()}{:else}<!-- optional fallback -->{/if}
 		</div>
 	</div>
 	{#if !data.noUI}

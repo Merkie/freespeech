@@ -3,7 +3,8 @@
 	import { ElevenLabsVoiceId } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 
-	export let voices: {
+	interface Props {
+		voices: {
 		voice_id: string;
 		name: string;
 		labels: {
@@ -13,6 +14,9 @@
 			gender: string;
 		};
 	}[];
+	}
+
+	let { voices }: Props = $props();
 
 	function getEmoji(key: string, label: string) {
 		const category = emojis[key as keyof typeof emojis];
@@ -55,7 +59,7 @@
 				id={$ElevenLabsVoiceId === voice.voice_id ? 'el-voice-active' : ''}
 			>
 				<button
-					on:click={() => {
+					onclick={() => {
 						$ElevenLabsVoiceId = voice.voice_id;
 					}}
 					class="p-2"

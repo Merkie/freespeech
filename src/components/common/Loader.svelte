@@ -7,14 +7,14 @@
 	class="fixed left-0 top-0 z-40 grid h-screen w-screen place-items-center bg-[rgba(0,0,0,0.5)]"
 >
 	<div transition:scale class="dot-spinner">
-		<div class="dot-spinner__dot" />
-		<div class="dot-spinner__dot" />
-		<div class="dot-spinner__dot" />
-		<div class="dot-spinner__dot" />
-		<div class="dot-spinner__dot" />
-		<div class="dot-spinner__dot" />
-		<div class="dot-spinner__dot" />
-		<div class="dot-spinner__dot" />
+		<div class="dot-spinner__dot"></div>
+		<div class="dot-spinner__dot"></div>
+		<div class="dot-spinner__dot"></div>
+		<div class="dot-spinner__dot"></div>
+		<div class="dot-spinner__dot"></div>
+		<div class="dot-spinner__dot"></div>
+		<div class="dot-spinner__dot"></div>
+		<div class="dot-spinner__dot"></div>
 	</div>
 </main>
 

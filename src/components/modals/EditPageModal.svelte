@@ -35,7 +35,7 @@
 		<p class="mb-2">Page Name:</p>
 		<input type="text" bind:value={$PageBeingEdited.name} />
 		<button
-			on:click={editPage}
+			onclick={editPage}
 			class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50"
 			>Submit Edits</button
 		>

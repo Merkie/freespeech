@@ -6,8 +6,12 @@
 	import { page } from '$app/stores';
 	import api from '$ts/client/api';
 
-	export let pages: TilePage[];
-	export let projectId: string;
+	interface Props {
+		pages: TilePage[];
+		projectId: string;
+	}
+
+	let { pages, projectId }: Props = $props();
 
 	const deletePage = async (pageId: string) => {
 		await api.page.delete(pageId);
@@ -27,21 +31,21 @@
 				}`}
 			>
 				<p>{page.name}</p>
-				<div class="flex-1" />
+				<div class="flex-1"></div>
 				<a
 					href={`/app/project/${projectId}/${page.id}`}
 					class="rounded-md border border-blue-500 bg-blue-600 p-1 px-2 text-sm">View</a
 				>
 				{#if page.name !== 'Home'}
 					<button
-						on:click={() => {
+						onclick={() => {
 							$PageBeingEdited = { ...page };
 							$EditingPages = false;
 						}}
 						class="rounded-md border border-yellow-500 bg-yellow-600 p-1 px-2 text-sm">Edit</button
 					>
 					<button
-						on:click={() => deletePage(page.id)}
+						onclick={() => deletePage(page.id)}
 						class="rounded-md border border-red-500 bg-red-600 p-1 px-2 text-sm">Delete</button
 					>
 				{/if}

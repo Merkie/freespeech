@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import ProjectCard from '~/routes/app/dashboard/projects/_components/ProjectCard.svelte';
 	import CreateProjectModal from './_components/CreateProjectModal/CreateProjectModal.svelte';
 	import { onMount } from 'svelte';
@@ -16,36 +18,36 @@
 	import EditProjectsModal from '$components/modals/EditProjectsModal.svelte';
 	import EditProjectModal from '$components/modals/EditProjectModal.svelte';
 
-	export let data;
+	let { data } = $props();
 
 	let searchQuery = writable('');
-	let searchedProjects: Project[] = [];
+	let searchedProjects: Project[] = $state([]);
 
 	onMount(() => {
 		// Open the create project modal if there are no projects
 		if (data.projects.length === 0) $AddingProject = true;
 	});
 
-	$: {
+	run(() => {
 		if (searchQuery) {
 			const fuse = new Fuse(data.projects, {
 				keys: ['name', 'description']
 			});
 			searchedProjects = fuse.search($searchQuery).map((result) => result.item);
 		}
-	}
+	});
 </script>
 
 <SearchBar query={searchQuery}>
 	<button
-		on:click={() => ($AddingProject = true)}
+		onclick={() => ($AddingProject = true)}
 		class="hidden rounded-md border border-blue-500 bg-blue-600 p-2 px-4 text-sm text-blue-50 sm:block"
-		><i class="bi bi-plus-lg" /> Create New Project</button
+		><i class="bi bi-plus-lg"></i> Create New Project</button
 	>
 	<button
-		on:click={() => ($EditingProjects = true)}
+		onclick={() => ($EditingProjects = true)}
 		class="hidden rounded-md border border-zinc-600 bg-zinc-700 p-2 px-4 text-sm text-zinc-50 sm:block"
-		><i class="bi bi-gear" /> Manage Projects</button
+		><i class="bi bi-gear"></i> Manage Projects</button
 	>
 </SearchBar>
 <div class="m-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">

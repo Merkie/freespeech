@@ -1,13 +1,22 @@
 <script lang="ts">
-	export let title: string;
-	export let icon: string;
-	export let description: string;
 
-	export let onClick: () => void = () => {};
+	interface Props {
+		title: string;
+		icon: string;
+		description: string;
+		onClick?: () => void;
+	}
+
+	let {
+		title,
+		icon,
+		description,
+		onClick = () => {}
+	}: Props = $props();
 </script>
 
 <button
-	on:click={onClick}
+	onclick={onClick}
 	class="grid w-full place-items-center rounded-lg bg-zinc-800 transition-all hover:brightness-110 active:brightness-90"
 >
 	<div class="flex flex-col items-center p-4 text-center text-white">

@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let data;
+	let { data } = $props();
 </script>
 
 <svelte:head>
@@ -14,11 +14,11 @@
 	<div class="mx-auto flex h-[60px] w-[90%] max-w-[1200px] items-center p-2">
 		<img src="/favicon.png" class="mix-blend-multiply" width={40} alt="asdasd" />
 		<p class="text-lg font-semibold">FreeSpeech <span class="text-sm font-light">AAC</span></p>
-		<div class="flex-1" />
+		<div class="flex-1"></div>
 		{#if data.user}
 			<a
 				class="ml-4 rounded-md border border-blue-600 bg-blue-600 p-1 px-3 text-blue-50 transition-all hover:bg-transparent hover:text-blue-600"
-				href="/app/dashboard">Go to App <i class="bi bi-box-arrow-in-right" /></a
+				href="/app/dashboard">Go to App <i class="bi bi-box-arrow-in-right"></i></a
 			>
 		{:else}
 			<a class="hover:underline" href="/login">Login</a>
@@ -130,18 +130,18 @@
 				href="https://github.com/merkie/freespeech"
 				target="_blank"
 			>
-				<i class="bi bi-github mr-2" />Check out the source code on GitHub!</a
+				<i class="bi bi-github mr-2"></i>Check out the source code on GitHub!</a
 			>
 			<a
 				class="rounded-md border border-red-500 bg-red-600 p-2 px-3 text-red-50"
 				href="https://github.com/sponsors/Merkie"
 				target="_blank"
 			>
-				<i class="bi bi-heart mr-2" />Sponsor the Project</a
+				<i class="bi bi-heart mr-2"></i>Sponsor the Project</a
 			>
 		</div>
 		<!-- footer -->
-		<div class="h-[100px]" />
+		<div class="h-[100px]"></div>
 	</div>
 </main>
 

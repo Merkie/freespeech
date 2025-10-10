@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	// stores
 	import { EditingTiles, TileBeingEdited } from '$ts/client/stores';
 	// components
@@ -9,19 +11,32 @@
 	// types
 	import type { Tile } from '$ts/common/types';
 
-	export let tiles: Tile[];
-	export let columns: number;
-	export let rows: number;
-	export let projectId: string;
-	export let pageId: string;
-	export let isHomePage: boolean;
 
-	export let containerHeight: number;
-	export let subpage = 0;
+	interface Props {
+		tiles: Tile[];
+		columns: number;
+		rows: number;
+		projectId: string;
+		pageId: string;
+		isHomePage: boolean;
+		containerHeight: number;
+		subpage?: number;
+	}
 
-	let unusedCoords: { x: number; y: number }[] = [];
+	let {
+		tiles,
+		columns,
+		rows,
+		projectId,
+		pageId,
+		isHomePage,
+		containerHeight,
+		subpage = 0
+	}: Props = $props();
 
-	$: {
+	let unusedCoords: { x: number; y: number }[] = $state([]);
+
+	run(() => {
 		// fill array with all possible cords, 6 cols and 4 rows, starting with 0,0
 		for (let x = 0; x < columns; x++) {
 			for (let y = 0; y < rows; y++) {
@@ -34,7 +49,7 @@
 			(coord) =>
 				!usedCoords?.find((usedCoord) => usedCoord.x === coord.x && usedCoord.y === coord.y)
 		);
-	}
+	});
 </script>
 
 <div

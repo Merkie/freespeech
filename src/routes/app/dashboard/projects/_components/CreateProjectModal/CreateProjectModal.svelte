@@ -6,7 +6,7 @@
 	import BlankProjectInner from './BlankProjectInner.svelte';
 	import TemplateProjectInner from './TemplateProjectInner.svelte';
 
-	let step = 'type';
+	let step = $state('type');
 
 	function closeModal() {
 		$AddingProject = false;

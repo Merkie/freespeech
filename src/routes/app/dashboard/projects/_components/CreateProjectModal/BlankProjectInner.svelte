@@ -3,12 +3,12 @@
 	import api from '$ts/client/api';
 	import { cn } from '$ts/client/cn';
 
-	let name: string;
-	let columns = 6;
-	let rows = 4;
-	let showingAdvancedSettings = false;
+	let name: string = $state();
+	let columns = $state(6);
+	let rows = $state(4);
+	let showingAdvancedSettings = $state(false);
 
-	let loading = false;
+	let loading = $state(false);
 
 	const createProject = async () => {
 		if (loading) return;
@@ -59,12 +59,12 @@
 		</div>
 	{:else}
 		<button
-			on:click={() => (showingAdvancedSettings = true)}
+			onclick={() => (showingAdvancedSettings = true)}
 			class="w-fit py-4 text-sm hover:underline">Show advanced settings</button
 		>
 	{/if}
 	<button
-		on:click={createProject}
+		onclick={createProject}
 		type="submit"
 		class={cn(
 			'mt-2 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50 transition-all',

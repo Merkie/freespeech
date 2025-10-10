@@ -1,18 +1,24 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
 
-	export let apiKey: string;
-	export let usePersonalElevenLabsKey: boolean;
+	interface Props {
+		apiKey: string;
+		usePersonalElevenLabsKey: boolean;
+	}
 
-	let usePersonalKey = usePersonalElevenLabsKey;
+	let { apiKey, usePersonalElevenLabsKey }: Props = $props();
 
-	let elevenLabsApiKey = apiKey;
-	let showKey = false;
+	let usePersonalKey = $state(usePersonalElevenLabsKey);
 
-	let inputElem: HTMLInputElement;
+	let elevenLabsApiKey = $state(apiKey);
+	let showKey = $state(false);
 
-	$: {
+	let inputElem: HTMLInputElement = $state();
+
+	run(() => {
 		(async () => {
 			await api.user.update({
 				elevenLabsApiKey,
@@ -20,14 +26,14 @@
 			});
 			await invalidateAll();
 		})();
-	}
+	});
 </script>
 
 <div class="flex flex-col">
 	<div class="flex items-center gap-4">
 		<p class="text-3xl text-zinc-800">Use personal ElevenLabs key:</p>
 		<button
-			on:click={async () => {
+			onclick={async () => {
 				usePersonalKey = !usePersonalKey;
 				await api.user.update({
 					usePersonalElevenLabsKey: usePersonalKey
@@ -58,7 +64,7 @@
 		<p class="text-3xl text-zinc-800">ElevenLabs API Key:</p>
 
 		<button
-			on:click={async () => {
+			onclick={async () => {
 				if (showKey) return;
 
 				showKey = true;
@@ -73,7 +79,7 @@
 			{#if showKey}
 				<input
 					bind:this={inputElem}
-					on:blur={() => (showKey = false)}
+					onblur={() => (showKey = false)}
 					class="flex-1 bg-transparent p-4 text-lg outline-none"
 					bind:value={elevenLabsApiKey}
 					type="text"

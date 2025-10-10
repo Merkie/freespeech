@@ -7,13 +7,17 @@
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import api from '$ts/client/api';
 
-	export let isOpen: boolean;
-	export let closeModal: () => void;
+	interface Props {
+		isOpen: boolean;
+		closeModal: () => void;
+	}
 
-	let loading = false;
+	let { isOpen, closeModal }: Props = $props();
 
-	let previewBase64 = '';
-	let previewFile: File | null = null;
+	let loading = $state(false);
+
+	let previewBase64 = $state('');
+	let previewFile: File | null = $state(null);
 
 	async function handleFileDrop(e: CustomEvent<File>) {
 		const { acceptedFiles, fileRejections } = e.detail as unknown as {
@@ -78,7 +82,7 @@
 						alt="Preview"
 					/>
 					<button
-						on:click={() => {
+						onclick={() => {
 							previewBase64 = '';
 							previewFile = null;
 						}}
@@ -90,7 +94,7 @@
 				</div>
 			</div>
 			<button
-				on:click={handleFileUpload}
+				onclick={handleFileUpload}
 				class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 			>
 		{:else}

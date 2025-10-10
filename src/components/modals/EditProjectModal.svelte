@@ -51,7 +51,7 @@
 		</div>
 
 		<button
-			on:click={updateProject}
+			onclick={updateProject}
 			type="submit"
 			class="mt-4 rounded-md border border-blue-500 bg-blue-600 p-2 text-blue-50">Submit</button
 		>

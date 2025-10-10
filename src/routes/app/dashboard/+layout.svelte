@@ -2,9 +2,9 @@
 	import { page } from '$app/stores';
 	import { PUBLIC_R2_URL } from '$env/static/public';
 
-	export let data;
+	let { data, children } = $props();
 
-	let containerHeight: number;
+	let containerHeight: number = $state();
 
 	const links = [
 		{
@@ -46,9 +46,9 @@
 		return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 	};
 
-	$: profileUrl = data.user.profileImgUrl?.startsWith('http')
+	let profileUrl = $derived(data.user.profileImgUrl?.startsWith('http')
 		? data.user.profileImgUrl
-		: `${PUBLIC_R2_URL}${data.user.profileImgUrl}`;
+		: `${PUBLIC_R2_URL}${data.user.profileImgUrl}`);
 </script>
 
 <!-- webpage title -->
@@ -67,11 +67,11 @@
 						? 'border-zinc-600'
 						: 'border-zinc-900 text-zinc-500 hover:text-zinc-400'
 				} flex items-center gap-4 border-b-4 p-3 px-4 transition-colors`}
-				><i class={`bi bi-${link.icon} text-lg`} /><span class="text-base">{link.name}</span></a
+				><i class={`bi bi-${link.icon} text-lg`}></i><span class="text-base">{link.name}</span></a
 			>
 		{/if}
 	{/each}
-	<div class="flex-1" />
+	<div class="flex-1"></div>
 	<a href="/app/dashboard/profile" class="px-4">
 		{#if data.user.profileImgUrl}
 			<img
@@ -100,7 +100,7 @@
 				class="absolute w-full"
 				style={`height: ${containerHeight}px; max-height: ${containerHeight}px; overflow-y: auto;`}
 			>
-				<slot><!-- optional fallback --></slot>
+				{#if children}{@render children()}{:else}<!-- optional fallback -->{/if}
 			</div>
 		{/if}
 	</div>

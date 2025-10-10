@@ -5,13 +5,23 @@
 	import { cn } from '$ts/client/cn';
 	import { getOpenBoardFileData } from '$ts/client/handle-open-board-files';
 
-	export let thumbnail: string;
-	export let title: string;
-	export let description: string;
-	export let creatorName: string;
-	export let projectDownloadLink: string;
+	interface Props {
+		thumbnail: string;
+		title: string;
+		description: string;
+		creatorName: string;
+		projectDownloadLink: string;
+	}
 
-	let loading = false;
+	let {
+		thumbnail,
+		title,
+		description,
+		creatorName,
+		projectDownloadLink
+	}: Props = $props();
+
+	let loading = $state(false);
 
 	async function handleUseTemplate() {
 		if (loading) return;
@@ -70,7 +80,7 @@
 
 	<div class="mt-4 flex items-center">
 		<button
-			on:click={handleUseTemplate}
+			onclick={handleUseTemplate}
 			class={cn('flex-1 rounded-md bg-blue-500 p-2 px-4 font-semibold transition-all', {
 				'pointer-events-none opacity-50': loading
 			})}>{loading ? 'Creating Project...' : 'Use Template'}</button

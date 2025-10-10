@@ -2,9 +2,9 @@
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
 
-	let email = '';
-	let password = '';
-	let error = '';
+	let email = $state('');
+	let password = $state('');
+	let error = $state('');
 
 	const submitLogin = async () => {
 		const data = await api.auth.email.login({
@@ -53,7 +53,7 @@
 				<small class="mb-4 text-red-500">{error}</small>
 			{/if}
 			<button
-				on:click={submitLogin}
+				onclick={submitLogin}
 				class="rounded-md bg-blue-600 p-2 text-lg font-bold text-blue-50">Log In</button
 			>
 			<a href="/register" class="mt-4 p-4 text-zinc-400">

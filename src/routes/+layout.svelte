@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
 	import { setContext } from 'svelte';
 	import '../app.css';
 
-	export let data;
+	let { data, children } = $props();
 
 	setContext('media_uri', data.media_uri);
 </script>
 
-<slot />
+{@render children?.()}
 
 <style lang="postcss">
 	:global(body) {

@@ -2,9 +2,9 @@
 	import { OfflineVoiceUri } from '$ts/client/stores';
 	import { onMount } from 'svelte';
 
-	let offlineBrowserVoices: SpeechSynthesisVoice[] = speechSynthesis.getVoices();
+	let offlineBrowserVoices: SpeechSynthesisVoice[] = $state(speechSynthesis.getVoices());
 
-	let voicesContainerElem: HTMLDivElement;
+	let voicesContainerElem: HTMLDivElement = $state();
 
 	onMount(async () => {
 		offlineBrowserVoices = speechSynthesis.getVoices();
@@ -42,7 +42,7 @@
 				id={$OfflineVoiceUri === voice.voiceURI ? 'offline-voice-active' : ''}
 			>
 				<button
-					on:click={() => {
+					onclick={() => {
 						$OfflineVoiceUri = voice.voiceURI;
 					}}
 					class="p-2"
