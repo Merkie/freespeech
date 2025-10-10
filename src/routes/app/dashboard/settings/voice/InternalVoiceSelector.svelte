@@ -4,7 +4,7 @@
 
 	let offlineBrowserVoices: SpeechSynthesisVoice[] = $state(speechSynthesis.getVoices());
 
-	let voicesContainerElem: HTMLDivElement = $state();
+	let voicesContainerElem: HTMLDivElement = $state()!;
 
 	onMount(async () => {
 		offlineBrowserVoices = speechSynthesis.getVoices();

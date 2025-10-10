@@ -2,8 +2,6 @@
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
 
-
-
 	interface Props {
 		x: number;
 		y: number;
@@ -13,14 +11,7 @@
 		isHomePage: boolean;
 	}
 
-	let {
-		x,
-		y,
-		subpage,
-		projectId,
-		pageId,
-		isHomePage
-	}: Props = $props();
+	let { x, y, subpage, projectId, pageId, isHomePage }: Props = $props();
 
 	async function handleAddTile() {
 		await api.tile.create({

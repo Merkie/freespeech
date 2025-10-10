@@ -3,7 +3,7 @@
 	import api from '$ts/client/api';
 	import { cn } from '$ts/client/cn';
 
-	let name: string = $state();
+	let name: string = $state('');
 	let columns = $state(6);
 	let rows = $state(4);
 	let showingAdvancedSettings = $state(false);

@@ -16,7 +16,7 @@
 	let elevenLabsApiKey = $state(apiKey);
 	let showKey = $state(false);
 
-	let inputElem: HTMLInputElement = $state();
+	let inputElem: HTMLInputElement = $state()!;
 
 	run(() => {
 		(async () => {

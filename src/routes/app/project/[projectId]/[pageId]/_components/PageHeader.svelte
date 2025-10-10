@@ -12,7 +12,7 @@
 
 	let { page }: Props = $props();
 
-	let element: HTMLElement = $state();
+	let element: HTMLElement = $state()!;
 
 	let x = $state(0);
 	let y = $state(0);

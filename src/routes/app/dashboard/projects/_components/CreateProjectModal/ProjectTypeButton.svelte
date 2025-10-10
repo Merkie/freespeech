@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	interface Props {
 		title: string;
 		icon: string;
@@ -7,12 +6,7 @@
 		onClick?: () => void;
 	}
 
-	let {
-		title,
-		icon,
-		description,
-		onClick = () => {}
-	}: Props = $props();
+	let { title, icon, description, onClick = () => {} }: Props = $props();
 </script>
 
 <button

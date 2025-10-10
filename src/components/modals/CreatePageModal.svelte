@@ -10,7 +10,7 @@
 
 	let { projectId }: Props = $props();
 
-	let pageName: string = $state();
+	let pageName: string = $state('');
 	let creatingPage = $state(false);
 
 	const createPage = async () => {

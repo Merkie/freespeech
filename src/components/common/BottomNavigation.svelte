@@ -18,6 +18,7 @@
 >
 	<!-- Home button -->
 	<a
+		aria-label="Home"
 		onclick={() => {
 			if (!$UnsavedChanges) {
 				$EditingTiles = false;
@@ -44,6 +45,7 @@
 
 	<!-- Edit Button -->
 	<button
+		aria-label="Edit tiles"
 		onclick={() => {
 			$EditingTiles = true;
 		}}
@@ -56,6 +58,7 @@
 
 	<!-- Dashboard Button -->
 	<a
+		aria-label="Dashboard"
 		href="/app/dashboard/projects"
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
 			'bg-zinc-800': page.url.pathname.startsWith('/app/dashboard'),

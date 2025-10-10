@@ -7,7 +7,6 @@
 	import type { Tile, TilePage } from '$ts/common/types';
 	import api from '$ts/client/api';
 
-
 	interface Props {
 		tiles: Tile[];
 		pages: TilePage[];
@@ -15,14 +14,9 @@
 		isHomePage: boolean;
 	}
 
-	let {
-		tiles,
-		pages,
-		projectId,
-		isHomePage
-	}: Props = $props();
+	let { tiles, pages, projectId, isHomePage }: Props = $props();
 
-	let fileinput: HTMLInputElement = $state();
+	let fileinput: HTMLInputElement = $state()!;
 	let showingDisplayTextOption = $state(false);
 
 	const tileColors = {

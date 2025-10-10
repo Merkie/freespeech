@@ -13,13 +13,7 @@
 		projectDownloadLink: string;
 	}
 
-	let {
-		thumbnail,
-		title,
-		description,
-		creatorName,
-		projectDownloadLink
-	}: Props = $props();
+	let { thumbnail, title, description, creatorName, projectDownloadLink }: Props = $props();
 
 	let loading = $state(false);
 

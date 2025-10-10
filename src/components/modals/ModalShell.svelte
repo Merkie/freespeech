@@ -40,7 +40,7 @@
 		>
 			<div class="mb-2 flex items-center justify-between gap-2">
 				<p class="text-lg font-bold">{title}</p>
-				<button onclick={closeModal}>
+				<button aria-label="Close modal" onclick={closeModal}>
 					<i class="bi bi-x-lg flex items-center"></i>
 				</button>
 			</div>

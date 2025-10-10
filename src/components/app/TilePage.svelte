@@ -11,7 +11,6 @@
 	// types
 	import type { Tile } from '$ts/common/types';
 
-
 	interface Props {
 		tiles: Tile[];
 		columns: number;

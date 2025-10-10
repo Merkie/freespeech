@@ -1,3 +1,4 @@
+<!-- @ts-nocheck -->
 <div class="mx-auto flex w-[90%] max-w-[1400px] flex-col gap-2 py-[100px]">
 	<div data-custom-class="body">
 		<div align="center" style="text-align: left;">

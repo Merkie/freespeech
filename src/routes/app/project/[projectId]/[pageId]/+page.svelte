@@ -22,20 +22,22 @@
 
 	let { data } = $props();
 
-	let containerHeight: number = $state(); // Needed for CSS tricks
+	let containerHeight: number = $state(0); // Needed for CSS tricks
 
-	let organizedTiles = $derived((() => {
-		const newTiles = data.page.tiles!.reduce((acc: Tile[][], tile: Tile) => {
-			acc[tile.page] = acc[tile.page] || [];
-			acc[tile.page].push(tile);
+	let organizedTiles = $derived(
+		(() => {
+			const newTiles = data.page.tiles!.reduce((acc: Tile[][], tile: Tile) => {
+				acc[tile.page] = acc[tile.page] || [];
+				acc[tile.page].push(tile);
 
-			return acc;
-		}, []) as Tile[][];
+				return acc;
+			}, []) as Tile[][];
 
-		if ($EditingTiles) newTiles.push([]);
+			if ($EditingTiles) newTiles.push([]);
 
-		return newTiles;
-	})());
+			return newTiles;
+		})()
+	);
 
 	onMount(() => {
 		if (data.projectId) $LocalSettings.lastVisitedProjectId = data.projectId;

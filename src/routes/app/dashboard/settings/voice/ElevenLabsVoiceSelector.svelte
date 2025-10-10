@@ -5,15 +5,15 @@
 
 	interface Props {
 		voices: {
-		voice_id: string;
-		name: string;
-		labels: {
-			accent: string;
-			description: string;
-			age: string;
-			gender: string;
-		};
-	}[];
+			voice_id: string;
+			name: string;
+			labels: {
+				accent: string;
+				description: string;
+				age: string;
+				gender: string;
+			};
+		}[];
 	}
 
 	let { voices }: Props = $props();

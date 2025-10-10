@@ -17,3 +17,10 @@ export function clickOutside(node: HTMLElement, ignore?: string) {
 		}
 	};
 }
+
+// Type declaration for the custom event
+declare global {
+	interface HTMLElementEventMap {
+		clickOutside: CustomEvent;
+	}
+}

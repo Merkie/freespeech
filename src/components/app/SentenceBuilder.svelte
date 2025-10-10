@@ -38,6 +38,7 @@
 	<div class="flex h-full items-center gap-2">
 		{#if $EnableSentenceCopyButton}
 			<button
+				aria-label="Copy sentence to clipboard"
 				onclick={() => {
 					const text = $Sentence.map((tile) => tile.text).join(' ');
 					navigator.clipboard.writeText(text);
@@ -59,12 +60,14 @@
 		{/if}
 
 		<button
+			aria-label="Speak sentence"
 			onclick={() => speakText($Sentence.map((tile) => tile.text).join(' '))}
 			class="grid h-[80px] w-[80px] place-items-center rounded-md bg-blue-500 text-blue-50"
 		>
 			<i class="bi bi-volume-up-fill text-4xl"></i>
 		</button>
 		<button
+			aria-label="Clear sentence"
 			onclick={() => ($Sentence = [])}
 			class="grid h-[80px] w-[80px] place-items-center rounded-md bg-red-500 text-blue-50"
 		>

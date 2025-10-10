@@ -3,7 +3,7 @@
 	import type { TilePage } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import api from '$ts/client/api';
 
 	interface Props {
@@ -16,7 +16,7 @@
 	const deletePage = async (pageId: string) => {
 		await api.page.delete(pageId);
 
-		if ($page.url.pathname.includes(pageId)) window.location.assign(`/app/project/${projectId}`);
+		if (page.url.pathname.includes(pageId)) window.location.assign(`/app/project/${projectId}`);
 
 		await invalidateAll();
 	};

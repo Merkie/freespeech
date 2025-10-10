@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { PUBLIC_R2_URL } from '$env/static/public';
 
 	let { data, children } = $props();
 
-	let containerHeight: number = $state();
+	let containerHeight: number = $state(0);
 
 	const links = [
 		{
@@ -46,14 +46,16 @@
 		return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 	};
 
-	let profileUrl = $derived(data.user.profileImgUrl?.startsWith('http')
-		? data.user.profileImgUrl
-		: `${PUBLIC_R2_URL}${data.user.profileImgUrl}`);
+	let profileUrl = $derived(
+		data.user.profileImgUrl?.startsWith('http')
+			? data.user.profileImgUrl
+			: `${PUBLIC_R2_URL}${data.user.profileImgUrl}`
+	);
 </script>
 
 <!-- webpage title -->
 <svelte:head>
-	<title>{links.find((link) => link.path.startsWith($page.url.pathname))?.name} - Dashboard</title>
+	<title>{links.find((link) => link.path.startsWith(page.url.pathname))?.name} - Dashboard</title>
 </svelte:head>
 
 <!-- dashboard header -->
@@ -63,7 +65,7 @@
 			<a
 				href={link.path}
 				class={`${
-					$page.url.pathname.startsWith(link.path)
+					page.url.pathname.startsWith(link.path)
 						? 'border-zinc-600'
 						: 'border-zinc-900 text-zinc-500 hover:text-zinc-400'
 				} flex items-center gap-4 border-b-4 p-3 px-4 transition-colors`}
