@@ -87,12 +87,4 @@
 		<i class="bi bi-grid text-sm"></i><span>View All Pages</span>
 	</button>
 	<div class="h-[1px] w-full bg-zinc-700/[40%]"></div>
-	<!-- <button
-		on:click={() => {
-			isDropDownOpen = false;
-		}}
-		class="flex items-center gap-2 rounded-md p-2 px-4 text-left transition-all hover:bg-zinc-700/[50%]"
-	>
-		<i class="bi bi-cloud-upload text-sm"></i><span>Upload "{page.name}" to Marketplace</span>
-	</button> -->
 </div>

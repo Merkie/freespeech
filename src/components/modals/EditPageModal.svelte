@@ -22,16 +22,6 @@
 		}}
 		title={'Edit Page'}
 	>
-		<!-- <button
-			on:click={() => {
-				$PageBeingEdited = null;
-				$EditingPages = true;
-			}}
-			class="mb-2 flex items-center gap-1 text-sm text-zinc-300"
-		>
-			<i class="bi bi-arrow-left" />
-			Back
-		</button> -->
 		<p class="mb-2">Page Name:</p>
 		<input type="text" bind:value={$PageBeingEdited.name} />
 		<button
