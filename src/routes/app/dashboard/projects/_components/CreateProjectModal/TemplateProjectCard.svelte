@@ -1,4 +1,6 @@
 <script lang="ts">
+	/* eslint-disable @typescript-eslint/no-explicit-any */
+
 	import { invalidateAll } from '$app/navigation';
 	import { PUBLIC_R2_URL } from '$env/static/public';
 	import api from '$ts/client/api';
@@ -60,6 +62,8 @@
 		}
 	}
 </script>
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 <div class="rounded-lg bg-zinc-800 p-4">
 	<img

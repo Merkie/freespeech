@@ -7,12 +7,7 @@
 	import { fly } from 'svelte/transition';
 	import type { Project } from '$ts/common/types';
 	import Fuse from 'fuse.js';
-	import {
-		AddingProject,
-		EditingProjects,
-		ImportingProject,
-		LocalSettings
-	} from '$ts/client/stores';
+	import { AddingProject, EditingProjects, LocalSettings } from '$ts/client/stores';
 	import SearchBar from '~/routes/app/dashboard/projects/_components/SearchBar.svelte';
 	import { writable } from 'svelte/store';
 	import EditProjectsModal from '$components/modals/EditProjectsModal.svelte';

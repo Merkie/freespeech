@@ -20,9 +20,8 @@
 	let previewFile: File | null = $state(null);
 
 	async function handleFileDrop(e: CustomEvent<File>) {
-		const { acceptedFiles, fileRejections } = e.detail as unknown as {
+		const { acceptedFiles } = e.detail as unknown as {
 			acceptedFiles: File[];
-			fileRejections: File[];
 		};
 
 		const file = acceptedFiles[0];

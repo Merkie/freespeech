@@ -5,7 +5,6 @@
 	import { uploadBlob } from '$ts/client/presigned-uploads';
 	import type { SkinTone } from '$ts/common/types';
 	import api from '$ts/client/api';
-	import { onMount } from 'svelte';
 
 	type SearchResult = {
 		image_url: string;
@@ -58,17 +57,6 @@
 		}
 		searching = false;
 	};
-
-	const handleSkinToneRefresh = () => {
-		if (selectedSearchStrategy !== 'open-symbols') return;
-		if (imageSearchResults.length === 0) return;
-		searchImages();
-	};
-
-	onMount(() => {
-		$LocalSettings.skinTone;
-		handleSkinToneRefresh();
-	});
 </script>
 
 <button

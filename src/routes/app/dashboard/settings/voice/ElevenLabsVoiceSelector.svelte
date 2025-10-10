@@ -59,6 +59,7 @@
 				id={$ElevenLabsVoiceId === voice.voice_id ? 'el-voice-active' : ''}
 			>
 				<button
+					aria-label={`Select ${voice.name} voice`}
 					onclick={() => {
 						$ElevenLabsVoiceId = voice.voice_id;
 					}}

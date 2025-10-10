@@ -1,4 +1,6 @@
 <script lang="ts">
+	/* eslint-disable @typescript-eslint/no-explicit-any */
+
 	import Dropzone from 'svelte-file-dropzone';
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';

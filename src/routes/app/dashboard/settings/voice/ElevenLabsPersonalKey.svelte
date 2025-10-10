@@ -33,6 +33,7 @@
 	<div class="flex items-center gap-4">
 		<p class="text-3xl text-zinc-800">Use personal ElevenLabs key:</p>
 		<button
+			aria-label={`Turn ${usePersonalKey ? 'off' : 'on'} personal ElevenLabs key`}
 			onclick={async () => {
 				usePersonalKey = !usePersonalKey;
 				await api.user.update({

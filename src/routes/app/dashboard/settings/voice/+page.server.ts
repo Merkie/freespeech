@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '$ts/client/api';
 
 export const load = async ({ locals: { user }, cookies }) => {

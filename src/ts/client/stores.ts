@@ -25,8 +25,6 @@ export const EditingProjects = writable(false);
 export const AddingProject = writable(false);
 export const ProjectBeingEdited = writable<Project | null>(null);
 
-export const ImportingProject = writable(false);
-
 export const VoiceEngineStatus = writable<'ready' | 'speaking' | 'synthesizing' | 'failed'>(
 	'ready'
 );

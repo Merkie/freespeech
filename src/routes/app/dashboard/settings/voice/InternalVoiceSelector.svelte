@@ -42,6 +42,7 @@
 				id={$OfflineVoiceUri === voice.voiceURI ? 'offline-voice-active' : ''}
 			>
 				<button
+					aria-label={`Select ${voice.name} voice`}
 					onclick={() => {
 						$OfflineVoiceUri = voice.voiceURI;
 					}}

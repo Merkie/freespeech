@@ -25,6 +25,7 @@
 		<div class="flex items-center gap-4">
 			<p class="text-3xl text-zinc-800">Enable third-party voice providers:</p>
 			<button
+				aria-label={`Turn ${$EnableThirdPartyVoiceProviders ? 'off' : 'on'} third-party voice providers`}
 				onclick={() => ($EnableThirdPartyVoiceProviders = !$EnableThirdPartyVoiceProviders)}
 				class={`relative w-[48px] scale-[120%] rounded-full p-1 shadow-sm transition-all ${$EnableThirdPartyVoiceProviders ? 'bg-green-500' : 'bg-zinc-300'}`}
 			>
