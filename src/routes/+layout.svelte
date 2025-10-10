@@ -8,9 +8,3 @@
 </script>
 
 {@render children?.()}
-
-<style lang="postcss">
-	:global(body) {
-		@apply font-sans;
-	}
-</style>

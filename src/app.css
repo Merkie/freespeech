@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	@apply font-sans;
+}
+
 button {
 	@apply cursor-pointer;
 }

@@ -19,6 +19,15 @@
 	let fileinput: HTMLInputElement = $state()!;
 	let showingDisplayTextOption = $state(false);
 
+	// Helper function to update tile properties reactively
+	function updateTileProperty<K extends keyof Tile>(key: K, value: Tile[K]) {
+		if (!$TileBeingEdited) return;
+		$TileBeingEdited = {
+			...$TileBeingEdited,
+			[key]: value
+		} as Tile;
+	}
+
 	const tileColors = {
 		white: {
 			background_color: '#fafafa',
@@ -62,8 +71,11 @@
 		const key = await uploadFile(uploadedFile);
 		$Loading = false;
 
-		if (!!key) {
-			$TileBeingEdited.image = `https://media.freespeechaac.com/${key}`;
+		if (key) {
+			$TileBeingEdited = {
+				...$TileBeingEdited,
+				image: `https://media.freespeechaac.com/${key}`
+			} as Tile;
 		}
 	};
 
@@ -97,10 +109,18 @@
 
 {#if $TileBeingEdited}
 	<p class="mb-2">Tile Text:</p>
-	<input type="text" bind:value={$TileBeingEdited.text} />
+	<input
+		type="text"
+		value={$TileBeingEdited.text}
+		oninput={(e) => updateTileProperty('text', e.currentTarget.value)}
+	/>
 	{#if showingDisplayTextOption || $TileBeingEdited.displayText}
 		<p class="my-2">Tile Display Text:</p>
-		<input type="text" value={$TileBeingEdited.displayText} />
+		<input
+			type="text"
+			value={$TileBeingEdited.displayText}
+			oninput={(e) => updateTileProperty('displayText', e.currentTarget.value)}
+		/>
 	{:else}
 		<button
 			onclick={() => (showingDisplayTextOption = true)}
@@ -124,7 +144,12 @@
 				<button
 					aria-label="Remove image"
 					onclick={() => {
-						if ($TileBeingEdited) $TileBeingEdited.image = '';
+						if ($TileBeingEdited) {
+							$TileBeingEdited = {
+								...$TileBeingEdited,
+								image: ''
+							} as Tile;
+						}
 					}}
 					class="absolute bottom-2 right-4 grid h-[30px] w-[30px] place-items-center rounded-md bg-red-500 text-white"
 				>
@@ -156,12 +181,11 @@
 			{@const colorValues = getColorFromKey(colorKey)}
 			<button
 				onclick={() => {
-					// @ts-ignore
 					$TileBeingEdited = {
 						...$TileBeingEdited,
 						backgroundColor: colorValues.background_color,
 						borderColor: colorValues.border_color
-					};
+					} as Tile;
 				}}
 				class={`${
 					$TileBeingEdited.backgroundColor === colorValues.background_color &&
@@ -180,7 +204,8 @@
 	<div>
 		<select
 			class="rounded-md border border-zinc-300 p-1 px-2 text-zinc-800"
-			bind:value={$TileBeingEdited.navigation}
+			value={$TileBeingEdited.navigation}
+			onchange={(e) => updateTileProperty('navigation', e.currentTarget.value)}
 		>
 			<option value={''}>No Navigation</option>
 			{#each pages as page (page.id)}

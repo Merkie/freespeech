@@ -69,7 +69,7 @@
 				<input type="text" value={data.user?.email} disabled={true} />
 				<p class="text-lg">Name</p>
 				<input type="text" bind:value={name} />
-				{#if !!name && name !== data.user?.name}
+				{#if name && name !== data.user?.name}
 					<button
 						onclick={updateUser}
 						type="submit"

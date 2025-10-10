@@ -27,8 +27,7 @@
 			}
 		}}
 		onclick={(e) => {
-			//@ts-ignore
-			if (e.target.tagName === 'MAIN') {
+			if ((e.target as HTMLElement | undefined)?.tagName === 'MAIN') {
 				closeModal();
 			}
 		}}

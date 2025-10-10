@@ -59,7 +59,7 @@
 
 		const key = await uploadFile(previewFile);
 
-		if (!!key) {
+		if (key) {
 			await api.user.update({
 				profileImgUrl: `/${key}`
 			});

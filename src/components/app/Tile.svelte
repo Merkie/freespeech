@@ -21,6 +21,9 @@
 
 	let tileTextContainerHeight = $state(0);
 
+	// Create a reactive variable for the check to avoid repetition
+	const hasImage = $derived(tile.image && tile.image.trim());
+
 	const handleInteraction = () => {
 		if ($EditingTiles) {
 			// deselect tile
@@ -56,12 +59,12 @@
 >
 	<button
 		onclick={noInteraction ? null : handleInteraction}
-		style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};${tile.image ? ' grid-template-rows: 25% 75%;' : ''}`}
+		style={`background-color: ${tile.backgroundColor}; border-color: ${tile.borderColor};${hasImage ? ' grid-template-rows: 25% 75%;' : ''}`}
 		class={`absolute left-0 top-0 h-full w-full overflow-hidden rounded-md border ${
-			tile.image ? 'grid grid-cols-1 grid-rows-2' : 'grid place-items-center'
+			hasImage ? 'grid grid-cols-1 grid-rows-2' : 'grid place-items-center'
 		}`}
 	>
-		{#if tile.image}
+		{#if hasImage}
 			<div bind:clientHeight={tileTextContainerHeight} class="relative h-full w-full">
 				<div class="absolute left-0 top-0 flex h-full w-full items-center justify-center">
 					<p
@@ -75,7 +78,7 @@
 
 			<img src={tile.image} class="h-full w-full object-contain" alt="Tile media" />
 		{:else}
-			<p class={`w-full truncate ${!tile.image ? 'text-[2vw]' : 'py-2'}`}>
+			<p class="w-full truncate px-2 text-center text-[2vw]">
 				{tile.displayText || tile.text}
 			</p>
 		{/if}

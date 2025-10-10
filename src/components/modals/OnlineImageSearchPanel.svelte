@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { Loading, LocalSettings, TileBeingEdited, UsingOnlineSearch } from '$ts/client/stores';
 	import { scale } from 'svelte/transition';
-	// @ts-ignore
 	import { SkinTones } from '$ts/common/opensymbols';
 	import { uploadBlob } from '$ts/client/presigned-uploads';
 	import type { SkinTone } from '$ts/common/types';
 	import api from '$ts/client/api';
+	import { onMount } from 'svelte';
 
 	type SearchResult = {
 		image_url: string;
@@ -34,9 +32,12 @@
 		$Loading = false;
 
 		// Upload the image to the presigned URL
-		if (!!key) {
+		if (key) {
 			$UsingOnlineSearch = false;
-			$TileBeingEdited.image = `https://media.freespeechaac.com/${key}`;
+			$TileBeingEdited = {
+				...$TileBeingEdited,
+				image: `https://media.freespeechaac.com/${key}`
+			};
 		}
 	};
 
@@ -64,7 +65,7 @@
 		searchImages();
 	};
 
-	run(() => {
+	onMount(() => {
 		$LocalSettings.skinTone;
 		handleSkinToneRefresh();
 	});
