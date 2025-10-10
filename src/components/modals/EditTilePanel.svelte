@@ -122,6 +122,7 @@
 					alt="Uploaded media preview"
 				/>
 				<button
+					aria-label="Remove image"
 					onclick={() => {
 						if ($TileBeingEdited) $TileBeingEdited.image = '';
 					}}

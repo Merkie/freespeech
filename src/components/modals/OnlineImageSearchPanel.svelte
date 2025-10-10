@@ -99,6 +99,7 @@
 		<p class="pr-3">Skin tone:</p>
 		{#each SkinTones as skinTone}
 			<button
+				aria-label={`Select ${skinTone.name} skin tone`}
 				onclick={() => ($LocalSettings.skinTone = skinTone.name)}
 				class={`h-[40px] flex-1 rounded-sm ${
 					selectedSkinTone === skinTone.name
