@@ -24,12 +24,12 @@
 			</p>
 			<p class="mb-4 text-base leading-relaxed">
 				These Legal Terms constitute a legally binding agreement made between you, whether
-				personally or on behalf of an entity ("you"), and Free Speech AAC, concerning   your access
-				to and use of the Services. You agree that by accessing the Services, you have read,
+				personally or on behalf of an entity ("you"), and Free Speech AAC, concerning your access to
+				and use of the Services. You agree that by accessing the Services, you have read,
 				understood, and agreed to be bound by all of these Legal Terms. <span
 					class="font-extrabold text-red-600"
-					>IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED  
-					FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</span
+					>IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM
+					USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</span
 				>
 			</p>
 			<p class="mb-4 text-base leading-relaxed">
@@ -37,7 +37,7 @@
 				to time are hereby expressly incorporated herein by reference. We reserve the right, in our
 				sole discretion, to make changes or modifications to these Legal Terms at any time and for
 				any reason. We will alert you about any changes by updating the "Last updated" date of these
-				Legal Terms, and you waive any right to   receive specific notice of each such change. It is
+				Legal Terms, and you waive any right to receive specific notice of each such change. It is
 				your responsibility to periodically review these Legal Terms to stay informed of updates.
 				You will be subject to, and will be deemed to have been made aware of and to have accepted,
 				the changes in any revised Legal Terms by your continued use of the Services after the date
@@ -153,7 +153,7 @@
 			<ul class="mb-4 ml-6 list-disc space-y-2 text-base leading-relaxed">
 				<li>access the Services; and</li>
 				<li>
-					download or print a copy of any portion of the Content to which you have properly   gained
+					download or print a copy of any portion of the Content to which you have properly gained
 					access.
 				</li>
 			</ul>
@@ -204,7 +204,7 @@
 					confirm that you have read and agree with our "<a
 						href="#prohibited"
 						class="font-semibold text-blue-700 hover:underline">PROHIBITED ACTIVITIES</a
-					>" and will not post, send, publish, upload, or transmit through the Services any  
+					>" and will not post, send, publish, upload, or transmit through the Services any
 					Submission that is illegal, harassing, hateful, harmful, defamatory, obscene, bullying,
 					abusive, discriminatory, threatening to any
 				</li>

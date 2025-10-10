@@ -1,7 +1,3 @@
-<script lang="ts">
-	// You can optionally define props or a load function here if needed
-</script>
-
 <main class="min-h-screen bg-white text-zinc-700">
 	<div class="mx-auto w-[90%] max-w-6xl py-12 md:py-24">
 		<div class="mb-10 text-left">
@@ -13,8 +9,8 @@
 		<div class="mb-10">
 			<h2 class="mb-4 text-2xl font-bold text-zinc-900">INTRODUCTION</h2>
 			<p class="mb-4 text-base leading-relaxed">
-				This privacy policy for Free Speech AAC ("Company," "we," "us," "our")   describes how and
-				why we might collect, store, use, and/or share your information   when you use our services
+				This privacy policy for Free Speech AAC ("Company," "we," "us," "our") describes how and why
+				we might collect, store, use, and/or share your information when you use our services
 				("Services"), such as when you:
 			</p>
 			<ul class="mb-4 ml-6 list-disc space-y-2 text-base leading-relaxed">
