@@ -83,8 +83,8 @@
 		on:click={() => (selectedSearchStrategy = 'bing')}
 		class={selectedSearchStrategy === 'bing' ? 'underline' : ''}
 	>
-		<i class="bi bi-bing mr-1"></i>
-		<span>Bing Images</span>
+		<i class="bi bi-search mr-1"></i>
+		<span>Image Search</span>
 	</button>
 	<button
 		on:click={() => (selectedSearchStrategy = 'open-symbols')}
@@ -119,22 +119,29 @@
 			type="text"
 			bind:value={onlineSearchTerm}
 			on:keydown={(e) => {
-				if (e.key === 'Enter') searchImages();
+				if (e.key === 'Enter' && !searching) searchImages();
 			}}
 			placeholder={`Search for ${
-				selectedSearchStrategy === 'bing' ? 'images with Bing' : 'symbols on Open Symbols'
+				selectedSearchStrategy === 'bing' ? 'images online' : 'symbols on Open Symbols'
 			}...`}
 			class="w-full border-none outline-none"
 		/>
 	</div>
 	<button
 		on:click={searchImages}
-		class="rounded-md border border-blue-500 bg-blue-600 p-1 px-4 text-sm"
+		disabled={searching}
+		class="rounded-md border border-blue-500 bg-blue-600 p-1 px-4 text-sm disabled:cursor-not-allowed disabled:opacity-50"
 		>{searching ? 'Searching...' : 'Search'}</button
 	>
 </div>
 
-{#if imageSearchResults.length === 0 && !searching}
+{#if searching}
+	<div class="mt-8 flex flex-col items-center justify-center gap-3">
+		<div class="h-8 w-8 animate-spin rounded-full border-4 border-zinc-600 border-t-blue-500"></div>
+		<p class="text-center text-zinc-300">Searching for images...</p>
+		<p class="text-center text-xs text-zinc-500">This may take a few seconds</p>
+	</div>
+{:else if imageSearchResults.length === 0}
 	<p class="mt-8 text-center text-zinc-300">No results found</p>
 {/if}
 
