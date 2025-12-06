@@ -6,7 +6,8 @@ const media = {
 		google: searchGoogleImages,
 		openSymbols: searchOpenSymbols
 	},
-	presignUpload
+	presignUpload,
+	removeBackground
 };
 
 export default media;
@@ -63,6 +64,18 @@ async function presignUpload(filename: string) {
 	})) as {
 		presignedUrl: string;
 		key: string;
+	};
+
+	return response;
+}
+
+async function removeBackground(imageUrl: string) {
+	const response = (await fetchFromAPI({
+		path: `/media/remove-background`,
+		method: 'POST',
+		body: { image_url: imageUrl }
+	})) as {
+		image_url: string;
 	};
 
 	return response;
