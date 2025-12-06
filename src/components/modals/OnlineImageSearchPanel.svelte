@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Loading, LocalSettings, TileBeingEdited, UsingOnlineSearch } from '$ts/client/stores';
-	import { scale } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	// @ts-ignore
 	import { SkinTones } from '$ts/common/opensymbols';
 	import { uploadBlob } from '$ts/client/presigned-uploads';
@@ -16,9 +16,30 @@
 	let onlineSearchTerm = $TileBeingEdited?.text || '';
 	let imageSearchResults: SearchResult[] = [];
 	let searching = false;
+	let imagesReady = false;
 
 	let selectedSearchStrategy: 'google' | 'open-symbols' = 'google';
 	$: selectedSkinTone = ($LocalSettings.skinTone || 'medium') as SkinTone;
+
+	const preloadImages = (images: SearchResult[]): Promise<void> => {
+		if (images.length === 0) return Promise.resolve();
+
+		return new Promise((resolve) => {
+			let loadedCount = 0;
+			const totalImages = images.length;
+
+			images.forEach((image) => {
+				const img = new Image();
+				img.onload = img.onerror = () => {
+					loadedCount++;
+					if (loadedCount >= totalImages) {
+						resolve();
+					}
+				};
+				img.src = image.thumbnail_url;
+			});
+		});
+	};
 
 	const handleUploadFromInternet = async (url: string) => {
 		if (!$TileBeingEdited) return;
@@ -40,19 +61,30 @@
 
 	const searchImages = async () => {
 		searching = true;
+		imagesReady = false;
+		imageSearchResults = [];
+
+		let images: SearchResult[] = [];
 		if (selectedSearchStrategy === 'google') {
-			const { results: images } = await api.media.searchImages.google({
+			const response = await api.media.searchImages.google({
 				query: onlineSearchTerm,
 				skinColor: selectedSkinTone
 			});
-			if (images) imageSearchResults = [...images];
+			if (response.results) images = response.results;
 		} else {
-			const { results: images } = await api.media.searchImages.openSymbols({
+			const response = await api.media.searchImages.openSymbols({
 				query: onlineSearchTerm,
 				skinColor: selectedSkinTone
 			});
-			if (images) imageSearchResults = [...images];
+			if (response.results) images = response.results;
 		}
+
+		if (images.length > 0) {
+			await preloadImages(images);
+			imageSearchResults = images;
+		}
+
+		imagesReady = true;
 		searching = false;
 	};
 
@@ -80,14 +112,22 @@
 
 <div class="flex gap-4 py-4">
 	<button
-		on:click={() => (selectedSearchStrategy = 'google')}
+		on:click={() => {
+			selectedSearchStrategy = 'google';
+			imageSearchResults = [];
+			imagesReady = false;
+		}}
 		class={selectedSearchStrategy === 'google' ? 'underline' : ''}
 	>
-		<i class="bi bi-search mr-1"></i>
-		<span>Image Search</span>
+		<i class="bi bi-google mr-1"></i>
+		<span>Google Images</span>
 	</button>
 	<button
-		on:click={() => (selectedSearchStrategy = 'open-symbols')}
+		on:click={() => {
+			selectedSearchStrategy = 'open-symbols';
+			imageSearchResults = [];
+			imagesReady = false;
+		}}
 		class={selectedSearchStrategy === 'open-symbols' ? 'underline' : ''}>Open Symbols</button
 	>
 </div>
@@ -141,26 +181,25 @@
 		<p class="text-center text-zinc-300">Searching for images...</p>
 		<p class="text-center text-xs text-zinc-500">This may take a few seconds</p>
 	</div>
-{:else if imageSearchResults.length === 0}
+{:else if imagesReady && imageSearchResults.length === 0}
 	<p class="mt-8 text-center text-zinc-300">No results found</p>
 {/if}
 
-<div class="mt-2 flex-1 overflow-y-auto">
-	<div class="rows-1 columns-2 gap-4">
-		<!-- {#key imageSearchResults} -->
-		{#each imageSearchResults as image (image.image_url)}
-			<button
-				in:scale
-				disabled={searching}
-				on:click={() => handleUploadFromInternet(image.image_url)}
-				class="mb-4 w-full"
-			>
-				<img class="mx-auto" src={image.thumbnail_url} alt={image.alt} />
-			</button>
-		{/each}
-		<!-- {/key} -->
+{#if imagesReady && imageSearchResults.length > 0}
+	<div class="mt-2 flex-1 overflow-y-auto" in:fade={{ duration: 200 }}>
+		<div class="rows-1 columns-2 gap-4">
+			{#each imageSearchResults as image (image.image_url)}
+				<button
+					disabled={searching}
+					on:click={() => handleUploadFromInternet(image.image_url)}
+					class="mb-4 w-full"
+				>
+					<img class="mx-auto" src={image.thumbnail_url} alt={image.alt} />
+				</button>
+			{/each}
+		</div>
 	</div>
-</div>
+{/if}
 
 <style lang="postcss">
 	input {
