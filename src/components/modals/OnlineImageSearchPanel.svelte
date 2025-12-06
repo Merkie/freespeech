@@ -17,7 +17,7 @@
 	let imageSearchResults: SearchResult[] = [];
 	let searching = false;
 
-	let selectedSearchStrategy: 'bing' | 'open-symbols' = 'bing';
+	let selectedSearchStrategy: 'google' | 'open-symbols' = 'google';
 	$: selectedSkinTone = ($LocalSettings.skinTone || 'medium') as SkinTone;
 
 	const handleUploadFromInternet = async (url: string) => {
@@ -40,8 +40,8 @@
 
 	const searchImages = async () => {
 		searching = true;
-		if (selectedSearchStrategy === 'bing') {
-			const { results: images } = await api.media.searchImages.bing({
+		if (selectedSearchStrategy === 'google') {
+			const { results: images } = await api.media.searchImages.google({
 				query: onlineSearchTerm,
 				skinColor: selectedSkinTone
 			});
@@ -80,8 +80,8 @@
 
 <div class="flex gap-4 py-4">
 	<button
-		on:click={() => (selectedSearchStrategy = 'bing')}
-		class={selectedSearchStrategy === 'bing' ? 'underline' : ''}
+		on:click={() => (selectedSearchStrategy = 'google')}
+		class={selectedSearchStrategy === 'google' ? 'underline' : ''}
 	>
 		<i class="bi bi-search mr-1"></i>
 		<span>Image Search</span>
@@ -122,7 +122,7 @@
 				if (e.key === 'Enter' && !searching) searchImages();
 			}}
 			placeholder={`Search for ${
-				selectedSearchStrategy === 'bing' ? 'images online' : 'symbols on Open Symbols'
+				selectedSearchStrategy === 'google' ? 'images online' : 'symbols on Open Symbols'
 			}...`}
 			class="w-full border-none outline-none"
 		/>

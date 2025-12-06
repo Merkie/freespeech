@@ -3,7 +3,7 @@ import { fetchFromAPI } from '../util';
 const media = {
 	fetchFromUrl,
 	searchImages: {
-		bing: searchBingImages,
+		google: searchGoogleImages,
 		openSymbols: searchOpenSymbols
 	},
 	presignUpload
@@ -25,9 +25,9 @@ async function fetchFromUrl(url: string) {
 	return blob;
 }
 
-async function searchBingImages(body: { query: string; skinColor: string }) {
+async function searchGoogleImages(body: { query: string; skinColor: string }) {
 	const response = (await fetchFromAPI({
-		path: `/media/search/bing?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
+		path: `/media/search/google?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
 		method: 'GET'
 	})) as {
 		results: {
