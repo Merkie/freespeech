@@ -13,6 +13,21 @@
 
 	let fileinput: HTMLInputElement;
 	let showingDisplayTextOption = false;
+	let removingBackground = false;
+
+	async function handleRemoveBackground() {
+		if (!$TileBeingEdited?.image) return;
+
+		removingBackground = true;
+		try {
+			const { image_url } = await api.media.removeBackground($TileBeingEdited.image);
+			$TileBeingEdited.image = image_url;
+		} catch (error) {
+			console.error('Failed to remove background:', error);
+		} finally {
+			removingBackground = false;
+		}
+	}
 
 	const tileColors = {
 		white: {
@@ -106,7 +121,7 @@
 		{#if $TileBeingEdited.image}
 			<div
 				style="background-image: url('https://img.freepik.com/premium-vector/checkered-background-transparent-texture-vector-grid-pattern-gray-white-backdrop_231786-5657.jpg');"
-				class="relative rounded-sm border border-zinc-700 p-2"
+				class="rounded-sm border border-zinc-700 p-2"
 			>
 				<img
 					src={$TileBeingEdited.image}
@@ -114,11 +129,27 @@
 					class="mx-auto rounded-md"
 					alt="Uploaded media preview"
 				/>
+			</div>
+			<div class="flex gap-2">
+				<button
+					on:click={handleRemoveBackground}
+					disabled={removingBackground}
+					class="flex h-[30px] items-center gap-1 rounded-md border border-zinc-600 bg-zinc-700 px-2 text-sm text-white disabled:opacity-50"
+					title="Remove background"
+				>
+					{#if removingBackground}
+						<i class="bi bi-arrow-repeat animate-spin" />
+					{:else}
+						<i class="bi bi-eraser-fill" />
+					{/if}
+					<span>Remove Background</span>
+				</button>
 				<button
 					on:click={() => {
 						if ($TileBeingEdited) $TileBeingEdited.image = '';
 					}}
-					class="absolute bottom-2 right-4 grid h-[30px] w-[30px] place-items-center rounded-md bg-red-500 text-white"
+					class="grid h-[30px] w-[30px] place-items-center rounded-md bg-red-500 text-white"
+					title="Remove image"
 				>
 					<i class="bi bi-trash-fill" />
 				</button>
@@ -195,7 +226,7 @@
 			let tempId = $TileBeingEdited?.id;
 			$TileBeingEdited = null;
 			const oldTile = tiles.find((tile) => tile.id === tempId);
-			if (oldTile) $TileBeingEdited = oldTile;
+			if (oldTile) $TileBeingEdited = { ...oldTile };
 		}}
 		class="mt-4 flex items-center justify-center gap-2 rounded-md border border-zinc-500 bg-zinc-600 p-1"
 		disabled={!$UnsavedChanges}
