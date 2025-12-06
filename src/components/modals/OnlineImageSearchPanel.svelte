@@ -21,19 +21,27 @@
 	let selectedSearchStrategy: 'google' | 'open-symbols' = 'google';
 	$: selectedSkinTone = ($LocalSettings.skinTone || 'medium') as SkinTone;
 
-	const preloadImages = (images: SearchResult[]): Promise<void> => {
-		if (images.length === 0) return Promise.resolve();
+	const preloadImages = (images: SearchResult[]): Promise<SearchResult[]> => {
+		if (images.length === 0) return Promise.resolve([]);
 
 		return new Promise((resolve) => {
 			let loadedCount = 0;
 			const totalImages = images.length;
+			const validImages: SearchResult[] = [];
 
 			images.forEach((image) => {
 				const img = new Image();
-				img.onload = img.onerror = () => {
+				img.onload = () => {
+					validImages.push(image);
 					loadedCount++;
 					if (loadedCount >= totalImages) {
-						resolve();
+						resolve(validImages);
+					}
+				};
+				img.onerror = () => {
+					loadedCount++;
+					if (loadedCount >= totalImages) {
+						resolve(validImages);
 					}
 				};
 				img.src = image.thumbnail_url;
@@ -80,8 +88,8 @@
 		}
 
 		if (images.length > 0) {
-			await preloadImages(images);
-			imageSearchResults = images;
+			const validImages = await preloadImages(images);
+			imageSearchResults = validImages;
 		}
 
 		imagesReady = true;
