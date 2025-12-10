@@ -9,7 +9,7 @@
 </script>
 
 <div
-	class="relative flex min-h-[100px] items-center gap-2 overflow-hidden rounded-md border-b border-zinc-200 bg-zinc-50 p-2"
+	class="relative flex min-h-[100px] items-center gap-2 overflow-hidden border-b border-zinc-200 bg-zinc-50 p-2"
 >
 	{#if $isSynthesizingSpeech}
 		<div
