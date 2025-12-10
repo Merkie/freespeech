@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
+	import { refreshProjectPages } from '$ts/client/page-cache';
 	import type { TilePage } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
 	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
@@ -14,7 +14,7 @@
 
 		if ($page.url.pathname.includes(pageId)) window.location.assign(`/app/project/${projectId}`);
 
-		await invalidateAll();
+		await refreshProjectPages();
 	};
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
+	import { refreshCurrentPage } from '$ts/client/page-cache';
 	import api from '$ts/client/api';
 
 	export let x: number;
@@ -20,7 +20,7 @@
 		});
 		if (isHomePage) void api.project.updateThumbnail(projectId);
 
-		await invalidateAll();
+		await refreshCurrentPage();
 	}
 </script>
 

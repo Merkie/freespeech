@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Loading, TileBeingEdited, UnsavedChanges, UsingOnlineSearch } from '$ts/client/stores';
 	import { uploadFile } from '$ts/client/presigned-uploads';
-	import { invalidateAll } from '$app/navigation';
+	import { refreshCurrentPage } from '$ts/client/page-cache';
 	import type { Tile, TilePage } from '$ts/common/types';
 	import api from '$ts/client/api';
 
@@ -81,7 +81,7 @@
 		if (!$TileBeingEdited) return;
 		await api.tile.edit($TileBeingEdited.id, $TileBeingEdited);
 		if (isHomePage) void api.project.updateThumbnail(projectId);
-		await invalidateAll();
+		await refreshCurrentPage();
 	}
 
 	const getColorFromKey = (color: string) => {
@@ -247,7 +247,7 @@
 			if (!$TileBeingEdited) return;
 			await api.tile.delete($TileBeingEdited.id);
 			if (isHomePage) void api.project.updateThumbnail(projectId);
-			await invalidateAll();
+			await refreshCurrentPage();
 			$TileBeingEdited = null;
 		}}
 		class="flex items-center justify-center gap-2 rounded-md border border-red-500 bg-red-600 p-1"
