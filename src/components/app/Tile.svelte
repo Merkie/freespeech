@@ -69,7 +69,7 @@
 				</div>
 			</div>
 
-			<img src={tile.image} class="h-full w-full object-contain" alt="Tile media" />
+			<img src={tile.image} loading="lazy" class="h-full w-full object-contain" alt="Tile media" />
 		{:else}
 			<p class={`w-full truncate ${!tile.image ? 'text-[2vw]' : 'py-2'}`}>
 				{tile.displayText || tile.text}
