@@ -45,7 +45,23 @@
 	<!-- Edit Button -->
 	<button
 		on:click={() => {
-			$EditingTiles = true;
+			if ($EditingTiles) {
+				if (!$UnsavedChanges) {
+					$EditingTiles = false;
+					$UsingOnlineSearch = false;
+					$TileBeingEdited = null;
+				} else {
+					$DiscardUnsavedChangesHandler = () => {
+						$EditingTiles = false;
+						$UsingOnlineSearch = false;
+						$TileBeingEdited = null;
+						$UnsavedChanges = false;
+					};
+					$UnsavedChangesModalOpen = true;
+				}
+			} else {
+				$EditingTiles = true;
+			}
 		}}
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
 			'bg-zinc-800': !$page.url.pathname.startsWith('/app/dashboard') && $EditingTiles

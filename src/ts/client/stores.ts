@@ -38,6 +38,7 @@ export const OfflineVoiceUri = writable<string | null>(null);
 
 // behavior settings
 export const EnableSentenceCopyButton = writable(false);
+export const EnableTileAnimations = writable(true);
 
 if (browser) {
 	const enableThirdPartyVoiceProviders = localStorage.getItem('enableThirdPartyVoiceProviders');
@@ -78,6 +79,14 @@ if (browser) {
 	}
 	EnableSentenceCopyButton.subscribe((value) => {
 		localStorage.setItem('enableSentenceCopyButton', value.toString());
+	});
+
+	const enableTileAnimations = localStorage.getItem('enableTileAnimations');
+	if (enableTileAnimations) {
+		EnableTileAnimations.set(enableTileAnimations === 'true');
+	}
+	EnableTileAnimations.subscribe((value) => {
+		localStorage.setItem('enableTileAnimations', value.toString());
 	});
 }
 

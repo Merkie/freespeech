@@ -1,6 +1,6 @@
 <script lang="ts">
 	// stores
-	import { EditingTiles, TileBeingEdited } from '$ts/client/stores';
+	import { EditingTiles, TileBeingEdited, EnableTileAnimations } from '$ts/client/stores';
 	// components
 	import TileComponent from '$components/app/Tile.svelte';
 	import AddTileButton from '$components/app/AddTileButton.svelte';
@@ -46,7 +46,7 @@
 			<div
 				data-sveltekit-preload-data
 				style={`grid-row: ${tile.y + 1}; grid-column: ${tile.x + 1};`}
-				in:scale={{ delay: Math.random() * 200 }}
+				in:scale={{ delay: $EnableTileAnimations ? Math.random() * 200 : 0, duration: $EnableTileAnimations ? 400 : 0 }}
 			>
 				{#if tile.navigation && !$EditingTiles}
 					<a href={`/app/project/${projectId}/${tile.navigation}`}>
