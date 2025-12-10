@@ -20,7 +20,7 @@
 {/if}
 
 <main class="flex h-[100dvh] flex-col">
-	<div class="relative flex-1 overflow-auto">
+	<div class="relative flex-1 overflow-hidden">
 		<div class="absolute left-0 top-0 flex max-h-full min-h-full w-full flex-col">
 			<slot><!-- optional fallback --></slot>
 		</div>
