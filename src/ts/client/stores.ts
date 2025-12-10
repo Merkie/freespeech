@@ -7,6 +7,16 @@ export const isSynthesizingSpeech = writable(false);
 export const Sentence = writable<Tile[]>([]);
 export const Loading = writable(false);
 
+// Current page data (client-side loaded)
+export const CurrentPageData = writable<{
+	page: TilePage;
+	project: Project;
+	isHomePage: boolean;
+	projectPages: TilePage[];
+} | null>(null);
+export const PageDataLoading = writable(false);
+export const ProjectPagesLoading = writable(false);
+
 // Modals & Panels
 
 export const UnsavedChanges = writable(false);
