@@ -18,6 +18,7 @@ export type LocalSettings = {
 	sentenceBuilder: boolean;
 	skinTone: SkinTone;
 	lastVisitedProjectId: string;
+	lastVisitedPageId: string;
 };
 
 export type SkinTone = 'dark' | 'medium-dark' | 'medium' | 'medium-light' | 'light';

@@ -99,7 +99,8 @@ export const LocalSettings = writable<LocalSettingsType>({
 	speakOnTap: true,
 	sentenceBuilder: true,
 	skinTone: 'medium',
-	lastVisitedProjectId: ''
+	lastVisitedProjectId: '',
+	lastVisitedPageId: ''
 });
 
 if (browser) {

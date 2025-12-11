@@ -39,6 +39,7 @@
 
 	onMount(() => {
 		if (data.projectId) $LocalSettings.lastVisitedProjectId = data.projectId;
+		if (data.page?.id) $LocalSettings.lastVisitedPageId = data.page.id;
 		$Sentence = [];
 	});
 </script>
