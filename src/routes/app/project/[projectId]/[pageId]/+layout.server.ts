@@ -14,7 +14,7 @@ export const load = async ({ params: { projectId, pageId }, cookies }) => {
 	return {
 		page: projectPage.tilePage,
 		project: projectPage.project,
-		projectPages: projectPage.project.connectedPages!.map((p) => p.tilePage),
+		projectId,
 		isHomePage
 	};
 };
