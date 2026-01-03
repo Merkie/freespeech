@@ -49,6 +49,7 @@ export type Project = {
 	columns: number;
 	rows: number;
 	isPublic: boolean;
+	homePageId: string | null;
 
 	createdAt: Date;
 	updatedAt: Date;
