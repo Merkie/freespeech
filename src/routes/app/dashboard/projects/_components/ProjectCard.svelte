@@ -6,11 +6,14 @@
 	export let project: Project;
 
 	$: selected = $LocalSettings.lastVisitedProjectId === project.id;
+	$: projectUrl = project.homePageId
+		? `/app/project/${project.id}/${project.homePageId}`
+		: `/app/project/${project.id}`;
 </script>
 
 <div class={`relative`}>
 	<a
-		href={`/app/project/${project.id}`}
+		href={projectUrl}
 		class={`relative flex h-fit w-full flex-col gap-4 rounded-lg border border-zinc-300 bg-zinc-200 p-2 shadow-sm ${selected ? 'border-blue-200 ring-4 ring-blue-200 ring-offset-2 ring-offset-zinc-100' : ''}`}
 	>
 		<img
