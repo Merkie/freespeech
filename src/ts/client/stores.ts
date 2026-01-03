@@ -20,6 +20,8 @@ export const TileBeingEdited = writable<Tile | null>(null);
 export const EditingPages = writable(false);
 export const AddingPage = writable(false);
 export const PageBeingEdited = writable<TilePage | null>(null);
+export const ProjectPages = writable<TilePage[]>([]);
+export const ProjectPagesLoading = writable(false);
 
 export const EditingProjects = writable(false);
 export const AddingProject = writable(false);
