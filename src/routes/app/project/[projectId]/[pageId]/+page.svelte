@@ -5,7 +5,9 @@
 		EditingTiles,
 		LocalSettings,
 		UsingOnlineSearch,
-		Sentence
+		Sentence,
+		ProjectPages,
+		ProjectPagesLoading
 	} from '$ts/client/stores';
 	// components
 	import PageHeader from '~/routes/app/project/[projectId]/[pageId]/_components/PageHeader.svelte';
@@ -19,6 +21,7 @@
 	import CreatePageModal from '$components/modals/CreatePageModal.svelte';
 	import UnsavedChangesModal from '$components/modals/UnsavedChangesModal.svelte';
 	import { onMount } from 'svelte';
+	import api from '$ts/client/api';
 
 	export let data;
 
@@ -37,10 +40,27 @@
 		return newTiles;
 	})();
 
+	// Fetch project pages when entering edit mode
+	async function fetchProjectPages() {
+		if ($ProjectPages.length > 0 || $ProjectPagesLoading) return;
+		$ProjectPagesLoading = true;
+		try {
+			const { pages } = await api.project.listPages(data.project.id);
+			$ProjectPages = pages;
+		} finally {
+			$ProjectPagesLoading = false;
+		}
+	}
+
+	$: if ($EditingTiles) {
+		fetchProjectPages();
+	}
+
 	onMount(() => {
 		if (data.projectId) $LocalSettings.lastVisitedProjectId = data.projectId;
 		if (data.page?.id) $LocalSettings.lastVisitedPageId = data.page.id;
 		$Sentence = [];
+		$ProjectPages = []; // Reset pages when navigating to a new page
 	});
 </script>
 
@@ -83,7 +103,7 @@
 				<OnlineImageSearchPanel />
 			{:else}
 				<EditTilePanel
-					pages={data.projectPages}
+					pages={$ProjectPages}
 					tiles={data.page.tiles}
 					projectId={data.project.id}
 					isHomePage={data.isHomePage}
@@ -94,7 +114,7 @@
 </div>
 
 {#if data.project}
-	<EditPagesModal projectId={data.project.id} pages={data.projectPages} />
+	<EditPagesModal projectId={data.project.id} pages={$ProjectPages} />
 	<CreatePageModal projectId={data.project.id} />
 	<EditPageModal />
 	<UnsavedChangesModal />
