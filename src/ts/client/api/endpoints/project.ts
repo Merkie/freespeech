@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { OBFPage } from '$ts/common/openboardformat';
-import type { Project, TilePageInProject } from '$ts/common/types';
+import type { Project, TilePage, TilePageInProject } from '$ts/common/types';
 import { fetchFromAPI } from '../util';
 
 const project = {
 	view: viewProject,
 	list: listProjects,
+	listPages: listProjectPages,
 	create: createProject,
 	delete: deleteProject,
 	edit: editProject,
@@ -26,6 +27,17 @@ async function listProjects(token?: string) {
 		token
 	})) as {
 		projects: Project[];
+	};
+
+	return response;
+}
+
+async function listProjectPages(projectId: string) {
+	const response = (await fetchFromAPI({
+		path: `/project/${projectId}/pages`,
+		method: 'GET'
+	})) as {
+		pages: TilePage[];
 	};
 
 	return response;
