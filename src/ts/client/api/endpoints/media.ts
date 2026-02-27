@@ -28,7 +28,7 @@ async function fetchFromUrl(url: string) {
 
 async function searchGoogleImages(body: { query: string; skinColor: string }) {
 	const response = (await fetchFromAPI({
-		path: `/media/search/google?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
+		path: `/media/search/brave?q=${encodeURIComponent(body.query)}&skin=${encodeURIComponent(body.skinColor)}`,
 		method: 'GET'
 	})) as {
 		results: {
