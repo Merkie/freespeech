@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
-	import { AddingPage, EditingPages, ProjectPages } from '$ts/client/stores';
+	import { AddingPage, EditingPages, ProjectPages, requestBoardRefresh } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
 	export let projectId: string;
@@ -19,6 +19,7 @@
 		$ProjectPages = pages;
 
 		await invalidateAll();
+		requestBoardRefresh();
 		creatingPage = false;
 
 		$AddingPage = false;

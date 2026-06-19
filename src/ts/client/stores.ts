@@ -22,6 +22,8 @@ export const AddingPage = writable(false);
 export const PageBeingEdited = writable<TilePage | null>(null);
 export const ProjectPages = writable<TilePage[]>([]);
 export const ProjectPagesLoading = writable(false);
+export const BoardRefreshVersion = writable(0);
+export const requestBoardRefresh = () => BoardRefreshVersion.update((version) => version + 1);
 
 export const EditingProjects = writable(false);
 export const AddingProject = writable(false);
@@ -94,7 +96,7 @@ if (browser) {
 
 // Browser-based settings
 
-export const LocalSettings = writable<LocalSettingsType>({
+const defaultLocalSettings: LocalSettingsType = {
 	offlineVoice: '',
 	elevenLabsVoice: 'Rachel',
 	voiceGenerator: 'offline',
@@ -102,13 +104,16 @@ export const LocalSettings = writable<LocalSettingsType>({
 	sentenceBuilder: true,
 	skinTone: 'medium',
 	lastVisitedProjectId: '',
-	lastVisitedPageId: ''
-});
+	lastVisitedPageId: '',
+	lastVisitedHomePageId: ''
+};
+
+export const LocalSettings = writable<LocalSettingsType>(defaultLocalSettings);
 
 if (browser) {
 	const localSettings = localStorage.getItem('localSettings');
 	if (localSettings) {
-		LocalSettings.set({ ...LocalSettings, ...JSON.parse(localSettings) });
+		LocalSettings.set({ ...defaultLocalSettings, ...JSON.parse(localSettings) });
 	}
 	LocalSettings.subscribe((value) => {
 		if (value) {

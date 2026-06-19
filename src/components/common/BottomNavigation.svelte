@@ -10,6 +10,13 @@
 	} from '$ts/client/stores';
 	import { page } from '$app/stores';
 	import { cn } from '$ts/client/cn';
+
+	$: homeHref =
+		$LocalSettings.lastVisitedProjectId && $LocalSettings.lastVisitedHomePageId
+			? `/app/project/${$LocalSettings.lastVisitedProjectId}/${$LocalSettings.lastVisitedHomePageId}`
+			: $LocalSettings.lastVisitedProjectId
+				? `/app/project/${$LocalSettings.lastVisitedProjectId}`
+				: '/app/dashboard/projects';
 </script>
 
 <div
@@ -37,7 +44,7 @@
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
 			'bg-zinc-800': !$page.url.pathname.startsWith('/app/dashboard') && !$EditingTiles
 		})}
-		href={`/app/project/${$LocalSettings.lastVisitedProjectId}`}
+		href={homeHref}
 	>
 		<i class="bi bi-house-fill"></i>
 	</a>

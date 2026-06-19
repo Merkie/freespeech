@@ -1,5 +1,11 @@
 <script lang="ts">
-	import { Loading, TileBeingEdited, UnsavedChanges, UsingOnlineSearch } from '$ts/client/stores';
+	import {
+		Loading,
+		TileBeingEdited,
+		UnsavedChanges,
+		UsingOnlineSearch,
+		requestBoardRefresh
+	} from '$ts/client/stores';
 	import { uploadFile } from '$ts/client/presigned-uploads';
 	import { invalidateAll } from '$app/navigation';
 	import type { Tile, TilePage } from '$ts/common/types';
@@ -82,6 +88,7 @@
 		await api.tile.edit($TileBeingEdited.id, $TileBeingEdited);
 		if (isHomePage) void api.project.updateThumbnail(projectId);
 		await invalidateAll();
+		requestBoardRefresh();
 	}
 
 	const getColorFromKey = (color: string) => {
@@ -248,6 +255,7 @@
 			await api.tile.delete($TileBeingEdited.id);
 			if (isHomePage) void api.project.updateThumbnail(projectId);
 			await invalidateAll();
+			requestBoardRefresh();
 			$TileBeingEdited = null;
 		}}
 		class="flex items-center justify-center gap-2 rounded-md border border-red-500 bg-red-600 p-1"

@@ -8,8 +8,9 @@ export const load = async ({ params: { projectId, pageId }, cookies }) => {
 		cookies.get('token')
 	);
 
-	if (!projectPage || !projectPage.tilePage || !projectPage.project)
+	if (!projectPage || !projectPage.tilePage || !projectPage.project) {
 		throw redirect(302, '/app/dashboard/projects');
+	}
 
 	return {
 		page: projectPage.tilePage,

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
-	import { EditingPages, PageBeingEdited } from '$ts/client/stores';
+	import { EditingPages, PageBeingEdited, requestBoardRefresh } from '$ts/client/stores';
 	import ModalShell from './ModalShell.svelte';
 
 	const editPage = async () => {
@@ -10,6 +10,7 @@
 			name: $PageBeingEdited.name
 		});
 		await invalidateAll();
+		requestBoardRefresh();
 		$PageBeingEdited = null;
 		$EditingPages = true;
 	};

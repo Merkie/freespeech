@@ -2,7 +2,13 @@
 	import { invalidateAll } from '$app/navigation';
 	import type { TilePage } from '$ts/common/types';
 	import ModalShell from './ModalShell.svelte';
-	import { EditingPages, PageBeingEdited, ProjectPages, ProjectPagesLoading } from '$ts/client/stores';
+	import {
+		EditingPages,
+		PageBeingEdited,
+		ProjectPages,
+		ProjectPagesLoading,
+		requestBoardRefresh
+	} from '$ts/client/stores';
 	import { page } from '$app/stores';
 	import api from '$ts/client/api';
 
@@ -30,6 +36,7 @@
 		// Also update the store
 		$ProjectPages = $ProjectPages.filter((p) => p.id !== pageId);
 		await invalidateAll();
+		requestBoardRefresh();
 	};
 </script>
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
+	import { requestBoardRefresh } from '$ts/client/stores';
 
 	export let x: number;
 	export let y: number;
@@ -21,6 +22,7 @@
 		if (isHomePage) void api.project.updateThumbnail(projectId);
 
 		await invalidateAll();
+		requestBoardRefresh();
 	}
 </script>
 

@@ -19,6 +19,7 @@ export type LocalSettings = {
 	skinTone: SkinTone;
 	lastVisitedProjectId: string;
 	lastVisitedPageId: string;
+	lastVisitedHomePageId: string;
 };
 
 export type SkinTone = 'dark' | 'medium-dark' | 'medium' | 'medium-light' | 'light';
