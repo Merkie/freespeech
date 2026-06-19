@@ -16,6 +16,8 @@ export const UnsavedChangesModalOpen = writable(false);
 export const EditingTiles = writable(false);
 export const UsingOnlineSearch = writable(false);
 export const TileBeingEdited = writable<Tile | null>(null);
+// The tile currently being dragged in edit mode (drag-to-move).
+export const DraggedTile = writable<Tile | null>(null);
 
 export const EditingPages = writable(false);
 export const AddingPage = writable(false);
