@@ -27,6 +27,13 @@ export const ProjectPagesLoading = writable(false);
 export const BoardRefreshVersion = writable(0);
 export const requestBoardRefresh = () => BoardRefreshVersion.update((version) => version + 1);
 
+// Registered by the board page so tile mutations can update the on-screen board
+// immediately (optimistically) before the server round-trip completes, avoiding
+// the tile snapping back to its old position and then forward again.
+export const ApplyOptimisticBoardUpdate = writable<((mutate: (tiles: Tile[]) => Tile[]) => void) | null>(
+	null
+);
+
 export const EditingProjects = writable(false);
 export const AddingProject = writable(false);
 export const ProjectBeingEdited = writable<Project | null>(null);

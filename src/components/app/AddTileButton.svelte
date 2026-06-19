@@ -2,7 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
 	import { requestBoardRefresh, DraggedTile } from '$ts/client/stores';
-	import { moveTile } from '$ts/client/move-tile';
+	import { moveTile, applyOptimisticTiles } from '$ts/client/move-tile';
 
 	export let x: number;
 	export let y: number;
@@ -16,12 +16,14 @@
 	let dragOver = false;
 
 	async function handleAddTile() {
-		await api.tile.create({
+		const created = await api.tile.create({
 			pageId,
 			x,
 			y,
 			page: subpage
 		});
+		// Optimistic: drop the new tile onto the board immediately.
+		if (created) applyOptimisticTiles((tiles) => [...tiles, created]);
 		if (isHomePage) void api.project.updateThumbnail(projectId);
 
 		await invalidateAll();

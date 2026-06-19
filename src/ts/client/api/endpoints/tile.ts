@@ -10,11 +10,16 @@ const tile = {
 export default tile;
 
 async function createTile(body: { x: number; y: number; page: number; pageId: string }) {
-	await fetchFromAPI({
+	const response = (await fetchFromAPI({
 		path: '/tile/create',
 		method: 'POST',
 		body
-	});
+	})) as {
+		tile?: Tile;
+		error?: string;
+	};
+
+	return response.tile ?? null;
 }
 
 async function deleteTile(tileId: string) {

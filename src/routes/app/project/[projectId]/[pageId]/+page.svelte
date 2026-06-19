@@ -8,7 +8,8 @@
 		Sentence,
 		ProjectPages,
 		ProjectPagesLoading,
-		BoardRefreshVersion
+		BoardRefreshVersion,
+		ApplyOptimisticBoardUpdate
 	} from '$ts/client/stores';
 	// components
 	import PageHeader from '~/routes/app/project/[projectId]/[pageId]/_components/PageHeader.svelte';
@@ -86,6 +87,24 @@
 	function setBoardData(nextData: BoardPageData | null) {
 		boardData = nextData;
 		if (nextData) trackVisit(nextData);
+	}
+
+	// Apply an immediate change to the current board's tiles (optimistic UI) and
+	// mirror it into the cache, so edits/moves show instantly instead of waiting
+	// for the server round-trip and snapping into place afterwards.
+	function applyOptimisticBoardUpdate(mutate: (tiles: Tile[]) => Tile[]) {
+		if (!boardData) return;
+
+		const nextData: BoardPageData = {
+			...boardData,
+			page: { ...boardData.page, tiles: mutate(boardData.page.tiles) }
+		};
+
+		setBoardData(nextData);
+		writeCachedBoardPage(
+			{ projectId: nextData.projectId, pageId: nextData.page.id },
+			nextData
+		);
 	}
 
 	async function loadBoardPage(
@@ -205,11 +224,13 @@
 	onMount(() => {
 		mounted = true;
 		observedRefreshVersion = $BoardRefreshVersion;
+		$ApplyOptimisticBoardUpdate = applyOptimisticBoardUpdate;
 		syncTokenFromCookie();
 		void loadBoardPage(projectId, pageId);
 
 		return () => {
 			mounted = false;
+			$ApplyOptimisticBoardUpdate = null;
 		};
 	});
 </script>

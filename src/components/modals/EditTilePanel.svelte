@@ -10,6 +10,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import type { Tile, TilePage } from '$ts/common/types';
 	import api from '$ts/client/api';
+	import { applyOptimisticTiles } from '$ts/client/move-tile';
 
 	export let tiles: Tile[];
 	export let pages: TilePage[];
@@ -85,7 +86,10 @@
 
 	async function handleSaveChanges() {
 		if (!$TileBeingEdited) return;
-		await api.tile.edit($TileBeingEdited.id, $TileBeingEdited);
+		const edited = { ...$TileBeingEdited };
+		// Optimistic: reflect the edit on the board immediately.
+		applyOptimisticTiles((tiles) => tiles.map((tile) => (tile.id === edited.id ? edited : tile)));
+		await api.tile.edit(edited.id, edited);
 		if (isHomePage) void api.project.updateThumbnail(projectId);
 		await invalidateAll();
 		requestBoardRefresh();
@@ -252,11 +256,14 @@
 	<button
 		on:click={async () => {
 			if (!$TileBeingEdited) return;
-			await api.tile.delete($TileBeingEdited.id);
+			const deletedId = $TileBeingEdited.id;
+			// Optimistic: remove the tile from the board immediately.
+			applyOptimisticTiles((tiles) => tiles.filter((tile) => tile.id !== deletedId));
+			$TileBeingEdited = null;
+			await api.tile.delete(deletedId);
 			if (isHomePage) void api.project.updateThumbnail(projectId);
 			await invalidateAll();
 			requestBoardRefresh();
-			$TileBeingEdited = null;
 		}}
 		class="flex items-center justify-center gap-2 rounded-md border border-red-500 bg-red-600 p-1"
 	>

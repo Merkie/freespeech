@@ -1,7 +1,19 @@
+import { get } from 'svelte/store';
 import { invalidateAll } from '$app/navigation';
 import api from '$ts/client/api';
-import { requestBoardRefresh } from '$ts/client/stores';
+import { ApplyOptimisticBoardUpdate, requestBoardRefresh } from '$ts/client/stores';
 import type { Tile } from '$ts/common/types';
+
+/**
+ * Applies an immediate (optimistic) change to the on-screen board tiles, if a
+ * board page is currently mounted. The server call still runs afterwards; the
+ * later refresh reconciles against the real data (positions already match, so
+ * there is no visible snap).
+ */
+export function applyOptimisticTiles(mutate: (tiles: Tile[]) => Tile[]) {
+	const apply = get(ApplyOptimisticBoardUpdate);
+	if (apply) apply(mutate);
+}
 
 /**
  * Moves a tile to a target cell (x, y, subpage) within the board.
@@ -36,6 +48,16 @@ export async function moveTile({
 
 	// Dropping onto itself (occupant is the source) is also a no-op.
 	if (occupant && occupant.id === source.id) return;
+
+	// Optimistic: move the source (and swap the occupant) on screen right away.
+	applyOptimisticTiles((tiles) =>
+		tiles.map((tile) => {
+			if (tile.id === source.id) return { ...tile, x: targetX, y: targetY, page: targetPage };
+			if (occupant && tile.id === occupant.id)
+				return { ...tile, x: source.x, y: source.y, page: source.page };
+			return tile;
+		})
+	);
 
 	if (occupant) {
 		// Swap: the occupant takes the source's old cell.
@@ -101,6 +123,9 @@ export async function addTileToFolder({
 	isHomePage: boolean;
 }) {
 	if (!source || !folderPageId) return;
+
+	// Optimistic: the tile leaves the current page, so remove it on screen now.
+	applyOptimisticTiles((tiles) => tiles.filter((tile) => tile.id !== source.id));
 
 	// Fetch the destination page's current tiles + grid dimensions so we can
 	// pick a non-colliding slot.
