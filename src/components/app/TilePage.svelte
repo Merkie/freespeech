@@ -164,22 +164,41 @@
 				{/if}
 
 				{#if showFolderOverlay(tile)}
-					<!-- Add / Swap drop overlay for folder tiles -->
-					<div class="pointer-events-none absolute inset-0 z-10 flex overflow-hidden rounded-md">
+					<!-- Add / Swap drop overlay for folder tiles. Extends up over the
+					     folder "nub" (-top-1) so it reads as one cohesive panel. -->
+					<div
+						class="pointer-events-none absolute -top-1 bottom-0 left-0 right-0 z-20 flex overflow-hidden rounded-md"
+					>
 						<div
-							class={`flex flex-1 items-center justify-center transition-colors ${
-								folderDropSide === 'add' ? 'bg-black/25 text-white' : 'bg-black/60 text-white/60'
+							class={`flex flex-1 flex-col items-center justify-center gap-1 text-center transition-all ${
+								folderDropSide === 'add'
+									? 'bg-emerald-600 text-white ring-2 ring-inset ring-white'
+									: 'bg-zinc-900/85 text-white/50'
 							}`}
 						>
-							<span class="text-xs font-bold uppercase tracking-wide">Add</span>
+							<i
+								class={`bi bi-folder-plus leading-none drop-shadow transition-transform ${
+									folderDropSide === 'add' ? 'scale-110' : ''
+								}`}
+								style="font-size: clamp(20px, 3vw, 44px);"
+							/>
+							<span class="text-xs font-extrabold uppercase tracking-wide drop-shadow">Add</span>
 						</div>
-						<div class="h-full border-l-2 border-dotted border-white"></div>
+						<div class="w-0 self-stretch border-l-2 border-dashed border-white"></div>
 						<div
-							class={`flex flex-1 items-center justify-center transition-colors ${
-								folderDropSide === 'swap' ? 'bg-black/25 text-white' : 'bg-black/60 text-white/60'
+							class={`flex flex-1 flex-col items-center justify-center gap-1 text-center transition-all ${
+								folderDropSide === 'swap'
+									? 'bg-blue-600 text-white ring-2 ring-inset ring-white'
+									: 'bg-zinc-900/85 text-white/50'
 							}`}
 						>
-							<span class="text-xs font-bold uppercase tracking-wide">Swap</span>
+							<i
+								class={`bi bi-arrow-left-right leading-none drop-shadow transition-transform ${
+									folderDropSide === 'swap' ? 'scale-110' : ''
+								}`}
+								style="font-size: clamp(20px, 3vw, 44px);"
+							/>
+							<span class="text-xs font-extrabold uppercase tracking-wide drop-shadow">Swap</span>
 						</div>
 					</div>
 				{/if}
