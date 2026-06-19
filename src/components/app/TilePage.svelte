@@ -11,7 +11,7 @@
 	import AddTileButton from '$components/app/AddTileButton.svelte';
 	// helpers
 	import { scale } from 'svelte/transition';
-	import { moveTile } from '$ts/client/move-tile';
+	import { moveTile, addTileToFolder } from '$ts/client/move-tile';
 	// types
 	import type { Tile } from '$ts/common/types';
 
@@ -29,6 +29,19 @@
 
 	// Tile currently being hovered over as a drop target (for visual feedback).
 	let dragOverTileId: string | null = null;
+	// When hovering a folder tile, which half of the Add/Swap overlay is active.
+	let folderDropSide: 'add' | 'swap' | null = null;
+
+	// A "folder" tile is one that navigates to another page.
+	const isFolderTile = (tile: Tile) => !!tile.navigation;
+
+	// Whether the Add/Swap overlay should be shown over this tile right now.
+	$: showFolderOverlay = (tile: Tile) =>
+		$EditingTiles &&
+		!!$DraggedTile &&
+		$DraggedTile.id !== tile.id &&
+		isFolderTile(tile) &&
+		dragOverTileId === tile.id;
 
 	function handleDragStart(event: DragEvent, tile: Tile) {
 		if (!$EditingTiles) return;
@@ -42,6 +55,7 @@
 	function handleDragEnd() {
 		$DraggedTile = null;
 		dragOverTileId = null;
+		folderDropSide = null;
 	}
 
 	function handleDragOver(event: DragEvent, tile: Tile) {
@@ -49,27 +63,53 @@
 		event.preventDefault();
 		if (event.dataTransfer) event.dataTransfer.dropEffect = 'move';
 		dragOverTileId = tile.id;
+
+		// Over a folder tile, split the cell into an "Add" (left) and "Swap"
+		// (right) half and track which one the cursor is over.
+		if (isFolderTile(tile) && $DraggedTile.id !== tile.id) {
+			const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+			folderDropSide = event.clientX - rect.left < rect.width / 2 ? 'add' : 'swap';
+		} else {
+			folderDropSide = null;
+		}
 	}
 
 	function handleDragLeave(tile: Tile) {
-		if (dragOverTileId === tile.id) dragOverTileId = null;
+		if (dragOverTileId === tile.id) {
+			dragOverTileId = null;
+			folderDropSide = null;
+		}
 	}
 
 	async function handleDrop(event: DragEvent, tile: Tile) {
 		if (!$EditingTiles || !$DraggedTile) return;
 		event.preventDefault();
 		const source = $DraggedTile;
+		const side = folderDropSide;
 		dragOverTileId = null;
+		folderDropSide = null;
 		$DraggedTile = null;
-		await moveTile({
-			source,
-			targetX: tile.x,
-			targetY: tile.y,
-			targetPage: tile.page,
-			occupant: tile,
-			projectId,
-			isHomePage
-		});
+
+		if (isFolderTile(tile) && side === 'add' && source.id !== tile.id) {
+			// Drop on the "Add" half of a folder: move the tile into the folder.
+			await addTileToFolder({
+				source,
+				folderPageId: tile.navigation,
+				projectId,
+				isHomePage
+			});
+		} else {
+			// Empty cell, non-folder tile, or the "Swap" half: reposition / swap.
+			await moveTile({
+				source,
+				targetX: tile.x,
+				targetY: tile.y,
+				targetPage: tile.page,
+				occupant: tile,
+				projectId,
+				isHomePage
+			});
+		}
 	}
 
 	$: {
@@ -98,11 +138,11 @@
 			<div
 				data-sveltekit-preload-data
 				style={`grid-row: ${tile.y + 1}; grid-column: ${tile.x + 1};`}
-				class={`rounded-md transition-shadow ${
+				class={`relative rounded-md transition-shadow ${
 					$EditingTiles ? 'cursor-grab active:cursor-grabbing' : ''
-				} ${dragOverTileId === tile.id ? 'ring-2 ring-blue-500' : ''} ${
-					$DraggedTile && $DraggedTile.id === tile.id ? 'opacity-40' : ''
-				}`}
+				} ${
+					dragOverTileId === tile.id && !isFolderTile(tile) ? 'ring-2 ring-blue-500' : ''
+				} ${$DraggedTile && $DraggedTile.id === tile.id ? 'opacity-40' : ''}`}
 				draggable={$EditingTiles}
 				on:dragstart={(event) => handleDragStart(event, tile)}
 				on:dragend={handleDragEnd}
@@ -121,6 +161,27 @@
 					<TileComponent
 						tile={$EditingTiles && $TileBeingEdited?.id === tile.id ? $TileBeingEdited : tile}
 					/>
+				{/if}
+
+				{#if showFolderOverlay(tile)}
+					<!-- Add / Swap drop overlay for folder tiles -->
+					<div class="pointer-events-none absolute inset-0 z-10 flex overflow-hidden rounded-md">
+						<div
+							class={`flex flex-1 items-center justify-center transition-colors ${
+								folderDropSide === 'add' ? 'bg-black/25 text-white' : 'bg-black/60 text-white/60'
+							}`}
+						>
+							<span class="text-xs font-bold uppercase tracking-wide">Add</span>
+						</div>
+						<div class="h-full border-l-2 border-dotted border-white"></div>
+						<div
+							class={`flex flex-1 items-center justify-center transition-colors ${
+								folderDropSide === 'swap' ? 'bg-black/25 text-white' : 'bg-black/60 text-white/60'
+							}`}
+						>
+							<span class="text-xs font-bold uppercase tracking-wide">Swap</span>
+						</div>
+					</div>
 				{/if}
 			</div>
 		{/each}
