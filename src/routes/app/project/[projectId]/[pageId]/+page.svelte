@@ -244,7 +244,7 @@
 {#if !boardData && loading}
 	<Loader />
 {:else if boardData}
-	<PageHeader page={boardData.page} />
+	<PageHeader page={boardData.page} isHomePage={boardData.isHomePage} />
 
 	{#if !$EditingTiles && $LocalSettings.sentenceBuilder}<SentenceBuilder />{/if}
 
@@ -289,7 +289,11 @@
 		{/if}
 	</div>
 
-	<EditPagesModal projectId={boardData.project.id} pages={$ProjectPages} />
+	<EditPagesModal
+		projectId={boardData.project.id}
+		pages={$ProjectPages}
+		homePageId={boardData.project.homePageId}
+	/>
 	<CreatePageModal projectId={boardData.project.id} />
 	<EditPageModal />
 	<UnsavedChangesModal />
