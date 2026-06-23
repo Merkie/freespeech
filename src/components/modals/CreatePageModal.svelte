@@ -12,7 +12,13 @@
 	const createPage = async () => {
 		if (creatingPage) return;
 		creatingPage = true;
-		await api.page.create({ projectId, name: pageName });
+
+		const response = await api.page.create({ projectId, name: pageName });
+
+		if (response.error) {
+			creatingPage = false;
+			return alert(response.error);
+		}
 
 		// Refresh the pages list
 		const { pages } = await api.project.listPages(projectId);
