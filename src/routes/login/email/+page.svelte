@@ -56,6 +56,12 @@
 				on:click={submitLogin}
 				class="rounded-md bg-blue-600 p-2 text-lg font-bold text-blue-50">Log In</button
 			>
+			<a
+				href="/login/forgot-password"
+				class="mt-4 text-center text-sm text-zinc-500 hover:text-zinc-700 hover:underline"
+			>
+				Forgot password?
+			</a>
 			<a href="/register" class="mt-4 p-4 text-zinc-400">
 				<span class="mr-4">{`Don't have an account?`}</span>
 				<i class="bi bi-arrow-right"></i>

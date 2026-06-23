@@ -9,7 +9,9 @@ const auth = {
 	},
 	email: {
 		login: processEmailLogin,
-		register: registerWithEmail
+		register: registerWithEmail,
+		forgotPassword: sendForgotPasswordEmail,
+		resetPassword: processPasswordReset
 	}
 };
 
@@ -64,6 +66,32 @@ async function registerWithEmail(body: { email: string; name: string; password: 
 		body
 	})) as {
 		token: string;
+		error: string;
+	};
+
+	return response;
+}
+
+async function sendForgotPasswordEmail(body: { email: string }) {
+	const response = (await fetchFromAPI({
+		path: '/auth/forgot-password',
+		method: 'POST',
+		body
+	})) as {
+		success: boolean;
+		error: string;
+	};
+
+	return response;
+}
+
+async function processPasswordReset(body: { token: string; password: string }) {
+	const response = (await fetchFromAPI({
+		path: '/auth/reset-password',
+		method: 'POST',
+		body
+	})) as {
+		success: boolean;
 		error: string;
 	};
 
