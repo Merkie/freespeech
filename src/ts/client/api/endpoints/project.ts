@@ -84,6 +84,7 @@ async function editProject(
 		columns?: number;
 		rows?: number;
 		imageUrl?: string;
+		homePageId?: string;
 	}
 ) {
 	const response = (await fetchFromAPI({

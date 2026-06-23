@@ -2,9 +2,13 @@
 	import type { TilePage } from '$ts/common/types';
 	import { clickOutside } from '$ts/client/click-outside';
 	import { cn } from '$ts/client/cn';
-	import { AddingPage, EditingPages, EditingTiles, PageBeingEdited } from '$ts/client/stores';
+	import { AddingPage, EditingPages, EditingTiles, requestBoardRefresh } from '$ts/client/stores';
+	import { invalidateAll } from '$app/navigation';
+	import api from '$ts/client/api';
+	import { tick } from 'svelte';
 
 	export let page: TilePage;
+	export let isHomePage = false;
 
 	let element: HTMLElement;
 
@@ -20,10 +24,73 @@
 	}
 
 	let isDropDownOpen = false;
+
+	// Inline rename of the page name (only available in edit mode, never for the home page).
+	let renaming = false;
+	let draftName = '';
+	let renameInput: HTMLInputElement;
+	let savingName = false;
+
+	$: canRename = $EditingTiles && !isHomePage;
+
+	const startRename = async () => {
+		if (!canRename || renaming) return;
+		draftName = page.name;
+		renaming = true;
+		await tick();
+		renameInput?.focus();
+		renameInput?.select();
+	};
+
+	const cancelRename = () => {
+		renaming = false;
+	};
+
+	const commitRename = async () => {
+		if (!renaming) return;
+		renaming = false;
+
+		const name = draftName.trim();
+		if (!name || name === page.name) return;
+
+		savingName = true;
+		const response = await api.page.edit(page.id, { name });
+		savingName = false;
+
+		if (response.error) return alert(response.error);
+
+		await invalidateAll();
+		requestBoardRefresh();
+	};
 </script>
 
 <div class="relative h-14 bg-zinc-900 p-2 font-light text-zinc-100">
-	<p class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">{page.name}</p>
+	<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+		{#if renaming}
+			<input
+				bind:this={renameInput}
+				bind:value={draftName}
+				on:blur={commitRename}
+				on:keydown={(e) => {
+					if (e.key === 'Enter') commitRename();
+					else if (e.key === 'Escape') cancelRename();
+				}}
+				class="rounded-md border border-zinc-600 bg-zinc-800 px-2 py-0.5 text-center text-zinc-100 outline-none focus:border-blue-500"
+			/>
+		{:else if canRename}
+			<button
+				on:click={startRename}
+				disabled={savingName}
+				title="Rename page"
+				class="flex items-center gap-2 rounded-md px-2 py-0.5 transition-all hover:bg-zinc-800"
+			>
+				<span>{page.name}</span>
+				<i class="bi bi-pencil text-xs text-zinc-400"></i>
+			</button>
+		{:else}
+			<p>{page.name}</p>
+		{/if}
+	</div>
 
 	{#if $EditingTiles}
 		<div class="absolute left-3 top-1/2 flex -translate-y-1/2 items-center gap-2">
@@ -55,16 +122,6 @@
 	<button
 		on:click={() => {
 			isDropDownOpen = false;
-			$PageBeingEdited = { ...page };
-		}}
-		class="flex items-center gap-2 rounded-md p-2 px-4 text-left transition-all hover:bg-zinc-700/[50%]"
-	>
-		<i class="bi bi-pencil text-sm"></i><span>Edit "{page.name}"</span>
-	</button>
-	<div class="h-[1px] w-full bg-zinc-700/[40%]"></div>
-	<button
-		on:click={() => {
-			isDropDownOpen = false;
 			$AddingPage = true;
 		}}
 		class="flex items-center gap-2 rounded-md p-2 px-4 text-left transition-all hover:bg-zinc-700/[50%]"
@@ -80,13 +137,4 @@
 	>
 		<i class="bi bi-grid text-sm"></i><span>View All Pages</span>
 	</button>
-	<div class="h-[1px] w-full bg-zinc-700/[40%]"></div>
-	<!-- <button
-		on:click={() => {
-			isDropDownOpen = false;
-		}}
-		class="flex items-center gap-2 rounded-md p-2 px-4 text-left transition-all hover:bg-zinc-700/[50%]"
-	>
-		<i class="bi bi-cloud-upload text-sm"></i><span>Upload "{page.name}" to Marketplace</span>
-	</button> -->
 </div>
