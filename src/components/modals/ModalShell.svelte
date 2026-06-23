@@ -31,17 +31,37 @@
 	>
 		<div
 			transition:fly={{ y: 100, duration: 200 }}
-			class="flex max-h-[90%] w-[100%] flex-col overflow-y-auto border border-zinc-800 bg-zinc-900 p-6 text-zinc-200 shadow-md sm:w-[90%] sm:max-w-[500px] sm:rounded-xl"
+			class="flex max-h-[90%] w-[100%] flex-col overflow-hidden border border-zinc-800 bg-zinc-900 p-6 text-zinc-200 shadow-md sm:w-[90%] sm:max-w-[500px] sm:rounded-xl"
 		>
-			<div class="mb-2 flex items-center justify-between gap-2">
+			<div class="mb-2 flex shrink-0 items-center justify-between gap-2">
 				<p class="text-lg font-bold">{title}</p>
 				<button on:click={closeModal}>
 					<i class="bi bi-x-lg flex items-center" />
 				</button>
 			</div>
-			<div class="flex flex-col">
+			<div class="modal-scroll flex min-h-0 flex-1 flex-col overflow-y-auto">
 				<slot />
 			</div>
 		</div>
 	</main>
 {/if}
+
+<style lang="postcss">
+	.modal-scroll {
+		scrollbar-width: thin;
+		scrollbar-color: theme('colors.zinc.700') transparent;
+	}
+	.modal-scroll::-webkit-scrollbar {
+		width: 8px;
+	}
+	.modal-scroll::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.modal-scroll::-webkit-scrollbar-thumb {
+		background-color: theme('colors.zinc.700');
+		border-radius: 9999px;
+	}
+	.modal-scroll::-webkit-scrollbar-thumb:hover {
+		background-color: theme('colors.zinc.600');
+	}
+</style>
