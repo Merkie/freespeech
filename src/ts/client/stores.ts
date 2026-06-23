@@ -14,6 +14,12 @@ export const DiscardUnsavedChangesHandler = writable<() => void>(() => {});
 export const UnsavedChangesModalOpen = writable(false);
 
 export const EditingTiles = writable(false);
+// Access-control PIN modals
+export const PinEntryModalOpen = writable(false);
+export const PinSetupModalOpen = writable(false);
+// What to run after a correct PIN, and the prompt shown while entering it.
+export const PinUnlockHandler = writable<() => void>(() => {});
+export const PinPromptText = writable('Enter your PIN to continue.');
 export const UsingOnlineSearch = writable(false);
 export const TileBeingEdited = writable<Tile | null>(null);
 // The tile currently being dragged in edit mode (drag-to-move).
@@ -114,7 +120,12 @@ const defaultLocalSettings: LocalSettingsType = {
 	skinTone: 'medium',
 	lastVisitedProjectId: '',
 	lastVisitedPageId: '',
-	lastVisitedHomePageId: ''
+	lastVisitedHomePageId: '',
+	editPinEnabled: false,
+	editPinHash: '',
+	editPinSalt: '',
+	editPinFailureCount: 0,
+	editPinLockoutUntil: 0
 };
 
 export const LocalSettings = writable<LocalSettingsType>(defaultLocalSettings);

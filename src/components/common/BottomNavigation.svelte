@@ -3,13 +3,46 @@
 		DiscardUnsavedChangesHandler,
 		EditingTiles,
 		LocalSettings,
+		PinEntryModalOpen,
+		PinPromptText,
+		PinUnlockHandler,
 		TileBeingEdited,
 		UnsavedChanges,
 		UnsavedChangesModalOpen,
 		UsingOnlineSearch
 	} from '$ts/client/stores';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { cn } from '$ts/client/cn';
+	import PinEntryModal from '$components/modals/PinEntryModal.svelte';
+
+	// Open the PIN gate with a specific unlock action + prompt.
+	function requirePin(prompt: string, onUnlock: () => void) {
+		$PinPromptText = prompt;
+		$PinUnlockHandler = onUnlock;
+		$PinEntryModalOpen = true;
+	}
+
+	// Entering edit mode: gate behind the PIN modal if the access control is on,
+	// otherwise enter directly. (Exiting edit mode never requires the PIN.)
+	function requestEditMode() {
+		if ($LocalSettings.editPinEnabled) {
+			requirePin('Enter your PIN to enter edit mode.', () => ($EditingTiles = true));
+		} else {
+			$EditingTiles = true;
+		}
+	}
+
+	// Leaving the board for the dashboard: gate behind the PIN when on a board view
+	// (already inside the dashboard, or no PIN set, navigates directly).
+	function requestDashboard() {
+		const inDashboard = $page.url.pathname.startsWith('/app/dashboard');
+		if (!inDashboard && $LocalSettings.editPinEnabled) {
+			requirePin('Enter your PIN to open the dashboard.', () => goto('/app/dashboard/projects'));
+		} else {
+			goto('/app/dashboard/projects');
+		}
+	}
 
 	$: homeHref =
 		$LocalSettings.lastVisitedProjectId && $LocalSettings.lastVisitedHomePageId
@@ -67,7 +100,7 @@
 					$UnsavedChangesModalOpen = true;
 				}
 			} else {
-				$EditingTiles = true;
+				requestEditMode();
 			}
 		}}
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
@@ -78,11 +111,14 @@
 	>
 
 	<!-- Dashboard Button -->
-	<a
-		href="/app/dashboard/projects"
+	<button
+		on:click={requestDashboard}
+		disabled={$EditingTiles}
 		class={cn('flex-1 rounded-md p-1 text-center transition-colors', {
 			'bg-zinc-800': $page.url.pathname.startsWith('/app/dashboard'),
 			'pointer-events-none opacity-50': $EditingTiles
-		})}><i class="bi bi-gear-fill"></i></a
+		})}><i class="bi bi-gear-fill"></i></button
 	>
 </div>
+
+<PinEntryModal />

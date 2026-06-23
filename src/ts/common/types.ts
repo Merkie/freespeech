@@ -20,6 +20,12 @@ export type LocalSettings = {
 	lastVisitedProjectId: string;
 	lastVisitedPageId: string;
 	lastVisitedHomePageId: string;
+	// Access controls (client-side only): a PIN gate for entering edit mode.
+	editPinEnabled: boolean;
+	editPinHash: string;
+	editPinSalt: string;
+	editPinFailureCount: number;
+	editPinLockoutUntil: number; // epoch ms; 0 = not locked out
 };
 
 export type SkinTone = 'dark' | 'medium-dark' | 'medium' | 'medium-light' | 'light';
