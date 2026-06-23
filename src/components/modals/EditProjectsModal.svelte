@@ -8,7 +8,10 @@
 	export let projects: Project[];
 
 	const deleteProject = async (projectId: string) => {
-		await api.project.delete(projectId);
+		const response = await api.project.delete(projectId);
+
+		if (response.error) return alert(response.error);
+
 		await invalidateAll();
 	};
 </script>

@@ -29,7 +29,9 @@
 	}
 
 	const deletePage = async (pageId: string) => {
-		await api.page.delete(pageId);
+		const response = await api.page.delete(pageId);
+
+		if (response.error) return alert(response.error);
 
 		if ($page.url.pathname.includes(pageId)) window.location.assign(`/app/project/${projectId}`);
 

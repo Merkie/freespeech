@@ -6,9 +6,12 @@
 
 	const editPage = async () => {
 		if (!$PageBeingEdited) return;
-		await api.page.edit($PageBeingEdited.id, {
+		const response = await api.page.edit($PageBeingEdited.id, {
 			name: $PageBeingEdited.name
 		});
+
+		if (response.error) return alert(response.error);
+
 		await invalidateAll();
 		requestBoardRefresh();
 		$PageBeingEdited = null;
