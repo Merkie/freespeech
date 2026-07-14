@@ -81,15 +81,14 @@ else
     exit 1
 fi
 
-CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:${PORT}/" || true)
-if [ "$CODE" = "200" ]; then
-    echo -e "  ${GREEN}HTTP check OK (127.0.0.1:${PORT} -> ${CODE})${NC}"
+if wget -q -O /dev/null "http://127.0.0.1:${PORT}/"; then
+	echo -e "  ${GREEN}HTTP check OK (127.0.0.1:${PORT} -> 200)${NC}"
 else
-    echo -e "  ${RED}HTTP check FAILED (127.0.0.1:${PORT} -> ${CODE})${NC}"
-    echo ""
-    echo -e "${RED}Recent logs:${NC}"
-    journalctl -u "$SERVICE" -n 30 --no-pager
-    exit 1
+	echo -e "  ${RED}HTTP check FAILED (127.0.0.1:${PORT})${NC}"
+	echo ""
+	echo -e "${RED}Recent logs:${NC}"
+	journalctl -u "$SERVICE" -n 30 --no-pager
+	exit 1
 fi
 
 echo ""
