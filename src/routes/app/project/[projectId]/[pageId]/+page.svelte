@@ -34,6 +34,16 @@
 		writeCachedBoardPage,
 		type BoardPageData
 	} from '$ts/client/board-page-cache';
+	import {
+		markCachedProjectActive,
+		prepareProjectForOffline,
+		rememberBoardForOffline
+	} from '$ts/client/offline-support';
+	import {
+		BOARD_NAVIGATION_EVENT,
+		parseBoardRoute,
+		type BoardNavigationDetail
+	} from '$ts/client/board-navigation';
 
 	export let data;
 
@@ -41,13 +51,14 @@
 	let containerHeight: number; // Needed for CSS tricks
 	let mounted = false;
 	let loading = true;
+	let loadError = '';
 	let activeRouteKey = '';
 	let activeRequestKey = '';
 	let prefetchedRouteKey = '';
 	let observedRefreshVersion = 0;
 
-	$: projectId = ($route.params.projectId as string) || data.projectId || '';
-	$: pageId = ($route.params.pageId as string) || '';
+	let projectId = ($route.params.projectId as string) || data.projectId || '';
+	let pageId = ($route.params.pageId as string) || '';
 
 	$: organizedTiles = (() => {
 		if (!boardData) return [] as Tile[][];
@@ -86,7 +97,11 @@
 
 	function setBoardData(nextData: BoardPageData | null) {
 		boardData = nextData;
-		if (nextData) trackVisit(nextData);
+		if (nextData) {
+			trackVisit(nextData);
+			markCachedProjectActive(nextData.projectId, true);
+			rememberBoardForOffline(nextData.projectId, nextData.page.id);
+		}
 	}
 
 	// Apply an immediate change to the current board's tiles (optimistic UI) and
@@ -101,10 +116,7 @@
 		};
 
 		setBoardData(nextData);
-		writeCachedBoardPage(
-			{ projectId: nextData.projectId, pageId: nextData.page.id },
-			nextData
-		);
+		writeCachedBoardPage({ projectId: nextData.projectId, pageId: nextData.page.id }, nextData);
 	}
 
 	async function loadBoardPage(
@@ -126,6 +138,7 @@
 			const cachedData = readCachedBoardPage({ projectId: nextProjectId, pageId: nextPageId });
 			setBoardData(boardPageDataEqual(boardData, cachedData) ? boardData : cachedData);
 			loading = !cachedData;
+			loadError = '';
 		} else {
 			loading = !boardData;
 		}
@@ -133,7 +146,10 @@
 		activeRequestKey = routeKey;
 
 		try {
-			const { page: projectPage, isHomePage } = await api.project.viewPage(nextProjectId, nextPageId);
+			const { page: projectPage, isHomePage } = await api.project.viewPage(
+				nextProjectId,
+				nextPageId
+			);
 			if (activeRequestKey !== routeKey) return;
 
 			if (!projectPage || !projectPage.tilePage || !projectPage.project) {
@@ -152,9 +168,17 @@
 			writeCachedBoardPage({ projectId: nextProjectId, pageId: nextPageId }, freshData);
 			setBoardData(boardPageDataEqual(boardData, freshData) ? boardData : freshData);
 			loading = false;
+			loadError = '';
+			void prepareProjectForOffline(freshData, { force: options.force });
 		} catch {
 			if (activeRequestKey === routeKey && !boardData) {
-				await goto('/app/dashboard/projects', { replaceState: true });
+				loading = false;
+				if (navigator.onLine) {
+					await goto('/app/dashboard/projects', { replaceState: true });
+				} else {
+					loadError = 'This page was not downloaded before the connection was lost.';
+					markCachedProjectActive(nextProjectId, false);
+				}
 			}
 		}
 	}
@@ -226,11 +250,34 @@
 		observedRefreshVersion = $BoardRefreshVersion;
 		$ApplyOptimisticBoardUpdate = applyOptimisticBoardUpdate;
 		syncTokenFromCookie();
+
+		const syncRouteFromLocation = () => {
+			const parsed = parseBoardRoute(window.location.pathname);
+			if (!parsed) return;
+			projectId = parsed.projectId;
+			pageId = parsed.pageId;
+		};
+		const handleBoardNavigation = (event: Event) => {
+			const { detail } = event as CustomEvent<BoardNavigationDetail>;
+			projectId = detail.projectId;
+			pageId = detail.pageId;
+		};
+		const handleOnline = () => {
+			if (projectId && pageId) void loadBoardPage(projectId, pageId, { force: true });
+		};
+
+		window.addEventListener(BOARD_NAVIGATION_EVENT, handleBoardNavigation);
+		window.addEventListener('popstate', syncRouteFromLocation);
+		window.addEventListener('online', handleOnline);
+		syncRouteFromLocation();
 		void loadBoardPage(projectId, pageId);
 
 		return () => {
 			mounted = false;
 			$ApplyOptimisticBoardUpdate = null;
+			window.removeEventListener(BOARD_NAVIGATION_EVENT, handleBoardNavigation);
+			window.removeEventListener('popstate', syncRouteFromLocation);
+			window.removeEventListener('online', handleOnline);
 		};
 	});
 </script>
@@ -243,6 +290,14 @@
 
 {#if !boardData && loading}
 	<Loader />
+{:else if !boardData && loadError}
+	<div class="grid flex-1 place-items-center bg-zinc-100 p-8 text-center text-zinc-700">
+		<div class="max-w-md">
+			<i class="bi bi-wifi-off text-4xl text-zinc-500"></i>
+			<p class="mt-3 text-lg font-semibold">Page unavailable offline</p>
+			<p class="mt-1 text-sm">{loadError}</p>
+		</div>
+	</div>
 {:else if boardData}
 	<PageHeader page={boardData.page} isHomePage={boardData.isHomePage} />
 

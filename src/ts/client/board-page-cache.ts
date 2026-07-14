@@ -22,7 +22,7 @@ type BoardPageCacheEntry = {
 	data: BoardPageData;
 };
 
-function getTokenScope() {
+export function getBoardCacheScope() {
 	if (!browser) return 'server';
 
 	const token = localStorage.getItem('token') || '';
@@ -37,7 +37,7 @@ function getTokenScope() {
 }
 
 function getCacheKey({ projectId, pageId }: BoardPageCacheParams) {
-	return `${CACHE_PREFIX}:${getTokenScope()}:${projectId}:${pageId}`;
+	return `${CACHE_PREFIX}:${getBoardCacheScope()}:${projectId}:${pageId}`;
 }
 
 function isBoardPageData(value: unknown): value is BoardPageData {

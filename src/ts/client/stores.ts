@@ -7,6 +7,21 @@ export const isSynthesizingSpeech = writable(false);
 export const Sentence = writable<Tile[]>([]);
 export const Loading = writable(false);
 
+export type OfflineCachePhase = 'idle' | 'preparing' | 'ready' | 'partial' | 'offline' | 'error';
+
+export type OfflineCacheState = {
+	phase: OfflineCachePhase;
+	message: string;
+	detail?: string;
+	projectId?: string;
+};
+
+export const NetworkOnline = writable(browser ? navigator.onLine : true);
+export const OfflineCacheStatus = writable<OfflineCacheState>({
+	phase: browser && !navigator.onLine ? 'offline' : 'idle',
+	message: browser && !navigator.onLine ? 'Offline' : 'Preparing offline access'
+});
+
 // Modals & Panels
 
 export const UnsavedChanges = writable(false);
@@ -36,9 +51,9 @@ export const requestBoardRefresh = () => BoardRefreshVersion.update((version) =>
 // Registered by the board page so tile mutations can update the on-screen board
 // immediately (optimistically) before the server round-trip completes, avoiding
 // the tile snapping back to its old position and then forward again.
-export const ApplyOptimisticBoardUpdate = writable<((mutate: (tiles: Tile[]) => Tile[]) => void) | null>(
-	null
-);
+export const ApplyOptimisticBoardUpdate = writable<
+	((mutate: (tiles: Tile[]) => Tile[]) => void) | null
+>(null);
 
 export const EditingProjects = writable(false);
 export const AddingProject = writable(false);

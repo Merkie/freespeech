@@ -2,7 +2,14 @@
 	import type { TilePage } from '$ts/common/types';
 	import { clickOutside } from '$ts/client/click-outside';
 	import { cn } from '$ts/client/cn';
-	import { AddingPage, EditingPages, EditingTiles, requestBoardRefresh } from '$ts/client/stores';
+	import {
+		AddingPage,
+		EditingPages,
+		EditingTiles,
+		NetworkOnline,
+		OfflineCacheStatus,
+		requestBoardRefresh
+	} from '$ts/client/stores';
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
 	import { tick } from 'svelte';
@@ -32,6 +39,22 @@
 	let savingName = false;
 
 	$: canRename = $EditingTiles && !isHomePage;
+	$: offlineIcon = !$NetworkOnline
+		? 'wifi-off'
+		: $OfflineCacheStatus.phase === 'preparing'
+			? 'arrow-repeat'
+			: $OfflineCacheStatus.phase === 'ready'
+				? 'cloud-check-fill'
+				: $OfflineCacheStatus.phase === 'partial' || $OfflineCacheStatus.phase === 'error'
+					? 'exclamation-triangle-fill'
+					: 'cloud-arrow-down';
+	$: offlineStatusClass = !$NetworkOnline
+		? 'border-amber-500/50 bg-amber-500/15 text-amber-100'
+		: $OfflineCacheStatus.phase === 'ready'
+			? 'border-emerald-500/50 bg-emerald-500/15 text-emerald-100'
+			: $OfflineCacheStatus.phase === 'partial' || $OfflineCacheStatus.phase === 'error'
+				? 'border-amber-500/50 bg-amber-500/15 text-amber-100'
+				: 'border-zinc-600 bg-zinc-800 text-zinc-200';
 
 	const startRename = async () => {
 		if (!canRename || renaming) return;
@@ -104,6 +127,16 @@
 			</button>
 		</div>
 	{/if}
+
+	<div
+		class={`absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${offlineStatusClass}`}
+		title={$OfflineCacheStatus.detail || $OfflineCacheStatus.message}
+	>
+		<i
+			class={`bi bi-${offlineIcon} ${$OfflineCacheStatus.phase === 'preparing' ? 'animate-spin' : ''}`}
+		></i>
+		<span class="hidden sm:inline">{$OfflineCacheStatus.message}</span>
+	</div>
 </div>
 
 <div

@@ -6,6 +6,12 @@ FreeSpeech AAC is a free and open-source assistive communication app written in 
 
 FreeSpeech AAC is committed to providing the best AAC experience to users, this is accomplished by packaging FreeSpeech with technologies sourced from AWS, Micorosoft Cognitive Services, and Google Cloud that give users cutting-edge AI generated voices. FreeSpeech is also putting artificial intelligence to use by relying on the OpenAI GPT-3 model to handle complex textual analysis tasks along with phrase and word conjugation. FreeSpeech's client is built on top of Svelte, a blazingly fast front-end UI framework.
 
+### Offline communication
+
+When a signed-in user opens a communication board, the web app automatically downloads the SvelteKit application shell, every page in that board, and its tile images. The board header reports when that device is ready for offline use. A downloaded board can cold-start from the installed Home Screen app, navigate between its pages, display cached tile images, and use an available browser/device speech-synthesis voice without a network connection.
+
+Offline mode is intentionally communication-only. Editing boards, opening the dashboard, online image search, and cloud voice providers still require a connection. FreeSpeech falls back to an available device voice if a cloud voice cannot be reached.
+
 I created FreeSpeech initially for my sister who is nonverbal, but since then the project has been actively gaining users as the application also serves as a viable alternative to many other expensive pieces of AAC software. Keep up with the latest FreeSpeech news on the blog portion of the website!
 
 ### Hosting

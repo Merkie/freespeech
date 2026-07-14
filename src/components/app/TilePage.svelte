@@ -12,6 +12,7 @@
 	// helpers
 	import { scale } from 'svelte/transition';
 	import { moveTile, addTileToFolder } from '$ts/client/move-tile';
+	import { navigateToBoardPage } from '$ts/client/board-navigation';
 	// types
 	import type { Tile } from '$ts/common/types';
 
@@ -34,6 +35,22 @@
 
 	// A "folder" tile is one that navigates to another page.
 	const isFolderTile = (tile: Tile) => !!tile.navigation;
+
+	function handleBoardLink(event: MouseEvent, targetPageId: string) {
+		if (
+			event.defaultPrevented ||
+			event.button !== 0 ||
+			event.metaKey ||
+			event.ctrlKey ||
+			event.shiftKey ||
+			event.altKey
+		) {
+			return;
+		}
+
+		event.preventDefault();
+		navigateToBoardPage(projectId, targetPageId);
+	}
 
 	// Whether the Add/Swap overlay should be shown over this tile right now.
 	$: showFolderOverlay = (tile: Tile) =>
@@ -136,7 +153,6 @@
 		{#each tiles as tile (tile.id)}
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div
-				data-sveltekit-preload-data
 				style={`grid-row: ${tile.y + 1}; grid-column: ${tile.x + 1};`}
 				class={`relative rounded-md transition-shadow ${
 					$EditingTiles ? 'cursor-grab active:cursor-grabbing' : ''
@@ -149,10 +165,16 @@
 				on:dragover={(event) => handleDragOver(event, tile)}
 				on:dragleave={() => handleDragLeave(tile)}
 				on:drop={(event) => handleDrop(event, tile)}
-				in:scale={{ delay: $EnableTileAnimations ? Math.random() * 200 : 0, duration: $EnableTileAnimations ? 400 : 0 }}
+				in:scale={{
+					delay: $EnableTileAnimations ? Math.random() * 200 : 0,
+					duration: $EnableTileAnimations ? 400 : 0
+				}}
 			>
 				{#if tile.navigation && !$EditingTiles}
-					<a href={`/app/project/${projectId}/${tile.navigation}`}>
+					<a
+						href={`/app/project/${projectId}/${tile.navigation}`}
+						on:click={(event) => handleBoardLink(event, tile.navigation)}
+					>
 						<TileComponent
 							tile={$EditingTiles && $TileBeingEdited?.id === tile.id ? $TileBeingEdited : tile}
 						/>

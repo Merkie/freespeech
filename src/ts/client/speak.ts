@@ -11,26 +11,32 @@ import api from './api';
 export async function speakText(text: string) {
 	VoiceEngineStatus.set('synthesizing');
 
-	if (!get(EnableThirdPartyVoiceProviders) || !get(ElevenLabsVoiceId)) return speakSynth(text);
+	if (!navigator.onLine || !get(EnableThirdPartyVoiceProviders) || !get(ElevenLabsVoiceId)) {
+		return speakSynth(text);
+	}
 
-	const data = await api.tts.speak.elevenlabs(joinWordsInSentence(text));
+	try {
+		const data = await api.tts.speak.elevenlabs(joinWordsInSentence(text));
 
-	const sound = new Howl({
-		src: [URL.createObjectURL(data)],
-		format: ['mp3']
-	});
+		const sound = new Howl({
+			src: [URL.createObjectURL(data)],
+			format: ['mp3']
+		});
 
-	VoiceEngineStatus.set('speaking');
+		VoiceEngineStatus.set('speaking');
 
-	sound.play();
+		sound.play();
 
-	sound.on('end', () => {
-		VoiceEngineStatus.set('ready');
-	});
+		sound.on('end', () => {
+			VoiceEngineStatus.set('ready');
+		});
 
-	sound.on('loaderror', () => {
-		speakSynth(text);
-	});
+		sound.on('loaderror', () => {
+			speakSynth(text);
+		});
+	} catch {
+		return speakSynth(text);
+	}
 }
 
 function speakSynth(text: string) {

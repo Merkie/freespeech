@@ -2,11 +2,14 @@
 	import BottomNavigation from '$components/common/BottomNavigation.svelte';
 	import Loader from '$components/common/Loader.svelte';
 	import { Loading } from '$ts/client/stores';
+	import { initializeOfflineSupport } from '$ts/client/offline-support';
 	import { onMount } from 'svelte';
 
 	export let data;
 
 	onMount(() => {
+		initializeOfflineSupport();
+
 		const tokenCookie = document.cookie
 			.split(';')
 			.find((c) => c.trim().startsWith('token='))
