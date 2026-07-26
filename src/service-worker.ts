@@ -13,8 +13,14 @@ const OFFLINE_SHELL_URL = '/__freespeech_offline_shell__';
 const OFFLINE_START_URL = '/__freespeech_offline_start__';
 const PRECACHE_HISTORY_URL = '/__freespeech_precache_history__';
 const BOARD_ROUTE = /^\/app\/project\/[^/]+\/[^/]+\/?$/;
+// The marketing hero is multi-megabyte and is never shown inside the app, so it stays out of
+// the atomic install. The runtime image cache still picks it up for anyone on the landing page.
+const PRECACHE_EXCLUDED_PATHS = new Set(['/hero.webp']);
+const PRECACHE_ASSETS = [...build, ...files].filter(
+	(path) => !PRECACHE_EXCLUDED_PATHS.has(new URL(path, worker.location.origin).pathname)
+);
 const PRECACHED_PATHS = new Set(
-	[...build, ...files].map((path) => new URL(path, worker.location.origin).pathname)
+	PRECACHE_ASSETS.map((path) => new URL(path, worker.location.origin).pathname)
 );
 
 type WorkerMessage =
@@ -32,7 +38,7 @@ worker.addEventListener('install', (event) => {
 	event.waitUntil(
 		(async () => {
 			const cache = await caches.open(PRECACHE);
-			await cache.addAll([...build, ...files]);
+			await cache.addAll(PRECACHE_ASSETS);
 			await worker.skipWaiting();
 		})()
 	);
@@ -178,8 +184,14 @@ async function handleNavigation(request: Request) {
 }
 
 async function handleCacheableAsset(request: Request) {
+	const url = new URL(request.url);
+	const isPrecachedPath =
+		url.origin === worker.location.origin && PRECACHED_PATHS.has(url.pathname);
+
 	const currentPrecache = await caches.open(PRECACHE);
-	const precached = await currentPrecache.match(request, { ignoreSearch: false });
+	// Precached assets are keyed on the bare build path, but the CSS that references them can add
+	// a cache-busting query (bootstrap-icons.woff2?7141…), so those lookups must ignore the search.
+	const precached = await currentPrecache.match(request, { ignoreSearch: isPrecachedPath });
 	if (precached) return precached;
 
 	const offlineCache = await caches.open(OFFLINE_CACHE);

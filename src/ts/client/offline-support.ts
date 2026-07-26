@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import api from '$ts/client/api';
 import {
+	clearAllCachedBoardPages,
 	getBoardCacheScope,
 	writeCachedBoardPage,
 	type BoardPageData
@@ -220,6 +221,36 @@ async function downloadProject(initialData: BoardPageData) {
 			: `${record.pageCount} page${record.pageCount === 1 ? '' : 's'} and ${record.imageCount} image${record.imageCount === 1 ? '' : 's'} downloaded.`,
 		projectId
 	});
+}
+
+/**
+ * Drops every downloaded board from the device. Call this on logout so a shared iPad does not keep
+ * serving the previous user's board — the offline cache holds authenticated pages and their images.
+ * Must run before the token is cleared, because the local cache keys are scoped to it.
+ */
+export async function clearOfflineData() {
+	if (!browser) return;
+
+	clearAllCachedBoardPages();
+
+	try {
+		for (const key of Object.keys(localStorage)) {
+			if (key.startsWith(`${READY_CACHE_PREFIX}:`)) localStorage.removeItem(key);
+		}
+	} catch {
+		// Ignore storage failures; the service-worker cache is the part that actually leaks.
+	}
+
+	preparationPromises.clear();
+	OfflineCacheStatus.set({ phase: 'idle', message: 'Preparing offline access' });
+
+	if (!('serviceWorker' in navigator)) return;
+
+	try {
+		await postToWorker({ type: 'CLEAR_OFFLINE_DATA' });
+	} catch {
+		// Logging out must never be blocked by cache cleanup.
+	}
 }
 
 async function requestPersistentStorage() {

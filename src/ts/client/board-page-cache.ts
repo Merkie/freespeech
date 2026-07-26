@@ -97,6 +97,18 @@ export function deleteCachedBoardPage(params: BoardPageCacheParams) {
 	}
 }
 
+export function clearAllCachedBoardPages() {
+	if (!browser) return;
+
+	try {
+		for (const key of Object.keys(localStorage)) {
+			if (key.startsWith(`${CACHE_PREFIX}:`)) localStorage.removeItem(key);
+		}
+	} catch {
+		// Ignore storage failures.
+	}
+}
+
 export function boardPageDataEqual(
 	first: BoardPageData | null | undefined,
 	second: BoardPageData | null | undefined

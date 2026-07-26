@@ -147,7 +147,7 @@
 
 <style>
 	.hero {
-		background-image: url('/hero.jpg');
+		background-image: url('/hero.webp');
 		background-size: cover;
 		background-position: center;
 	}

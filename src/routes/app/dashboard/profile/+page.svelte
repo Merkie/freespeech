@@ -2,6 +2,7 @@
 	import ModalUploadProfilePicture from './_components/ModalUploadProfilePicture.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
+	import { clearOfflineData } from '$ts/client/offline-support';
 	import { PUBLIC_R2_URL } from '$env/static/public';
 
 	export let data;
@@ -12,6 +13,8 @@
 
 	const logout = async () => {
 		await fetch('/api/logout');
+		// Runs while the token is still set — the offline cache keys are scoped to it.
+		await clearOfflineData();
 		window.localStorage.setItem('token', '');
 		await invalidateAll();
 		window.location.assign('/');
