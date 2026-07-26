@@ -8,12 +8,6 @@ import {
 import { NetworkOnline, OfflineCacheStatus } from '$ts/client/stores';
 
 const READY_CACHE_PREFIX = 'offlineBoardReady:v1';
-const SHARED_OFFLINE_URLS = [
-	'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css',
-	'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/fonts/bootstrap-icons.woff2?7141511ac37f13e1a387fb9fc6646256',
-	'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/fonts/bootstrap-icons.woff?7141511ac37f13e1a387fb9fc6646256'
-];
-
 type WorkerResult = {
 	cached: number;
 	failed: number;
@@ -64,9 +58,6 @@ export function initializeOfflineSupport() {
 	updateNetworkState();
 
 	void requestPersistentStorage();
-	void cacheSharedOfflineAssets().catch(() => {
-		// The project-specific preparation will surface meaningful failures to the user.
-	});
 }
 
 export function prepareProjectForOffline(
@@ -229,11 +220,6 @@ async function downloadProject(initialData: BoardPageData) {
 			: `${record.pageCount} page${record.pageCount === 1 ? '' : 's'} and ${record.imageCount} image${record.imageCount === 1 ? '' : 's'} downloaded.`,
 		projectId
 	});
-}
-
-async function cacheSharedOfflineAssets() {
-	if (!('serviceWorker' in navigator)) return;
-	await postToWorker({ type: 'CACHE_URLS', urls: SHARED_OFFLINE_URLS });
 }
 
 async function requestPersistentStorage() {

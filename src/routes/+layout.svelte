@@ -1,6 +1,7 @@
 <script>
 	import { setContext } from 'svelte';
 	import '../app.css';
+	import 'bootstrap-icons/font/bootstrap-icons.css';
 
 	export let data;
 
