@@ -127,9 +127,15 @@
 			</tr>
 			<tr>
 				<td>Google (google.com)</td>
-				<td>Your Google identity at sign-in; your email address and the reset link</td>
-				<td>Google sign-in; sending password-reset email (Gmail)</td>
+				<td>Your Google identity at sign-in</td>
+				<td>Google sign-in, only if you choose it</td>
 				<td>USA and other countries</td>
+			</tr>
+			<tr>
+				<td>Resend (resend.com)</td>
+				<td>Your email address and the reset link</td>
+				<td>Sending password-reset email</td>
+				<td>USA</td>
 			</tr>
 			<tr>
 				<td>ElevenLabs (elevenlabs.io)</td>
