@@ -169,7 +169,7 @@
 		<li>encrypting connections with HTTPS</li>
 		<li>hashing passwords with bcrypt</li>
 		<li>storing ElevenLabs keys encrypted</li>
-		<li>letting only me have administrative access to the servers</li>
+		<li>limiting administrative access to the servers to named, trusted people</li>
 		<li>limiting each account&#39;s data to that account</li>
 	</ul>
 	<p>No system is perfectly secure. Please use a strong password.</p>

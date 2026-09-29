@@ -33,6 +33,12 @@
 				<i class="bi bi-arrow-right"></i>
 			</a>
 		</div>
+		<p class="px-4 text-center text-sm text-zinc-500">
+			By creating an account, you agree to the <a href="/tos" class="underline">Terms of Service</a>
+			and <a href="/privacy" class="underline">Privacy Policy</a>. Accounts are for adults; if you
+			set up boards for a child, you must be their parent or guardian or have their school's
+			authorization.
+		</p>
 	</div>
 </main>
 

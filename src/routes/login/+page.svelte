@@ -33,6 +33,10 @@
 				<i class="bi bi-arrow-right"></i>
 			</a>
 		</div>
+		<p class="text-center text-sm text-zinc-500">
+			<a href="/tos" class="underline">Terms of Service</a> ·
+			<a href="/privacy" class="underline">Privacy Policy</a>
+		</p>
 	</div>
 </main>
 
