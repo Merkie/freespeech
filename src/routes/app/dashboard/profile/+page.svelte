@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ModalUploadProfilePicture from './_components/ModalUploadProfilePicture.svelte';
+	import ModalDeleteAccount from './_components/ModalDeleteAccount.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import api from '$ts/client/api';
 	import { clearOfflineData } from '$ts/client/offline-support';
@@ -8,6 +9,10 @@
 	export let data;
 
 	let isUploadProfilePictureModalOpen = false;
+	let isDeleteAccountModalOpen = false;
+
+	let downloading = false;
+	let downloadError = '';
 
 	let name = data.user?.name;
 
@@ -31,6 +36,28 @@
 	const updateUser = async () => {
 		await api.user.update({ name });
 		await invalidateAll();
+	};
+
+	const downloadData = async () => {
+		if (downloading) return;
+		downloading = true;
+		downloadError = '';
+
+		try {
+			const blob = await api.user.exportData();
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `freespeech-data-${new Date().toISOString().slice(0, 10)}.json`;
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+			setTimeout(() => URL.revokeObjectURL(url), 1000);
+		} catch (e) {
+			downloadError = e instanceof Error ? e.message : 'Could not download your data.';
+		}
+
+		downloading = false;
 	};
 </script>
 
@@ -89,6 +116,29 @@
 					class="rounded-md border border-zinc-300 bg-zinc-200 p-2 px-4 text-zinc-500"
 					><i class="bi bi-image mr-2" />Upload Profile Picture</button
 				>
+
+				<p class="mt-6 text-lg">Your Data</p>
+				<button
+					on:click={downloadData}
+					disabled={downloading}
+					class="rounded-md border border-zinc-300 bg-zinc-200 p-2 px-4 text-zinc-500 disabled:opacity-50"
+					><i class="bi bi-download mr-2" />{downloading
+						? 'Preparing download…'
+						: 'Download my data'}</button
+				>
+				<p class="text-sm text-zinc-500">
+					A JSON file with your account details and all of your boards, pages and tiles.
+				</p>
+				{#if downloadError}
+					<p class="text-sm text-red-500">{downloadError}</p>
+				{/if}
+
+				<p class="mt-6 text-lg">Delete Account</p>
+				<button
+					on:click={() => (isDeleteAccountModalOpen = true)}
+					class="rounded-md border border-red-300 bg-white p-2 px-4 text-red-600 hover:bg-red-50"
+					><i class="bi bi-trash mr-2" />Delete account</button
+				>
 			</div>
 		</div>
 	</div>
@@ -97,6 +147,14 @@
 <ModalUploadProfilePicture
 	isOpen={isUploadProfilePictureModalOpen}
 	closeModal={() => (isUploadProfilePictureModalOpen = false)}
+/>
+
+<ModalDeleteAccount
+	isOpen={isDeleteAccountModalOpen}
+	closeModal={() => (isDeleteAccountModalOpen = false)}
+	email={data.user?.email || ''}
+	hasPassword={!!data.user?.password}
+	onDeleted={logout}
 />
 
 <style lang="postcss">
