@@ -43,7 +43,8 @@
 
 	{#if $EnableThirdPartyVoiceProviders}
 		<ElevenLabsPersonalKey
-			apiKey={data.elevenLabsApiKey || ''}
+			keyIsSet={data.elevenLabsKeyIsSet}
+			keyLast4={data.elevenLabsKeyLast4}
 			usePersonalElevenLabsKey={data.usePersonalElevenLabsKey}
 		/>
 	{/if}
